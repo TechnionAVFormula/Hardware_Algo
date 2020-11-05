@@ -1,0 +1,1 @@
+> **NOTE:** This is an attempt to read the output of the arduino from serial connection with python script. Not sure if it works.
