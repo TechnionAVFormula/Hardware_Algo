@@ -1,0 +1,480 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title "EBS schmatics 2020"
+Date "2020-03-19"
+Rev "Version 1"
+Comp "The Technion – Israel Institute of Technology"
+Comment1 "#555"
+Comment2 "Formula Technion Driverless"
+Comment3 "Schematics of EBS SDC logic and supervisor CPU"
+Comment4 ""
+$EndDescr
+$Comp
+L Interface_CAN_LIN:SN65HVD230 U12
+U 1 1 5E73BFEB
+P 7600 2350
+F 0 "U12" H 7800 2600 50  0000 C CNN
+F 1 "SN65HVD230" H 7950 2000 50  0000 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 7600 1850 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn65hvd230.pdf" H 7500 2750 50  0001 C CNN
+	1    7600 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7200 2250 6000 2250
+Wire Wire Line
+	6000 2350 7200 2350
+$Comp
+L power:GND #PWR011
+U 1 1 5E7481E0
+P 7600 2850
+F 0 "#PWR011" H 7600 2600 50  0001 C CNN
+F 1 "GND" H 7605 2677 50  0000 C CNN
+F 2 "" H 7600 2850 50  0001 C CNN
+F 3 "" H 7600 2850 50  0001 C CNN
+	1    7600 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 2850 7600 2800
+Wire Wire Line
+	7600 2800 7150 2800
+Wire Wire Line
+	7150 2800 7150 2550
+Wire Wire Line
+	7150 2550 7200 2550
+Connection ~ 7600 2800
+Wire Wire Line
+	7600 2800 7600 2750
+$Comp
+L power:GND #PWR012
+U 1 1 5E748F96
+P 8200 1950
+F 0 "#PWR012" H 8200 1700 50  0001 C CNN
+F 1 "GND" H 8205 1777 50  0000 C CNN
+F 2 "" H 8200 1950 50  0001 C CNN
+F 3 "" H 8200 1950 50  0001 C CNN
+	1    8200 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C3
+U 1 1 5E74A23D
+P 7850 1900
+F 0 "C3" V 7598 1900 50  0000 C CNN
+F 1 "100nF" V 7689 1900 50  0000 C CNN
+F 2 "" H 7888 1750 50  0001 C CNN
+F 3 "~" H 7850 1900 50  0001 C CNN
+	1    7850 1900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8200 1950 8200 1900
+Wire Wire Line
+	8200 1900 8000 1900
+Wire Wire Line
+	6850 1900 6850 2000
+Wire Wire Line
+	6850 2000 6000 2000
+NoConn ~ 7200 2450
+$Comp
+L Device:R R18
+U 1 1 5E74FCB1
+P 8700 2400
+F 0 "R18" H 8770 2446 50  0000 L CNN
+F 1 "120" H 8770 2355 50  0000 L CNN
+F 2 "" V 8630 2400 50  0001 C CNN
+F 3 "~" H 8700 2400 50  0001 C CNN
+	1    8700 2400
+	1    0    0    -1  
+$EndComp
+Text HLabel 9200 2200 2    50   Input ~ 0
+CAN_H
+Text HLabel 9200 2600 2    50   Input ~ 0
+CAN_L
+Wire Wire Line
+	8000 2350 8550 2350
+Wire Wire Line
+	8550 2350 8550 2200
+Wire Wire Line
+	8550 2200 8700 2200
+Wire Wire Line
+	9200 2600 8700 2600
+Wire Wire Line
+	8550 2600 8550 2450
+Wire Wire Line
+	8550 2450 8000 2450
+Wire Wire Line
+	8700 2250 8700 2200
+Connection ~ 8700 2200
+Wire Wire Line
+	8700 2200 9200 2200
+Wire Wire Line
+	8700 2550 8700 2600
+Connection ~ 8700 2600
+Wire Wire Line
+	8700 2600 8550 2600
+$Comp
+L power:GND #PWR05
+U 1 1 5E7545ED
+P 4750 1900
+F 0 "#PWR05" H 4750 1650 50  0001 C CNN
+F 1 "GND" H 4755 1727 50  0000 C CNN
+F 2 "" H 4750 1900 50  0001 C CNN
+F 3 "" H 4750 1900 50  0001 C CNN
+	1    4750 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 1900 4750 1850
+Wire Wire Line
+	4750 1850 4900 1850
+Text HLabel 2550 4950 0    50   Input ~ 0
+EBS_valve_1_in
+Text HLabel 2550 5550 0    50   Input ~ 0
+EBS_valve_2_in
+Wire Wire Line
+	6850 1900 7600 1900
+Wire Wire Line
+	7600 2050 7600 1900
+Connection ~ 7600 1900
+Wire Wire Line
+	7600 1900 7700 1900
+Text HLabel 6550 2600 2    50   Input ~ 0
+BP1
+Text HLabel 6550 2750 2    50   Input ~ 0
+BP2
+Text HLabel 6550 2900 2    50   Input ~ 0
+BP3
+Text HLabel 6550 3050 2    50   Input ~ 0
+BP4
+Text HLabel 6550 3200 2    50   Input ~ 0
+BP5
+Text HLabel 6550 3350 2    50   Input ~ 0
+BP6
+Wire Wire Line
+	6000 2600 6550 2600
+Wire Wire Line
+	6550 2750 6000 2750
+Wire Wire Line
+	6000 2900 6550 2900
+Wire Wire Line
+	6550 3050 6000 3050
+Wire Wire Line
+	6000 3200 6550 3200
+Wire Wire Line
+	6550 3350 6000 3350
+Wire Wire Line
+	4250 3200 4900 3200
+Wire Wire Line
+	4900 3350 4250 3350
+Text HLabel 4250 2600 0    50   Output ~ 0
+AS_close_SDC
+Text HLabel 4250 3050 0    50   Input ~ 0
+SDC_is_ready
+Text HLabel 4250 2900 0    50   Output ~ 0
+watchdog
+Text HLabel 4250 2750 0    50   Output ~ 0
+AS_driving_mode
+Wire Wire Line
+	4250 2600 4900 2600
+Wire Wire Line
+	4900 2750 4250 2750
+Wire Wire Line
+	4250 2900 4900 2900
+Wire Wire Line
+	4900 3050 4250 3050
+Wire Wire Line
+	6200 1400 6200 1850
+Wire Wire Line
+	6200 1850 6000 1850
+$Comp
+L Device:R R6
+U 1 1 5E764F0C
+P 3200 2100
+F 0 "R6" H 3270 2146 50  0000 L CNN
+F 1 "R" H 3270 2055 50  0000 L CNN
+F 2 "" V 3130 2100 50  0001 C CNN
+F 3 "~" H 3200 2100 50  0001 C CNN
+	1    3200 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 5E76533C
+P 3500 2300
+F 0 "R8" V 3600 2250 50  0000 L CNN
+F 1 "220" V 3400 2250 50  0000 L CNN
+F 2 "" V 3430 2300 50  0001 C CNN
+F 3 "~" H 3500 2300 50  0001 C CNN
+	1    3500 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L EBS_library:N_Channel_MOSFET Q2
+U 1 1 5E779E8D
+P 2850 2300
+F 0 "Q2" H 3054 2346 50  0000 L CNN
+F 1 "Si2302CDS" H 3054 2255 50  0000 L CNN
+F 2 "" H 3050 2225 50  0001 L CIN
+F 3 "" H 2850 2300 50  0001 L CNN
+	1    2850 2300
+	-1   0    0    1   
+$EndComp
+$Comp
+L EBS_library:Teensy_3.2 U11
+U 1 1 5E77F298
+P 5450 2150
+F 0 "U11" H 5450 2915 50  0000 C CNN
+F 1 "Teensy_3.2" H 5450 2824 50  0000 C CNN
+F 2 "" H 5450 2000 50  0001 C CNN
+F 3 "" H 5450 2000 50  0001 C CNN
+	1    5450 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3050 2300 3200 2300
+Wire Wire Line
+	3200 2300 3200 2250
+Connection ~ 3200 2300
+Wire Wire Line
+	3200 2300 3350 2300
+Wire Wire Line
+	4900 2300 3650 2300
+Wire Wire Line
+	2750 2500 2750 2600
+Wire Wire Line
+	2750 2600 2500 2600
+Text HLabel 2500 2600 0    50   Input ~ 0
+EBS_failure_LED
+Wire Wire Line
+	3200 1950 3200 1900
+Wire Wire Line
+	3200 1900 2750 1900
+Wire Wire Line
+	2750 1900 2750 2100
+Wire Wire Line
+	2750 1900 2500 1900
+Wire Wire Line
+	2500 1900 2500 1950
+Connection ~ 2750 1900
+$Comp
+L power:GND #PWR04
+U 1 1 5E794CA5
+P 2500 1950
+F 0 "#PWR04" H 2500 1700 50  0001 C CNN
+F 1 "GND" H 2505 1777 50  0000 C CNN
+F 2 "" H 2500 1950 50  0001 C CNN
+F 3 "" H 2500 1950 50  0001 C CNN
+	1    2500 1950
+	1    0    0    -1  
+$EndComp
+Text HLabel 2550 5250 0    50   Input ~ 0
+EBS_valves_power
+$Comp
+L Diode:1N4148W D2
+U 1 1 5E7B220D
+P 2950 4950
+F 0 "D2" H 2950 5050 50  0000 C CNN
+F 1 "1N4148W" H 2950 4850 50  0000 C CNN
+F 2 "Diode_SMD:D_SOD-123" H 2950 4775 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/85748/1n4148w.pdf" H 2950 4950 50  0001 C CNN
+	1    2950 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Diode:1N4148W D3
+U 1 1 5E7B414F
+P 2950 5550
+F 0 "D3" H 2950 5650 50  0000 C CNN
+F 1 "1N4148W" H 2950 5450 50  0000 C CNN
+F 2 "Diode_SMD:D_SOD-123" H 2950 5375 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/85748/1n4148w.pdf" H 2950 5550 50  0001 C CNN
+	1    2950 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L EBS_library:N_Channel_MOSFET Q3
+U 1 1 5E7BAF8E
+P 3900 4850
+F 0 "Q3" V 4150 4800 50  0000 L CNN
+F 1 "Si2302CDS" V 4250 4650 50  0000 L CNN
+F 2 "" H 4100 4775 50  0001 L CIN
+F 3 "" H 3900 4850 50  0001 L CNN
+	1    3900 4850
+	0    1    1    0   
+$EndComp
+$Comp
+L EBS_library:N_Channel_MOSFET Q4
+U 1 1 5E7BD8E2
+P 3900 5650
+F 0 "Q4" V 4250 5600 50  0000 L CNN
+F 1 "Si2302CDS" V 4150 5450 50  0000 L CNN
+F 2 "" H 4100 5575 50  0001 L CIN
+F 3 "" H 3900 5650 50  0001 L CNN
+	1    3900 5650
+	0    -1   -1   0   
+$EndComp
+Text GLabel 4250 3200 0    50   Output ~ 0
+EBS_valve_1_control
+Text GLabel 4250 3350 0    50   Output ~ 0
+EBS_valve_2_control
+Text GLabel 5050 4550 2    50   Input ~ 0
+EBS_valve_1_control
+Text GLabel 5100 5950 2    50   Input ~ 0
+EBS_valve_2_control
+Text HLabel 2550 4650 0    50   Input ~ 0
+EBS_valve_1_out
+Text HLabel 2550 5850 0    50   Input ~ 0
+EBS_valve_2_out
+Wire Wire Line
+	2550 5250 2650 5250
+Wire Wire Line
+	2650 5250 2650 4950
+Wire Wire Line
+	2650 4950 2550 4950
+Wire Wire Line
+	2650 5250 2650 5550
+Wire Wire Line
+	2650 5550 2550 5550
+Connection ~ 2650 5250
+Connection ~ 2650 5550
+$Comp
+L Device:R R16
+U 1 1 5E81A51C
+P 4750 4550
+F 0 "R16" V 4550 4550 50  0000 L CNN
+F 1 "220" V 4650 4550 50  0000 L CNN
+F 2 "" V 4680 4550 50  0001 C CNN
+F 3 "~" H 4750 4550 50  0001 C CNN
+	1    4750 4550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4600 4550 4450 4550
+Wire Wire Line
+	4450 4550 4450 4600
+Wire Wire Line
+	5050 4550 4900 4550
+Wire Wire Line
+	4450 4900 4450 4950
+$Comp
+L Device:R R19
+U 1 1 5E81A516
+P 4450 4750
+F 0 "R19" H 4520 4796 50  0000 L CNN
+F 1 "10K" H 4520 4705 50  0000 L CNN
+F 2 "" V 4380 4750 50  0001 C CNN
+F 3 "~" H 4450 4750 50  0001 C CNN
+	1    4450 4750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3900 4650 3900 4550
+Wire Wire Line
+	3900 4550 4450 4550
+Connection ~ 4450 4550
+Wire Wire Line
+	4450 4950 4100 4950
+Wire Wire Line
+	4450 4950 4550 4950
+Wire Wire Line
+	4550 4950 4550 5250
+Connection ~ 4450 4950
+$Comp
+L power:GND #PWR08
+U 1 1 5E836EB7
+P 4850 5300
+F 0 "#PWR08" H 4850 5050 50  0001 C CNN
+F 1 "GND" H 4855 5127 50  0000 C CNN
+F 2 "" H 4850 5300 50  0001 C CNN
+F 3 "" H 4850 5300 50  0001 C CNN
+	1    4850 5300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 5550 2800 5550
+Wire Wire Line
+	2650 4950 2800 4950
+Connection ~ 2650 4950
+Wire Wire Line
+	3100 4950 3250 4950
+Wire Wire Line
+	3250 4950 3250 4650
+Connection ~ 3250 4950
+Wire Wire Line
+	3250 4950 3700 4950
+Wire Wire Line
+	2550 4650 3250 4650
+Wire Wire Line
+	4100 5550 4450 5550
+Wire Wire Line
+	3700 5550 3250 5550
+Wire Wire Line
+	3250 5550 3250 5850
+Wire Wire Line
+	3250 5850 2550 5850
+Connection ~ 3250 5550
+Wire Wire Line
+	3250 5550 3100 5550
+$Comp
+L Device:R R20
+U 1 1 5E895AA0
+P 4450 5700
+F 0 "R20" H 4520 5746 50  0000 L CNN
+F 1 "10K" H 4520 5655 50  0000 L CNN
+F 2 "" V 4380 5700 50  0001 C CNN
+F 3 "~" H 4450 5700 50  0001 C CNN
+	1    4450 5700
+	-1   0    0    1   
+$EndComp
+Connection ~ 4450 5550
+Wire Wire Line
+	4450 5550 4550 5550
+$Comp
+L Device:R R17
+U 1 1 5E89693F
+P 4750 5950
+F 0 "R17" V 4957 5950 50  0000 C CNN
+F 1 "220" V 4866 5950 50  0000 C CNN
+F 2 "" V 4680 5950 50  0001 C CNN
+F 3 "~" H 4750 5950 50  0001 C CNN
+	1    4750 5950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5100 5950 4900 5950
+Wire Wire Line
+	4600 5950 4450 5950
+Wire Wire Line
+	4450 5950 4450 5850
+Wire Wire Line
+	3900 5850 3900 5950
+Wire Wire Line
+	3900 5950 4450 5950
+Connection ~ 4450 5950
+Wire Wire Line
+	4550 5250 4850 5250
+Wire Wire Line
+	4850 5250 4850 5300
+Connection ~ 4550 5250
+Wire Wire Line
+	4550 5250 4550 5550
+$Comp
+L power:+5V #PWR010
+U 1 1 5E762060
+P 6200 1400
+F 0 "#PWR010" H 6200 1250 50  0001 C CNN
+F 1 "+5V" H 6215 1573 50  0000 C CNN
+F 2 "" H 6200 1400 50  0001 C CNN
+F 3 "" H 6200 1400 50  0001 C CNN
+	1    6200 1400
+	1    0    0    -1  
+$EndComp
+Text Notes 4600 900  2    157  ~ 0
+CPU_Supervisor
+$EndSCHEMATC

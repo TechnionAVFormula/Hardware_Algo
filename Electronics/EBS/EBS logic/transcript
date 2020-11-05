@@ -1,0 +1,15 @@
+# Reading C:/Modeltech_pe_edu_10.4a/tcl/vsim/pref.tcl
+vlib work
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+vlib work
+vlog newSDC.sv
+# Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+# Start time: 19:16:08 on Sep 01,2020
+# vlog -reportprogress 300 newSDC.sv 
+# -- Compiling module SDC
+# ** Error: (vlog-13069) newSDC.sv(10): near "-": syntax error, unexpected '-', expecting ')'.
+# 
+# End time: 19:16:09 on Sep 01,2020, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0
+# C:/Modeltech_pe_edu_10.4a/win32pe_edu/vlog failed.
