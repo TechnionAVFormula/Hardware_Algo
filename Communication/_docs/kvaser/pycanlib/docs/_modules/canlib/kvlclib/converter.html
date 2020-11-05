@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvlclib.converter &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvlclib.converter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvlclib.converter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">..futureapi</span> <span class="k">import</span> <span class="n">NotYetSupportedError</span>
+<span class="kn">from</span> <span class="nn">.properties</span> <span class="k">import</span> <span class="n">_PROPERTY_TYPE</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+
+<div class="viewcode-block" id="Converter"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter">[docs]</a><span class="k">class</span> <span class="nc">Converter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A kvlclib converter</span>
+
+<span class="sd">    This class wraps all kvlclib functions related to converters, and saves you</span>
+<span class="sd">    from keeping track of a handle and passing that to the functions.</span>
+
+<span class="sd">    `kvlcCreateConverter` and `kvlcDeleteConverter` are not wrapped as they are</span>
+<span class="sd">    called when Converter objects are created and deleted,</span>
+<span class="sd">    respectively. However, if it is necessary to force the converter to write</span>
+<span class="sd">    its files, `flush` can be used to simulate destroying and recreating the</span>
+<span class="sd">    converter object.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        No more than 128 converters can be open at the same time.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">file_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="n">file_format</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcCreateConverter</span><span class="p">(</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">file_format</span><span class="o">.</span><span class="n">id_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete the converter and close all files.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcDeleteConverter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Converter.addDatabaseFile"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.addDatabaseFile">[docs]</a>    <span class="k">def</span> <span class="nf">addDatabaseFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">channel_mask</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a database file.</span>
+
+<span class="sd">        Converters with the property `Property.SIGNAL_BASED` will match</span>
+<span class="sd">        events against all entries in the database and write signals to the</span>
+<span class="sd">        output file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcAddDatabaseFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct_filename</span><span class="p">,</span> <span class="n">channel_mask</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.attachFile"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.attachFile">[docs]</a>    <span class="k">def</span> <span class="nf">attachFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Attach file to be included in the output file.</span>
+
+<span class="sd">        E.g. used to add a database or a movie to the output.</span>
+
+<span class="sd">        Note that the output format must support the property</span>
+<span class="sd">        `canlib.kvlclib.Property.ATTACHMENTS`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcAttachFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct_filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.convertEvent"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.convertEvent">[docs]</a>    <span class="k">def</span> <span class="nf">convertEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert next event.</span>
+
+<span class="sd">        Convert one event from input file and write it to output file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcConvertEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.flush"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recreate the converter so changes are saved to disk</span>
+
+<span class="sd">        Converters do not write changes to disk until they are deleted. This</span>
+<span class="sd">        method deletes and recreates the underlying C converter, without</span>
+<span class="sd">        needing to recreate the Python object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__del__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.getDlcMismatch"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.getDlcMismatch">[docs]</a>    <span class="k">def</span> <span class="nf">getDlcMismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a dictionary with id, DLC with number of mismatched messages</span>
+
+<span class="sd">        If any DLC mismatch occurred during conversion (which can be seen using</span>
+<span class="sd">        `isDlcMismatch`) this function returns a dictonary with the tuple</span>
+<span class="sd">        message id and message DLC as key, and the number of times that</span>
+<span class="sd">        triggered the mismatch as value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcGetDlcMismatchList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">max_length</span><span class="p">))</span>
+        <span class="n">msg_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span> <span class="o">*</span> <span class="n">max_length</span><span class="o">.</span><span class="n">value</span><span class="p">)()</span>
+        <span class="n">msg_dlc</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span> <span class="o">*</span> <span class="n">max_length</span><span class="o">.</span><span class="n">value</span><span class="p">)()</span>
+        <span class="n">msg_occurance</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span> <span class="o">*</span> <span class="n">max_length</span><span class="o">.</span><span class="n">value</span><span class="p">)()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcGetDlcMismatchList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">msg_id</span><span class="p">,</span> <span class="n">msg_dlc</span><span class="p">,</span> <span class="n">msg_occurance</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">max_length</span><span class="p">))</span>
+        <span class="n">mismatch_counter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_length</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">mismatch_counter</span><span class="p">[(</span><span class="n">msg_id</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">msg_dlc</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">msg_occurance</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">mismatch_counter</span></div>
+
+<div class="viewcode-block" id="Converter.getProperty"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.getProperty">[docs]</a>    <span class="k">def</span> <span class="nf">getProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current value for a writer property.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wr_property (`canlib.kvlclib.Property`): Writer property to be set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Backward compatibility with deprecated kvlclib.PROPERTY_XXX</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wr_property</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="n">wr_property</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+            <span class="n">wr_property</span> <span class="o">=</span> <span class="n">wr_property</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="n">_PROPERTY_TYPE</span><span class="p">[</span><span class="n">wr_property</span><span class="p">]()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcGetProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.getOutputFilename"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.getOutputFilename">[docs]</a>    <span class="k">def</span> <span class="nf">getOutputFilename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the filename of the current output file.&quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcGetOutputFilename</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">filename</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.nextInputFile"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.nextInputFile">[docs]</a>    <span class="k">def</span> <span class="nf">nextInputFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Select next input file.&quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcNextInputFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct_filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.eventCount"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.eventCount">[docs]</a>    <span class="k">def</span> <span class="nf">eventCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get extimated number of events left.</span>
+
+<span class="sd">        Get the estimated number of remaining events in the input file. This</span>
+<span class="sd">        can be useful for displaying progress during conversion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvlcEventCountEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">NotYetSupportedError</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvlcEventCount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.setProperty"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.setProperty">[docs]</a>    <span class="k">def</span> <span class="nf">setProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set a property value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wr_property (`canlib.kvlclib.Property`): Writer property to be set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Backward compatibility with deprecated kvlclib.PROPERTY_XXX</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wr_property</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="n">wr_property</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+            <span class="n">wr_property</span> <span class="o">=</span> <span class="n">wr_property</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="n">_PROPERTY_TYPE</span><span class="p">[</span><span class="n">wr_property</span><span class="p">]()</span>
+        <span class="n">buf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcSetProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Converter.isDlcMismatch"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.isDlcMismatch">[docs]</a>    <span class="k">def</span> <span class="nf">isDlcMismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get DLC mismatch status.</span>
+
+<span class="sd">        DLC mismatch occurs when a CAN id is found in the database but the DLC</span>
+<span class="sd">        differs from the DLC in the message.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mismatch</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcIsDlcMismatch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mismatch</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mismatch</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.resetDlcMismatch"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.resetDlcMismatch">[docs]</a>    <span class="k">def</span> <span class="nf">resetDlcMismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset DLC mismatch status.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcResetDlcMismatch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.isOutputFilenameNew"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.isOutputFilenameNew">[docs]</a>    <span class="k">def</span> <span class="nf">isOutputFilenameNew</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the converter has created a new file.</span>
+
+<span class="sd">        This is only true once after a a new file has been created. Used when</span>
+<span class="sd">        splitting output into multiple files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcIsOutputFilenameNew</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">updated</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">updated</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.IsOutputFilenameNew"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.IsOutputFilenameNew">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">replacedby</span><span class="p">(</span><span class="n">isOutputFilenameNew</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">IsOutputFilenameNew</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Converter.isOverrunActive"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.isOverrunActive">[docs]</a>    <span class="k">def</span> <span class="nf">isOverrunActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get overrun status.</span>
+
+<span class="sd">        Overruns can occur during logging with a Memorator if the bus load</span>
+<span class="sd">        exceeds the logging capacity. This is very unusual, but can occur if a</span>
+<span class="sd">        Memorator runs complex scripts and triggers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">overrun</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcIsOverrunActive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">overrun</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">overrun</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.IsOverrunActive"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.IsOverrunActive">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">replacedby</span><span class="p">(</span><span class="n">isOverrunActive</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">IsOverrunActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Converter.resetOverrunActive"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.resetOverrunActive">[docs]</a>    <span class="k">def</span> <span class="nf">resetOverrunActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset overrun status.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcResetOverrunActive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.isDataTruncated"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.isDataTruncated">[docs]</a>    <span class="k">def</span> <span class="nf">isDataTruncated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get truncation status.</span>
+
+<span class="sd">        Truncation occurs when the selected output converter can&#39;t write all</span>
+<span class="sd">        bytes in a data frame to file. This can happen if CAN FD data is</span>
+<span class="sd">        extracted to a format that only supports up to 8 data bytes,</span>
+<span class="sd">        e.g. `canlib.kvlclib.FileFormat.KME40`.</span>
+
+<span class="sd">        Truncation can also happen if `kvlclib.Property.LIMIT_DATA_BYTES` is</span>
+<span class="sd">        set to limit the number of data bytes in output.</span>
+
+<span class="sd">        Returns True if data has been truncated</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">truncated</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcIsDataTruncated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">truncated</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">truncated</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Converter.IsDataTruncated"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.IsDataTruncated">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">replacedby</span><span class="p">(</span><span class="n">isDataTruncated</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">IsDataTruncated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Converter.resetStatusTruncated"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.resetStatusTruncated">[docs]</a>    <span class="k">def</span> <span class="nf">resetStatusTruncated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset data trunctation status.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcResetDataTruncated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.setInputFile"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.setInputFile">[docs]</a>    <span class="k">def</span> <span class="nf">setInputFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Select input file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (string): Name of input file</span>
+<span class="sd">            file_format (`canlib.kvlclib.FileFormat`): A supported input format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvlcSetInputFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct_filename</span><span class="p">,</span> <span class="n">file_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.getPropertyDefault"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.getPropertyDefault">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;.format.getPropertyDefault&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getPropertyDefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get default value for a writer property.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">getPropertyDefault</span><span class="p">(</span><span class="n">wr_property</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.isPropertySupported"><a class="viewcode-back" href="../../../reference/kvlclib/converter.html#canlib.kvlclib.Converter.isPropertySupported">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;.format.isPropertySupported&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">isPropertySupported</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wr_property</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if specified wr_property is supported by the current format.</span>
+
+<span class="sd">        Retuns True if the property is supported by the current format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wr_property (int): Any one of the defined PROPERTY_xxx</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">isPropertySupported</span><span class="p">(</span><span class="n">wr_property</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

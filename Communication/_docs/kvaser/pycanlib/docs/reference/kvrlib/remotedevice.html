@@ -1,0 +1,908 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Remote Device &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Structures" href="structures.html" />
+    <link rel="prev" title="Device Info Set" href="infoset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvrlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discovery.html">Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="infoset.html">Device Info Set</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Remote Device</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#addressinfo">AddressInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configprofile">ConfigProfile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#connectionstatus">ConnectionStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#connectiontestresult">ConnectionTestResult</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#connectiontest">ConnectionTest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opendevice">openDevice()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remotedevice">RemoteDevice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wlanscan">WlanScan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wlanscanresult">WlanScanResult</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvrlib</a> &raquo;</li>
+        
+      <li>Remote Device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvrlib/remotedevice.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="remote-device">
+<h1>Remote Device<a class="headerlink" href="#remote-device" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="addressinfo">
+<h2>AddressInfo<a class="headerlink" href="#addressinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.AddressInfo">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">AddressInfo</code><span class="sig-paren">(</span><em>adress1</em>, <em>address2</em>, <em>netmask</em>, <em>gateway</em>, <em>is_dhcp</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvrlib.AddressInfo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.AddressInfo.address2">
+<code class="descname">address2</code><a class="headerlink" href="#canlib.kvrlib.AddressInfo.address2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.AddressInfo.adress1">
+<code class="descname">adress1</code><a class="headerlink" href="#canlib.kvrlib.AddressInfo.adress1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.AddressInfo.gateway">
+<code class="descname">gateway</code><a class="headerlink" href="#canlib.kvrlib.AddressInfo.gateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.AddressInfo.is_dhcp">
+<code class="descname">is_dhcp</code><a class="headerlink" href="#canlib.kvrlib.AddressInfo.is_dhcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.AddressInfo.netmask">
+<code class="descname">netmask</code><a class="headerlink" href="#canlib.kvrlib.AddressInfo.netmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configprofile">
+<h2>ConfigProfile<a class="headerlink" href="#configprofile" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.ConfigProfile">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">ConfigProfile</code><span class="sig-paren">(</span><em>device</em>, <em>profile_number</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConfigProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConfigProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A configuration profile of a remote-capable device</p>
+<p>The active profile for a <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.RemoteDevice</span></code></a>, <code class="docutils literal notranslate"><span class="pre">rdev</span></code>, is accessed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">active_profile</span>
+</pre></div>
+</div>
+<p>Other profiles are accessed with <code class="docutils literal notranslate"><span class="pre">profiles</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>See the documentation for <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.RemoteDevice</span></code></a> for more information
+on how to get <a class="reference internal" href="#canlib.kvrlib.ConfigProfile" title="canlib.kvrlib.ConfigProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigProfile</span></code></a> objects.</p>
+<p>The specific configuration of a profile can be read:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xml_string</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And it can also be written back:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">xml_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The password used by this object is taken from its parent <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a>
+object. See that documentation for how to set the password.</p>
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConfigProfile.XML_BUFFER_SIZE">
+<code class="descname">XML_BUFFER_SIZE</code><em class="property"> = 2046</em><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.XML_BUFFER_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConfigProfile.channel_number">
+<code class="descname">channel_number</code><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.channel_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CANlib channel number used to communicate with the device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConfigProfile.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConfigProfile.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the configuration</p>
+<p>This will also clear any previously set device password.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method requires the parent <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a> to have the correct password.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConfigProfile.info">
+<code class="descname">info</code><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simplified version of the configuration</p>
+<p>It is not necessary to know the configuration password to access this
+information. Note that the partial XML data returned is not enough to
+reconfigure a device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConfigProfile.password">
+<code class="descname">password</code><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.password" title="Permalink to this definition">¶</a></dt>
+<dd><p>The password used to communicate with the device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConfigProfile.read">
+<code class="descname">read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConfigProfile.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the configuration</p>
+<p>Returns either an XML string, or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> if there is no configuration.</p>
+<p>Note that <a class="reference internal" href="#canlib.kvrlib.ConfigProfile.write" title="canlib.kvrlib.ConfigProfile.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigProfile.write</span></code></a> can handle <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>; in other words:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xml</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Do anything, including writing new configurations</span>
+<span class="o">...</span>
+
+<span class="n">profile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will always work even if <code class="docutils literal notranslate"><span class="pre">xml</span></code> is <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>. This would mean that the
+profile originally had an empty configuration, and it will once again
+have an empty configuration at the end.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method requires the parent <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a> to have the correct password.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConfigProfile.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>xml</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConfigProfile.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConfigProfile.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the configuration area</p>
+<p>This function takes as its single argument either an xml string that
+will be written to this profile, or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> in which case the
+configuration will be cleared.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method requires the parent <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a> to have the correct password.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="connectionstatus">
+<h2>ConnectionStatus<a class="headerlink" href="#connectionstatus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.ConnectionStatus">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">ConnectionStatus</code><span class="sig-paren">(</span><em>state</em>, <em>tx_rate</em>, <em>rx_rate</em>, <em>channel_number</em>, <em>rssi</em>, <em>tx_power</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.channel_number">
+<code class="descname">channel_number</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.channel_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.rssi">
+<code class="descname">rssi</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.rx_rate">
+<code class="descname">rx_rate</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.rx_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.state">
+<code class="descname">state</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.tx_power">
+<code class="descname">tx_power</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.tx_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionStatus.tx_rate">
+<code class="descname">tx_rate</code><a class="headerlink" href="#canlib.kvrlib.ConnectionStatus.tx_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="connectiontestresult">
+<h2>ConnectionTestResult<a class="headerlink" href="#connectiontestresult" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.ConnectionTestResult">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">ConnectionTestResult</code><span class="sig-paren">(</span><em>rssi</em>, <em>rtt</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvrlib.ConnectionTestResult" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionTestResult.rssi">
+<code class="descname">rssi</code><a class="headerlink" href="#canlib.kvrlib.ConnectionTestResult.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ConnectionTestResult.rtt">
+<code class="descname">rtt</code><a class="headerlink" href="#canlib.kvrlib.ConnectionTestResult.rtt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="connectiontest">
+<h2>ConnectionTest<a class="headerlink" href="#connectiontest" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.ConnectionTest">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">ConnectionTest</code><span class="sig-paren">(</span><em>config_handle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>A connection test for a specific device</p>
+<p>A connection test for a <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a>, <code class="docutils literal notranslate"><span class="pre">rdev</span></code>, is created by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">connection_test</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>While a connection test is running, the device will connect and start
+pinging itself to measure round-trip time (RTT) and Receive Signal Strength
+Indicator (RSSI).</p>
+<p>A <a class="reference internal" href="#canlib.kvrlib.ConnectionTest" title="canlib.kvrlib.ConnectionTest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest</span></code></a> is started with <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.start" title="canlib.kvrlib.ConnectionTest.start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.start</span></code></a> and stopped with
+<a class="reference internal" href="#canlib.kvrlib.ConnectionTest.stop" title="canlib.kvrlib.ConnectionTest.stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.stop</span></code></a>, after which its results are retrieved by
+<a class="reference internal" href="#canlib.kvrlib.ConnectionTest.results" title="canlib.kvrlib.ConnectionTest.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.results</span></code></a>. If it is acceptable to block while the test is
+running, these three calls can be combined into <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.run" title="canlib.kvrlib.ConnectionTest.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.run</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Connection tests are automatically closed when garbage-collected, but they
+can also be closed manually with <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.close" title="canlib.kvrlib.ConnectionTest.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.close</span></code></a>.</p>
+<dl class="method">
+<dt id="canlib.kvrlib.ConnectionTest.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the internal handle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConnectionTest.results">
+<code class="descname">results</code><span class="sig-paren">(</span><em>maxresults=20</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest.results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the results from a connection test</p>
+<p>The test must have been running for any results to be available.</p>
+<p>This function returns a <a class="reference internal" href="#canlib.kvrlib.ConnectionTestResult" title="canlib.kvrlib.ConnectionTestResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTestResult</span></code></a>, which is a namedtuple
+of <code class="docutils literal notranslate"><span class="pre">(rssi,</span> <span class="pre">rtt)</span></code>. Both <code class="docutils literal notranslate"><span class="pre">rssi</span></code> and <code class="docutils literal notranslate"><span class="pre">rtt</span></code> are tuples containing a
+number of individual results for RSSI and RTT.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maxresults</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The maximum number of rssi and rtt numbers to
+return. The returned <code class="docutils literal notranslate"><span class="pre">rssi</span></code> and <code class="docutils literal notranslate"><span class="pre">rtt</span></code> will be tuples with
+this long or the number of results available long, whichever is
+shortest.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConnectionTest.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>duration</em>, <em>maxresults=20</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a connection test and return its results.</p>
+<p>This function calls <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.start" title="canlib.kvrlib.ConnectionTest.start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.start</span></code></a>, then blocks for <code class="xref py py-obj docutils literal notranslate"><span class="pre">duration</span></code>
+seconds, then calls <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.stop" title="canlib.kvrlib.ConnectionTest.stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.stop</span></code></a> before finally returning the
+<a class="reference internal" href="#canlib.kvrlib.ConnectionTestResult" title="canlib.kvrlib.ConnectionTestResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTestResult</span></code></a> from <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.results" title="canlib.kvrlib.ConnectionTest.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.results</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>duration</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Seconds to run the test for.</li>
+<li><strong>maxresults</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Passed to <a class="reference internal" href="#canlib.kvrlib.ConnectionTest.results" title="canlib.kvrlib.ConnectionTest.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectionTest.results</span></code></a> as <code class="docutils literal notranslate"><span class="pre">maxlen</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConnectionTest.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the connection test</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.ConnectionTest.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#ConnectionTest.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.ConnectionTest.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the connection test</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="opendevice">
+<h2>openDevice()<a class="headerlink" href="#opendevice" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.openDevice">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">openDevice</code><span class="sig-paren">(</span><em>channel_number</em>, <em>password=''</em>, <em>validate_password=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#openDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.openDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a> object bound to a channel number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>channel_number</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – CANlib channel number of the device to open</li>
+<li><strong>password</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Password of the device, if any</li>
+<li><strong>validate_password</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Whether the password should be validated
+(defaults to <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function checks that a remote-capable device is currently connection
+on the channel <code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_number</span></code>. If <code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_password</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, it
+also checks that the password supplied is correct. If any of these checks
+fail, a <code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code> will be raised.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="remotedevice">
+<h2>RemoteDevice<a class="headerlink" href="#remotedevice" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.RemoteDevice">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">RemoteDevice</code><span class="sig-paren">(</span><em>channel_number</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#RemoteDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.RemoteDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>A remote-capable Kvaser device</p>
+<p>This class is normally instantiated with <a class="reference internal" href="#canlib.kvrlib.openDevice" title="canlib.kvrlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.openDevice</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdev</span> <span class="o">=</span> <span class="n">kvrlib</span><span class="o">.</span><span class="n">openDevice</span><span class="p">(</span><span class="n">CHANNEL_NUMBER</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once this is done, the currently active profile can be accessed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">active</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">active_profile</span>
+</pre></div>
+</div>
+<p>All profiles, including the active one, are <a class="reference internal" href="#canlib.kvrlib.ConfigProfile" title="canlib.kvrlib.ConfigProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConfigProfile</span></code></a>
+objects, see that documentation for all the operations available for
+profile objects.</p>
+<p>The full list of profiles a device has can be inspected using
+<code class="docutils literal notranslate"><span class="pre">rdev.profiles</span></code>. This is a <a class="reference internal" href="#canlib.kvrlib.RemoteDevice.ProfileList" title="canlib.kvrlib.RemoteDevice.ProfileList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice.ProfileList</span></code></a> object, which works
+much like a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The profile list can be indexed</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># We can check if a configuration belongs to this device with &#39;in&#39;</span>
+<span class="k">assert</span> <span class="n">first</span> <span class="ow">in</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span>
+
+<span class="c1"># The length of the profile list is the number of profiles</span>
+<span class="n">num_profiles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">)</span>
+
+<span class="c1"># Using the number of profiles, we can get the last one</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">num_profiles</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># But negative indexes also work and are a better way of getting</span>
+<span class="c1"># the last profile</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># You can also iterate over all profiles</span>
+<span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">rdev</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice</span></code></a> also lets you access a variety of information about the
+specific device, as well as the ability to do a WLAN scan with
+<a class="reference internal" href="#canlib.kvrlib.RemoteDevice.wlan_scan" title="canlib.kvrlib.RemoteDevice.wlan_scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice.wlan_scan</span></code></a>.</p>
+<p>If the device is password protected, that password can be passed to
+<a class="reference internal" href="#canlib.kvrlib.openDevice" title="canlib.kvrlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.openDevice</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">protected_device</span> <span class="o">=</span> <span class="n">kvrlib</span><span class="o">.</span><span class="n">openDevice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;Once upon a playground rainy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After the object is created, the password is available as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">password</span> <span class="o">=</span> <span class="n">protected_device</span><span class="o">.</span><span class="n">password</span>
+</pre></div>
+</div>
+<p>The password can be changed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">protected_device</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;Wolves without teeth&quot;</span>
+</pre></div>
+</div>
+<p>The reason the password is stored as clear-text is because it must be
+supplied to the underlying library each time an operation is done using
+this and related classes. This also means that the password is only
+validated, and required, when one of the functions requiring a password is
+called.</p>
+<p>If the device is not password-protected, the password should be an empty string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unprotected_device</span> <span class="o">=</span> <span class="n">kvrlib</span><span class="o">.</span><span class="n">openDevice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">unprotected_device</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="canlib.kvrlib.RemoteDevice.ProfileList">
+<em class="property">class </em><code class="descname">ProfileList</code><span class="sig-paren">(</span><em>channel_number</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#RemoteDevice.ProfileList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.ProfileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>The available profiles in a remote-capable device</p>
+<p>This is the type of <code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice.profiles</span></code>. It implements the following:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">len(profiles)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">profile</span> <span class="pre">in</span> <span class="pre">profiles</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">profile[index]</span></code></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.RemoteDevice.active_profile">
+<code class="descname">active_profile</code><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.active_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>The currently active profile</p>
+<p>Activating another profile is done by assigning this attribute to
+another profile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_profile</span> <span class="o">=</span> <span class="n">remote_device</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+<span class="n">remote_device</span><span class="o">.</span><span class="n">active_profile</span> <span class="o">=</span> <span class="n">new_profile</span>
+</pre></div>
+</div>
+<p>The value assigned to this property must be a
+<a class="reference internal" href="#canlib.kvrlib.ConfigProfile" title="canlib.kvrlib.ConfigProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConfigProfile</span></code></a> that belongs to this device, i.e. the
+following must be <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_profile</span> <span class="ow">in</span> <span class="n">remote_device</span><span class="o">.</span><span class="n">profiles</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.ConfigProfile" title="canlib.kvrlib.ConfigProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConfigProfile</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.RemoteDevice.address_info">
+<code class="descname">address_info</code><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.address_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information about network address settings</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Accessing this attribute requires the correct password be set on the object.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.AddressInfo" title="canlib.kvrlib.AddressInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.AddressInfo</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.RemoteDevice.connection_status">
+<code class="descname">connection_status</code><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.connection_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection status information</p>
+<p>The returned tuple is a <code class="docutils literal notranslate"><span class="pre">(state,</span> <span class="pre">tx_rate,</span> <span class="pre">rx_rate,</span> <span class="pre">channel,</span> <span class="pre">rssi,</span>
+<span class="pre">tx_power)</span></code> namedtuple of:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">state</span></code> (<a class="reference internal" href="enums.html#canlib.kvrlib.NetworkState" title="canlib.kvrlib.NetworkState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.NetworkState</span></code></a>): Network connection state</li>
+<li><code class="docutils literal notranslate"><span class="pre">tx_rate</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>): Transmit rate in kbit/s</li>
+<li><code class="docutils literal notranslate"><span class="pre">rx_rate</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>): Receive rate in kbit/s</li>
+<li><code class="docutils literal notranslate"><span class="pre">channel</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>): Channel</li>
+<li><code class="docutils literal notranslate"><span class="pre">rssi</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>): Receive Signal Strength Indicator</li>
+<li><code class="docutils literal notranslate"><span class="pre">tx_power</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>): Transmit power level in dB</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Accessing this attribute requires the correct password be set on the object.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.ConnectionStatus" title="canlib.kvrlib.ConnectionStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConnectionStatus</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.RemoteDevice.connection_test">
+<code class="descname">connection_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#RemoteDevice.connection_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.connection_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a connection test for this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.ConnectionTest" title="canlib.kvrlib.ConnectionTest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConnectionTest</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>See the documentation of <a class="reference internal" href="#canlib.kvrlib.ConnectionTest" title="canlib.kvrlib.ConnectionTest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ConnectionTest</span></code></a> for more
+information.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Accessing this attribute requires the correct password be set on the object.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.RemoteDevice.hostname">
+<code class="descname">hostname</code><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.hostname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Device’s hostname</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Accessing this attribute requires the correct password be set on the object.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.RemoteDevice.password_valid">
+<code class="descname">password_valid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#RemoteDevice.password_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.password_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the password set is valid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the password is valid, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.RemoteDevice.wlan_scan">
+<code class="descname">wlan_scan</code><span class="sig-paren">(</span><em>active=False</em>, <em>bss_type=&lt;BasicServiceSet.ANY: 2&gt;</em>, <em>domain=&lt;RegulatoryDomain.WORLD: 3&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#RemoteDevice.wlan_scan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.RemoteDevice.wlan_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and starts a wlan scan for this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.WlanScan" title="canlib.kvrlib.WlanScan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.WlanScan</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>See the documentation of <a class="reference internal" href="#canlib.kvrlib.WlanScan" title="canlib.kvrlib.WlanScan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.WlanScan</span></code></a> for more
+information.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Accessing this attribute requires the correct password be set on the object.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="wlanscan">
+<h2>WlanScan<a class="headerlink" href="#wlanscan" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.WlanScan">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">WlanScan</code><span class="sig-paren">(</span><em>config_handle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#WlanScan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.WlanScan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wlan scan for this device</p>
+<p>The device starts scanning as soon as this object is created by <a class="reference internal" href="#canlib.kvrlib.RemoteDevice.wlan_scan" title="canlib.kvrlib.RemoteDevice.wlan_scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice.wlan_scan</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scan</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">wlan_scan</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When calling <a class="reference internal" href="#canlib.kvrlib.RemoteDevice.wlan_scan" title="canlib.kvrlib.RemoteDevice.wlan_scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RemoteDevice.wlan_scan</span></code></a>, you can also specify whether the
+scan should be an active one, the Basic Service Set (bss) to use, and the
+regulatory domain:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scan</span> <span class="o">=</span> <span class="n">rdev</span><span class="o">.</span><span class="n">wlan_scan</span><span class="p">(</span>
+    <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">bss</span><span class="o">=</span><span class="n">kvrlib</span><span class="o">.</span><span class="n">BasicServiceSet</span><span class="o">.</span><span class="n">INFRASTRUCTURE</span><span class="p">,</span>
+    <span class="n">domain</span><span class="o">=</span><span class="n">kvrlib</span><span class="o">.</span><span class="n">RegulatoryDomain</span><span class="o">.</span><span class="n">EUROPE_ETSI</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Results from the scan are retrieved by iterating over the <a class="reference internal" href="#canlib.kvrlib.WlanScan" title="canlib.kvrlib.WlanScan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WlanScan</span></code></a> object:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>for result in scan:</dt>
+<dd>print(result)</dd>
+</dl>
+</div></blockquote>
+<p>When getting the next result, the code will block until a new result is
+available or until no more results are available, in which case the
+iteration stops.</p>
+<p>Wlan scans are automatically closed when garbage-collected, but they
+can also be closed manually with <a class="reference internal" href="#canlib.kvrlib.WlanScan.close" title="canlib.kvrlib.WlanScan.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WlanScan.close</span></code></a>.</p>
+<dl class="method">
+<dt id="canlib.kvrlib.WlanScan.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/remotedevice.html#WlanScan.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.WlanScan.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the internal handle</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="wlanscanresult">
+<h2>WlanScanResult<a class="headerlink" href="#wlanscanresult" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.WlanScanResult">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">WlanScanResult</code><span class="sig-paren">(</span><em>rssi</em>, <em>channel_number</em>, <em>mac</em>, <em>bss_type</em>, <em>ssid</em>, <em>security_text</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvrlib.WlanScanResult" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.bss_type">
+<code class="descname">bss_type</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.bss_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.channel_number">
+<code class="descname">channel_number</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.channel_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.mac">
+<code class="descname">mac</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.mac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.rssi">
+<code class="descname">rssi</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.security_text">
+<code class="descname">security_text</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.security_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.WlanScanResult.ssid">
+<code class="descname">ssid</code><a class="headerlink" href="#canlib.kvrlib.WlanScanResult.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="structures.html" class="btn btn-neutral float-right" title="Structures" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="infoset.html" class="btn btn-neutral float-left" title="Device Info Set" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

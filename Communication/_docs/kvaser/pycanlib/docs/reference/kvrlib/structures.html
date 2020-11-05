@@ -1,0 +1,500 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Structures &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="service" href="service.html" />
+    <link rel="prev" title="Remote Device" href="remotedevice.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvrlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discovery.html">Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="infoset.html">Device Info Set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remotedevice.html">Remote Device</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kvraddress">kvrAddress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kvraddresslist">kvrAddressList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kvrdeviceinfo">kvrDeviceInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kvrdeviceinfolist">kvrDeviceInfoList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kvrversion">kvrVersion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvrlib</a> &raquo;</li>
+        
+      <li>Structures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvrlib/structures.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="structures">
+<h1>Structures<a class="headerlink" href="#structures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="kvraddress">
+<h2>kvrAddress<a class="headerlink" href="#kvraddress" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.kvrAddress">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">kvrAddress</code><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrAddress" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.TypeText">
+<code class="descname">TypeText</code><em class="property"> = {0: 'UNKNOWN', 1: 'IPV4', 2: 'IPV6', 3: 'IPV4_PORT', 4: 'MAC'}</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.TypeText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.Type_IPV4">
+<code class="descname">Type_IPV4</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.Type_IPV4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.Type_IPV4_PORT">
+<code class="descname">Type_IPV4_PORT</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.Type_IPV4_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.Type_IPV6">
+<code class="descname">Type_IPV6</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.Type_IPV6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.Type_MAC">
+<code class="descname">Type_MAC</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.Type_MAC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.Type_UNKNOWN">
+<code class="descname">Type_UNKNOWN</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.kvrlib.kvrAddress.Type_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.address">
+<code class="descname">address</code><a class="headerlink" href="#canlib.kvrlib.kvrAddress.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddress.type">
+<code class="descname">type</code><a class="headerlink" href="#canlib.kvrlib.kvrAddress.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kvraddresslist">
+<h2>kvrAddressList<a class="headerlink" href="#kvraddresslist" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.kvrAddressList">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">kvrAddressList</code><span class="sig-paren">(</span><em>num_of_structs=20</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrAddressList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrAddressList" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddressList.STRUCT_ARRAY">
+<code class="descname">STRUCT_ARRAY</code><a class="headerlink" href="#canlib.kvrlib.kvrAddressList.STRUCT_ARRAY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrAddressList.elements">
+<code class="descname">elements</code><a class="headerlink" href="#canlib.kvrlib.kvrAddressList.elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kvrdeviceinfo">
+<h2>kvrDeviceInfo<a class="headerlink" href="#kvrdeviceinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.kvrDeviceInfo">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">kvrDeviceInfo</code><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrDeviceInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.accessibility">
+<code class="descname">accessibility</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.accessibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.accessibility_pwd">
+<code class="descname">accessibility_pwd</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.accessibility_pwd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.availability">
+<code class="descname">availability</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.availability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.base_station_id">
+<code class="descname">base_station_id</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.base_station_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.client_address">
+<code class="descname">client_address</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.client_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.kvrDeviceInfo.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrDeviceInfo.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.device_address">
+<code class="descname">device_address</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.device_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.kvrDeviceInfo.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrDeviceInfo.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.ean_hi">
+<code class="descname">ean_hi</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.ean_hi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.ean_lo">
+<code class="descname">ean_lo</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.ean_lo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.encryption_key">
+<code class="descname">encryption_key</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.encryption_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.fw_build_ver">
+<code class="descname">fw_build_ver</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.fw_build_ver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.fw_major_ver">
+<code class="descname">fw_major_ver</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.fw_major_ver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.fw_minor_ver">
+<code class="descname">fw_minor_ver</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.fw_minor_ver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.host_name">
+<code class="descname">host_name</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.host_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.name">
+<code class="descname">name</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.request_connection">
+<code class="descname">request_connection</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.request_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.reserved1">
+<code class="descname">reserved1</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.reserved1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.reserved2">
+<code class="descname">reserved2</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.reserved2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.ser_no">
+<code class="descname">ser_no</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.ser_no" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.struct_size">
+<code class="descname">struct_size</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.struct_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfo.usage">
+<code class="descname">usage</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfo.usage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kvrdeviceinfolist">
+<h2>kvrDeviceInfoList<a class="headerlink" href="#kvrdeviceinfolist" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.kvrDeviceInfoList">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">kvrDeviceInfoList</code><span class="sig-paren">(</span><em>deviceInfos</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrDeviceInfoList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfoList" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfoList.STRUCT_ARRAY">
+<code class="descname">STRUCT_ARRAY</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfoList.STRUCT_ARRAY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrDeviceInfoList.elements">
+<code class="descname">elements</code><a class="headerlink" href="#canlib.kvrlib.kvrDeviceInfoList.elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kvrversion">
+<h2>kvrVersion<a class="headerlink" href="#kvrversion" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.kvrVersion">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">kvrVersion</code><a class="reference internal" href="../../_modules/canlib/kvrlib/structures.html#kvrVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.kvrVersion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.kvrVersion.major">
+<code class="descname">major</code><a class="headerlink" href="#canlib.kvrlib.kvrVersion.major" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.kvrVersion.minor">
+<code class="descname">minor</code><a class="headerlink" href="#canlib.kvrlib.kvrVersion.minor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="service.html" class="btn btn-neutral float-right" title="service" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="remotedevice.html" class="btn btn-neutral float-left" title="Remote Device" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

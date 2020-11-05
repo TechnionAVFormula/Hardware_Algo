@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Property &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reader Formats" href="readerformat.html" />
+    <link rel="prev" title="Enumerations" href="enums.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvlclib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="converter.html">Converter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Property</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readerformat.html">Reader Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writerformat.html">Writer Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvlclib</a> &raquo;</li>
+        
+      <li>Property</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvlclib/property.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="property">
+<h1>Property<a class="headerlink" href="#property" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="canlib.kvlclib.Property">
+<em class="property">class </em><code class="descclassname">canlib.kvlclib.</code><code class="descname">Property</code><a class="reference internal" href="../../_modules/canlib/kvlclib/properties.html#Property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Property" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvlclib.Property.ATTACHMENTS">
+<code class="descname">ATTACHMENTS</code><em class="property"> = 1003</em><a class="headerlink" href="#canlib.kvlclib.Property.ATTACHMENTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.CALENDAR_TIME_STAMPS">
+<code class="descname">CALENDAR_TIME_STAMPS</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.kvlclib.Property.CALENDAR_TIME_STAMPS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.CHANNEL_MASK">
+<code class="descname">CHANNEL_MASK</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.kvlclib.Property.CHANNEL_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.CREATION_DATE">
+<code class="descname">CREATION_DATE</code><em class="property"> = 27</em><a class="headerlink" href="#canlib.kvlclib.Property.CREATION_DATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.CROP_PRETRIGGER">
+<code class="descname">CROP_PRETRIGGER</code><em class="property"> = 22</em><a class="headerlink" href="#canlib.kvlclib.Property.CROP_PRETRIGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.DATA_IN_HEX">
+<code class="descname">DATA_IN_HEX</code><em class="property"> = 12</em><a class="headerlink" href="#canlib.kvlclib.Property.DATA_IN_HEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.DECIMAL_CHAR">
+<code class="descname">DECIMAL_CHAR</code><em class="property"> = 10</em><a class="headerlink" href="#canlib.kvlclib.Property.DECIMAL_CHAR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.ENUM_VALUES">
+<code class="descname">ENUM_VALUES</code><em class="property"> = 23</em><a class="headerlink" href="#canlib.kvlclib.Property.ENUM_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.FILL_BLANKS">
+<code class="descname">FILL_BLANKS</code><em class="property"> = 15</em><a class="headerlink" href="#canlib.kvlclib.Property.FILL_BLANKS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.FIRST_TRIGGER">
+<code class="descname">FIRST_TRIGGER</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.kvlclib.Property.FIRST_TRIGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.FULLY_QUALIFIED_NAMES">
+<code class="descname">FULLY_QUALIFIED_NAMES</code><em class="property"> = 30</em><a class="headerlink" href="#canlib.kvlclib.Property.FULLY_QUALIFIED_NAMES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.HLP_J1939">
+<code class="descname">HLP_J1939</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.kvlclib.Property.HLP_J1939" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.ID_IN_HEX">
+<code class="descname">ID_IN_HEX</code><em class="property"> = 11</em><a class="headerlink" href="#canlib.kvlclib.Property.ID_IN_HEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.ISO8601_DECIMALS">
+<code class="descname">ISO8601_DECIMALS</code><em class="property"> = 17</em><a class="headerlink" href="#canlib.kvlclib.Property.ISO8601_DECIMALS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.LIMIT_DATA_BYTES">
+<code class="descname">LIMIT_DATA_BYTES</code><em class="property"> = 26</em><a class="headerlink" href="#canlib.kvlclib.Property.LIMIT_DATA_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.MERGE_LINES">
+<code class="descname">MERGE_LINES</code><em class="property"> = 18</em><a class="headerlink" href="#canlib.kvlclib.Property.MERGE_LINES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.NAME_MANGLING">
+<code class="descname">NAME_MANGLING</code><em class="property"> = 14</em><a class="headerlink" href="#canlib.kvlclib.Property.NAME_MANGLING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.NUMBER_OF_DATA_DECIMALS">
+<code class="descname">NUMBER_OF_DATA_DECIMALS</code><em class="property"> = 31</em><a class="headerlink" href="#canlib.kvlclib.Property.NUMBER_OF_DATA_DECIMALS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.NUMBER_OF_TIME_DECIMALS">
+<code class="descname">NUMBER_OF_TIME_DECIMALS</code><em class="property"> = 13</em><a class="headerlink" href="#canlib.kvlclib.Property.NUMBER_OF_TIME_DECIMALS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.OFFSET">
+<code class="descname">OFFSET</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.kvlclib.Property.OFFSET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.OVERWRITE">
+<code class="descname">OVERWRITE</code><em class="property"> = 28</em><a class="headerlink" href="#canlib.kvlclib.Property.OVERWRITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.RESAMPLE_COLUMN">
+<code class="descname">RESAMPLE_COLUMN</code><em class="property"> = 19</em><a class="headerlink" href="#canlib.kvlclib.Property.RESAMPLE_COLUMN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SEPARATOR_CHAR">
+<code class="descname">SEPARATOR_CHAR</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.kvlclib.Property.SEPARATOR_CHAR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SHOW_COUNTER">
+<code class="descname">SHOW_COUNTER</code><em class="property"> = 21</em><a class="headerlink" href="#canlib.kvlclib.Property.SHOW_COUNTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SHOW_SIGNAL_SELECT">
+<code class="descname">SHOW_SIGNAL_SELECT</code><em class="property"> = 1002</em><a class="headerlink" href="#canlib.kvlclib.Property.SHOW_SIGNAL_SELECT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SHOW_UNITS">
+<code class="descname">SHOW_UNITS</code><em class="property"> = 16</em><a class="headerlink" href="#canlib.kvlclib.Property.SHOW_UNITS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SIGNAL_BASED">
+<code class="descname">SIGNAL_BASED</code><em class="property"> = 1001</em><a class="headerlink" href="#canlib.kvlclib.Property.SIGNAL_BASED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.SIZE_LIMIT">
+<code class="descname">SIZE_LIMIT</code><em class="property"> = 24</em><a class="headerlink" href="#canlib.kvlclib.Property.SIZE_LIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.START_OF_MEASUREMENT">
+<code class="descname">START_OF_MEASUREMENT</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.kvlclib.Property.START_OF_MEASUREMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.TIMEZONE">
+<code class="descname">TIMEZONE</code><em class="property"> = 29</em><a class="headerlink" href="#canlib.kvlclib.Property.TIMEZONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.TIME_LIMIT">
+<code class="descname">TIME_LIMIT</code><em class="property"> = 25</em><a class="headerlink" href="#canlib.kvlclib.Property.TIME_LIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.USE_OFFSET">
+<code class="descname">USE_OFFSET</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.kvlclib.Property.USE_OFFSET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 20</em><a class="headerlink" href="#canlib.kvlclib.Property.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Property.WRITE_HEADER">
+<code class="descname">WRITE_HEADER</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.kvlclib.Property.WRITE_HEADER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="readerformat.html" class="btn btn-neutral float-right" title="Reader Formats" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="enums.html" class="btn btn-neutral float-left" title="Enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

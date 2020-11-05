@@ -1,0 +1,820 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.wrapper &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.wrapper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">dllLoader</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">BetaVersionNumber</span><span class="p">,</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.dll</span> <span class="k">import</span> <span class="n">CanlibDll</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">VersionEx</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+
+
+<span class="n">_ct_dll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;canlib32.dll&#39;</span><span class="p">,</span>
+                             <span class="n">linux_name</span><span class="o">=</span><span class="s1">&#39;libcanlib.so&#39;</span><span class="p">)</span>
+<span class="n">dll</span> <span class="o">=</span> <span class="n">CanlibDll</span><span class="p">(</span><span class="n">_ct_dll</span><span class="p">)</span>
+<span class="n">dll</span><span class="o">.</span><span class="n">canInitializeLibrary</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="bitrateSetting"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.bitrateSetting">[docs]</a><span class="k">class</span> <span class="nc">bitrateSetting</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that holds bitrate setting.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        freq: Bitrate in bit/s.</span>
+<span class="sd">        tseg1: Number of quanta from (but not including) the Sync Segment to</span>
+<span class="sd">            the sampling point.</span>
+<span class="sd">        tseg2: Number of quanta from the sampling point to the end of the bit.</span>
+<span class="sd">        sjw: The Synchronization Jump Width, can be 1,2,3, or 4.</span>
+<span class="sd">        nosamp: The number of sampling points, only 1 is supported.</span>
+<span class="sd">        syncMode: Unsupported and ignored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">tseg1</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tseg2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sjw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nosamp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">syncMode</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tseg1</span> <span class="o">=</span> <span class="n">tseg1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tseg2</span> <span class="o">=</span> <span class="n">tseg2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sjw</span> <span class="o">=</span> <span class="n">sjw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nosamp</span> <span class="o">=</span> <span class="n">nosamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">syncMode</span> <span class="o">=</span> <span class="n">syncMode</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">freq</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tseg1</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">tseg1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tseg2</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">tseg2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sjw</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">sjw</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nosamp</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">nosamp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">syncMode</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">syncMode</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;freq    : </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span>
+        <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;tseg1   : </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">tseg1</span>
+        <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;tseg2   : </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">tseg2</span>
+        <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;sjw     : </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">sjw</span>
+        <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;nosamp  : </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">nosamp</span>
+        <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;syncMode: </span><span class="si">%8d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">syncMode</span>
+        <span class="k">return</span> <span class="n">txt</span></div>
+
+
+<span class="k">class</span> <span class="nc">CANLib</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deprecated wrapper class for the Kvaser CANlib.</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+
+<span class="sd">    All functionality of this class has been moved to the canlib module itself::</span>
+
+<span class="sd">      # deprecated</span>
+<span class="sd">      from canlib import canlib</span>
+<span class="sd">      cl = canlib.CANLib()  # or canlib.canlib()</span>
+<span class="sd">      cl.functionName()</span>
+
+<span class="sd">      # use this instead</span>
+<span class="sd">      from canlib import canlib</span>
+<span class="sd">      canlib.functionName()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span> <span class="o">=</span> <span class="n">dll</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">deprecation</span><span class="o">.</span><span class="n">manual_warn</span><span class="p">(</span>
+            <span class="s2">&quot;Creating CANLib objects is deprecated, &quot;</span>
+            <span class="s2">&quot;all functionality has been moved to the canlib module itself.&quot;</span><span class="p">)</span>
+        <span class="c1"># since=1.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{t}</span><span class="s2"> object has no attribute </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">openChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.channel</span> <span class="k">import</span> <span class="n">openChannel</span>
+        <span class="k">return</span> <span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="getErrorText"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.getErrorText">[docs]</a><span class="k">def</span> <span class="nf">getErrorText</span><span class="p">(</span><span class="n">error_code</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return error text for supplied error_code&quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetErrorText</span><span class="p">(</span><span class="n">error_code</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="getVersion"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.getVersion">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s1">&#39;dllversion&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getVersion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the CANlib DLL version number as a `str`</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `dllversion` instead.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">dllversion</span><span class="p">())</span></div>
+
+
+<span class="k">def</span> <span class="nf">_version_number</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return `VersionNumber` or `BetaVersionNumber` of v&quot;&quot;&quot;</span>
+    <span class="c1"># assuming byte order &#39;little&#39;:</span>
+    <span class="k">if</span> <span class="n">beta</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">BetaVersionNumber</span><span class="p">(</span><span class="n">major</span><span class="o">=</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">,</span> <span class="n">minor</span><span class="o">=</span><span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">major</span><span class="o">=</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">,</span> <span class="n">minor</span><span class="o">=</span><span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">version</span>
+
+
+<span class="k">def</span> <span class="nf">enumerate_hardware</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Enumerate connected Kvaser devices and rebuild list of available channels</span>
+
+<span class="sd">    Returns the number of CAN channels appended.</span>
+
+<span class="sd">    .. versionadded:: 1.13</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chan_count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canEnumHardwareEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">chan_count</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">chan_count</span><span class="o">.</span><span class="n">value</span>
+
+
+<div class="viewcode-block" id="dllversion"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.dllversion">[docs]</a><span class="k">def</span> <span class="nf">dllversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the CANlib DLL version number</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Returns a `BetaVersionNumber` if the CANlib DLL is marked as beta</span>
+<span class="sd">    (preview), otherwise returns `VersionNumber`.</span>
+
+<span class="sd">    .. versionchanged:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canGetVersionEx</span><span class="p">(</span><span class="n">VersionEx</span><span class="o">.</span><span class="n">VERSION</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="c1"># Backward compatibility with CANlib v5.22</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canGetVersion</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_version_number</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canGetVersionEx</span><span class="p">(</span><span class="n">VersionEx</span><span class="o">.</span><span class="n">BETA</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_version_number</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="prodversion"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.prodversion">[docs]</a><span class="k">def</span> <span class="nf">prodversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the CANlib Product version number</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Returns a `BetaVersionNumber` if the CANlib driver/DLL is marked as beta</span>
+<span class="sd">    (preview), otherwise returns `VersionNumber`.</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canGetVersionEx</span><span class="p">(</span><span class="n">VersionEx</span><span class="o">.</span><span class="n">PRODVER</span><span class="p">)</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canGetVersionEx</span><span class="p">(</span><span class="n">VersionEx</span><span class="o">.</span><span class="n">BETA</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_version_number</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="getNumberOfChannels"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.getNumberOfChannels">[docs]</a><span class="k">def</span> <span class="nf">getNumberOfChannels</span><span class="p">(</span><span class="n">driver</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get number of available CAN channels.</span>
+
+<span class="sd">    Returns the number of available CAN channels in the computer. The</span>
+<span class="sd">    virtual channels are included in this number.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        chanCount (int): Number of available CAN channels</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chanCount</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetNumberOfChannels</span><span class="p">(</span><span class="n">chanCount</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">chanCount</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).channel_flags&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Channel_Flags</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get channel status flags</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``channel_flags`` attribute instead.</span>
+
+<span class="sd">    Returns a :py:class:`ChannelData_Channel_Flags` object holding</span>
+<span class="sd">    information about the channel.</span>
+
+<span class="sd">    Note: Currently not implemented!</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CHANNEL_FLAGS</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">ChannelData_Channel_Flags</span><span class="p">()</span>
+    <span class="n">flags</span><span class="o">.</span><span class="n">asbyte</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">return</span> <span class="n">flags</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).device_name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Name</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the product name.</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``device_name`` attribute instead.</span>
+
+<span class="sd">    Retrieves the product name of the device connected to channel. The name</span>
+<span class="sd">    is returned as a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        product_name (string): The product name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_DEVDESCR_ASCII</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span> <span class="o">*</span> <span class="mi">1</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CHAN_NO_ON_CARD</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (channel </span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).custom_name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Cust_Name</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the customized channel name.</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``custom_name`` attribute instead.</span>
+
+<span class="sd">    Retrieves the customized device channel name of the device connected to</span>
+<span class="sd">    channel. The name is returned as a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        custom_name (string): The customized device channel name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CUST_CHANNEL_NAME</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).chan_no_on_card&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Chan_No_On_Card</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the channel number on the card.</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``chan_no_on_card`` attribute instead.</span>
+
+<span class="sd">    Retrieves the channel number, as numbered locally on the card, device</span>
+<span class="sd">    connected to channel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        number (int): The local channel number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CHAN_NO_ON_CARD</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">number</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">number</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span> <span class="o">*</span> <span class="mi">1</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CHAN_NO_ON_CARD</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">number</span><span class="o">.</span><span class="n">value</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).card_number&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_CardNumber</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the card number</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``card_number`` attribute instead.</span>
+
+<span class="sd">    Retrieves the card&#39;s number in the computer. Each card type is numbered</span>
+<span class="sd">    separately. For example, the first PCIEcan card in a machine will have</span>
+<span class="sd">    number 0, the second PCIEcan number 1, etc.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        card_number (int): The device&#39;s card number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CARD_NUMBER</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).card_upc_no&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_EAN</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get EAN code</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``card_upc_no`` attribute instead.</span>
+
+<span class="sd">    Retrieves the EAN number for the device connected to channel. If there</span>
+<span class="sd">    is no EAN number, &quot;00-00000-00000-0&quot; will be returned.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ean (str): The device&#39;s EAN number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CARD_UPC_NO</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">ean_lo</span><span class="p">,</span> <span class="n">ean_hi</span><span class="p">)</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;II&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%02x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ean_hi</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">,</span>
+                                  <span class="p">((</span><span class="n">ean_hi</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ean_lo</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">),</span>
+                                  <span class="p">(</span><span class="n">ean_lo</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfffff</span><span class="p">,</span> <span class="n">ean_lo</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span>
+<span class="k">def</span> <span class="nf">getChannelData_EAN_short</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get short EAN code</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``.card_upc_no.product()`` instead.</span>
+
+<span class="sd">    Retrieves the short EAN number, aka product number, for the device</span>
+<span class="sd">    connected to channel. If there is no EAN number, &quot;00000-0&quot; will be</span>
+<span class="sd">    returned.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ean (str): The device&#39;s shortened EAN number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CARD_UPC_NO</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">ean_lo</span><span class="p">,</span> <span class="n">ean_hi</span><span class="p">)</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;II&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%04x</span><span class="s2">-</span><span class="si">%x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">((</span><span class="n">ean_lo</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">,</span> <span class="n">ean_lo</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).card_serial_no&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Serial</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get device serial number</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``card_serial_no`` attribute instead.</span>
+
+<span class="sd">    Retrieves the serial number for the device connected to channel. If the</span>
+<span class="sd">    device does not have a serial number, 0 is returned.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        serial (int): The device serial number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CARD_SERIAL_NO</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">serial_lo</span><span class="p">,</span> <span class="n">serial_hi</span><span class="p">)</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;II&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="c1"># serial_hi is always 0</span>
+    <span class="k">return</span> <span class="n">serial_lo</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).driver_name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_DriverName</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get device driver name</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``driver_name`` attribute instead.</span>
+
+<span class="sd">    Retrieves the name of the device driver (e.g. &quot;kcany&quot;) for the device</span>
+<span class="sd">    connected to channel. The device driver names have no special meanings</span>
+<span class="sd">    and may change from a release to another.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        driver_name (str): The device driver name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_DRIVER_NAME</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(channel).card_firmware_rev&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getChannelData_Firmware</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get device firmware version</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `ChannelData` and their ``card_firmware_rev`` attribute instead.</span>
+
+<span class="sd">    Retrieves the firmvare version numbers for the device connected to</span>
+<span class="sd">    channel.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (int): The channel you are interested in</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (fw_major, fw_minor, fw_build): The version number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ushort</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+        <span class="n">channel</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">canCHANNELDATA_CARD_FIRMWARE_REV</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">build</span><span class="p">,</span> <span class="n">release</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">major</span><span class="p">)</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;HHHH&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">build</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="translateBaud"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.translateBaud">[docs]</a><span class="k">def</span> <span class="nf">translateBaud</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Translate bitrate constant</span>
+
+<span class="sd">    This function translates the canBITRATE_xxx constants to their</span>
+<span class="sd">    corresponding bus parameter values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        freq: Any of the predefined constants canBITRATE_xxx</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A bitrateSetting object containing the actual values of</span>
+<span class="sd">            frequency, tseg1, tseg2 etc.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">freq_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
+    <span class="n">tseg1_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">tseg2_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">sjw_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">nosamp_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">syncMode_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canTranslateBaud</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">freq_p</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg1_p</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg2_p</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sjw_p</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nosamp_p</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">syncMode_p</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">rateSetting</span> <span class="o">=</span> <span class="n">bitrateSetting</span><span class="p">(</span>
+        <span class="n">freq</span><span class="o">=</span><span class="n">freq_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">tseg1</span><span class="o">=</span><span class="n">tseg1_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">tseg2</span><span class="o">=</span><span class="n">tseg2_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">sjw</span><span class="o">=</span><span class="n">sjw_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">nosamp</span><span class="o">=</span><span class="n">nosamp_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">syncMode</span><span class="o">=</span><span class="n">syncMode_p</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">rateSetting</span></div>
+
+
+<div class="viewcode-block" id="unloadLibrary"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.unloadLibrary">[docs]</a><span class="k">def</span> <span class="nf">unloadLibrary</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Unload CANlib</span>
+
+<span class="sd">    Unload canlib and release all internal handles.</span>
+
+<span class="sd">    Warning:</span>
+
+<span class="sd">        Calling `unloadLibrary` invalidates every canlib-object. Use at your</span>
+<span class="sd">        own risk.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canUnloadLibrary</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; (Not implemented in Linux)&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">initializeLibrary</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Initialize CANlib library</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        This initializes the driver and must be called before any other</span>
+<span class="sd">        function in the CANlib DLL is used. This is handled in most cases by</span>
+<span class="sd">        the Python wrapper but if you want to trigger a re-enumeration of</span>
+<span class="sd">        connected devices, call this function.</span>
+
+<span class="sd">    Any errors encountered during library initialization will be &quot;silent&quot;</span>
+<span class="sd">    and an appropriate error code will be returned later on when an API</span>
+<span class="sd">    call that requires initialization is called.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canInitializeLibrary</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="reinitializeLibrary"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.reinitializeLibrary">[docs]</a><span class="k">def</span> <span class="nf">reinitializeLibrary</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Reinitializes the CANlib driver.</span>
+
+<span class="sd">    Convenience function that calls `unloadLibrary` and `initializeLibrary`</span>
+<span class="sd">    in succession.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unloadLibrary</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">canInitializeLibrary</span><span class="p">()</span></div>
+
+
+<span class="k">class</span> <span class="nc">ChannelData_Channel_Flags_bits</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">LittleEndianStructure</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Access flags of :py:class:`ChannelData_Channel_Flags`</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+
+<span class="sd">    Gives access to individual parts in :py:class:`ChannelData_Channel_Flags`</span>
+<span class="sd">    as flags.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;is_exclusive&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;is_open&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;is_canfd&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">ChannelData_Channel_Flags</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Union</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Holds data from :py:meth:`canlib.getChannelData_Channel_Flags()`</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+
+<span class="sd">    Data in this object may be accessed as an c_uint32 using `object.asbyte`,</span>
+<span class="sd">    or as indivisual flags using the class</span>
+<span class="sd">    :py:class:`ChannelData_Channel_Flags_bits`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">ChannelData_Channel_Flags_bits</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;asbyte&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">)]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

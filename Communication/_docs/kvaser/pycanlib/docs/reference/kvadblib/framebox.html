@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Frame Box &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Message" href="message.html" />
+    <link rel="prev" title="Enumerations" href="enums.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvadblib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="attribute.html">Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="attributedef.html">Attribute Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbc.html">Dbc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Frame Box</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#framebox">FrameBox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boundmessage">BoundMessage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boundsignal">BoundSignal</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="message.html">Message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html">Signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvadblib</a> &raquo;</li>
+        
+      <li>Frame Box</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvadblib/framebox.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="frame-box">
+<h1>Frame Box<a class="headerlink" href="#frame-box" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="framebox">
+<h2>FrameBox<a class="headerlink" href="#framebox" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvadblib.FrameBox">
+<em class="property">class </em><code class="descclassname">canlib.kvadblib.</code><code class="descname">FrameBox</code><span class="sig-paren">(</span><em>db</em>, <em>messages=()</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper class for sending signals</p>
+<p>This class allows sending signals without worrying about what message they
+are defined in. It does this by binding a message and all its signals to
+the same <a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> object.</p>
+<p>Objects are created by giving them a <a class="reference internal" href="dbc.html#canlib.kvadblib.Dbc" title="canlib.kvadblib.Dbc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dbc</span></code></a> database, and optionally a list
+of messages (either names or <a class="reference internal" href="message.html#canlib.kvadblib.Message" title="canlib.kvadblib.Message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Message</span></code></a> objects):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">Dbc</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">framebox</span> <span class="o">=</span> <span class="n">FrameBox</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Msg0&#39;</span><span class="p">,</span><span class="s1">&#39;Msg1&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Messages can also be added after instantiation with <a class="reference internal" href="#canlib.kvadblib.FrameBox.add_message" title="canlib.kvadblib.FrameBox.add_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_message</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">framebox</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s1">&#39;Msg0&#39;</span><span class="p">,</span> <span class="s1">&#39;Msg1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then setting signal values for any added message is done with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">framebox</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;Sig0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">phys</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">framebox</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;Sig1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">phys</span> <span class="o">=</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<p>Once all values are set, they can easily be sent via the channel <code class="xref py py-obj docutils literal notranslate"><span class="pre">channel</span></code> with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">framebox</span><span class="o">.</span><span class="n">frames</span><span class="p">():</span>
+  <span class="n">channel</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any <code class="xref py py-obj docutils literal notranslate"><span class="pre">Framebox</span></code> methods that return messages requires the message to have
+been added to the framebox, either with the <code class="docutils literal notranslate"><span class="pre">messages</span></code> constructor
+argument or with <a class="reference internal" href="#canlib.kvadblib.FrameBox.add_message" title="canlib.kvadblib.FrameBox.add_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_message</span></code></a>. Likewise, any methods that return signals
+require the signal’s message to have been added.</p>
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.add_message">
+<code class="descname">add_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.add_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.add_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a message to the framebox</p>
+<p>The message will be available for all future uses of <a class="reference internal" href="#canlib.kvadblib.FrameBox.message" title="canlib.kvadblib.FrameBox.message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox.message</span></code></a>
+and <a class="reference internal" href="#canlib.kvadblib.FrameBox.messages" title="canlib.kvadblib.FrameBox.messages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox.messages</span></code></a>, and all its signals will be available for uses
+of <a class="reference internal" href="#canlib.kvadblib.FrameBox.signal" title="canlib.kvadblib.FrameBox.signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox.signal</span></code></a> and <a class="reference internal" href="#canlib.kvadblib.FrameBox.signals" title="canlib.kvadblib.FrameBox.signals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox.signals</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">message</span></code> argument can either be a message name, or a
+<a class="reference internal" href="message.html#canlib.kvadblib.Message" title="canlib.kvadblib.Message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.Message</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.frames">
+<code class="descname">frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all frames of the signals/messages from this <a class="reference internal" href="#canlib.kvadblib.FrameBox" title="canlib.kvadblib.FrameBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.message">
+<code class="descname">message</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a message by name</p>
+<p>Returns a <a class="reference internal" href="#canlib.kvadblib.BoundMessage" title="canlib.kvadblib.BoundMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoundMessage</span></code></a> that shares its <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code> object with its child
+signals.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.messages">
+<code class="descname">messages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator over all messages that this <a class="reference internal" href="#canlib.kvadblib.FrameBox" title="canlib.kvadblib.FrameBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox</span></code></a> is aware of</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.signal">
+<code class="descname">signal</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.signal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a signal by name</p>
+<p>Returns a <a class="reference internal" href="#canlib.kvadblib.BoundSignal" title="canlib.kvadblib.BoundSignal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoundSignal</span></code></a> that shares its <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code> object with its parent
+message and sibling signals.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvadblib.FrameBox.signals">
+<code class="descname">signals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/framebox.html#FrameBox.signals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.FrameBox.signals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator over all signals that this <a class="reference internal" href="#canlib.kvadblib.FrameBox" title="canlib.kvadblib.FrameBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameBox</span></code></a> is aware of</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="boundmessage">
+<h2>BoundMessage<a class="headerlink" href="#boundmessage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvadblib.BoundMessage">
+<em class="property">class </em><code class="descclassname">canlib.kvadblib.</code><code class="descname">BoundMessage</code><span class="sig-paren">(</span><em>message</em>, <em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/bound_message.html#BoundMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.BoundMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A CAN data object that manipulates data through signals.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="boundsignal">
+<h2>BoundSignal<a class="headerlink" href="#boundsignal" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvadblib.BoundSignal">
+<em class="property">class </em><code class="descclassname">canlib.kvadblib.</code><code class="descname">BoundSignal</code><span class="sig-paren">(</span><em>signal</em>, <em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvadblib/bound_signal.html#BoundSignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvadblib.BoundSignal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.is_enum">
+<code class="descname">is_enum</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.is_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this signal is an enum-signal</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.name">
+<code class="descname">name</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal’s name string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.phys">
+<code class="descname">phys</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.phys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal’s physical value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.raw">
+<code class="descname">raw</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal’s raw value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.unit">
+<code class="descname">unit</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal’s unit string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvadblib.BoundSignal.value">
+<code class="descname">value</code><a class="headerlink" href="#canlib.kvadblib.BoundSignal.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal’s value</p>
+<p>If the signal is an enum-signal (i.e. the signal has a defined value
+table), then the enum name is returned if found, otherwise the signals
+raw value (<a class="reference internal" href="#canlib.kvadblib.BoundSignal.raw" title="canlib.kvadblib.BoundSignal.raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raw</span></code></a>) is returned. If the signal is not an enum-signal, the
+signals physical value (<a class="reference internal" href="#canlib.kvadblib.BoundSignal.phys" title="canlib.kvadblib.BoundSignal.phys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phys</span></code></a>) is returned.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="message.html" class="btn btn-neutral float-right" title="Message" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="enums.html" class="btn btn-neutral float-left" title="Enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

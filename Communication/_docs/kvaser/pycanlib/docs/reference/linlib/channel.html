@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enumerations" href="enums.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">linlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Channel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#openchannel">openChannel()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openmaster">openMaster()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openslave">openSlave()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Channel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmwareversion">FirmwareVersion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">MessageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">linlib</a> &raquo;</li>
+        
+      <li>Channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/linlib/channel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="channel">
+<h1>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="openchannel">
+<h2>openChannel()<a class="headerlink" href="#openchannel" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.linlib.openChannel">
+<code class="descclassname">canlib.linlib.</code><code class="descname">openChannel</code><span class="sig-paren">(</span><em>channel_number</em>, <em>channel_type</em>, <em>bps=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#openChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.openChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a channel to a LIN interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>channel_number</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The number of the channel. This is the same
+channel number as used by <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ppenChannel</span></code>.</li>
+<li><strong>channel_type</strong> (<a class="reference internal" href="enums.html#canlib.linlib.ChannelType" title="canlib.linlib.ChannelType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelType</span></code></a>) – Whether the LIN interface will be a
+master or slave.</li>
+<li><strong>bps</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>) – If not <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>, <a class="reference internal" href="#canlib.linlib.Channel.setBitrate" title="canlib.linlib.Channel.setBitrate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.setBitrate</span></code></a> will be called with
+this value before the channel is returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="#canlib.linlib.Channel" title="canlib.linlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a>) – The opened channel</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For DRV Lin: The cable must be powered and connected to a LAPcan channel.
+For Kvaser LIN Leaf: The Leaf must be powered from the LIN side.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="openmaster">
+<h2>openMaster()<a class="headerlink" href="#openmaster" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.linlib.openMaster">
+<code class="descclassname">canlib.linlib.</code><code class="descname">openMaster</code><span class="sig-paren">(</span><em>channel_number</em>, <em>bps=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#openMaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.openMaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a channel as a master</p>
+<p>This function simply calls <a class="reference internal" href="#canlib.linlib.openChannel" title="canlib.linlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> with <code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_type</span></code> set to
+<a class="reference internal" href="enums.html#canlib.linlib.ChannelType.MASTER" title="canlib.linlib.ChannelType.MASTER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelType.MASTER</span></code></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="openslave">
+<h2>openSlave()<a class="headerlink" href="#openslave" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.linlib.openSlave">
+<code class="descclassname">canlib.linlib.</code><code class="descname">openSlave</code><span class="sig-paren">(</span><em>channel_number</em>, <em>bps=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#openSlave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.openSlave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a channel as a slave</p>
+<p>This function simply calls <a class="reference internal" href="#canlib.linlib.openChannel" title="canlib.linlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> with <code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_type</span></code> set to
+<a class="reference internal" href="enums.html#canlib.linlib.ChannelType.SLAVE" title="canlib.linlib.ChannelType.SLAVE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelType.SLAVE</span></code></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Channel<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.Channel">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>handle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A LINlib channel</p>
+<p>This class is normally instantiated with <a class="reference internal" href="#canlib.linlib.openMaster" title="canlib.linlib.openMaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openMaster</span></code></a> or <a class="reference internal" href="#canlib.linlib.openSlave" title="canlib.linlib.openSlave"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openSlave</span></code></a>.</p>
+<p>Channels are automatically closed on garbage collection, and can
+also be used as context managers in which case they close as soon as the
+context exits.</p>
+<dl class="method">
+<dt id="canlib.linlib.Channel.busOff">
+<code class="descname">busOff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.busOff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.busOff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go bus off</p>
+<p>This function deactivates the LIN interface. It will not participate
+further in the LIN bus traffic.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.busOn">
+<code class="descname">busOn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.busOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.busOn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go bus on</p>
+<p>This function activates the LIN interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.clearMessage">
+<code class="descname">clearMessage</code><span class="sig-paren">(</span><em>msg_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.clearMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.clearMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear a message buffer for a LIN slave</p>
+<p>The message buffer will not answer next time it is polled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close this LINlib channel</p>
+<p>Closes an open handle to a LIN channel.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is normally not necessary to call this function directly, as the
+internal handle is automatically closed when the <a class="reference internal" href="#canlib.linlib.Channel" title="canlib.linlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> object
+is garbage collected.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.getCanHandle">
+<code class="descname">getCanHandle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.getCanHandle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.getCanHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the CAN handle given an open LIN handle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.getFirmwareVersion">
+<code class="descname">getFirmwareVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.getFirmwareVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.getFirmwareVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the firmware version from the LIN interface</p>
+<p>Returns a <a class="reference internal" href="#canlib.linlib.FirmwareVersion" title="canlib.linlib.FirmwareVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FirmwareVersion</span></code></a> namedtuple containing <code class="xref py py-obj docutils literal notranslate"><span class="pre">boot_version</span></code> and
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">app_version</span></code> that are <a class="reference internal" href="../versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a> namedtuples. If only one of
+these is needed, the return value can be unpacked as such:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">boot_ver</span><span class="p">,</span> <span class="n">app_ver</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">getFirmwareVersion</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For newer interfaces use <a class="reference internal" href="wrapper.html#canlib.linlib.getChannelData" title="canlib.linlib.getChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getChannelData</span></code></a> with
+<a class="reference internal" href="enums.html#canlib.linlib.ChannelData.CARD_FIRMWARE_REV" title="canlib.linlib.ChannelData.CARD_FIRMWARE_REV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData.CARD_FIRMWARE_REV</span></code></a> instead.</p>
+<p>The version numbers aren’t valid until <a class="reference internal" href="#canlib.linlib.Channel.busOn" title="canlib.linlib.Channel.busOn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.busOn</span></code></a> has been
+called.</p>
+<p>The firmware in the LIN interface is divided into two parts, the
+boot code and the application. The boot code is used only when
+reprogramming (reflashing) the LIN interface. The application
+handles all LIN communication.</p>
+<p class="last">Version numbers are, since the precambric era, divided into a major
+version number, a minor version number and a build
+number. These are usually written like, for example,
+3.2.12. Here the major number is 3, the minor number 2 and the
+build number 12.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>timeout=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a message from the LIN interface</p>
+<p>If a message is available for reception, linOK is returned. This is a
+non-blocking call. It waits until a message is received in the LIN
+interface, or the specified timeout period elapses.</p>
+<p>This may return a frame sent by <a class="reference internal" href="#canlib.linlib.Channel.writeMessage" title="canlib.linlib.Channel.writeMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeMessage</span></code></a> or <a class="reference internal" href="#canlib.linlib.Channel.writeWakeup" title="canlib.linlib.Channel.writeWakeup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeWakeup</span></code></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This call will also return echoes of what the LIN interface is
+transmitting with <a class="reference internal" href="#canlib.linlib.Channel.writeMessage" title="canlib.linlib.Channel.writeMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeMessage</span></code></a>. In other words, the LIN
+interface can hear itself.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Timeout in milliseconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(<a class="reference internal" href="../frame.html#canlib.LINFrame" title="canlib.LINFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.LINFrame</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.requestMessage">
+<code class="descname">requestMessage</code><span class="sig-paren">(</span><em>msgid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.requestMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.requestMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request a message from a slave</p>
+<p>This function writes a LIN message header to the LIN bus. A slave in
+the system is then expected to fill in the header with data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This call is only available in master mode.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.setBitrate">
+<code class="descname">setBitrate</code><span class="sig-paren">(</span><em>bps</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.setBitrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.setBitrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the bitrate in bits per second</p>
+<p>This function sets the bit rate for a master, or the initial bit rate
+for a slave. The LIN interface should not be on-bus when this function
+is called.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The LIN Interface should not be on bus.
+Supported bit rates are 1000 - 20000 bits per second.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.setupIllegalMessage">
+<code class="descname">setupIllegalMessage</code><span class="sig-paren">(</span><em>msgid</em>, <em>disturb_flags</em>, <em>delay</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.setupIllegalMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.setupIllegalMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a corrupted LIN message</p>
+<p>Using this function, it is possible to use the LIN interface to create
+corrupted LIN messages. You call the function once for each LIN
+identifier that should be affected.</p>
+<p>To return to normal mode, either restart the LIN interface (by going
+off bus and on the bus again) or call the function with delay and
+disturb_flags set to zero.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msgid</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The identifier of the LIN message</li>
+<li><strong>disturb_flags</strong> (<a class="reference internal" href="enums.html#canlib.linlib.MessageDisturb" title="canlib.linlib.MessageDisturb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageDisturb</span></code></a>) – One or more of the
+<a class="reference internal" href="enums.html#canlib.linlib.MessageDisturb" title="canlib.linlib.MessageDisturb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageDisturb</span></code></a> flags.</li>
+<li><strong>delay</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The delay parameter will result in a delay of this
+many bittimes after the header and before the first data byte.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The LIN Interface must be on bus for this command to work.
+It is supported in firmware version 2.4.1 and later.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.setupLIN">
+<code class="descname">setupLIN</code><span class="sig-paren">(</span><em>flags=&lt;Setup.VARIABLE_DLC: 2&gt;</em>, <em>bps=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.setupLIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.setupLIN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup the LIN interface</p>
+<p>This function changes various settings on a LIN Interface that is on
+bus. When going on bus, the bit rate and the flag values listed below
+are set to the default value (either as hard-coded in the firmware, or
+as stored in the non-volatile memory of the LIN Interface).</p>
+<p>With this function, you can do one or more of the following things:</p>
+<ul class="simple">
+<li>Select checksum according to LIN 2.0</li>
+<li>Turn variable message length off. The message length then will depend
+on the message ID.</li>
+</ul>
+<p>In master mode it is also possible to change the bit rate without going
+off bus first.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The LIN Interface must be on bus for this command to work.
+It is supported in firmware version 2.5.1 and later.
+For LIN 2.0 compliance, you must specify both LIN_ENHANCED_CHECKSUM
+and LIN_VARIABLE_DLC.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>flags</strong> (<a class="reference internal" href="enums.html#canlib.linlib.Setup" title="canlib.linlib.Setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Setup</span></code></a>) – One or more of the <a class="reference internal" href="enums.html#canlib.linlib.Setup" title="canlib.linlib.Setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Setup</span></code></a> flags</li>
+<li><strong>bps</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The bit rate in bits per second. This parameter can be
+used only in master mode. The bit rate is set without going off
+bus.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.updateMessage">
+<code class="descname">updateMessage</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.updateMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.updateMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a message buffer in a slave</p>
+<p>This function updates a message buffer in a slave. The contents of the
+message buffer will be used the next time the slave is polled for the
+specified LIN message id.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The LIN Interface must be on bus.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> (<a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a>) – The information to be updated. Only the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame.id</span></code>,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame.data</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame.dlc</span></code> attributes are used. Note that the frame can,
+but not need not, be a <a class="reference internal" href="../frame.html#canlib.LINFrame" title="canlib.LINFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.LINFrame</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.writeMessage">
+<code class="descname">writeMessage</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.writeMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.writeMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a LIN message</p>
+<p>Write a LIN message. It is advisable to wait until the message is
+echoed by <a class="reference internal" href="#canlib.linlib.Channel.read" title="canlib.linlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> before transmitting a new message, or in
+case of a schedule table being used, transmit the next message when the
+previous one is known to be complete.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only available in master mode</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> (<a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a>) – <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame.data</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame.dlc</span></code> attributes are used. Note that the frame can,
+but not need not, be a <a class="reference internal" href="../frame.html#canlib.LINFrame" title="canlib.LINFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.LINFrame</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.writeSync">
+<code class="descname">writeSync</code><span class="sig-paren">(</span><em>timeout</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.writeSync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.writeSync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure all message transmitted to the interface have been received</p>
+<p><em>timeout</em> is in milliseconds.</p>
+<p>When messages are transmitted to the LIN Interface, they are queued by
+the driver before appearing on the CAN bus.</p>
+<p>If the LIN Interface is in master mode and a LIN message has been
+transmitted with <a class="reference internal" href="#canlib.linlib.Channel.writeMessage" title="canlib.linlib.Channel.writeMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeMessage</span></code></a>, this function will return when the LIN
+Interface has received the message. If another LIN message is being
+received or transmitted, the message will not be transmitted on the LIN
+bus at once. And even if the LIN Interface is idle, the header of the
+new message will just have been started when <a class="reference internal" href="#canlib.linlib.Channel.writeSync" title="canlib.linlib.Channel.writeSync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeSync</span></code></a> returns.</p>
+<p>After calling <a class="reference internal" href="#canlib.linlib.Channel.updateMessage" title="canlib.linlib.Channel.updateMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateMessage</span></code></a> and <a class="reference internal" href="#canlib.linlib.Channel.clearMessage" title="canlib.linlib.Channel.clearMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clearMessage</span></code></a> for a slave, this
+function is enough to know that the LIN Interface is updated.</p>
+<p>After <a class="reference internal" href="#canlib.linlib.Channel.writeMessage" title="canlib.linlib.Channel.writeMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeMessage</span></code></a>, it is advisable to wait until the message is
+echoed by <a class="reference internal" href="#canlib.linlib.Channel.read" title="canlib.linlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> before transmitting a new message, or in case
+of a schedule table being used, transmit the next message when the
+previous one is known to be complete.</p>
+<p>When, in master mode, a message should be transmitted after a poll
+(reception) is done, it might be necessary to call <a class="reference internal" href="#canlib.linlib.Channel.writeMessage" title="canlib.linlib.Channel.writeMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeMessage</span></code></a>
+before the result is received via <a class="reference internal" href="#canlib.linlib.Channel.read" title="canlib.linlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> as the LIN Interface
+waits up to the maximum frame length before knowing a received message
+is complete. A new message to transmit will force completion if the
+currently received one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.linlib.Channel.writeWakeup">
+<code class="descname">writeWakeup</code><span class="sig-paren">(</span><em>count=0</em>, <em>interval=1</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/channel.html#Channel.writeWakeup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Channel.writeWakeup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write one or more wakeup frames</p>
+<p>If <em>count</em> is zero (the default), one single wakeup frame is
+transmitted. If <em>count</em> &gt; 1, several wakeup frames are transmitted
+spaced with <em>interval</em> bit times. The LIN interface will interrupt the
+sequence when a LIN message or another command is received. The stream
+of wakeups will be recived as incoming messages with the
+<a class="reference internal" href="enums.html#canlib.linlib.MessageFlag.RX" title="canlib.linlib.MessageFlag.RX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.RX</span></code></a> flag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>count</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The number of wakeup frames to send.</li>
+<li><strong>interval</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The time, in bit times, between the wakeup  frames.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="firmwareversion">
+<h2>FirmwareVersion<a class="headerlink" href="#firmwareversion" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.FirmwareVersion">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">FirmwareVersion</code><span class="sig-paren">(</span><em>boot_version</em>, <em>app_version</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.linlib.FirmwareVersion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.linlib.FirmwareVersion.app_version">
+<code class="descname">app_version</code><a class="headerlink" href="#canlib.linlib.FirmwareVersion.app_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.FirmwareVersion.boot_version">
+<code class="descname">boot_version</code><a class="headerlink" href="#canlib.linlib.FirmwareVersion.boot_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="enums.html" class="btn btn-neutral float-right" title="Enumerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

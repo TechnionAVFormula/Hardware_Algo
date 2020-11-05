@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvmlib.logfile &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvmlib.logfile</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvmlib.logfile</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvmNoLogMsg</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">LogFileType</span>
+<span class="kn">from</span> <span class="nn">.events</span> <span class="k">import</span> <span class="n">memoLogEventEx</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+
+<div class="viewcode-block" id="LogFile"><a class="viewcode-back" href="../../../reference/kvmlib/log.html#canlib.kvmlib.LogFile">[docs]</a><span class="k">class</span> <span class="nc">LogFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A log file read from a `MountedLog` object</span>
+
+<span class="sd">    This class is normally not directly instantiated but retrieved from a</span>
+<span class="sd">    `MountedLog` object.</span>
+
+<span class="sd">    The most common use of this class is iterating through it to get the</span>
+<span class="sd">    individual events as `LogEvent` subclasses::</span>
+
+<span class="sd">        for event in logfile:</span>
+<span class="sd">            ...</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        While iterating over a `LogFile`, accessing any other `LogFile` is will</span>
+<span class="sd">        result in a `LockedLogError`. Make sure to finish the loop (or when</span>
+<span class="sd">        using iteration objects directly call the `close` method) before</span>
+<span class="sd">        interacting with any other log files.</span>
+
+<span class="sd">    A fast approximation of the number of events is given by</span>
+<span class="sd">    `event_count_estimation`, the exact number of events can be calculated</span>
+<span class="sd">    using::</span>
+
+<span class="sd">        num_events = len(list(logfile))</span>
+
+<span class="sd">    Finally this class has several read-only properties for getting information</span>
+<span class="sd">    about the log file itself.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Before any data is fetched from the dll, this class will make sure that</span>
+<span class="sd">        the correct file has been mounted on the underlying ``kvmHandle``.</span>
+
+<span class="sd">        Manually mounting or unmounting log files by calling the dll directly</span>
+<span class="sd">        is not supported.</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_mounted_handle</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span>
+            <span class="k">if</span> <span class="n">cont</span><span class="o">.</span><span class="n">_mounted_index</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remount</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cont</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span> <span class="o">=</span> <span class="n">container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># force a remount, to reset the dll&#39;s internal event counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remount</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="o">.</span><span class="n">_mount_lock</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="c1"># It is currently up to the user to make sure the handle/device</span>
+                <span class="c1"># stays mounted on this file during iteration.</span>
+                <span class="n">eventstruct</span> <span class="o">=</span> <span class="n">memoLogEventEx</span><span class="p">()</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvmLogFileReadEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">eventstruct</span><span class="p">))</span>
+                <span class="n">event</span> <span class="o">=</span> <span class="n">eventstruct</span><span class="o">.</span><span class="n">createMemoEvent</span><span class="p">()</span>
+                <span class="k">yield</span> <span class="n">event</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">KvmNoLogMsg</span><span class="p">,</span> <span class="ne">GeneratorExit</span><span class="p">):</span>
+            <span class="c1"># GeneratorExit is raised when close() is called on this</span>
+            <span class="c1"># generator. This means that if we iterate over the LogFile</span>
+            <span class="c1"># manually (it = iter(LogFile) and then next(it)) we can also</span>
+            <span class="c1"># release the lock when we close it (it.close())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="o">.</span><span class="n">_mount_lock</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@_mounted_handle</span>
+    <span class="k">def</span> <span class="nf">creator_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`int`: The serial number of the interface that created the log file&quot;&quot;&quot;</span>
+        <span class="n">serial</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmLogFileGetCreatorSerial</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">serial</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">serial</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@_mounted_handle</span>
+    <span class="k">def</span> <span class="nf">end_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`datetime.datetime`: The time of the last event in the log file&quot;&quot;&quot;</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmLogFileGetEndTime</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@_mounted_handle</span>
+    <span class="k">def</span> <span class="nf">start_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`datetime.datetime`: The time of the first event in the log file&quot;&quot;&quot;</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmLogFileGetStartTime</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@_mounted_handle</span>
+    <span class="k">def</span> <span class="nf">log_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`~canlib.kvmlib.enums.LogFileType`: The type of the log file</span>
+
+<span class="sd">        .. versionadded:: 1.11</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmLogFileGetType</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">type_</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">LogFileType</span><span class="p">(</span><span class="n">type_</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogFile.event_count_estimation"><a class="viewcode-back" href="../../../reference/kvmlib/log.html#canlib.kvmlib.LogFile.event_count_estimation">[docs]</a>    <span class="k">def</span> <span class="nf">event_count_estimation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an approximation of the number of events</span>
+
+<span class="sd">        The number is a rough estimation because it is calculated from the</span>
+<span class="sd">        number of blocks allocated by the log file on the disk as an</span>
+<span class="sd">        optimization.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># The only way to get the event count approximation from the underlying</span>
+        <span class="c1"># dll is during mounting (in kvmLogFileMountEx())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remount</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_remount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="o">.</span><span class="n">_mount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Converter &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enumerations" href="enums.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvlclib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Converter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="property.html">Property</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readerformat.html">Reader Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writerformat.html">Writer Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvlclib</a> &raquo;</li>
+        
+      <li>Converter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvlclib/converter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converter">
+<h1>Converter<a class="headerlink" href="#converter" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="canlib.kvlclib.Converter">
+<em class="property">class </em><code class="descclassname">canlib.kvlclib.</code><code class="descname">Converter</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kvlclib converter</p>
+<p>This class wraps all kvlclib functions related to converters, and saves you
+from keeping track of a handle and passing that to the functions.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kvlcCreateConverter</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvlcDeleteConverter</span></code> are not wrapped as they are
+called when Converter objects are created and deleted,
+respectively. However, if it is necessary to force the converter to write
+its files, <a class="reference internal" href="#canlib.kvlclib.Converter.flush" title="canlib.kvlclib.Converter.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a> can be used to simulate destroying and recreating the
+converter object.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">No more than 128 converters can be open at the same time.</p>
+</div>
+<dl class="attribute">
+<dt id="canlib.kvlclib.Converter.IsDataTruncated">
+<code class="descname">IsDataTruncated</code><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.IsDataTruncated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.IsDataTruncated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Converter.IsOutputFilenameNew">
+<code class="descname">IsOutputFilenameNew</code><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.IsOutputFilenameNew"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.IsOutputFilenameNew" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Converter.IsOverrunActive">
+<code class="descname">IsOverrunActive</code><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.IsOverrunActive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.IsOverrunActive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.addDatabaseFile">
+<code class="descname">addDatabaseFile</code><span class="sig-paren">(</span><em>filename</em>, <em>channel_mask</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.addDatabaseFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.addDatabaseFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a database file.</p>
+<p>Converters with the property <a class="reference internal" href="property.html#canlib.kvlclib.Property.SIGNAL_BASED" title="canlib.kvlclib.Property.SIGNAL_BASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Property.SIGNAL_BASED</span></code></a> will match
+events against all entries in the database and write signals to the
+output file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.attachFile">
+<code class="descname">attachFile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.attachFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.attachFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach file to be included in the output file.</p>
+<p>E.g. used to add a database or a movie to the output.</p>
+<p>Note that the output format must support the property
+<a class="reference internal" href="property.html#canlib.kvlclib.Property.ATTACHMENTS" title="canlib.kvlclib.Property.ATTACHMENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.Property.ATTACHMENTS</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.convertEvent">
+<code class="descname">convertEvent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.convertEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.convertEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert next event.</p>
+<p>Convert one event from input file and write it to output file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.eventCount">
+<code class="descname">eventCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.eventCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.eventCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get extimated number of events left.</p>
+<p>Get the estimated number of remaining events in the input file. This
+can be useful for displaying progress during conversion.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.flush">
+<code class="descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recreate the converter so changes are saved to disk</p>
+<p>Converters do not write changes to disk until they are deleted. This
+method deletes and recreates the underlying C converter, without
+needing to recreate the Python object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.getDlcMismatch">
+<code class="descname">getDlcMismatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.getDlcMismatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.getDlcMismatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with id, DLC with number of mismatched messages</p>
+<p>If any DLC mismatch occurred during conversion (which can be seen using
+<a class="reference internal" href="#canlib.kvlclib.Converter.isDlcMismatch" title="canlib.kvlclib.Converter.isDlcMismatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDlcMismatch</span></code></a>) this function returns a dictonary with the tuple
+message id and message DLC as key, and the number of times that
+triggered the mismatch as value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.getOutputFilename">
+<code class="descname">getOutputFilename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.getOutputFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.getOutputFilename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filename of the current output file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.getProperty">
+<code class="descname">getProperty</code><span class="sig-paren">(</span><em>wr_property</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.getProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.getProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current value for a writer property.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wr_property</strong> (<a class="reference internal" href="property.html#canlib.kvlclib.Property" title="canlib.kvlclib.Property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.Property</span></code></a>) – Writer property to be set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Converter.getPropertyDefault">
+<code class="descname">getPropertyDefault</code><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.getPropertyDefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.getPropertyDefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get default value for a writer property.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.isDataTruncated">
+<code class="descname">isDataTruncated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.isDataTruncated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.isDataTruncated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get truncation status.</p>
+<p>Truncation occurs when the selected output converter can’t write all
+bytes in a data frame to file. This can happen if CAN FD data is
+extracted to a format that only supports up to 8 data bytes,
+e.g. <a class="reference internal" href="enums.html#canlib.kvlclib.FileFormat.KME40" title="canlib.kvlclib.FileFormat.KME40"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.FileFormat.KME40</span></code></a>.</p>
+<p>Truncation can also happen if <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvlclib.Property.LIMIT_DATA_BYTES</span></code> is
+set to limit the number of data bytes in output.</p>
+<p>Returns True if data has been truncated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.isDlcMismatch">
+<code class="descname">isDlcMismatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.isDlcMismatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.isDlcMismatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get DLC mismatch status.</p>
+<p>DLC mismatch occurs when a CAN id is found in the database but the DLC
+differs from the DLC in the message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.isOutputFilenameNew">
+<code class="descname">isOutputFilenameNew</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.isOutputFilenameNew"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.isOutputFilenameNew" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the converter has created a new file.</p>
+<p>This is only true once after a a new file has been created. Used when
+splitting output into multiple files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.isOverrunActive">
+<code class="descname">isOverrunActive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.isOverrunActive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.isOverrunActive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get overrun status.</p>
+<p>Overruns can occur during logging with a Memorator if the bus load
+exceeds the logging capacity. This is very unusual, but can occur if a
+Memorator runs complex scripts and triggers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvlclib.Converter.isPropertySupported">
+<code class="descname">isPropertySupported</code><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.isPropertySupported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.isPropertySupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if specified wr_property is supported by the current format.</p>
+<p>Retuns True if the property is supported by the current format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wr_property</strong> (<em>int</em>) – Any one of the defined PROPERTY_xxx</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.nextInputFile">
+<code class="descname">nextInputFile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.nextInputFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.nextInputFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select next input file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.resetDlcMismatch">
+<code class="descname">resetDlcMismatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.resetDlcMismatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.resetDlcMismatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset DLC mismatch status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.resetOverrunActive">
+<code class="descname">resetOverrunActive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.resetOverrunActive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.resetOverrunActive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset overrun status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.resetStatusTruncated">
+<code class="descname">resetStatusTruncated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.resetStatusTruncated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.resetStatusTruncated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset data trunctation status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.setInputFile">
+<code class="descname">setInputFile</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.setInputFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.setInputFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select input file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>string</em>) – Name of input file</li>
+<li><strong>file_format</strong> (<a class="reference internal" href="enums.html#canlib.kvlclib.FileFormat" title="canlib.kvlclib.FileFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.FileFormat</span></code></a>) – A supported input format</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvlclib.Converter.setProperty">
+<code class="descname">setProperty</code><span class="sig-paren">(</span><em>wr_property</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvlclib/converter.html#Converter.setProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvlclib.Converter.setProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a property value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wr_property</strong> (<a class="reference internal" href="property.html#canlib.kvlclib.Property" title="canlib.kvlclib.Property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.Property</span></code></a>) – Writer property to be set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="enums.html" class="btn btn-neutral float-right" title="Enumerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

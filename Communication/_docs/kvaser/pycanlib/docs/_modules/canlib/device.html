@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.device &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.device</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="k">import</span> <span class="n">import_module</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">class</span> <span class="nc">_Libs</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to facilitate importing canlib modules on-demand</span>
+
+<span class="sd">    The main problem this class solves is that kvrlib is not available on</span>
+<span class="sd">    linux, so unconditionally importing kvrlib is not an option. However, it is</span>
+<span class="sd">    also preferable that simply importing this module loads most of pycanlib,</span>
+<span class="sd">    if a user wants to use `Device` to interact with canlib, they should not</span>
+<span class="sd">    need to load e.g. kvmlib.</span>
+
+<span class="sd">    This class is instanced, once, in device.py as `_libs`. Any time a library,</span>
+<span class="sd">    for example `canlib`, is used in device.py it will be accessed with</span>
+<span class="sd">    ``_libs.canlib``. The first time this happens, there will be no ``canlib``</span>
+<span class="sd">    attribute on ` libs``, and `_Libs.__getattr__` will be called. This looks</span>
+<span class="sd">    up the library name provided in `_Libs._imports`, which should give a</span>
+<span class="sd">    no-argument function that imports that library and returns</span>
+<span class="sd">    it. `_Libs.__getattr__` then saves the returned module as an attribute,</span>
+<span class="sd">    making sure that `_Libs.__getattr__` is only called the first time any</span>
+<span class="sd">    particular library is requested.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">import_kvrlib</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;canlib.kvrlib&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;win&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;kvrlib is only available on Windows&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">module</span>
+
+    <span class="n">_imports</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;canlib&#39;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;canlib.canlib&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;kvmlib&#39;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;canlib.kvmlib&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;linlib&#39;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;canlib.linlib&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;kvrlib&#39;</span><span class="p">:</span> <span class="n">import_kvrlib</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imports</span><span class="p">[</span><span class="n">name</span><span class="p">]())</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+
+<span class="n">_libs</span> <span class="o">=</span> <span class="n">_Libs</span><span class="p">()</span>
+
+
+<span class="n">_ChannelInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s1">&#39;_channel_info&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;channel_number ean serial channel_name&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">_ChannelInfo</span><span class="o">.</span><span class="n">__new__</span><span class="o">.</span><span class="n">__defaults__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_ChannelInfo</span><span class="o">.</span><span class="n">_fields</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="connected_devices"><a class="viewcode-back" href="../../reference/device.html#canlib.connected_devices">[docs]</a><span class="k">def</span> <span class="nf">connected_devices</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get all currently connected devices as `Device`\s</span>
+
+<span class="sd">    Returns an iterator of `Device` object, one object for every physical</span>
+<span class="sd">    device currently connected.</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    .. versionchanged:: 1.7</span>
+<span class="sd">       `Device.last_channel_number` will now be set.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">last_device</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">curr_channel</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">curr_channel</span><span class="p">)</span>
+            <span class="n">ean</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">card_upc_no</span>
+            <span class="n">serial</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">card_serial_no</span>
+        <span class="k">except</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">CanNotFound</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">serial</span><span class="p">)</span>
+            <span class="n">dev</span><span class="o">.</span><span class="n">last_channel_number</span> <span class="o">=</span> <span class="n">curr_channel</span>
+            <span class="k">if</span> <span class="n">dev</span> <span class="o">!=</span> <span class="n">last_device</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">dev</span>
+                <span class="n">last_device</span> <span class="o">=</span> <span class="n">dev</span></div>
+
+
+<span class="k">def</span> <span class="nf">_find_channel</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">new_info</span> <span class="o">=</span> <span class="n">_match_channel</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">CanNotFound</span><span class="p">:</span>
+            <span class="n">new_info</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">new_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_info</span>
+
+    <span class="k">for</span> <span class="n">curr_channel</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="n">new_info</span> <span class="o">=</span> <span class="n">_match_channel</span><span class="p">(</span><span class="n">curr_channel</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_info</span>
+
+
+<span class="k">def</span> <span class="nf">_match_channel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+    <span class="n">target_ch</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">channel_number</span>
+    <span class="n">target_ean</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">ean</span>
+    <span class="n">target_serial</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">serial</span>
+    <span class="n">target_name</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">channel_name</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">target_ch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">channel_number</span> <span class="o">!=</span> <span class="n">target_ch</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">channel_number</span><span class="p">)</span>
+    <span class="n">ean</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">card_upc_no</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">target_ean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ean</span> <span class="o">!=</span> <span class="n">target_ean</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">serial</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">card_serial_no</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">target_serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">serial</span> <span class="o">!=</span> <span class="n">target_serial</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">custom_name</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">target_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="n">target_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">chan_no_on_card</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">chan_no_on_card</span>
+    <span class="c1"># The Device channel_number should always point at the first channel on card</span>
+    <span class="n">channel_number</span> <span class="o">-=</span> <span class="n">chan_no_on_card</span>
+    <span class="k">return</span> <span class="n">_ChannelInfo</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Device"><a class="viewcode-back" href="../../reference/device.html#canlib.Device">[docs]</a><span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for keeping track of a physical device</span>
+
+<span class="sd">    This class represents a physical device regardless of whether it is</span>
+<span class="sd">    currently connected or not, and on which channel it is connected.</span>
+
+<span class="sd">    If the device is currently connected, `Device.find` can be used to get a</span>
+<span class="sd">    `Device` object::</span>
+
+<span class="sd">        dev = Device.find(ean=EAN.from_string(&#39;67890-1&#39;))</span>
+
+<span class="sd">    `Device.find` supports searching for devices based on a variety of</span>
+<span class="sd">    information, and will return a `Device` object corresponding to the first</span>
+<span class="sd">    physical device that matched its arguments. In this case, it would be the</span>
+<span class="sd">    first device found with an EAN of 73-30130-67890-1.</span>
+
+<span class="sd">    If the device wanted is not currently connected, `Device` objects can be</span>
+<span class="sd">    created with their EAN and serial number (as this is the minimal</span>
+<span class="sd">    information needed to uniquely identify a specific device)::</span>
+
+<span class="sd">        dev = Device(ean=EAN.from_string(&#39;67890-1&#39;), serial=42)</span>
+
+<span class="sd">    Two `Device` objects can be checked for equality (whether they refer to the same</span>
+<span class="sd">    device) and be converted to a `str`. `Device.probe_info` can also be used</span>
+<span class="sd">    for a more verbose string representation that queries the device (if</span>
+<span class="sd">    connected) for various pieces of information.</span>
+
+<span class="sd">    This class also provides functions for creating the other objects of `canlib`:</span>
+
+<span class="sd">    * `canlib.Channel` -- `Device.channel`</span>
+<span class="sd">    * `canlib.ChannelData` -- `Device.channel_data`</span>
+<span class="sd">    * `canlib.IOControl` -- `Device.iocontrol`</span>
+<span class="sd">    * `kvmlib.Memorator`-- `Device.memorator`</span>
+<span class="sd">    * `linlib.Channel` -- `Device.lin_master` and `Device.lin_slave`</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        Device.ean (`canlib.EAN`): The EAN of this device.</span>
+<span class="sd">        Device.serial (`int`): The serial number of this device.</span>
+
+<span class="sd">        last_channel_number (`int`): The channel number this device was last</span>
+<span class="sd">            found on (used as an optimization; while the device stays on the</span>
+<span class="sd">            same CANlib channel there is no need for a linear search of all</span>
+<span class="sd">            channels).</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ean&quot;</span><span class="p">,</span> <span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="s2">&quot;last_channel_number&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Device.find"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.find">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">channel_number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">channel_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Searches for a specific device</span>
+
+<span class="sd">        Goes through all CANlib channels (from zero and up), until one of them</span>
+<span class="sd">        matches the given arguments. If an argument is omitted or `None`, any</span>
+<span class="sd">        device will match it. If no devices matches a</span>
+<span class="sd">        `canlib.CanNotFound` exception will be raised.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            channel_number (`int`): Find a device on this CANlib channel (number).</span>
+<span class="sd">            ean (`canlib.EAN`): Find a device with this EAN.</span>
+<span class="sd">            serial (`int`): Find a device with this serial number.</span>
+<span class="sd">            channel_name (`str`): Find a device with this CANlib channel name.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target_info</span> <span class="o">=</span> <span class="n">_ChannelInfo</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">channel_name</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">_find_channel</span><span class="p">(</span><span class="n">target_info</span><span class="p">)</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+        <span class="n">dev</span><span class="o">.</span><span class="n">last_channel_number</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">channel_number</span>  <span class="c1"># last known CANlib channel</span>
+        <span class="k">return</span> <span class="n">dev</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">):</span>
+        <span class="c1"># setval = super().__setattr__</span>
+        <span class="c1"># setval(&quot;ean&quot;, ean)</span>
+        <span class="c1"># setval(&quot;serial&quot;, serial)</span>
+
+        <span class="c1"># super() is annoying in python 2</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;ean&quot;</span><span class="p">,</span> <span class="n">ean</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="n">serial</span><span class="p">)</span>
+
+        <span class="c1"># The last channel number this device was found on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_channel_number</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="c1"># required in python 2</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">if</span> <span class="n">eq</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eq</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">eq</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Device</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ean</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">serial</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;last_channel_number&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s2">&quot; only supports setting last_channel_number&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># super().__setattr__(name, value)</span>
+            <span class="c1"># super() is annoying in python 2</span>
+            <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2">(ean=</span><span class="si">{ean!r}</span><span class="s2">, serial=</span><span class="si">{serial!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">ean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{ean}</span><span class="s2">:</span><span class="si">{serial}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Device.channel"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.channel">[docs]</a>    <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `canlib.Channel` for this device&#39;s first channel</span>
+
+<span class="sd">        The experimental attribute `_chan_no_on_card` may be given, the `int`</span>
+<span class="sd">        provided will be added (without any verifications) to the</span>
+<span class="sd">        `channel_number` where this device was found on, and may thus be used</span>
+<span class="sd">        to open a specific local channel on this device.</span>
+
+<span class="sd">        NOTE:</span>
+
+<span class="sd">            When using the `_chan_no_on_card` attribute, you must make sure</span>
+<span class="sd">            that the card actually have the assumed number of local channels.</span>
+<span class="sd">            Using this argument with a too large `int` could return a channel</span>
+<span class="sd">            belonging to a different device.</span>
+
+<span class="sd">        Arguments to `canlib.openChannel` other than the channel number</span>
+<span class="sd">        can be passed to this function.</span>
+
+<span class="sd">        .. versionchanged:: 1.13</span>
+<span class="sd">           Added attribute `_chan_no_on_card`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_chan_no_on_card</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="s1">&#39;_chan_no_on_card&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">_chan_no_on_card</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;_chan_no_on_card&quot;</span><span class="p">)</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;_chan_no_on_card&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Should we somehow (without affecting performance) check that _chan_no_on_card is small enough?</span>
+        <span class="n">channel_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">()</span> <span class="o">+</span> <span class="n">_chan_no_on_card</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.channel_data"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.channel_data">[docs]</a>    <span class="k">def</span> <span class="nf">channel_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `canlib.ChannelData` for this device&#39;s first channel&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Device.channel_number"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.channel_number">[docs]</a>    <span class="k">def</span> <span class="nf">channel_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An `int` with this device&#39;s CANlib channel number&quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">_find_channel</span><span class="p">(</span>
+            <span class="n">_ChannelInfo</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">),</span>
+            <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_channel_number</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_channel_number</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">channel_number</span>
+        <span class="k">return</span> <span class="n">info</span><span class="o">.</span><span class="n">channel_number</span></div>
+
+<div class="viewcode-block" id="Device.iocontrol"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.iocontrol">[docs]</a>    <span class="k">def</span> <span class="nf">iocontrol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `canlib.IOControl` for this device&#39;s first channel&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">IOControl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Device.isconnected"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.isconnected">[docs]</a>    <span class="k">def</span> <span class="nf">isconnected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `bool` whether this device can currently be found&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">CanNotFound</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Device.issubset"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.issubset">[docs]</a>    <span class="k">def</span> <span class="nf">issubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if device is a subset of other Device.</span>
+
+<span class="sd">        This can be used to see if a found device fulfills criteria specified</span>
+<span class="sd">        in other.  Setting an attribute to None is regarded as a Any. This</span>
+<span class="sd">        means that e.g. any serial number will be a subset of a serial number</span>
+<span class="sd">        specified as None.</span>
+
+<span class="sd">        .. versionadded:: 1.9</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">serial</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">ean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">ean</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Device.lin_master"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.lin_master">[docs]</a>    <span class="k">def</span> <span class="nf">lin_master</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `linlib.Channel` master for this device&#39;s first channel</span>
+
+<span class="sd">        Arguments to `linlib.openMaster` other than the channel number</span>
+<span class="sd">        can be passed to this function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">linlib</span><span class="o">.</span><span class="n">openMaster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">(),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.lin_slave"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.lin_slave">[docs]</a>    <span class="k">def</span> <span class="nf">lin_slave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `linlib.Channel` slave for this device&#39;s first channel</span>
+
+<span class="sd">        Arguments to `linlib.openSlave` other than the channel number</span>
+<span class="sd">        can be passed to this function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">linlib</span><span class="o">.</span><span class="n">openSlave</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">(),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.memorator"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.memorator">[docs]</a>    <span class="k">def</span> <span class="nf">memorator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `canlib.kvmlib.Memorator` for this device&#39;s first channel</span>
+
+<span class="sd">        Arguments to `canlib.openChannel` other than the channel number</span>
+<span class="sd">        can be passed to this function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">kvmlib</span><span class="o">.</span><span class="n">openDevice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">(),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.probe_info"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.probe_info">[docs]</a>    <span class="k">def</span> <span class="nf">probe_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `str` with information about this device</span>
+
+<span class="sd">        This function is useful when the `Device`&#39;s `str()` does not give</span>
+<span class="sd">        enough information while debugging. When the device is connected</span>
+<span class="sd">        various pieces of information such as the device name, firmware, and</span>
+<span class="sd">        driver name is given. When the device is not connected only basic</span>
+<span class="sd">        information can be given.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            Never inspect the return value of this function, only use it for</span>
+<span class="sd">            displaying information. Exactly what is shown depends on whether</span>
+<span class="sd">            the device is connected or not, and is not guaranteed to stay</span>
+<span class="sd">            consistent between versions.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_data</span><span class="p">()</span>
+            <span class="n">infos</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;CANlib Channel&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">(),</span>
+                <span class="s1">&#39;Card Number&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">card_number</span><span class="p">,</span>
+                <span class="s1">&#39;Device&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">channel_name</span><span class="p">,</span>
+                <span class="s1">&#39;Driver Name&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">driver_name</span><span class="p">,</span>
+                <span class="s1">&#39;EAN&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span>
+                <span class="s1">&#39;Firmware&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">card_firmware_rev</span><span class="p">,</span>
+                <span class="s1">&#39;Serial Number&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="n">_libs</span><span class="o">.</span><span class="n">canlib</span><span class="o">.</span><span class="n">CanNotFound</span><span class="p">:</span>
+            <span class="n">infos</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;EAN&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span>
+                <span class="s1">&#39;Last CANlib Channel&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_channel_number</span><span class="p">,</span>
+                <span class="s1">&#39;Serial Number&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">infos</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="c1"># We sort the keys before printing as pre python 3.6 the order of</span>
+        <span class="c1"># dictionary keys is arbitrary, and can change between calls.</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">infos</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="Device.remote"><a class="viewcode-back" href="../../reference/device.html#canlib.Device.remote">[docs]</a>    <span class="k">def</span> <span class="nf">remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A `canlib.kvrlib.RemoteDevice` for this device</span>
+
+<span class="sd">        Arguments to `canlib.kvrlib.openDevice` other than the channel number</span>
+<span class="sd">        can be passed to this function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_libs</span><span class="o">.</span><span class="n">kvrlib</span><span class="o">.</span><span class="n">openDevice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">(),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

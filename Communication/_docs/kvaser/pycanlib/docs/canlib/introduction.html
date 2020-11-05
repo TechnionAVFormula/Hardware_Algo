@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Initialization" href="initialization.html" />
+    <link rel="prev" title="Using canlib (CANlib)" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hello-can">Hello, CAN!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#canlib-core-api-calls">canlib Core API Calls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devicesandchannels.html">Devices and Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openchannel.html">Open Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sendandreceive.html">Send and Receive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buserrors.html">Bus Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iopinhandling.html">I/O Pin Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="hello-can">
+<h2>Hello, CAN!<a class="headerlink" href="#hello-can" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start with a simple example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The CANlib library is initialized when the canlib module is imported.</span>
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">Frame</span>
+
+<span class="c1"># Open a channel to a CAN circuit. In this case we open channel 0 which</span>
+<span class="c1"># should be the first channel on the CAN interface. EXCLUSIVE means we don&#39;t</span>
+<span class="c1"># want to share this channel with any other currently executing program.</span>
+<span class="c1"># We also set the CAN bus bit rate to 250 kBit/s, using a set of predefined</span>
+<span class="c1"># bus parameters.</span>
+<span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span>
+    <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">EXCLUSIVE</span><span class="p">,</span>
+    <span class="n">bitrate</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_250K</span>
+<span class="p">)</span>
+
+<span class="c1"># Set the CAN bus driver type to NORMAL.</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">Driver</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">)</span>
+
+<span class="c1"># Activate the CAN chip.</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+<span class="c1"># Transmit a message with (11-bit) CAN id = 123, length 6 and contents</span>
+<span class="c1"># (decimal) 72, 69, 76, 76, 79, 33.</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">b</span><span class="s1">&#39;HELLO!&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># Wait until the message is sent or at most 500 ms.</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">writeSync</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Inactivate the CAN chip.</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+
+<span class="c1"># Close the channel.</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="canlib-core-api-calls">
+<h2>canlib Core API Calls<a class="headerlink" href="#canlib-core-api-calls" title="Permalink to this headline">¶</a></h2>
+<p>The following calls can be considered the “core” of canlib as they are essential
+for almost any program that uses the CAN bus:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.openChannel</span></code></a> and <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.close" title="canlib.canlib.Channel.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.close</span></code></a></li>
+<li><a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.busOn" title="canlib.canlib.Channel.busOn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.busOn</span></code></a> and <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.busOff" title="canlib.canlib.Channel.busOff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.busOff</span></code></a></li>
+<li><a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.read</span></code></a></li>
+<li><a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.write" title="canlib.canlib.Channel.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.write</span></code></a> and <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.writeSync" title="canlib.canlib.Channel.writeSync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.writeSync</span></code></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="initialization.html" class="btn btn-neutral float-right" title="Initialization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Using canlib (CANlib)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.enums &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span><span class="p">,</span> <span class="n">CFlag</span>
+
+
+<div class="viewcode-block" id="DeviceUsage"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.DeviceUsage">[docs]</a><span class="k">class</span> <span class="nc">DeviceUsage</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrDeviceUsage_xxx</span>
+
+<span class="sd">    Remote device usage status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">FREE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">REMOTE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">USB</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CONFIG</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="Accessibility"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.Accessibility">[docs]</a><span class="k">class</span> <span class="nc">Accessibility</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrAccessibility_xxx</span>
+
+<span class="sd">    Remote device accessability status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">PUBLIC</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PROTECTED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">PRIVATE</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="Availability"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.Availability">[docs]</a><span class="k">class</span> <span class="nc">Availability</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrAvailability_xxx</span>
+
+<span class="sd">    Device avalability flags.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mh">0x0</span>
+    <span class="n">FOUND_BY_SCAN</span> <span class="o">=</span> <span class="mh">0x1</span>
+    <span class="n">STORED</span> <span class="o">=</span> <span class="mh">0x2</span></div>
+
+
+<div class="viewcode-block" id="ConfigMode"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.ConfigMode">[docs]</a><span class="k">class</span> <span class="nc">ConfigMode</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrConfigMode_xxx</span>
+
+<span class="sd">    Configuration mode.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">RW</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ERASE</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">NOT_INITIALIZED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">GENERIC</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="n">CHECKSUM</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+    <span class="n">PARAMETER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+    <span class="n">PASSWORD</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">BLANK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+    <span class="n">NO_DEVICE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+    <span class="n">NO_ANSWER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+    <span class="n">NOT_IMPLEMENTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9</span>
+    <span class="n">PERMISSION_DENIED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+    <span class="n">OUT_OF_SPACE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span>
+    <span class="n">NO_SERVICE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span>
+    <span class="n">DUPLICATED_DEVICE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">13</span>
+    <span class="n">XML_VALIDATION</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>
+    <span class="n">BUFFER_TOO_SMALL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span></div>
+
+
+<div class="viewcode-block" id="NetworkState"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.NetworkState">[docs]</a><span class="k">class</span> <span class="nc">NetworkState</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrNetworkState_xxx</span>
+
+<span class="sd">    States for network connection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">INVALID</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">STARTUP</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">INITIALIZING</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">NOT_CONNECTED</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">CONNECTION_DELAY</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">CONNECTING</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">CONNECTED</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">AUTHENTICATING</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">AUTHENTICATION_FAILED</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">ONLINE</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">FAILED_MIC</span> <span class="o">=</span> <span class="mi">11</span></div>
+
+
+<div class="viewcode-block" id="BasicServiceSet"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.BasicServiceSet">[docs]</a><span class="k">class</span> <span class="nc">BasicServiceSet</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrBss_xxx</span>
+
+<span class="sd">    Basic Service Set.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">INFRASTRUCTURE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">INDEPENDENT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ANY</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="RegulatoryDomain"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.RegulatoryDomain">[docs]</a><span class="k">class</span> <span class="nc">RegulatoryDomain</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrRegulatoryDomain_xxx</span>
+
+<span class="sd">    Regulatory domain.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">JAPAN_TELEC</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">EUROPE_ETSI</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">NORTH_AMERICA_FCC</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">WORLD</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CHINA_MII</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="RemoteState"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.RemoteState">[docs]</a><span class="k">class</span> <span class="nc">RemoteState</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrRemoteState_xxx</span>
+
+<span class="sd">    State of connection to device.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">VOID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">AVAILABLE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">DISCOVERED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">STARTING</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">STARTED</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">CONNECTION_DOWN</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">CONNECTION_UP</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">REDISCOVER</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">UNWILLING</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">REDISCOVER_PENDING</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">CLOSING</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">REMOVE_ME</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">STANDBY</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">CONFIG_CHANGED</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">STOPPING</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">INSTALLING</span> <span class="o">=</span> <span class="mi">15</span></div>
+
+
+<div class="viewcode-block" id="AddressType"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.AddressType">[docs]</a><span class="k">class</span> <span class="nc">AddressType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrAddressType_xxx</span>
+
+<span class="sd">    Type of device address.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Ports are currently not used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">IPV4</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">IPV6</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">IPV4_PORT</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MAC</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="AddressTypeFlag"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.AddressTypeFlag">[docs]</a><span class="k">class</span> <span class="nc">AddressTypeFlag</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrAddressTypeFlag_xxx</span>
+
+<span class="sd">    Flags for setting what addresses that should be returned by</span>
+<span class="sd">    ``kvrDiscoveryGetDefaultAddresses()``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ALL</span> <span class="o">=</span> <span class="mh">0xff</span>
+    <span class="n">BROADCAST</span> <span class="o">=</span> <span class="mh">0x01</span>
+    <span class="n">STORED</span> <span class="o">=</span> <span class="mh">0x02</span></div>
+
+
+<div class="viewcode-block" id="ServiceState"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.ServiceState">[docs]</a><span class="k">class</span> <span class="nc">ServiceState</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrServiceState_xxx</span>
+
+<span class="sd">    Current service state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">VOID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">AVAILABLE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">DISCOVERED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">STARTING</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">STARTED</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">CONNECTION_DOWN</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">CONNECTION_UP</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">REDISCOVER</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">UNWILLING</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">REDISCOVER_PENDING</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">CLOSING</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">REMOVE_ME</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">STANDBY</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">CONFIG_CHANGED</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">STOPPING</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">INSTALLING</span> <span class="o">=</span> <span class="mi">15</span></div>
+
+
+<div class="viewcode-block" id="StartInfo"><a class="viewcode-back" href="../../../reference/kvrlib/enums.html#canlib.kvrlib.StartInfo">[docs]</a><span class="k">class</span> <span class="nc">StartInfo</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvrStartInfo_xxx</span>
+
+<span class="sd">    Current start information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">START_OK</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ERR_IN_USE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ERR_PWD</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">ERR_NOTME</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">ERR_CONFIGURING</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">ERR_PARAM</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">ERR_ENCRYPTION_PWD</span> <span class="o">=</span> <span class="mi">7</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

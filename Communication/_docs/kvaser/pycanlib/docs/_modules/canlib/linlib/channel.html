@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.linlib.channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.linlib.channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.linlib.channel</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..frame</span> <span class="k">import</span> <span class="n">LINFrame</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ChannelType</span><span class="p">,</span> <span class="n">Setup</span><span class="p">,</span> <span class="n">MessageFlag</span>
+<span class="kn">from</span> <span class="nn">.structures</span> <span class="k">import</span> <span class="n">MessageInfo</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+
+<span class="n">FirmwareVersion</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;FirmwareVersion&#39;</span><span class="p">,</span> <span class="s1">&#39;boot_version app_version&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="openChannel"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.openChannel">[docs]</a><span class="k">def</span> <span class="nf">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">channel_type</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open a channel to a LIN interface.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel_number (`int`): The number of the channel. This is the same</span>
+<span class="sd">            channel number as used by `canlib.canlib.ppenChannel`.</span>
+<span class="sd">        channel_type (`ChannelType`): Whether the LIN interface will be a</span>
+<span class="sd">            master or slave.</span>
+<span class="sd">        bps (`int` or `None`): If not `None`, `Channel.setBitrate` will be called with</span>
+<span class="sd">            this value before the channel is returned.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (`Channel`): The opened channel</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        For DRV Lin: The cable must be powered and connected to a LAPcan channel.</span>
+<span class="sd">        For Kvaser LIN Leaf: The Leaf must be powered from the LIN side.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">linOpenChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">channel_type</span><span class="p">)</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">setBitrate</span><span class="p">(</span><span class="n">bps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">channel</span></div>
+
+
+<div class="viewcode-block" id="openMaster"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.openMaster">[docs]</a><span class="k">def</span> <span class="nf">openMaster</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open a channel as a master</span>
+
+<span class="sd">    This function simply calls `openChannel` with `channel_type` set to</span>
+<span class="sd">    `ChannelType.MASTER`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ChannelType</span><span class="o">.</span><span class="n">MASTER</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="n">bps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="openSlave"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.openSlave">[docs]</a><span class="k">def</span> <span class="nf">openSlave</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open a channel as a slave</span>
+
+<span class="sd">    This function simply calls `openChannel` with `channel_type` set to</span>
+<span class="sd">    `ChannelType.SLAVE`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ChannelType</span><span class="o">.</span><span class="n">SLAVE</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="n">bps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Channel"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel">[docs]</a><span class="k">class</span> <span class="nc">Channel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A LINlib channel</span>
+
+<span class="sd">    This class is normally instantiated with `openMaster` or `openSlave`.</span>
+
+<span class="sd">    Channels are automatically closed on garbage collection, and can</span>
+<span class="sd">    also be used as context managers in which case they close as soon as the</span>
+<span class="sd">    context exits.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">handle</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># def readTimer():</span>
+    <span class="c1">#     raise NotImplementedError</span>
+
+<div class="viewcode-block" id="Channel.busOff"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.busOff">[docs]</a>    <span class="k">def</span> <span class="nf">busOff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Go bus off</span>
+
+<span class="sd">        This function deactivates the LIN interface. It will not participate</span>
+<span class="sd">        further in the LIN bus traffic.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linBusOff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.busOn"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.busOn">[docs]</a>    <span class="k">def</span> <span class="nf">busOn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Go bus on</span>
+
+<span class="sd">        This function activates the LIN interface.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linBusOn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.clearMessage"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.clearMessage">[docs]</a>    <span class="k">def</span> <span class="nf">clearMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clear a message buffer for a LIN slave</span>
+
+<span class="sd">        The message buffer will not answer next time it is polled.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linClearMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">msg_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.close"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close this LINlib channel</span>
+
+<span class="sd">        Closes an open handle to a LIN channel.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            It is normally not necessary to call this function directly, as the</span>
+<span class="sd">            internal handle is automatically closed when the `Channel` object</span>
+<span class="sd">            is garbage collected.</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">linClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Channel.getCanHandle"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.getCanHandle">[docs]</a>    <span class="k">def</span> <span class="nf">getCanHandle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the CAN handle given an open LIN handle&quot;&quot;&quot;</span>
+        <span class="n">can_handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linGetCanHandle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">can_handle</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">can_handle</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.getFirmwareVersion"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.getFirmwareVersion">[docs]</a>    <span class="k">def</span> <span class="nf">getFirmwareVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the firmware version from the LIN interface</span>
+
+<span class="sd">        Returns a `FirmwareVersion` namedtuple containing `boot_version` and</span>
+<span class="sd">        `app_version` that are `canlib.VersionNumber` namedtuples. If only one of</span>
+<span class="sd">        these is needed, the return value can be unpacked as such::</span>
+
+<span class="sd">            boot_ver, app_ver = channel.getFirmwareVersion()</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            For newer interfaces use `getChannelData` with</span>
+<span class="sd">            `ChannelData.CARD_FIRMWARE_REV` instead.</span>
+
+<span class="sd">            The version numbers aren&#39;t valid until `Channel.busOn` has been</span>
+<span class="sd">            called.</span>
+
+<span class="sd">            The firmware in the LIN interface is divided into two parts, the</span>
+<span class="sd">            boot code and the application. The boot code is used only when</span>
+<span class="sd">            reprogramming (reflashing) the LIN interface. The application</span>
+<span class="sd">            handles all LIN communication.</span>
+
+<span class="sd">            Version numbers are, since the precambric era, divided into a major</span>
+<span class="sd">            version number, a minor version number and a build</span>
+<span class="sd">            number. These are usually written like, for example,</span>
+<span class="sd">            3.2.12. Here the major number is 3, the minor number 2 and the</span>
+<span class="sd">            build number 12.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bootver</span> <span class="o">=</span> <span class="p">[</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">appver</span> <span class="o">=</span> <span class="p">[</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+
+        <span class="c1"># In Python 2, you can&#39;t use &#39;*&#39; on more than one argument</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ub</span><span class="p">)</span> <span class="k">for</span> <span class="n">ub</span> <span class="ow">in</span> <span class="n">bootver</span><span class="p">)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ub</span><span class="p">)</span> <span class="k">for</span> <span class="n">ub</span> <span class="ow">in</span> <span class="n">appver</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linGetFirmwareVersion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="o">*</span><span class="n">refs</span><span class="p">)</span>
+        <span class="n">bootver</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">bootver</span><span class="p">]</span>
+        <span class="n">appver</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">appver</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">FirmwareVersion</span><span class="p">(</span>
+            <span class="n">boot_version</span><span class="o">=</span><span class="n">VersionNumber</span><span class="p">(</span><span class="o">*</span><span class="n">bootver</span><span class="p">),</span>
+            <span class="n">app_version</span><span class="o">=</span><span class="n">VersionNumber</span><span class="p">(</span><span class="o">*</span><span class="n">appver</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.read"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a message from the LIN interface</span>
+
+<span class="sd">        If a message is available for reception, linOK is returned. This is a</span>
+<span class="sd">        non-blocking call. It waits until a message is received in the LIN</span>
+<span class="sd">        interface, or the specified timeout period elapses.</span>
+
+<span class="sd">        This may return a frame sent by `writeMessage` or `writeWakeup`.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This call will also return echoes of what the LIN interface is</span>
+<span class="sd">            transmitting with `writeMessage`. In other words, the LIN</span>
+<span class="sd">            interface can hear itself.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (`int`): Timeout in milliseconds.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (`canlib.LINFrame`)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">_MAX_SIZE</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">_MAX_SIZE</span><span class="p">)</span>
+        <span class="n">dlc</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">MessageInfo</span><span class="p">()</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">linReadMessageWait</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">id_</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">dlc</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">flags</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">info</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">_MAX_SIZE</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LINFrame</span><span class="p">(</span>
+            <span class="n">id_</span><span class="o">=</span><span class="n">id_</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">raw</span><span class="p">[:</span><span class="n">length</span><span class="p">]),</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">MessageFlag</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">value</span><span class="p">)),</span>  <span class="c1"># in Python 2, we get a long</span>
+            <span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.requestMessage"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.requestMessage">[docs]</a>    <span class="k">def</span> <span class="nf">requestMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request a message from a slave</span>
+
+<span class="sd">        This function writes a LIN message header to the LIN bus. A slave in</span>
+<span class="sd">        the system is then expected to fill in the header with data.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This call is only available in master mode.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linRequestMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">msgid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.setBitrate"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.setBitrate">[docs]</a>    <span class="k">def</span> <span class="nf">setBitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the bitrate in bits per second</span>
+
+<span class="sd">        This function sets the bit rate for a master, or the initial bit rate</span>
+<span class="sd">        for a slave. The LIN interface should not be on-bus when this function</span>
+<span class="sd">        is called.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The LIN Interface should not be on bus.</span>
+<span class="sd">            Supported bit rates are 1000 - 20000 bits per second.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="mi">1000</span> <span class="o">&lt;=</span> <span class="n">bps</span> <span class="o">&lt;=</span> <span class="mi">20000</span>  <span class="c1"># qqqdaca nicer error</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linSetBitrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">bps</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.setupIllegalMessage"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.setupIllegalMessage">[docs]</a>    <span class="k">def</span> <span class="nf">setupIllegalMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgid</span><span class="p">,</span> <span class="n">disturb_flags</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a corrupted LIN message</span>
+
+<span class="sd">        Using this function, it is possible to use the LIN interface to create</span>
+<span class="sd">        corrupted LIN messages. You call the function once for each LIN</span>
+<span class="sd">        identifier that should be affected.</span>
+
+<span class="sd">        To return to normal mode, either restart the LIN interface (by going</span>
+<span class="sd">        off bus and on the bus again) or call the function with delay and</span>
+<span class="sd">        disturb_flags set to zero.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            msgid (`int`): The identifier of the LIN message</span>
+
+<span class="sd">            disturb_flags (`MessageDisturb`): One or more of the</span>
+<span class="sd">                `MessageDisturb` flags.</span>
+
+<span class="sd">            delay (`int`): The delay parameter will result in a delay of this</span>
+<span class="sd">                many bittimes after the header and before the first data byte.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The LIN Interface must be on bus for this command to work.</span>
+<span class="sd">            It is supported in firmware version 2.4.1 and later.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linSetupIllegalMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">msgid</span><span class="p">,</span> <span class="n">disturb_flags</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.setupLIN"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.setupLIN">[docs]</a>    <span class="k">def</span> <span class="nf">setupLIN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">Setup</span><span class="o">.</span><span class="n">VARIABLE_DLC</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setup the LIN interface</span>
+
+<span class="sd">        This function changes various settings on a LIN Interface that is on</span>
+<span class="sd">        bus. When going on bus, the bit rate and the flag values listed below</span>
+<span class="sd">        are set to the default value (either as hard-coded in the firmware, or</span>
+<span class="sd">        as stored in the non-volatile memory of the LIN Interface).</span>
+
+<span class="sd">        With this function, you can do one or more of the following things:</span>
+
+<span class="sd">        * Select checksum according to LIN 2.0</span>
+
+<span class="sd">        * Turn variable message length off. The message length then will depend</span>
+<span class="sd">          on the message ID.</span>
+
+<span class="sd">        In master mode it is also possible to change the bit rate without going</span>
+<span class="sd">        off bus first.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The LIN Interface must be on bus for this command to work.</span>
+<span class="sd">            It is supported in firmware version 2.5.1 and later.</span>
+<span class="sd">            For LIN 2.0 compliance, you must specify both LIN_ENHANCED_CHECKSUM</span>
+<span class="sd">            and LIN_VARIABLE_DLC.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            flags (`Setup`): One or more of the `Setup` flags</span>
+
+<span class="sd">            bps (`int`): The bit rate in bits per second. This parameter can be</span>
+<span class="sd">                used only in master mode. The bit rate is set without going off</span>
+<span class="sd">                bus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linSetupLIN</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">bps</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.updateMessage"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.updateMessage">[docs]</a>    <span class="k">def</span> <span class="nf">updateMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update a message buffer in a slave</span>
+
+<span class="sd">        This function updates a message buffer in a slave. The contents of the</span>
+<span class="sd">        message buffer will be used the next time the slave is polled for the</span>
+<span class="sd">        specified LIN message id.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The LIN Interface must be on bus.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            frame (`canlib.Frame`): The information to be updated. Only the `Frame.id`,</span>
+<span class="sd">                `Frame.data`, and `Frame.dlc` attributes are used. Note that the frame can,</span>
+<span class="sd">                but not need not, be a `canlib.LINFrame`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">void_p_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">)(</span><span class="o">*</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linUpdateMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">void_p_data</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeMessage"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.writeMessage">[docs]</a>    <span class="k">def</span> <span class="nf">writeMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a LIN message</span>
+
+<span class="sd">        Write a LIN message. It is advisable to wait until the message is</span>
+<span class="sd">        echoed by `read` before transmitting a new message, or in</span>
+<span class="sd">        case of a schedule table being used, transmit the next message when the</span>
+<span class="sd">        previous one is known to be complete.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Only available in master mode</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            frame (`canlib.Frame`) :: The information to be updated. Only the `Frame.id`,</span>
+<span class="sd">                `Frame.data`, and `Frame.dlc` attributes are used. Note that the frame can,</span>
+<span class="sd">                but not need not, be a `canlib.LINFrame`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">void_p_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">)(</span><span class="o">*</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linWriteMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">void_p_data</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeSync"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.writeSync">[docs]</a>    <span class="k">def</span> <span class="nf">writeSync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make sure all message transmitted to the interface have been received</span>
+
+<span class="sd">        *timeout* is in milliseconds.</span>
+
+<span class="sd">        When messages are transmitted to the LIN Interface, they are queued by</span>
+<span class="sd">        the driver before appearing on the CAN bus.</span>
+
+<span class="sd">        If the LIN Interface is in master mode and a LIN message has been</span>
+<span class="sd">        transmitted with `writeMessage`, this function will return when the LIN</span>
+<span class="sd">        Interface has received the message. If another LIN message is being</span>
+<span class="sd">        received or transmitted, the message will not be transmitted on the LIN</span>
+<span class="sd">        bus at once. And even if the LIN Interface is idle, the header of the</span>
+<span class="sd">        new message will just have been started when `writeSync` returns.</span>
+
+<span class="sd">        After calling `updateMessage` and `clearMessage` for a slave, this</span>
+<span class="sd">        function is enough to know that the LIN Interface is updated.</span>
+
+<span class="sd">        After `writeMessage`, it is advisable to wait until the message is</span>
+<span class="sd">        echoed by `read` before transmitting a new message, or in case</span>
+<span class="sd">        of a schedule table being used, transmit the next message when the</span>
+<span class="sd">        previous one is known to be complete.</span>
+
+<span class="sd">        When, in master mode, a message should be transmitted after a poll</span>
+<span class="sd">        (reception) is done, it might be necessary to call `writeMessage`</span>
+<span class="sd">        before the result is received via `read` as the LIN Interface</span>
+<span class="sd">        waits up to the maximum frame length before knowing a received message</span>
+<span class="sd">        is complete. A new message to transmit will force completion if the</span>
+<span class="sd">        currently received one.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linWriteSync</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeWakeup"><a class="viewcode-back" href="../../../reference/linlib/channel.html#canlib.linlib.Channel.writeWakeup">[docs]</a>    <span class="k">def</span> <span class="nf">writeWakeup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write one or more wakeup frames</span>
+
+<span class="sd">        If *count* is zero (the default), one single wakeup frame is</span>
+<span class="sd">        transmitted. If *count* &gt; 1, several wakeup frames are transmitted</span>
+<span class="sd">        spaced with *interval* bit times. The LIN interface will interrupt the</span>
+<span class="sd">        sequence when a LIN message or another command is received. The stream</span>
+<span class="sd">        of wakeups will be recived as incoming messages with the</span>
+<span class="sd">        `MessageFlag.RX` flag.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            count (`int`): The number of wakeup frames to send.</span>
+<span class="sd">            interval (`int`): The time, in bit times, between the wakeup  frames.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">linWriteWakeup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

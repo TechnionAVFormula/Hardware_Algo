@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.iocontrol &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.iocontrol</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.iocontrol</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">IOControlItem</span><span class="p">,</span> <span class="n">BusTypeGroup</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+<span class="n">Property</span> <span class="o">=</span> <span class="nb">dict</span>
+<span class="n">Function</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Function&#39;</span><span class="p">,</span> <span class="s1">&#39;item arg ret doc&#39;</span><span class="p">)</span>
+
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">):</span>
+    <span class="nb">range</span> <span class="o">=</span> <span class="n">xrange</span>
+
+
+<span class="k">def</span> <span class="nf">_get_tx_interval</span><span class="p">(</span><span class="n">ioc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ioc</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">TX_INTERVAL</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mh">0xffffffff</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="c1"># In Python 2, xrange requires its arguments to fit into a C long (sys.maxint, which is 32bit on 64bit windows)</span>
+<span class="c1"># https://stackoverflow.com/questions/42256542/python-overflow-error-int-too-large-to-convert-to-c-long</span>
+<span class="c1">#</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_tx_interval_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">OverflowError</span><span class="p">:</span>
+    <span class="n">_tx_interval_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span><span class="p">)</span>
+
+<span class="c1"># wintypes does not exist on Linux</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_c_win_handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">wintypes</span><span class="o">.</span><span class="n">HANDLE</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="n">_c_win_handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span>
+
+<span class="n">ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># properties</span>
+    <span class="s1">&#39;timer_scale&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_TIMER_SCALE</span><span class="p">,</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_TIMER_SCALE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the time-stamp clock resolution in microseconds.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;txack&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_TXACK</span><span class="p">,</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_TXACK</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;0 for Transmit Acknowledges off, 1 for Transmit Acknowledges on, and 2 for Transmit Acknowledges off, even for the driver&#39;s internal usage (this will break parts of the library).&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;rx_buffer_level&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_RX_BUFFER_LEVEL</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the approximate receive queue level. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;tx_buffer_level&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_TX_BUFFER_LEVEL</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the approximate transmit queue level. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;txrq&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_TXRQ</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether Transmit Requests are turned on. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;eventhandle&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_EVENTHANDLE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">_c_win_handle</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the windows event handle. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;driverhandle&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_DRIVERHANDLE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">_c_win_handle</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;The windows handle related to the CANlib handle. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;report_access_errors&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_REPORT_ACCESS_ERRORS</span><span class="p">,</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_REPORT_ACCESS_ERRORS</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether Access Reporting is turned on&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="c1"># &#39;user_ioport&#39;: Property(  # winonly</span>
+    <span class="c1">#     getitem=IOControlItem.GET_USER_IOPORT,</span>
+    <span class="c1">#     setitem=IOControlItem.SET_USER_IOPORT,</span>
+    <span class="c1">#     ctype=UserIOPortData,</span>
+    <span class="c1">#     ptype=UserIOPortData,</span>
+    <span class="c1"># ),</span>
+    <span class="s1">&#39;rx_queue_size&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_RX_QUEUE_SIZE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the size of the receive buffer. Can only be used off-bus. Not implemented in Linux. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;buson_time_auto_reset&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_BUSON_TIME_AUTO_RESET</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether the CAN clock is reset at bus-on. Not implemented in Linux. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;local_txecho&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_LOCAL_TXECHO</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether local transmit echo is turned on. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;error_frames_reporting&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_ERROR_FRAMES_REPORTING</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether error frames are reported. Not implemented in Linux. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;channel_quality&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_CHANNEL_QUALITY</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` between 0 and 100 (inclusively) with the quality of the channel in percent. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;roundtrip_time&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_ROUNDTRIP_TIME</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the roundtrip time in milliseconds. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;bus_type&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_BUS_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">BusTypeGroup</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `BusTypeGroup` enum. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;devname_ascii&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_DEVNAME_ASCII</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the current device name. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;time_since_last_seen&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_TIME_SINCE_LAST_SEEN</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the time in milliseconds since the last communication occured. Not implemented in Linux. Read-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;throttle_scaled&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>  <span class="c1"># winonly</span>
+        <span class="n">getitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">GET_THROTTLE_SCALED</span><span class="p">,</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_THROTTLE_SCALED</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` between 0 and 100 (inclusively) where 0 means the device is very responsive but generates more CPU load and 100 means the device is less responsive with less CPU load. Note that not all devices support setting this. Some hardware will accept this command but neglect it. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;brlimit&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">SET_BRLIMIT</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the hardware bitrate limit, or zero for the device&#39;s default. Write-only.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;tx_interval&#39;</span><span class="p">:</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">getfunc</span><span class="o">=</span><span class="n">_get_tx_interval</span><span class="p">,</span>
+        <span class="n">setitem</span><span class="o">=</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">TX_INTERVAL</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="n">_tx_interval_range</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the number of microseconds with the minimum CAN message transmit interval.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+
+    <span class="c1"># functions</span>
+    <span class="s1">&#39;prefer_ext&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">PREFER_EXT</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Tells CANlib to assume `MessageFlag.EXT` when sending messages if neither `MessageFlag.EXT` or `MessageFlag.STD` is specified. Not implemented in Linux.&quot;</span><span class="p">)),</span>
+
+    <span class="s1">&#39;prefer_std&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">PREFER_STD</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Tells CANlib to assume `MessageFlag.STD` when sending messages if neither `MessageFlag.EXT` or `MessageFlag.STD` is specified. Not implemented in Linux.&quot;</span><span class="p">)),</span>
+
+    <span class="s1">&#39;clear_error_counters&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">CLEAR_ERROR_COUNTERS</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Tells CANlib to clear the CAN error counters. CAN error counters on device side are NOT updated. It is recommended to use `reset_overrun_count` to reset overrun status. Not implemented in Linux.&quot;</span><span class="p">)),</span>
+
+    <span class="s1">&#39;flush_rx_buffer&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">FLUSH_RX_BUFFER</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Discard the current contents of the RX queue.&quot;</span><span class="p">)),</span>
+
+    <span class="s1">&#39;flush_tx_buffer&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">FLUSH_TX_BUFFER</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Discard the current contents of the TX queue.&quot;</span><span class="p">)),</span>
+
+    <span class="s1">&#39;connect_to_virtual_bus&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span>
+        <span class="n">IOControlItem</span><span class="o">.</span><span class="n">CONNECT_TO_VIRTUAL_BUS</span><span class="p">,</span>
+        <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;Connects the channel to the virtual bus number `value`.&quot;</span>
+    <span class="p">),</span>
+
+    <span class="s1">&#39;disconnect_from_virtual_bus&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span>
+        <span class="n">IOControlItem</span><span class="o">.</span><span class="n">DISCONNECT_FROM_VIRTUAL_BUS</span><span class="p">,</span>
+        <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;Disconnects the channel from the virtual bus number `value`.&quot;</span>
+    <span class="p">),</span>
+
+    <span class="s1">&#39;reset_overrun_count&#39;</span><span class="p">:</span> <span class="n">Function</span><span class="p">(</span><span class="n">IOControlItem</span><span class="o">.</span><span class="n">RESET_OVERRUN_COUNT</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Resets overrun count and flags.&quot;</span><span class="p">)),</span>
+<span class="p">}</span>
+<span class="c1"># # functions</span>
+<span class="c1"># &quot;canIOCTL_PREFER_EXT&quot;, 1, None</span>
+<span class="c1"># &quot;canIOCTL_PREFER_STD&quot;, 2, None</span>
+<span class="c1"># &quot;canIOCTL_CLEAR_ERROR_COUNTERS&quot;, 5, None</span>
+<span class="c1"># &quot;canIOCTL_FLUSH_RX_BUFFER&quot;, 10, None</span>
+<span class="c1"># &quot;canIOCTL_FLUSH_TX_BUFFER&quot;, 11, None</span>
+<span class="c1"># &quot;canIOCTL_CONNECT_TO_VIRTUAL_BUS&quot;, 22, in, [0-31]</span>
+<span class="c1"># &quot;canIOCTL_DISCONNECT_FROM_VIRTUAL_BUS&quot;, 23, in, [0-31]</span>
+<span class="c1"># &quot;canIOCTL_RESET_OVERRUN_COUNT&quot;, 44, None</span>
+
+<span class="c1"># # NotImplemented</span>
+<span class="c1"># &quot;canIOCTL_SET_BYPASS_MODE&quot;, 15, NotImplemented</span>
+
+<span class="c1"># # NotSupported</span>
+<span class="c1"># &quot;canIOCTL_GET_TREF_LIST&quot;, 39, get, [int64]:(ref, time), &quot;not supported&quot;</span>
+
+<span class="c1"># # internal use_planka</span>
+<span class="c1"># &quot;canIOCTL_SET_WAKEUP&quot;, 16, internal use</span>
+<span class="c1"># &quot;canIOCTL_MAP_RXQUEUE&quot;, 18, internal</span>
+<span class="c1"># &quot;canIOCTL_GET_WAKEUP&quot;, 19, internal</span>
+<span class="c1"># &quot;canIOCTL_SET_BUFFER_WRAPAROUND_MODE&quot;, 26, internal</span>
+<span class="c1"># &quot;canIOCTL_SET_USB_THROTTLE&quot;, 28, internal</span>
+<span class="c1"># &quot;canIOCTL_GET_USB_THROTTLE&quot;, 29, internal</span>
+
+<span class="c1"># &quot;canIOCTL_LIN_MODE&quot;, 45, ???</span>
+
+
+<div class="viewcode-block" id="IOControl"><a class="viewcode-back" href="../../../reference/canlib/iocontrol.html#canlib.canlib.IOControl">[docs]</a><span class="k">class</span> <span class="nc">IOControl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1"># There&#39;s an unusual amount of work to create a docstring, so you can skip</span>
+    <span class="c1"># it by setting Python&#39;s optimization level (with the -O flag).</span>
+    <span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
+        <span class="c1"># Documenting this class is annoying:</span>
+        <span class="n">_func_docs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">_prop_docs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">ATTRIBUTES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Function</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+                <span class="n">_func_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        .. function:: </span><span class="si">{name}</span><span class="s2">(</span><span class="si">{args}</span><span class="s2">)</span>
+
+<span class="s2">           </span><span class="si">{desc}</span><span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">attr</span><span class="o">.</span><span class="n">doc</span><span class="p">))</span>
+                <span class="k">del</span> <span class="n">args</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Property</span><span class="p">)</span>
+                <span class="n">_prop_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            </span><span class="si">{name}</span><span class="s2">: </span><span class="si">{desc}</span><span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">attr</span><span class="p">[</span><span class="s1">&#39;__doc__&#39;</span><span class="p">]))</span>
+
+        <span class="k">del</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span>
+        <span class="c1"># But now the documentation can be generated:</span>
+
+        <span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Helper object for using `canIoCtl`</span>
+
+<span class="s2">        Provides a variety of functionality, some of which are represented as</span>
+<span class="s2">        attributes of this object and some as functions. See the respective</span>
+<span class="s2">        entries below for more information.</span>
+
+<span class="s2">        Attributes:</span>
+<span class="s2">    </span><span class="si">{props}</span><span class="s2"></span>
+
+<span class="s2">    </span><span class="si">{funcs}</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">_prop_docs</span><span class="p">)),</span> <span class="n">funcs</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">_func_docs</span><span class="p">)))</span>
+        <span class="k">del</span> <span class="n">_func_docs</span><span class="p">,</span> <span class="n">_prop_docs</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">ATTRIBUTES</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2"> object has no attribute </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Property</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;getitem&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getprop</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s1">&#39;getfunc&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;getfunc&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> attribute of </span><span class="si">{cls}</span><span class="s2"> object isn&#39;t readable&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Function</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getfunc</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">ATTRIBUTES</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2"> has no attribute </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Property</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;setitem&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setprop</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> attribute of </span><span class="si">{cls}</span><span class="s2"> object isn&#39;t writable&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_getfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="n">item</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">assert</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Return values are not supported&quot;</span>
+
+        <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ptype</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">ctype</span> <span class="o">=</span> <span class="n">arg</span>
+
+            <span class="k">def</span> <span class="nf">_dynamic_iocontrol_function</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">ptype</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{rec}</span><span class="s2"> received, expected </span><span class="si">{exp}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">rec</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="n">ptype</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{rec!r}</span><span class="s2"> received, expected a value in </span><span class="si">{exp!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">rec</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="n">values</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ctype</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">_dynamic_iocontrol_function</span>
+
+    <span class="k">def</span> <span class="nf">_getprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;getitem&#39;</span><span class="p">]</span>
+        <span class="n">ctype</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;ctype&#39;</span><span class="p">]</span>
+        <span class="n">ptype</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;ptype&#39;</span><span class="p">]</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ctype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ptype</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ptype</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">ptype</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_setprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;setitem&#39;</span><span class="p">]</span>
+        <span class="n">ctype</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;ctype&#39;</span><span class="p">]</span>
+        <span class="n">ptype</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ptype&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;values&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ptype</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">ptype</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{rec}</span><span class="s2"> received, expected </span><span class="si">{exp}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">rec</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="n">ptype</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">values</span> <span class="ow">and</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{rec!r}</span><span class="s2"> received, expected a value in </span><span class="si">{exp!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">rec</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="n">values</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ctype</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IOControl.raw"><a class="viewcode-back" href="../../../reference/canlib/iocontrol.html#canlib.canlib.IOControl.raw">[docs]</a>    <span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A raw call to `canIoCtl`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item (`IOControlItem`): The &quot;function code&quot; to be passed to `canIoCtl`.</span>
+
+<span class="sd">            value: The value sent to `canIoCtl` or `None` if no value should be</span>
+<span class="sd">                given. Must be compatible with the `ctype` argument.</span>
+
+<span class="sd">            ctype: The `ctypes` type that should be used to when sending the</span>
+<span class="sd">                `value` argument and when interpreting the result of `canIoCtl`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ctype</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">buf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># array types must be given their value like this</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canIoCtl</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+            <span class="n">item</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

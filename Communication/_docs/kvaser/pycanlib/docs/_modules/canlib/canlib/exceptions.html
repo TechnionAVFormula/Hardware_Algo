@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.exceptions &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">DllException</span><span class="p">,</span> <span class="n">CanlibException</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">Error</span>
+
+
+<span class="n">_all_errors_by_status</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_remember</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="n">_all_errors_by_status</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">status</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span>
+    <span class="k">return</span> <span class="n">cls</span>
+
+
+<span class="k">def</span> <span class="nf">can_error</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">_all_errors_by_status</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_all_errors_by_status</span><span class="p">[</span><span class="n">status</span><span class="p">]()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">CanGeneralError</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CanError"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.CanError">[docs]</a><span class="k">class</span> <span class="nc">CanError</span><span class="p">(</span><span class="n">DllException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for exceptions raised by the canlib class</span>
+
+<span class="sd">    Looks up the error text in the canlib dll and presents it together with the</span>
+<span class="sd">    error code and the wrapper function that triggered the exception.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_error_text</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>  <span class="c1"># import here to prevent circular imports</span>
+            <span class="n">msg_buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">canGetErrorText</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">msg_buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg_buf</span><span class="p">))</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">msg_buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Unknown error text&quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39; (</span><span class="si">%d</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">status</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<span class="k">class</span> <span class="nc">CanGeneralError</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A canlib error that does not (yet) have its own Exception</span>
+
+<span class="sd">    WARNING: Do not explicitly catch this error, instead catch `CanError`. Your</span>
+<span class="sd">    error may at any point in the future get its own exception class, and so</span>
+<span class="sd">    will no longer be of this type. The actual status code that raised any</span>
+<span class="sd">    `CanError` can always be accessed through a `status` attribute.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CanGeneralError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="CanNoMsg"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.CanNoMsg">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">CanNoMsg</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when no matching message was available&quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NOMSG</span></div>
+
+
+<div class="viewcode-block" id="CanScriptFail"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.CanScriptFail">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">CanScriptFail</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when a script call failed.</span>
+
+<span class="sd">    This exception represents several different failures, for example:</span>
+
+<span class="sd">    * Trying to load a corrupt file or not a .txe file</span>
+<span class="sd">    * Trying to start a t script that has not been loaded</span>
+<span class="sd">    * Trying to load a t script compiled with the wrong version of the t compiler</span>
+<span class="sd">    * Trying to unload a t script that has not been stopped</span>
+<span class="sd">    * Trying to use an envvar that does not exist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">SCRIPT_FAIL</span></div>
+
+
+<div class="viewcode-block" id="CanNotFound"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.CanNotFound">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">CanNotFound</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specified device or channel not found</span>
+
+<span class="sd">    There is no hardware available that matches the given search criteria. For</span>
+<span class="sd">    example, you may have specified `Open.REQUIRE_EXTENDED` but there&#39;s no</span>
+<span class="sd">    controller capable of extended CAN. You may have specified a channel number</span>
+<span class="sd">    that is out of the range for the hardware in question. You may have</span>
+<span class="sd">    requested exclusive access to a channel, but the channel is already</span>
+<span class="sd">    occupied.</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NOTFOUND</span></div>
+
+
+<span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">CanNotImplementedError</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Not implemented</span>
+
+<span class="sd">    The requested feature or function is not implemented in the device you are</span>
+<span class="sd">    trying to use it on.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NOT_IMPLEMENTED</span>
+
+
+<div class="viewcode-block" id="IoPinConfigurationNotConfirmed"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.IoPinConfigurationNotConfirmed">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">IoPinConfigurationNotConfirmed</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;I/O pin configuration is not confirmed</span>
+
+<span class="sd">    Before accessing any I/O pin value, the device I/O pin configuration must be</span>
+<span class="sd">    confirmed, using e.g. `Channel.io_confirm_config`.</span>
+
+<span class="sd">    See also `iopin.Configuration`.</span>
+
+<span class="sd">    .. versionadded:: 1.8</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">IO_NOT_CONFIRMED</span></div>
+
+
+<div class="viewcode-block" id="IoNoValidConfiguration"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.IoNoValidConfiguration">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">IoNoValidConfiguration</span><span class="p">(</span><span class="n">CanError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;I/O pin configuration is invalid</span>
+
+<span class="sd">    No I/O pins was found, or unknown I/O pins was discovered.</span>
+
+<span class="sd">    .. versionadded:: 1.8</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">IO_NO_VALID_CONFIG</span></div>
+
+
+<div class="viewcode-block" id="EnvvarException"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.EnvvarException">[docs]</a><span class="k">class</span> <span class="nc">EnvvarException</span><span class="p">(</span><span class="n">CanlibException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for exceptions related to environment variables.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="EnvvarValueError"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.EnvvarValueError">[docs]</a><span class="k">class</span> <span class="nc">EnvvarValueError</span><span class="p">(</span><span class="n">EnvvarException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raised when the type of the value does not match the type of the</span>
+<span class="sd">    environment variable.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envvar</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;invalid literal for envvar (</span><span class="si">{envvar}</span><span class="s2">) with&quot;</span>
+               <span class="s2">&quot; type </span><span class="si">{type_}</span><span class="s2">: </span><span class="si">{value}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">envvar</span><span class="o">=</span><span class="n">envvar</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EnvvarValueError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EnvvarNameError"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.EnvvarNameError">[docs]</a><span class="k">class</span> <span class="nc">EnvvarNameError</span><span class="p">(</span><span class="n">EnvvarException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raised when the name of the environment variable is illegal.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envvar</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;envvar names must not start with an underscore: </span><span class="si">{envvar}</span><span class="s2">&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">envvar</span><span class="o">=</span><span class="n">envvar</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EnvvarNameError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TxeFileIsEncrypted"><a class="viewcode-back" href="../../../reference/canlib/exceptions.html#canlib.canlib.TxeFileIsEncrypted">[docs]</a><span class="k">class</span> <span class="nc">TxeFileIsEncrypted</span><span class="p">(</span><span class="n">CanlibException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raised when trying to access `Txe.source` and the source and byte-code</span>
+<span class="sd">    sections of the .txe binary have been encrypted.</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

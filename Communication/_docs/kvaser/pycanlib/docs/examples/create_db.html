@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Create a Database &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitor a Channel Using a Database" href="dbmonitor.html" />
+    <link rel="prev" title="Convert a .kme50 file to plain ASCII" href="convert_kme_asc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="convert_kme_asc.html">Convert a .kme50 file to plain ASCII</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dbmonitor.html">Monitor a Channel Using a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examine_db.html">Examine the Contents of a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_channels.html">Print Information About All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html">Monitor a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pinger.html">Send Random Messages on a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_memo_config.html">Validate a Memorator Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="write_memo_config.html">Write a Configuration to a Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Create a Database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/create_db.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="create-a-database">
+<h1>Create a Database<a class="headerlink" href="#create-a-database" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;create_db.py -- Creating a .dbc database from scratch</span>
+
+<span class="sd">This script will use canlib.kvadblib to create a new database file filled with</span>
+<span class="sd">arbitrary data.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">kvadblib</span>
+
+<span class="n">Message</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Message&#39;</span><span class="p">,</span> <span class="s1">&#39;name id dlc signals&#39;</span><span class="p">)</span>
+<span class="n">Signal</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Signal&#39;</span><span class="p">,</span> <span class="s1">&#39;name size scaling limits unit&#39;</span><span class="p">)</span>
+<span class="n">EnumSignal</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;EnumSignal&#39;</span><span class="p">,</span> <span class="s1">&#39;name size scaling limits unit enums&#39;</span><span class="p">)</span>
+
+<span class="n">_messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Message</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EngineData&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">dlc</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">signals</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PetrolLevel&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;l&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EngPower&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;kW&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EngForce&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;N&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">EnumSignal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;IdleRunning&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">enums</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Running&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Idle&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EngTemp&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;degC&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EngSpeed&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8000</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;rpm&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">]),</span>
+    <span class="n">Message</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;GearBoxInfo&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="mi">1020</span><span class="p">,</span>
+        <span class="n">dlc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">signals</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;EcoMode&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">EnumSignal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ShiftRequest&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">enums</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Shift_Request_On&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Shift_Request_Off&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">EnumSignal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Gear&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">enums</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;Idle&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;Gear_1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;Gear_2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="s1">&#39;Gear_3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="s1">&#39;Gear_4&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="s1">&#39;Gear_5&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">),</span>
+        <span class="p">]),</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">Dbc</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_msg</span> <span class="ow">in</span> <span class="n">_messages</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">new_message</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">_msg</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">_msg</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="n">_msg</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_sig</span> <span class="ow">in</span> <span class="n">_msg</span><span class="o">.</span><span class="n">signals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_sig</span><span class="p">,</span> <span class="n">EnumSignal</span><span class="p">):</span>
+                <span class="n">_type</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalType</span><span class="o">.</span><span class="n">ENUM_UNSIGNED</span>
+                <span class="n">_enums</span> <span class="o">=</span> <span class="n">_sig</span><span class="o">.</span><span class="n">enums</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_type</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalType</span><span class="o">.</span><span class="n">UNSIGNED</span>
+                <span class="n">_enums</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">new_signal</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">_sig</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="nb">type</span><span class="o">=</span><span class="n">_type</span><span class="p">,</span>
+                <span class="n">byte_order</span><span class="o">=</span><span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalByteOrder</span><span class="o">.</span><span class="n">INTEL</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalMultiplexMode</span><span class="o">.</span><span class="n">MUX_INDEPENDENT</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="n">kvadblib</span><span class="o">.</span><span class="n">ValueSize</span><span class="p">(</span><span class="o">*</span><span class="n">_sig</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+                <span class="n">scaling</span><span class="o">=</span><span class="n">kvadblib</span><span class="o">.</span><span class="n">ValueScaling</span><span class="p">(</span><span class="o">*</span><span class="n">_sig</span><span class="o">.</span><span class="n">scaling</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">=</span><span class="n">kvadblib</span><span class="o">.</span><span class="n">ValueLimits</span><span class="p">(</span><span class="o">*</span><span class="n">_sig</span><span class="o">.</span><span class="n">limits</span><span class="p">),</span>
+                <span class="n">unit</span><span class="o">=</span><span class="n">_sig</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+                <span class="n">enums</span><span class="o">=</span><span class="n">_enums</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Create a database from scratch.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The filename to save the database to.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Engine example&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The name of the database (not the filename, the internal name.&quot;</span><span class="p">))</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">create_database</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>While the name of the created database and the filename it is saved as is
+passed as arguments to <code class="xref py py-obj docutils literal notranslate"><span class="pre">create_database</span></code>, the contents of the database is
+defined in the variable <code class="xref py py-obj docutils literal notranslate"><span class="pre">_messages</span></code>. This is a list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Message</span></code> namedtuples
+that describes all the messages to be put in the database:</p>
+<ul class="simple">
+<li>Their <code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">id</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">dlc</span></code> fields are passed to
+<a class="reference internal" href="../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.new_message" title="canlib.kvadblib.Dbc.new_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.Dbc.new_message</span></code></a>.</li>
+<li>Their <code class="xref py py-obj docutils literal notranslate"><span class="pre">signals</span></code> attribute is a list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Signal</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">EnumSignal</span></code>
+namedtuples. All their fields will be passed to
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.Dbc.new_signal</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="sample-output">
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<p>With the <code class="xref py py-obj docutils literal notranslate"><span class="pre">_messages</span></code> variable as shown above, the following .dbc file is created:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">VERSION &quot;HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/&#39;%**4YYY///&quot;</span>
+
+
+<span class="go">NS_ :</span>
+<span class="go">     NS_DESC_</span>
+<span class="go">     CM_</span>
+<span class="go">     BA_DEF_</span>
+<span class="go">     BA_</span>
+<span class="go">     VAL_</span>
+<span class="go">     CAT_DEF_</span>
+<span class="go">     CAT_</span>
+<span class="go">     FILTER</span>
+<span class="go">     BA_DEF_DEF_</span>
+<span class="go">     EV_DATA_</span>
+<span class="go">     ENVVAR_DATA_</span>
+<span class="go">     SGTYPE_</span>
+<span class="go">     SGTYPE_VAL_</span>
+<span class="go">     BA_DEF_SGTYPE_</span>
+<span class="go">     BA_SGTYPE_</span>
+<span class="go">     SIG_TYPE_REF_</span>
+<span class="go">     VAL_TABLE_</span>
+<span class="go">     SIG_GROUP_</span>
+<span class="go">     SIG_VALTYPE_</span>
+<span class="go">     SIGTYPE_VALTYPE_</span>
+<span class="go">     BO_TX_BU_</span>
+<span class="go">     BA_DEF_REL_</span>
+<span class="go">     BA_REL_</span>
+<span class="go">     BA_DEF_DEF_REL_</span>
+<span class="go">     BU_SG_REL_</span>
+<span class="go">     BU_EV_REL_</span>
+<span class="go">     BU_BO_REL_</span>
+<span class="go">     SG_MUL_VAL_</span>
+
+<span class="go">BS_:</span>
+
+<span class="go">BU_:</span>
+
+
+<span class="go">BO_ 100 EngineData: 8 Vector__XXX</span>
+<span class="go"> SG_ PetrolLevel : 24|8@1+ (1,0) [0|255] &quot;l&quot; Vector__XXX</span>
+<span class="go"> SG_ EngPower : 48|16@1+ (0.01,0) [0|150] &quot;kW&quot; Vector__XXX</span>
+<span class="go"> SG_ EngForce : 32|16@1+ (1,0) [0|0] &quot;N&quot; Vector__XXX</span>
+<span class="go"> SG_ IdleRunning : 23|1@1+ (1,0) [0|0] &quot;&quot; Vector__XXX</span>
+<span class="go"> SG_ EngTemp : 16|7@1+ (2,-50) [-50|150] &quot;°C&quot; Vector__XXX</span>
+<span class="go"> SG_ EngSpeed : 0|16@1+ (1,0) [0|8000] &quot;rpm&quot; Vector__XXX</span>
+
+<span class="go">BO_ 1020 GearBoxInfo: 1 Vector__XXX</span>
+<span class="go"> SG_ EcoMode : 6|2@1+ (1,0) [0|1] &quot;&quot; Vector__XXX</span>
+<span class="go"> SG_ ShiftRequest : 3|1@1+ (1,0) [0|0] &quot;&quot; Vector__XXX</span>
+<span class="go"> SG_ Gear : 0|3@1+ (1,0) [0|5] &quot;&quot; Vector__XXX</span>
+
+
+<span class="go">BA_DEF_  &quot;BusType&quot; STRING ;</span>
+<span class="go">BA_DEF_DEF_  &quot;BusType&quot; &quot;&quot;;</span>
+<span class="go">BA_ &quot;BusType&quot; &quot;CAN&quot;;</span>
+<span class="go">VAL_ 100 IdleRunning 0 &quot;Running&quot; 1 &quot;Idle&quot; ;</span>
+<span class="go">VAL_ 1020 ShiftRequest 1 &quot;Shift_Request_On&quot; 0 &quot;Shift_Request_Off&quot; ;</span>
+<span class="go">VAL_ 1020 Gear 0 &quot;Idle&quot; 2 &quot;Gear_2&quot; 1 &quot;Gear_1&quot; 5 &quot;Gear_5&quot; 3 &quot;Gear_3&quot; 4 &quot;Gear_4&quot; ;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dbmonitor.html" class="btn btn-neutral float-right" title="Monitor a Channel Using a Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="convert_kme_asc.html" class="btn btn-neutral float-left" title="Convert a .kme50 file to plain ASCII" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

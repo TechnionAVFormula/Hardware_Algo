@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Supported Libraries and Installation &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials/index.html" />
+    <link rel="prev" title="Welcome" href="welcome.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Supported Libraries and Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#supported-platforms">Supported platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-libraries">Supported libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-new">What’s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wrapped-libraries">Wrapped libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Supported Libraries and Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/canlib.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>canlib - a Python wrapper for Kvaser CANlib</p>
+<div class="section" id="supported-libraries-and-installation">
+<h1>Supported Libraries and Installation<a class="headerlink" href="#supported-libraries-and-installation" title="Permalink to this headline">¶</a></h1>
+<p>The Python canlib module wraps the Kvaser CANlib API in order to make it easy to control most aspects of any Kvaser CAN interface. For more information about Kvaser please go to <a class="reference external" href="https://www.kvaser.com/">https://www.kvaser.com/</a>.</p>
+<p>The latest version of this package is available on the <a class="reference external" href="https://www.kvaser.com/downloads-kvaser/">Kvaser Download page</a> (<a class="reference external" href="https://www.kvaser.com/downloads-kvaser/?utm_source=software&amp;utm_ean=7330130981911&amp;utm_status=latest">pycanlib.zip</a>).</p>
+<div class="section" id="supported-platforms">
+<h2>Supported platforms<a class="headerlink" href="#supported-platforms" title="Permalink to this headline">¶</a></h2>
+<p>Windows and Linux using Python v3.6+ (both 32 and 64 bit).</p>
+</div>
+<div class="section" id="supported-libraries">
+<h2>Supported libraries<a class="headerlink" href="#supported-libraries" title="Permalink to this headline">¶</a></h2>
+<p>The following libraries are currently supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="26%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Library</th>
+<th class="head">Module</th>
+<th class="head">Windows</th>
+<th class="head">Linux</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CANlib</td>
+<td>canlib.canlib</td>
+<td>canlib32.dll</td>
+<td>libcanlib.so</td>
+</tr>
+<tr class="row-odd"><td>kvaMemoLibXML</td>
+<td>canlib.kvamemolibxml</td>
+<td>kvaMemoLibXML.dll</td>
+<td>libkvamemolibxml.so</td>
+</tr>
+<tr class="row-even"><td>kvrlib</td>
+<td>canlib.kvrlib</td>
+<td>kvrlib.dll,
+irisdll.dll,
+irisflash.dll,
+libxml2.dll</td>
+<td>not supported</td>
+</tr>
+<tr class="row-odd"><td>kvmlib</td>
+<td>canlib.kvmlib</td>
+<td>kvaMemoLib0600.dll,
+kvaMemoLib0700.dll,
+kvaMemoLib.dll,
+kvmlib.dll</td>
+<td>not supported, <a class="footnote-reference" href="#id4" id="id1">[2]</a>
+libkvamemolib0700.so,
+libkvamemolib.so,
+libkvmlib.so</td>
+</tr>
+<tr class="row-even"><td>kvlclib</td>
+<td>canlib.kvlclib</td>
+<td>kvlclib.dll <a class="footnote-reference" href="#id3" id="id2">[1]</a></td>
+<td>libkvlclib.so</td>
+</tr>
+<tr class="row-odd"><td>kvaDbLib</td>
+<td>canlib.kvadblib</td>
+<td>kvaDbLib.dll</td>
+<td>libkvadblib.so</td>
+</tr>
+<tr class="row-even"><td>LINlib</td>
+<td>canlib.linlib</td>
+<td>linlib.dll</td>
+<td>liblinlib.so</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>The kvlclib.dll depends on dll files from matlab wich are installed alongside kvlclib.dll.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>The kvaMemoLib0600.dll, which supports older devices, is not supported under Linux.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="what-s-new">
+<h2>What’s new<a class="headerlink" href="#what-s-new" title="Permalink to this headline">¶</a></h2>
+<p>For a complete set of release notes, see <a class="reference external" href="Relnotes.html">Release Notes</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the Python package using e.g. <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<p>Unzip <code class="docutils literal notranslate"><span class="pre">pycanlib.zip</span></code>. Navigate to the unzipped pycanlib in the command line. It should
+contain the file <code class="docutils literal notranslate"><span class="pre">canlib-x.y.z-py2.py3-none-any.whl</span></code>, where x,y,z are version numbers.
+Run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install canlib-x.y.z-py2.py3-none-any.whl
+</pre></div>
+</div>
+<p>The Kvaser CANlib DLLs or shared libraries also need to be installed:</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>On <strong>Windows</strong>, first install the <code class="docutils literal notranslate"><span class="pre">canlib32.dll</span></code> by downloading and installing “Kvaser Drivers for Windows” which can be found on the <a class="reference external" href="https://www.kvaser.com/downloads-kvaser/">Kvaser Download page</a> (<a class="reference external" href="https://www.kvaser.com/downloads-kvaser/?utm_source=software&amp;utm_ean=7330130980013&amp;utm_status=latest">kvaser_drivers_setup.exe</a>) This will also install <code class="docutils literal notranslate"><span class="pre">kvrlib.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">irisdll.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">irisflash.dll</span></code> and <code class="docutils literal notranslate"><span class="pre">libxml2.dll</span></code> used by kvrlib.</p>
+<p>The “Kvaser CANlib SDK” also needs to be downloaded from the same place (<a class="reference external" href="https://www.kvaser.com/downloads-kvaser/?utm_source=software&amp;utm_ean=7330130980150&amp;utm_status=latest">canlib.exe</a>) and installed if more than just CANlib will be used. This will install the rest of the supported library dll’s.</p>
+<p>The two packages, “Kvaser Drivers for Windows” and “Kvaser CANlib SDK”, contains both 32 and 64 bit versions of the included dll’s.</p>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>On <strong>Linux</strong>, first install the <code class="docutils literal notranslate"><span class="pre">libcanlib.so</span></code> by downloading and installing “Kvaser LINUX Driver and SDK” which can be found on the <a class="reference external" href="https://www.kvaser.com/downloads-kvaser/">Kvaser Download page</a> (<a class="reference external" href="https://www.kvaser.com/downloads-kvaser/?utm_source=software&amp;utm_ean=7330130980754&amp;utm_status=latest">linuxcan.tar.gz</a>).</p>
+<p>If more than just CANlib will be used, the rest of the supported libraries will be available by downloading and installing “Linux SDK library” (<a class="reference external" href="https://www.kvaser.com/downloads-kvaser/?utm_source=software&amp;utm_ean=7330130981966&amp;utm_status=latest">kvlibsdk.tar.gz</a>).</p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Example of using canlib to list connected Kvaser devices:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">canlib</span>
+
+<span class="n">num_channels</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">getNumberOfChannels</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Found </span><span class="si">%d</span><span class="s2"> channels&quot;</span> <span class="o">%</span> <span class="n">num_channels</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">):</span>
+    <span class="n">chdata</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">. </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">chdata</span><span class="o">.</span><span class="n">channel_name</span><span class="p">,</span>
+                                <span class="n">chdata</span><span class="o">.</span><span class="n">card_upc_no</span><span class="p">,</span>
+                                <span class="n">chdata</span><span class="o">.</span><span class="n">card_serial_no</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Which may result in:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">Found</span> <span class="mi">4</span> <span class="n">channels</span>
+<span class="mf">0.</span> <span class="n">Kvaser</span> <span class="n">Memorator</span> <span class="n">Professional</span> <span class="n">HS</span><span class="o">/</span><span class="n">HS</span> <span class="p">(</span><span class="n">channel</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">73</span><span class="o">-</span><span class="mi">30130</span><span class="o">-</span><span class="mo">00351</span><span class="o">-</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">12377</span><span class="p">)</span>
+<span class="mf">1.</span> <span class="n">Kvaser</span> <span class="n">Memorator</span> <span class="n">Professional</span> <span class="n">HS</span><span class="o">/</span><span class="n">HS</span> <span class="p">(</span><span class="n">channel</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="mi">73</span><span class="o">-</span><span class="mi">30130</span><span class="o">-</span><span class="mo">00351</span><span class="o">-</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">12377</span><span class="p">)</span>
+<span class="mf">2.</span> <span class="n">Kvaser</span> <span class="n">Virtual</span> <span class="n">CAN</span> <span class="n">Driver</span> <span class="p">(</span><span class="n">channel</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mo">00</span><span class="o">-</span><span class="mo">00000</span><span class="o">-</span><span class="mo">00000</span><span class="o">-</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="mf">3.</span> <span class="n">Kvaser</span> <span class="n">Virtual</span> <span class="n">CAN</span> <span class="n">Driver</span> <span class="p">(</span><span class="n">channel</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="mo">00</span><span class="o">-</span><span class="mo">00000</span><span class="o">-</span><span class="mo">00000</span><span class="o">-</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>You are invited to visit the Kvaser web pages at <a class="reference external" href="https://www.kvaser.com/support/">https://www.kvaser.com/support/</a>. If you don’t find what you are looking for, you can obtain support on a time-available basis by sending an e-mail to <a class="reference external" href="mailto:support&#37;&#52;&#48;kvaser&#46;com">support<span>&#64;</span>kvaser<span>&#46;</span>com</a>.</p>
+<p>Bug reports, contributions, suggestions for improvements, and similar things are much appreciated and can be sent by e-mail to <a class="reference external" href="mailto:support&#37;&#52;&#48;kvaser&#46;com">support<span>&#64;</span>kvaser<span>&#46;</span>com</a>.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Kvaser CANlib SDK Page: <a class="reference external" href="https://www.kvaser.com/developer/canlib-sdk/">https://www.kvaser.com/developer/canlib-sdk/</a></li>
+<li>Description of CANlib SDK library contents: <a class="reference external" href="https://www.kvaser.com/developer-blog/get-hardware-kvaser-sdk-libraries/">https://www.kvaser.com/developer-blog/get-hardware-kvaser-sdk-libraries/</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="wrapped-libraries">
+<h2>Wrapped libraries<a class="headerlink" href="#wrapped-libraries" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="reference/canlib/index.html"><span class="doc">canlib</span></a></li>
+<li><a class="reference internal" href="reference/kvadblib/index.html"><span class="doc">kvadblib</span></a></li>
+<li><a class="reference internal" href="reference/kvamemolibxml/index.html"><span class="doc">kvamemolibxml</span></a></li>
+<li><a class="reference internal" href="reference/kvlclib/index.html"><span class="doc">kvlclib</span></a></li>
+<li><a class="reference internal" href="reference/kvmlib/index.html"><span class="doc">kvmlib</span></a></li>
+<li><a class="reference internal" href="reference/kvrlib/index.html"><span class="doc">kvrlib</span></a></li>
+<li><a class="reference internal" href="reference/linlib/index.html"><span class="doc">linlib</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorials/index.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="welcome.html" class="btn btn-neutral float-left" title="Welcome" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Memorator &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Miscellaneous" href="wrapper.html" />
+    <link rel="prev" title="kmf files" href="kmf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvmlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log.html">Log files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kme.html">kme files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kmf.html">kmf files</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Memorator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#opendevice">openDevice()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvmlib</a> &raquo;</li>
+        
+      <li>Memorator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvmlib/memorator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="memorator">
+<h1>Memorator<a class="headerlink" href="#memorator" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="opendevice">
+<h2>openDevice()<a class="headerlink" href="#opendevice" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvmlib.openDevice">
+<code class="descclassname">canlib.kvmlib.</code><code class="descname">openDevice</code><span class="sig-paren">(</span><em>channel_number</em>, <em>mount=False</em>, <em>device_type=&lt;Device.MHYDRA_EXT: 1&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#openDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.openDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a Memorator device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>channel_number</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – A channel number of the Memorator to be opened.</li>
+<li><strong>mount</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Whether the memorator log area should be mounted before
+returned.</li>
+<li><strong>device_type</strong> (<a class="reference internal" href="enums.html#canlib.kvmlib.Device" title="canlib.kvmlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Device</span></code></a>) – The type of the memorator to be
+opened (defaults to <a class="reference internal" href="enums.html#canlib.kvmlib.Device.MHYDRA_EXT" title="canlib.kvmlib.Device.MHYDRA_EXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Device.MHYDRA_EXT</span></code></a>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Memorator</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Memorator<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.Memorator">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.</code><code class="descname">Memorator</code><span class="sig-paren">(</span><em>handle</em>, <em>channel_number</em>, <em>device_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Memorator device opened with <a class="reference internal" href="#canlib.kvmlib.openDevice" title="canlib.kvmlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openDevice</span></code></a></p>
+<p>This class should not be instantiated directly, instead call <a class="reference internal" href="#canlib.kvmlib.openDevice" title="canlib.kvmlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openDevice</span></code></a>.</p>
+<p>A device opened as <code class="xref py py-obj docutils literal notranslate"><span class="pre">memorator</span></code> can be configured from XML using
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml</span></code> and <a class="reference internal" href="#canlib.kvmlib.Memorator.write_config" title="canlib.kvmlib.Memorator.write_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_config</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the original XML file (config.xml)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">kvamemolibxml</span><span class="o">.</span><span class="n">load_xml_file</span><span class="p">(</span><span class="s2">&quot;config.xml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Validate the XML</span>
+<span class="n">errors</span><span class="p">,</span> <span class="n">warnings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">errors</span> <span class="ow">or</span> <span class="n">warnings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">warnings</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;One or more errors/warnings in xml configuration&quot;</span><span class="p">)</span>
+
+<span class="c1"># Write the configuration in binary</span>
+<span class="n">memorator</span><span class="o">.</span><span class="n">write_config</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">lif</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The configuration can then be read back (in binary):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span><span class="o">.</span><span class="n">read_config</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The log files on the device can be accessed via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code> attribute. By
+default, the log area is not mounted so only a few operations are allowed,
+such as getting the number of log files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_log_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">memorator</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a full list of allowed operations, see <a class="reference internal" href="log.html#canlib.kvmlib.UnmountedLog" title="canlib.kvmlib.UnmountedLog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.UnmountedLog</span></code></a>
+(the type of <code class="docutils literal notranslate"><span class="pre">.log</span></code> before a mount).</p>
+<p>The log area can be mounted either with <a class="reference internal" href="#canlib.kvmlib.openDevice" title="canlib.kvmlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openDevice</span></code></a>’s <a class="reference internal" href="#canlib.kvmlib.Memorator.mount" title="canlib.kvmlib.Memorator.mount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mount</span></code></a> argument set to
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code>, or later with the <a class="reference internal" href="#canlib.kvmlib.Memorator.mount" title="canlib.kvmlib.Memorator.mount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Memorator.mount</span></code></a> function. Once this is done the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code> attribute is a <a class="reference internal" href="log.html#canlib.kvmlib.MountedLog" title="canlib.kvmlib.MountedLog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.MountedLog</span></code></a> which supports getting log
+files as <a class="reference internal" href="log.html#canlib.kvmlib.LogFile" title="canlib.kvmlib.LogFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.LogFile</span></code></a> objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can index the Memorator object if we know what file we want</span>
+<span class="n">log_file_number_two</span> <span class="o">=</span> <span class="n">memorator</span><span class="o">.</span><span class="n">log</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># Although usually we want to loop through all log files</span>
+<span class="k">for</span> <span class="n">log_file</span> <span class="ow">in</span> <span class="n">memorator</span><span class="o">.</span><span class="n">log</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>See the documentation of <a class="reference internal" href="log.html#canlib.kvmlib.MountedLog" title="canlib.kvmlib.MountedLog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.MountedLog</span></code></a> for all available
+operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Memorator.channel_number</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The channel number that was used to connect to
+this memorator.</li>
+<li><strong>device_type</strong> (<a class="reference internal" href="enums.html#canlib.kvmlib.Device" title="canlib.kvmlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Device</span></code></a>) – The device type that was used to
+connect to this memorator.</li>
+<li><a class="reference internal" href="#canlib.kvmlib.Memorator.mounted" title="canlib.kvmlib.Memorator.mounted"><strong>mounted</strong></a> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Whether the device’s memory card has been mounted.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.config_version_needed">
+<code class="descname">config_version_needed</code><a class="headerlink" href="#canlib.kvmlib.Memorator.config_version_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The version of param.lif that the connected device expects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.versionnumber.VersionNumber</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.disk_size">
+<code class="descname">disk_size</code><a class="headerlink" href="#canlib.kvmlib.Memorator.disk_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The disk size in megabytes</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This is not necessarily the amount of space available for
+allocation; <code class="docutils literal notranslate"><span class="pre">memo.format_disk(reserved_space=memo.disk_size)</span></code> is
+not guaranteed to succeed.</p>
+<p class="last">The most reliable way of calculating reserved space is to first
+format the disk with <code class="xref py py-obj docutils literal notranslate"><span class="pre">reserved_space</span></code> set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, and then use
+<code class="docutils literal notranslate"><span class="pre">memo.disk_usage.total</span></code>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.driver_version">
+<code class="descname">driver_version</code><a class="headerlink" href="#canlib.kvmlib.Memorator.driver_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The used driver version information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.versionnumber.VersionNumber</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.firmware_version">
+<code class="descname">firmware_version</code><a class="headerlink" href="#canlib.kvmlib.Memorator.firmware_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The device firmware version information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.versionnumber.VersionNumber</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.flash_leds">
+<code class="descname">flash_leds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.flash_leds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.flash_leds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flash all LEDs on the Memorator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.format_disk">
+<code class="descname">format_disk</code><span class="sig-paren">(</span><em>reserved_space=10</em>, <em>database_space=2</em>, <em>fat32=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.format_disk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.format_disk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the SD memory card in the Memorator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reserved_space</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Space to reserve for user files, in MB.</li>
+<li><strong>database_space</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Space to reserve for database files, in MB.</li>
+<li><strong>fat32</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Whether the filesystem should be formatted as fat32
+(defaults to <code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.9: </span>Will now reopen the internal handle if the log is mounted in order
+to refresh <code class="xref py py-obj docutils literal notranslate"><span class="pre">Memorator.log.ldf_version</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.kvmlib_version">
+<code class="descname">kvmlib_version</code><a class="headerlink" href="#canlib.kvmlib.Memorator.kvmlib_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the version of kvmlib</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.versionnumber.VersionNumber</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.mount">
+<code class="descname">mount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.mount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mount the Memorator’s log area</p>
+<p>This replaces the object <code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code> attribute with a <a class="reference internal" href="log.html#canlib.kvmlib.MountedLog" title="canlib.kvmlib.MountedLog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MountedLog</span></code></a>, which
+allows access to log files.</p>
+<p>If the log has already been mounted (<code class="docutils literal notranslate"><span class="pre">self.mounted</span> <span class="pre">==</span> <span class="pre">True</span></code>), this is
+a no-op.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.mounted">
+<code class="descname">mounted</code><em class="property"> = None</em><a class="headerlink" href="#canlib.kvmlib.Memorator.mounted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.read_config">
+<code class="descname">read_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.read_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the configuration of the Memorator</p>
+<p>The configuration is returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code> object with the binary
+configuration data (param.lif).</p>
+<p>If a <a class="reference internal" href="../kvamemolibxml/configuration.html#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.Configuration</span></code></a> is desired, the returned <code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code> can
+be parsed using <a class="reference internal" href="../kvamemolibxml/configuration.html#canlib.kvamemolibxml.load_lif" title="canlib.kvamemolibxml.load_lif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.load_lif</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_object</span> <span class="o">=</span> <span class="n">kvamemolibxml</span><span class="o">.</span><span class="n">load_lif</span><span class="p">(</span><span class="n">memorator</span><span class="o">.</span><span class="n">read_config</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.reopen">
+<code class="descname">reopen</code><span class="sig-paren">(</span><em>device_type=None</em>, <em>mount=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.reopen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.reopen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes and then reopens the internal handle</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.rtc">
+<code class="descname">rtc</code><a class="headerlink" href="#canlib.kvmlib.Memorator.rtc" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of the real-time clock</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Memorator.serial_number">
+<code class="descname">serial_number</code><a class="headerlink" href="#canlib.kvmlib.Memorator.serial_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>The serial number of the Memorator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvmlib.Memorator.write_config">
+<code class="descname">write_config</code><span class="sig-paren">(</span><em>config_lif</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvmlib/memorator.html#Memorator.write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Memorator.write_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes configuration to the Memorator</p>
+<p>The configuration should be given as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code> object with the binary
+configuration data (param.lif).</p>
+<p>Given a <a class="reference internal" href="../kvamemolibxml/configuration.html#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.Configuration</span></code></a> object, pass its <code class="xref py py-obj docutils literal notranslate"><span class="pre">lif</span></code>
+attribute to this function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">memorator</span><span class="o">.</span><span class="n">write_config</span><span class="p">(</span><span class="n">config_object</span><span class="o">.</span><span class="n">lif</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wrapper.html" class="btn btn-neutral float-right" title="Miscellaneous" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kmf.html" class="btn btn-neutral float-left" title="kmf files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

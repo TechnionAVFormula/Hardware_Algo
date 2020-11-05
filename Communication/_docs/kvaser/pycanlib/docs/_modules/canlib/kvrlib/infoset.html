@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.infoset &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.infoset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.infoset</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1"># Python 2 does not have abc module</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">MutableSet</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">MutableSet</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">EAN</span><span class="p">,</span> <span class="n">CanlibException</span>
+<span class="kn">from</span> <span class="nn">.discovery</span> <span class="k">import</span> <span class="n">stored_devices</span><span class="p">,</span> <span class="n">store_devices</span><span class="p">,</span> <span class="n">DeviceInfo</span><span class="p">,</span> <span class="n">start_discovery</span>
+
+
+<div class="viewcode-block" id="discover_info_set"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.discover_info_set">[docs]</a><span class="k">def</span> <span class="nf">discover_info_set</span><span class="p">(</span><span class="n">delay</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">addresses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">report_stored</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">start_discovery</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">addresses</span><span class="p">,</span> <span class="n">report_stored</span><span class="p">)</span> <span class="k">as</span> <span class="n">disc</span><span class="p">:</span>
+        <span class="n">info_set</span> <span class="o">=</span> <span class="n">DeviceInfoSet</span><span class="p">(</span><span class="n">disc</span><span class="o">.</span><span class="n">results</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">info_set</span></div>
+
+
+<div class="viewcode-block" id="empty_info_set"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.empty_info_set">[docs]</a><span class="k">def</span> <span class="nf">empty_info_set</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">DeviceInfoSet</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="stored_info_set"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.stored_info_set">[docs]</a><span class="k">def</span> <span class="nf">stored_info_set</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">DeviceInfoSet</span><span class="p">(</span><span class="n">stored_devices</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="DeviceNotInSetError"><a class="viewcode-back" href="../../../reference/kvrlib/exceptions.html#canlib.kvrlib.DeviceNotInSetError">[docs]</a><span class="k">class</span> <span class="nc">DeviceNotInSetError</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">CanlibException</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="DeviceInfoSet"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet">[docs]</a><span class="k">class</span> <span class="nc">DeviceInfoSet</span><span class="p">(</span><span class="n">MutableSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A mutable set of `DeviceInfo` objects that can be written to the registry</span>
+
+<span class="sd">    There are three different functions for creating `DeviceInfoSet` objects:</span>
+
+<span class="sd">    `empty_info_set`</span>
+<span class="sd">        Creates an empty set.</span>
+
+<span class="sd">    `stored_info_set`</span>
+<span class="sd">        Creates a set from the device information stored in the registry.</span>
+
+<span class="sd">    `discover_info_set`</span>
+<span class="sd">        Create a set from the results of a `canlib.kvrlib.Discovery`.</span>
+
+<span class="sd">    Once a `DeviceInfoSet` has been created it can be modified as a normal set,</span>
+<span class="sd">    and the `DeviceInfo` elements can also be modified. Once all modification</span>
+<span class="sd">    is done, the set can be written to the registry with `DeviceInfoSet.store`.</span>
+
+<span class="sd">    The main difference between `DeviceInfoSet` and normal sets is that it can</span>
+<span class="sd">    only contain one `DeviceInfo` with a specific combination of EAN and serial</span>
+<span class="sd">    number, even if they otherwise are not equal. This means that even if</span>
+<span class="sd">    ``info in infoset`` evaluates to true, that exact object may not be in the</span>
+<span class="sd">    set, and modifying it may not change the set.</span>
+
+<span class="sd">    To retrieve a specific `DeviceInfo` from the set use `DeviceInfoSet.find`::</span>
+
+<span class="sd">        info = infoset.find(ean=&#39;01234-5&#39;, serial=42)</span>
+
+<span class="sd">    Modifying the resulting `DeviceInfo` will then change the contents of the set.</span>
+
+<span class="sd">    Instances of this class can also be used as context managers, in which case</span>
+<span class="sd">    they will write their content to the registry when the context exists.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_elemid</span><span class="p">(</span><span class="n">el</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span> <span class="n">el</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">iterable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">el</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">DeviceInfo</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">elemid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elemid</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">elemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DeviceInfoSet.add"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a `DeviceInfo` to this `DeviceInfoSet`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            info (`DeviceInfo`): The element to add to this set</span>
+
+<span class="sd">        If the set already contains a `DeviceInfo` with the same EAN and serial</span>
+<span class="sd">        number as ``info``, the previous `DeviceInfo` will be discarded and</span>
+<span class="sd">        replaced by ``info``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">DeviceInfo</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2"> objects can only contain DeviceInfo objects&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_elemid</span><span class="p">(</span><span class="n">info</span><span class="p">)]</span> <span class="o">=</span> <span class="n">info</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.discard"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.discard">[docs]</a>    <span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="n">elemid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elemid</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">elemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">[</span><span class="n">elemid</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.find"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find and return a specific `DeviceInfo` in this set</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ean (`canlib.ean.EAN`): The EAN to search for</span>
+<span class="sd">            serial (`int`): The serial number to search for</span>
+
+<span class="sd">        If no `DeviceInfo` with the EAN and serial number is found in this set,</span>
+<span class="sd">        `canlib.kvrlib.DeviceNotInSetError` is raised.</span>
+
+<span class="sd">        Note that there can never be more than one `DeviceInfo` with the same</span>
+<span class="sd">        EAN and serial number in a `DeviceInfoSet`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">elemid</span> <span class="o">=</span> <span class="p">(</span><span class="n">EAN</span><span class="p">(</span><span class="n">ean</span><span class="p">),</span> <span class="n">serial</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">elemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">[</span><span class="n">elemid</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DeviceNotInSetError</span><span class="p">(</span><span class="s2">&quot;No device info matching ean=</span><span class="si">{ean}</span><span class="s2"> and serial=</span><span class="si">{serial}</span><span class="s2"> found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">ean</span><span class="o">=</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">serial</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.find_remove"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.find_remove">[docs]</a>    <span class="k">def</span> <span class="nf">find_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find a specific `DeviceInfo` and remove it from this set</span>
+
+<span class="sd">        Like `DeviceInfoSet.find` but immediately removes the `DeviceInfo` found from the set.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ean (`canlib.ean.EAN`): The EAN to search for</span>
+<span class="sd">            serial (`int`): The serial number to search for</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.has"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.has">[docs]</a>    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check whether the set contains a specific `DeviceInfo`</span>
+
+<span class="sd">        Similar to `DeviceInfoSet.find` but instead of returning a `DeviceInfo`</span>
+<span class="sd">        or raising an exception, this function returns ``True`` or ``False``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ean (`canlib.ean.EAN`): The EAN to search for</span>
+<span class="sd">            serial (`int`): The serial number to search for</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">EAN</span><span class="p">(</span><span class="n">ean</span><span class="p">),</span> <span class="n">serial</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.new_info"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.new_info">[docs]</a>    <span class="k">def</span> <span class="nf">new_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create and return new `DeviceInfo` in this set</span>
+
+<span class="sd">        Any attribute of the `DeviceInfo` that should have a specific value can</span>
+<span class="sd">        be passed as keyword arguments to this function.</span>
+
+<span class="sd">        The EAN and serial number must be provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ean (`canlib.ean.EAN`): The EAN of the info (`DeviceInfo.ean`)</span>
+<span class="sd">            serial (`int`): The serial number of the info (`DeviceInfo.serial`)</span>
+<span class="sd">            **attrs: Any other attributes to be set on the `DeviceInfo`</span>
+
+<span class="sd">        If the set already contains a `DeviceInfo` with the EAN ``ean`` and</span>
+<span class="sd">        serial number ``serial``, the previous `DeviceInfo` will be discarded</span>
+<span class="sd">        and replaced by the new `DeviceInfo` created by this function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">DeviceInfo</span><span class="p">()</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">ean</span> <span class="o">=</span> <span class="n">ean</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">serial</span> <span class="o">=</span> <span class="n">serial</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.store"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.store">[docs]</a>    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Store this set&#39;s `DeviceInfo` objects in the registry&quot;&quot;&quot;</span>
+        <span class="n">store_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DeviceInfoSet.update"><a class="viewcode-back" href="../../../reference/kvrlib/infoset.html#canlib.kvrlib.DeviceInfoSet.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">others</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the set, adding elements from all others</span>
+
+<span class="sd">        All ``others`` must contain nothing but `DeviceInfo` objects, or this</span>
+<span class="sd">        function will raise `TypeError` without modifying this `DeviceInfoSet`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">infos</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">info</span> <span class="k">for</span> <span class="n">iterable</span> <span class="ow">in</span> <span class="n">others</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">DeviceInfo</span><span class="p">)</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">infos</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2"> objects can only contain DeviceInfo objects&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">infos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">info</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

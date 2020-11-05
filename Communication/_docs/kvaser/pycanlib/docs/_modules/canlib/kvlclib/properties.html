@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvlclib.properties &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvlclib.properties</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvlclib.properties</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span>
+
+
+<div class="viewcode-block" id="Property"><a class="viewcode-back" href="../../../reference/kvlclib/property.html#canlib.kvlclib.Property">[docs]</a><span class="k">class</span> <span class="nc">Property</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">START_OF_MEASUREMENT</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Use start of measurement as time reference.</span>
+    <span class="n">FIRST_TRIGGER</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Use first trigger as time reference.</span>
+    <span class="n">USE_OFFSET</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Use offset as time reference.</span>
+    <span class="n">OFFSET</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Time reference offset.</span>
+    <span class="n">CHANNEL_MASK</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Bitmask of the channels that should be used during conversion.</span>
+
+    <span class="n">HLP_J1939</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># Interpret events as J1939.</span>
+    <span class="n">CALENDAR_TIME_STAMPS</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># Write calendar time stamps.</span>
+    <span class="n">WRITE_HEADER</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># Write informational header.</span>
+    <span class="n">SEPARATOR_CHAR</span> <span class="o">=</span> <span class="mi">9</span>  <span class="c1"># Use token as separator.</span>
+    <span class="n">DECIMAL_CHAR</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Use token as decimal separator.</span>
+
+    <span class="n">ID_IN_HEX</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># Write id in hexadecimal format.</span>
+    <span class="n">DATA_IN_HEX</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># Write data in hexadecimal format.</span>
+    <span class="n">NUMBER_OF_TIME_DECIMALS</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c1"># Number of time decimals (0-9).</span>
+    <span class="n">NAME_MANGLING</span> <span class="o">=</span> <span class="mi">14</span>  <span class="c1"># Make signal names safe for use in Matlab.</span>
+    <span class="n">FILL_BLANKS</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># Propagate values down to next row in csv-files.</span>
+
+    <span class="n">SHOW_UNITS</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># Show units on their own row.</span>
+    <span class="n">ISO8601_DECIMALS</span> <span class="o">=</span> <span class="mi">17</span>  <span class="c1"># Number of time decimals (0-9) to print in the calendar timestamps using ISO8601.</span>
+    <span class="n">MERGE_LINES</span> <span class="o">=</span> <span class="mi">18</span>  <span class="c1"># Merge two lines if their signal values are equal.</span>
+    <span class="n">RESAMPLE_COLUMN</span> <span class="o">=</span> <span class="mi">19</span>  <span class="c1"># Only print a line when the given column has been accessed.</span>
+    <span class="n">VERSION</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># File format version.</span>
+
+    <span class="n">SHOW_COUNTER</span> <span class="o">=</span> <span class="mi">21</span>  <span class="c1"># Add a counter to the output.</span>
+    <span class="n">CROP_PRETRIGGER</span> <span class="o">=</span> <span class="mi">22</span>  <span class="c1"># Crop pre-triggers.</span>
+    <span class="n">ENUM_VALUES</span> <span class="o">=</span> <span class="mi">23</span>  <span class="c1"># Replace integer values in signals with strings from database.</span>
+    <span class="n">SIZE_LIMIT</span> <span class="o">=</span> <span class="mi">24</span>  <span class="c1"># Maximum file size in megabytes before starting a new output file.</span>
+    <span class="n">TIME_LIMIT</span> <span class="o">=</span> <span class="mi">25</span>  <span class="c1"># Maximum delta time in seconds between first and last event before starting a new output file.</span>
+
+    <span class="n">LIMIT_DATA_BYTES</span> <span class="o">=</span> <span class="mi">26</span>  <span class="c1"># Number of data bytes that a converter will write.</span>
+    <span class="n">CREATION_DATE</span> <span class="o">=</span> <span class="mi">27</span>  <span class="c1"># File creation date/time as seconds in standard UNIX format. Used in file headers if not zero</span>
+    <span class="n">OVERWRITE</span> <span class="o">=</span> <span class="mi">28</span>  <span class="c1"># Overwrite existing output files</span>
+    <span class="n">TIMEZONE</span> <span class="o">=</span> <span class="mi">29</span>  <span class="c1"># Timezone for absolute timestamps</span>
+    <span class="n">FULLY_QUALIFIED_NAMES</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Write fully qualified signal names</span>
+    <span class="n">NUMBER_OF_DATA_DECIMALS</span> <span class="o">=</span> <span class="mi">31</span>  <span class="c1"># Number of data decimals (0-50)</span>
+
+    <span class="n">SIGNAL_BASED</span> <span class="o">=</span> <span class="mi">1001</span>  <span class="c1"># Writes signals and not data frames. Used only with kvlcIsPropertySupported().</span>
+    <span class="n">SHOW_SIGNAL_SELECT</span> <span class="o">=</span> <span class="mi">1002</span>  <span class="c1"># Requires a database. Used only with kvlcIsPropertySupported().</span>
+    <span class="n">ATTACHMENTS</span> <span class="o">=</span> <span class="mi">1003</span>  <span class="c1"># Can attach files to converted data. Use kvlcAttachFile() to add a file. Used only with kvlcIsPropertySupported().</span></div>
+
+
+<span class="n">_PROPERTY_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">START_OF_MEASUREMENT</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">FIRST_TRIGGER</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">USE_OFFSET</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">OFFSET</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">CHANNEL_MASK</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">HLP_J1939</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">CALENDAR_TIME_STAMPS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">WRITE_HEADER</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SEPARATOR_CHAR</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">DECIMAL_CHAR</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">ID_IN_HEX</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">DATA_IN_HEX</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">NUMBER_OF_TIME_DECIMALS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">NAME_MANGLING</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">FILL_BLANKS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SHOW_UNITS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">ISO8601_DECIMALS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">MERGE_LINES</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">RESAMPLE_COLUMN</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">VERSION</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SHOW_COUNTER</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">CROP_PRETRIGGER</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">ENUM_VALUES</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SIZE_LIMIT</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">TIME_LIMIT</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">LIMIT_DATA_BYTES</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">CREATION_DATE</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">OVERWRITE</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">TIMEZONE</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">FULLY_QUALIFIED_NAMES</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">NUMBER_OF_DATA_DECIMALS</span><span class="p">:</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SIGNAL_BASED</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">SHOW_SIGNAL_SELECT</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">Property</span><span class="o">.</span><span class="n">ATTACHMENTS</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

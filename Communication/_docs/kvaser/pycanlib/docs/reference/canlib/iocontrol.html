@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>IOControl &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="I/O pin" href="iopin.html" />
+    <link rel="prev" title="Enumerations" href="enums.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">canlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channeldata.html">ChannelData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="envvar.html">EnvVar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IOControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iopin.html">I/O pin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="txe.html">Script Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">canlib</a> &raquo;</li>
+        
+      <li>IOControl</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/canlib/iocontrol.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="iocontrol">
+<h1>IOControl<a class="headerlink" href="#iocontrol" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="canlib.canlib.IOControl">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">IOControl</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/iocontrol.html#IOControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.IOControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper object for using <code class="xref py py-obj docutils literal notranslate"><span class="pre">canIoCtl</span></code></p>
+<p>Provides a variety of functionality, some of which are represented as
+attributes of this object and some as functions. See the respective
+entries below for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>brlimit</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the hardware bitrate limit, or zero for the device’s default. Write-only.</li>
+<li><strong>bus_type</strong> – A member of the <a class="reference internal" href="enums.html#canlib.canlib.BusTypeGroup" title="canlib.canlib.BusTypeGroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BusTypeGroup</span></code></a> enum. Not implemented in Linux. Read-only.</li>
+<li><strong>buson_time_auto_reset</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> for whether the CAN clock is reset at bus-on. Not implemented in Linux. Write-only.</li>
+<li><strong>channel_quality</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> between 0 and 100 (inclusively) with the quality of the channel in percent. Not implemented in Linux. Read-only.</li>
+<li><strong>devname_ascii</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> with the current device name. Not implemented in Linux. Read-only.</li>
+<li><strong>driverhandle</strong> – The windows handle related to the CANlib handle. Not implemented in Linux. Read-only.</li>
+<li><strong>error_frames_reporting</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> for whether error frames are reported. Not implemented in Linux. Write-only.</li>
+<li><strong>eventhandle</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the windows event handle. Not implemented in Linux. Read-only.</li>
+<li><strong>local_txecho</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> for whether local transmit echo is turned on. Write-only.</li>
+<li><strong>report_access_errors</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> for whether Access Reporting is turned on</li>
+<li><strong>roundtrip_time</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the roundtrip time in milliseconds. Not implemented in Linux. Read-only.</li>
+<li><strong>rx_buffer_level</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the approximate receive queue level. Read-only.</li>
+<li><strong>rx_queue_size</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the size of the receive buffer. Can only be used off-bus. Not implemented in Linux. Write-only.</li>
+<li><strong>throttle_scaled</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> between 0 and 100 (inclusively) where 0 means the device is very responsive but generates more CPU load and 100 means the device is less responsive with less CPU load. Note that not all devices support setting this. Some hardware will accept this command but neglect it. Not implemented in Linux.</li>
+<li><strong>time_since_last_seen</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the time in milliseconds since the last communication occured. Not implemented in Linux. Read-only.</li>
+<li><strong>timer_scale</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the time-stamp clock resolution in microseconds.</li>
+<li><strong>tx_buffer_level</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the approximate transmit queue level. Read-only.</li>
+<li><strong>tx_interval</strong> – An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with the number of microseconds with the minimum CAN message transmit interval.</li>
+<li><strong>txack</strong> – 0 for Transmit Acknowledges off, 1 for Transmit Acknowledges on, and 2 for Transmit Acknowledges off, even for the driver’s internal usage (this will break parts of the library).</li>
+<li><strong>txrq</strong> – A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> for whether Transmit Requests are turned on. Write-only.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="canlib.canlib.IOControl.clear_error_counters">
+<code class="descname">clear_error_counters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.clear_error_counters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells CANlib to clear the CAN error counters. CAN error counters on device side are NOT updated. It is recommended to use <a class="reference internal" href="#canlib.canlib.IOControl.reset_overrun_count" title="canlib.canlib.IOControl.reset_overrun_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_overrun_count</span></code></a> to reset overrun status. Not implemented in Linux.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.connect_to_virtual_bus">
+<code class="descname">connect_to_virtual_bus</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.connect_to_virtual_bus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects the channel to the virtual bus number <code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.disconnect_from_virtual_bus">
+<code class="descname">disconnect_from_virtual_bus</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.disconnect_from_virtual_bus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects the channel from the virtual bus number <code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.flush_rx_buffer">
+<code class="descname">flush_rx_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.flush_rx_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discard the current contents of the RX queue.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.flush_tx_buffer">
+<code class="descname">flush_tx_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.flush_tx_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discard the current contents of the TX queue.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.prefer_ext">
+<code class="descname">prefer_ext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.prefer_ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells CANlib to assume <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.EXT" title="canlib.canlib.MessageFlag.EXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.EXT</span></code></a> when sending messages if neither <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.EXT" title="canlib.canlib.MessageFlag.EXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.EXT</span></code></a> or <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.STD" title="canlib.canlib.MessageFlag.STD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.STD</span></code></a> is specified. Not implemented in Linux.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.prefer_std">
+<code class="descname">prefer_std</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.prefer_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells CANlib to assume <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.STD" title="canlib.canlib.MessageFlag.STD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.STD</span></code></a> when sending messages if neither <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.EXT" title="canlib.canlib.MessageFlag.EXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.EXT</span></code></a> or <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag.STD" title="canlib.canlib.MessageFlag.STD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag.STD</span></code></a> is specified. Not implemented in Linux.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canlib.canlib.IOControl.reset_overrun_count">
+<code class="descname">reset_overrun_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.IOControl.reset_overrun_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets overrun count and flags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.IOControl.raw">
+<code class="descname">raw</code><span class="sig-paren">(</span><em>item</em>, <em>value=None</em>, <em>ctype=&lt;class 'ctypes.c_ulong'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/iocontrol.html#IOControl.raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.IOControl.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>A raw call to <code class="xref py py-obj docutils literal notranslate"><span class="pre">canIoCtl</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>item</strong> (<a class="reference internal" href="enums.html#canlib.canlib.IOControlItem" title="canlib.canlib.IOControlItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControlItem</span></code></a>) – The “function code” to be passed to <code class="xref py py-obj docutils literal notranslate"><span class="pre">canIoCtl</span></code>.</li>
+<li><strong>value</strong> – The value sent to <code class="xref py py-obj docutils literal notranslate"><span class="pre">canIoCtl</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> if no value should be
+given. Must be compatible with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">ctype</span></code> argument.</li>
+<li><strong>ctype</strong> – The <code class="xref py py-obj docutils literal notranslate"><span class="pre">ctypes</span></code> type that should be used to when sending the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code> argument and when interpreting the result of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canIoCtl</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="iopin.html" class="btn btn-neutral float-right" title="I/O pin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="enums.html" class="btn btn-neutral float-left" title="Enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

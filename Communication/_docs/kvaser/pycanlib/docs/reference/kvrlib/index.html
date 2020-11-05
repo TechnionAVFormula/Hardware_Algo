@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kvrlib &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exceptions" href="exceptions.html" />
+    <link rel="prev" title="Miscellaneous" href="../kvmlib/wrapper.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kvrlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discovery.html">Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="infoset.html">Device Info Set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remotedevice.html">Remote Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+      <li>kvrlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvrlib/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kvrlib">
+<h1>kvrlib<a class="headerlink" href="#kvrlib" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#kvrerror">KvrError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#kvrblank">KvrBlank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#devicenotinseterror">DeviceNotInSetError</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="discovery.html">Discovery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#address">Address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#deviceinfo">DeviceInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#id1">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#get-default-discovery-addresses">get_default_discovery_addresses()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#opendiscovery">openDiscovery()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#servicestatus">ServiceStatus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#set-clear-stored-devices-on-exit">set_clear_stored_devices_on_exit()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#start-discovery">start_discovery()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#store-devices">store_devices()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html#stored-devices">stored_devices()</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enumerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#accessibility">Accessibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#addresstype">AddressType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#addresstypeflag">AddressTypeFlag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#availability">Availability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#basicserviceset">BasicServiceSet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#configmode">ConfigMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#deviceusage">DeviceUsage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#error">Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#networkstate">NetworkState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#regulatorydomain">RegulatoryDomain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#remotestate">RemoteState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#servicestate">ServiceState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums.html#startinfo">StartInfo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="infoset.html">Device Info Set</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="infoset.html#discover-info-set">discover_info_set()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="infoset.html#empty-info-set">empty_info_set()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="infoset.html#stored-info-set">stored_info_set()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="infoset.html#deviceinfoset">DeviceInfoSet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="remotedevice.html">Remote Device</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#addressinfo">AddressInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#configprofile">ConfigProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#connectionstatus">ConnectionStatus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#connectiontestresult">ConnectionTestResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#connectiontest">ConnectionTest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#opendevice">openDevice()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#remotedevice">RemoteDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#wlanscan">WlanScan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remotedevice.html#wlanscanresult">WlanScanResult</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="structures.html">Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#kvraddress">kvrAddress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#kvraddresslist">kvrAddressList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#kvrdeviceinfo">kvrDeviceInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#kvrdeviceinfolist">kvrDeviceInfoList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#kvrversion">kvrVersion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#addressfromstring">addressFromString()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#configactiveprofileset">configActiveProfileSet()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#configactiveprofileget">configActiveProfileGet()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#confignoprofilesget">configNoProfilesGet()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#devicegetservicestatus">deviceGetServiceStatus()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#devicegetservicestatustext">deviceGetServiceStatusText()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#generate-wep-keys">generate_wep_keys()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#generate-wpa-keys">generate_wpa_keys()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#hostname">hostname()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#initializelibrary">initializeLibrary()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#kvrdiscovery">kvrDiscovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#kvrconfig">kvrConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#stringfromaddress">stringFromAddress()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#unload">unload()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#verify-xml">verify_xml()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html#wepkeys">WEPKeys</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exceptions.html" class="btn btn-neutral float-right" title="Exceptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../kvmlib/wrapper.html" class="btn btn-neutral float-left" title="Miscellaneous" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

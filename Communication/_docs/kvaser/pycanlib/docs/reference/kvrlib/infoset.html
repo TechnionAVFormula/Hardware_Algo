@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Device Info Set &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Remote Device" href="remotedevice.html" />
+    <link rel="prev" title="Enumerations" href="enums.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvrlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discovery.html">Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Device Info Set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discover-info-set">discover_info_set()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#empty-info-set">empty_info_set()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stored-info-set">stored_info_set()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deviceinfoset">DeviceInfoSet</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="remotedevice.html">Remote Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvrlib</a> &raquo;</li>
+        
+      <li>Device Info Set</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvrlib/infoset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="device-info-set">
+<h1>Device Info Set<a class="headerlink" href="#device-info-set" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="discover-info-set">
+<h2>discover_info_set()<a class="headerlink" href="#discover-info-set" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.discover_info_set">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">discover_info_set</code><span class="sig-paren">(</span><em>delay=100</em>, <em>timeout=1000</em>, <em>addresses=None</em>, <em>report_stored=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#discover_info_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.discover_info_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="empty-info-set">
+<h2>empty_info_set()<a class="headerlink" href="#empty-info-set" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.empty_info_set">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">empty_info_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#empty_info_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.empty_info_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="stored-info-set">
+<h2>stored_info_set()<a class="headerlink" href="#stored-info-set" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.stored_info_set">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">stored_info_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#stored_info_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.stored_info_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="deviceinfoset">
+<h2>DeviceInfoSet<a class="headerlink" href="#deviceinfoset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.DeviceInfoSet">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">DeviceInfoSet</code><span class="sig-paren">(</span><em>iterable=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mutable set of <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> objects that can be written to the registry</p>
+<p>There are three different functions for creating <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a> objects:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="#canlib.kvrlib.empty_info_set" title="canlib.kvrlib.empty_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">empty_info_set</span></code></a></dt>
+<dd>Creates an empty set.</dd>
+<dt><a class="reference internal" href="#canlib.kvrlib.stored_info_set" title="canlib.kvrlib.stored_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stored_info_set</span></code></a></dt>
+<dd>Creates a set from the device information stored in the registry.</dd>
+<dt><a class="reference internal" href="#canlib.kvrlib.discover_info_set" title="canlib.kvrlib.discover_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discover_info_set</span></code></a></dt>
+<dd>Create a set from the results of a <a class="reference internal" href="discovery.html#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Discovery</span></code></a>.</dd>
+</dl>
+<p>Once a <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a> has been created it can be modified as a normal set,
+and the <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> elements can also be modified. Once all modification
+is done, the set can be written to the registry with <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet.store" title="canlib.kvrlib.DeviceInfoSet.store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet.store</span></code></a>.</p>
+<p>The main difference between <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a> and normal sets is that it can
+only contain one <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> with a specific combination of EAN and serial
+number, even if they otherwise are not equal. This means that even if
+<code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">in</span> <span class="pre">infoset</span></code> evaluates to true, that exact object may not be in the
+set, and modifying it may not change the set.</p>
+<p>To retrieve a specific <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> from the set use <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet.find" title="canlib.kvrlib.DeviceInfoSet.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet.find</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">info</span> <span class="o">=</span> <span class="n">infoset</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="s1">&#39;01234-5&#39;</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Modifying the resulting <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> will then change the contents of the set.</p>
+<p>Instances of this class can also be used as context managers, in which case
+they will write their content to the registry when the context exists.</p>
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> to this <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a>) – The element to add to this set</td>
+</tr>
+</tbody>
+</table>
+<p>If the set already contains a <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> with the same EAN and serial
+number as <code class="docutils literal notranslate"><span class="pre">info</span></code>, the previous <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> will be discarded and
+replaced by <code class="docutils literal notranslate"><span class="pre">info</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.discard">
+<code class="descname">discard</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.discard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.discard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an element.  Do not raise an exception if absent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.find">
+<code class="descname">find</code><span class="sig-paren">(</span><em>ean</em>, <em>serial</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find and return a specific <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> in this set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ean</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code>) – The EAN to search for</li>
+<li><strong>serial</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The serial number to search for</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If no <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> with the EAN and serial number is found in this set,
+<a class="reference internal" href="exceptions.html#canlib.kvrlib.DeviceNotInSetError" title="canlib.kvrlib.DeviceNotInSetError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceNotInSetError</span></code></a> is raised.</p>
+<p>Note that there can never be more than one <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> with the same
+EAN and serial number in a <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.find_remove">
+<code class="descname">find_remove</code><span class="sig-paren">(</span><em>ean</em>, <em>serial</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.find_remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.find_remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a specific <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> and remove it from this set</p>
+<p>Like <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet.find" title="canlib.kvrlib.DeviceInfoSet.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet.find</span></code></a> but immediately removes the <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> found from the set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ean</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code>) – The EAN to search for</li>
+<li><strong>serial</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The serial number to search for</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.has">
+<code class="descname">has</code><span class="sig-paren">(</span><em>ean</em>, <em>serial</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.has"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.has" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the set contains a specific <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a></p>
+<p>Similar to <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet.find" title="canlib.kvrlib.DeviceInfoSet.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet.find</span></code></a> but instead of returning a <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a>
+or raising an exception, this function returns <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ean</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code>) – The EAN to search for</li>
+<li><strong>serial</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The serial number to search for</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.new_info">
+<code class="descname">new_info</code><span class="sig-paren">(</span><em>ean</em>, <em>serial</em>, <em>**attrs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.new_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.new_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return new <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> in this set</p>
+<p>Any attribute of the <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> that should have a specific value can
+be passed as keyword arguments to this function.</p>
+<p>The EAN and serial number must be provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ean</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code>) – The EAN of the info (<a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo.ean" title="canlib.kvrlib.DeviceInfo.ean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo.ean</span></code></a>)</li>
+<li><strong>serial</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The serial number of the info (<a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo.serial" title="canlib.kvrlib.DeviceInfo.serial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo.serial</span></code></a>)</li>
+<li><strong>**attrs</strong> – Any other attributes to be set on the <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If the set already contains a <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> with the EAN <code class="docutils literal notranslate"><span class="pre">ean</span></code> and
+serial number <code class="docutils literal notranslate"><span class="pre">serial</span></code>, the previous <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> will be discarded
+and replaced by the new <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> created by this function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.store">
+<code class="descname">store</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store this set’s <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> objects in the registry</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfoSet.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/infoset.html#DeviceInfoSet.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfoSet.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the set, adding elements from all others</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">others</span></code> must contain nothing but <a class="reference internal" href="discovery.html#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> objects, or this
+function will raise <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypeError</span></code> without modifying this <a class="reference internal" href="#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfoSet</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="remotedevice.html" class="btn btn-neutral float-right" title="Remote Device" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="enums.html" class="btn btn-neutral float-left" title="Enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

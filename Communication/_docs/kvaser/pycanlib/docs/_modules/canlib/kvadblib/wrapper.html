@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvadblib.wrapper &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvadblib.wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvadblib.wrapper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Wrapper for Kvaser Database API (kvaDbLib).&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">dllLoader</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ProtocolProperties</span>
+<span class="kn">from</span> <span class="nn">.dll</span> <span class="k">import</span> <span class="n">KvaDbDll</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvdBufferTooSmall</span>
+
+
+<span class="c1"># qqqmac replace with global version class</span>
+<span class="k">class</span> <span class="nc">kvadbVersion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that holds kvadblib version number.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">build</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">major</span> <span class="o">=</span> <span class="n">major</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minor</span> <span class="o">=</span> <span class="n">minor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build</span> <span class="o">=</span> <span class="n">build</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Presents the version number as &#39;major.minor.build&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">major</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="bytes_to_dlc"><a class="viewcode-back" href="../../../reference/kvadblib/wrapper.html#canlib.kvadblib.bytes_to_dlc">[docs]</a><span class="k">def</span> <span class="nf">bytes_to_dlc</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert number of bytes to DLC for given protocol.&quot;&quot;&quot;</span>
+    <span class="n">dlc</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbBytesToMsgDlc</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">dlc</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dlc</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="dlc_to_bytes"><a class="viewcode-back" href="../../../reference/kvadblib/wrapper.html#canlib.kvadblib.dlc_to_bytes">[docs]</a><span class="k">def</span> <span class="nf">dlc_to_bytes</span><span class="p">(</span><span class="n">dlc</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert DLC to number of bytes for given protocol.&quot;&quot;&quot;</span>
+    <span class="n">num_bytes</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbMsgDlcToBytes</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">num_bytes</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="get_protocol_properties"><a class="viewcode-back" href="../../../reference/kvadblib/wrapper.html#canlib.kvadblib.get_protocol_properties">[docs]</a><span class="k">def</span> <span class="nf">get_protocol_properties</span><span class="p">(</span><span class="n">prot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the signal protocol_properties.&quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ProtocolProperties</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetProtocolProperties</span><span class="p">(</span><span class="n">prot</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="dllversion"><a class="viewcode-back" href="../../../reference/kvadblib/wrapper.html#canlib.kvadblib.dllversion">[docs]</a><span class="k">def</span> <span class="nf">dllversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the kvaDbLib DLL version number as a `VersionNumber`&quot;&quot;&quot;</span>
+    <span class="n">c_major</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">c_minor</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">c_build</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetVersion</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_major</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_minor</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_build</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">kvadbVersion</span><span class="p">(</span><span class="n">major</span><span class="o">=</span><span class="n">c_major</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">minor</span><span class="o">=</span><span class="n">c_minor</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">build</span><span class="o">=</span><span class="n">c_build</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_last_parse_error"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.get_last_parse_error">[docs]</a><span class="k">def</span> <span class="nf">get_last_parse_error</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Can be used to get the specific reason why `KvdDbFileParse` was raised.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `str`: Error message from the parser.</span>
+
+<span class="sd">    .. versionadded:: 1.10</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buflen_pre</span> <span class="o">=</span> <span class="mi">512</span>
+    <span class="n">buflen</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">pointer</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">buflen_pre</span><span class="p">))</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">buflen</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetLastParseError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">buflen</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">KvdBufferTooSmall</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">buflen</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetLastParseError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">buflen</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+
+<span class="n">_ct_dll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;kvaDbLib.dll&#39;</span><span class="p">,</span>
+                             <span class="n">linux_name</span><span class="o">=</span><span class="s1">&#39;libkvadblib.so&#39;</span><span class="p">)</span>
+<span class="n">dll</span> <span class="o">=</span> <span class="n">KvaDbDll</span><span class="p">(</span><span class="n">_ct_dll</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

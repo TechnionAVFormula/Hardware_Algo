@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Monitor a Channel Using a Database &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examine the Contents of a Database" href="examine_db.html" />
+    <link rel="prev" title="Create a Database" href="create_db.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="convert_kme_asc.html">Convert a .kme50 file to plain ASCII</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_db.html">Create a Database</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Monitor a Channel Using a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examine_db.html">Examine the Contents of a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_channels.html">Print Information About All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html">Monitor a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pinger.html">Send Random Messages on a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_memo_config.html">Validate a Memorator Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="write_memo_config.html">Write a Configuration to a Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Monitor a Channel Using a Database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/dbmonitor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="monitor-a-channel-using-a-database">
+<h1>Monitor a Channel Using a Database<a class="headerlink" href="#monitor-a-channel-using-a-database" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;dbmonitor.py -- Read CAN messages using a database</span>
+
+<span class="sd">This script will use canlib.canlib and canlib.kvadblib to monitor a CAN</span>
+<span class="sd">channel, and look up all messages received in a database before printing them.</span>
+
+<span class="sd">It requires a CANlib channel with a connected device capable of receiving CAN</span>
+<span class="sd">messages, some source of CAN messages, and the same database that the source is</span>
+<span class="sd">using to generate the messages.</span>
+
+<span class="sd">The source of the messages may be e.g. the pinger.py example script.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">kvadblib</span>
+
+
+<span class="n">bitrates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;1M&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_1M</span><span class="p">,</span>
+    <span class="s1">&#39;500K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">,</span>
+    <span class="s1">&#39;250K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_250K</span><span class="p">,</span>
+    <span class="s1">&#39;125K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_125K</span><span class="p">,</span>
+    <span class="s1">&#39;100K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_100K</span><span class="p">,</span>
+    <span class="s1">&#39;62K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_62K</span><span class="p">,</span>
+    <span class="s1">&#39;50K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_50K</span><span class="p">,</span>
+    <span class="s1">&#39;83K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_83K</span><span class="p">,</span>
+    <span class="s1">&#39;10K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_10K</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">printframe</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">bmsg</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">KvdNoMessage</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&lt; No message found for frame with id </span><span class="si">%s</span><span class="s2"> &gt;&gt;&gt;&quot;</span> <span class="o">%</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">bmsg</span><span class="o">.</span><span class="n">_message</span>
+
+    <span class="c1"># form = &#39;═^&#39; + str(width)</span>
+    <span class="c1"># print(format(&quot; %s &quot; % msg.name, form))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;┏&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;┃&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">bsig</span> <span class="ow">in</span> <span class="n">bmsg</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;┃&#39;</span><span class="p">,</span> <span class="n">bsig</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">bsig</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">bsig</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;┗&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">monitor_channel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">bitrate</span><span class="p">,</span> <span class="n">ticktime</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">Dbc</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">db_name</span><span class="p">)</span>
+
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canOPEN_ACCEPT_VIRTUAL</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canDRIVER_NORMAL</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">tick_countup</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">ticktime</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ticktime</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">ticktime</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">ticktime</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Listening...&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">timeout</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+            <span class="n">printframe</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">canlib</span><span class="o">.</span><span class="n">CanNoMsg</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ticktime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tick_countup</span> <span class="o">+=</span> <span class="n">timeout</span>
+                <span class="k">while</span> <span class="n">tick_countup</span> <span class="o">&gt;</span> <span class="n">ticktime</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tick&quot;</span><span class="p">)</span>
+                    <span class="n">tick_countup</span> <span class="o">-=</span> <span class="n">ticktime</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop.&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Listen on a CAN channel and print all signals received, as specified by a database.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The channel to listen on.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;engine_example.dbc&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The database file to look up messages and signals in.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--bitrate&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;500k&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;Bitrate, one of &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bitrates</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--ticktime&#39;</span><span class="p">,</span> <span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;If greater than zero, display &#39;tick&#39; every this many seconds&quot;</span><span class="p">))</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">monitor_channel</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">bitrates</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">bitrate</span><span class="o">.</span><span class="n">upper</span><span class="p">()],</span> <span class="n">args</span><span class="o">.</span><span class="n">ticktime</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Any CAN messages received on the specified channel will be looked up in the
+database using <a class="reference internal" href="../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.interpret" title="canlib.kvadblib.Dbc.interpret"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.Dbc.interpret</span></code></a>, which allows the script to
+print the “phys” value of each signal instead of just printing the raw data (as
+<a class="reference internal" href="monitor.html"><span class="doc">Monitor a Channel</span></a> does). The script also prints the message’s name and
+comment (if available), as well as the signals name and unit.</p>
+</div>
+<div class="section" id="sample-output">
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">┏ EngineData</span>
+<span class="go">┃ PetrolLevel: 0.0 l</span>
+<span class="go">┃ EngPower: 12.0 kW</span>
+<span class="go">┃ EngForce: 0.0 N</span>
+<span class="go">┃ IdleRunning: 0.0</span>
+<span class="go">┃ EngTemp: -30.0 °C</span>
+<span class="go">┃ EngSpeed: 7735.0 rpm</span>
+<span class="go">┗</span>
+<span class="go">┏ GearBoxInfo</span>
+<span class="go">┃ EcoMode: 0.0</span>
+<span class="go">┃ ShiftRequest: 0.0</span>
+<span class="go">┃ Gear: 0.0</span>
+<span class="go">┗</span>
+<span class="go">┏ EngineData</span>
+<span class="go">┃ PetrolLevel: 0.0 l</span>
+<span class="go">┃ EngPower: 28.0 kW</span>
+<span class="go">┃ EngForce: 0.0 N</span>
+<span class="go">┃ IdleRunning: 0.0</span>
+<span class="go">┃ EngTemp: -30.0 °C</span>
+<span class="go">┃ EngSpeed: 3467.0 rpm</span>
+<span class="go">┗</span>
+<span class="go">┏ GearBoxInfo</span>
+<span class="go">┃ EcoMode: 1.0</span>
+<span class="go">┃ ShiftRequest: 0.0</span>
+<span class="go">┃ Gear: 0.0</span>
+<span class="go">┗</span>
+<span class="go">┏ EngineData</span>
+<span class="go">┃ PetrolLevel: 0.0 l</span>
+<span class="go">┃ EngPower: 0.0 kW</span>
+<span class="go">┃ EngForce: 0.0 N</span>
+<span class="go">┃ IdleRunning: 0.0</span>
+<span class="go">┃ EngTemp: -50.0 °C</span>
+<span class="go">┃ EngSpeed: 1639.0 rpm</span>
+<span class="go">┗</span>
+<span class="go">┏ GearBoxInfo</span>
+<span class="go">┃ EcoMode: 1.0</span>
+<span class="go">┃ ShiftRequest: 0.0</span>
+<span class="go">┃ Gear: 1.0</span>
+<span class="go">┗</span>
+<span class="go">┏ EngineData</span>
+<span class="go">┃ PetrolLevel: 60.0 l</span>
+<span class="go">┃ EngPower: 0.0 kW</span>
+<span class="go">┃ EngForce: 0.0 N</span>
+<span class="go">┃ IdleRunning: 0.0</span>
+<span class="go">┃ EngTemp: 142.0 °C</span>
+<span class="go">┃ EngSpeed: 0.0 rpm</span>
+<span class="go">┗</span>
+<span class="go">┏ GearBoxInfo</span>
+<span class="go">┃ EcoMode: 0.0</span>
+<span class="go">┃ ShiftRequest: 0.0</span>
+<span class="go">┃ Gear: 0.0</span>
+<span class="go">┗</span>
+<span class="go">┏ EngineData</span>
+<span class="go">┃ PetrolLevel: 172.0 l</span>
+<span class="go">┃ EngPower: 51.0 kW</span>
+<span class="go">┃ EngForce: 0.0 N</span>
+<span class="go">┃ IdleRunning: 0.0</span>
+<span class="go">┃ EngTemp: -50.0 °C</span>
+<span class="go">┃ EngSpeed: 0.0 rpm</span>
+<span class="go">┗</span>
+<span class="go">┏ GearBoxInfo</span>
+<span class="go">┃ EcoMode: 0.0</span>
+<span class="go">┃ ShiftRequest: 0.0</span>
+<span class="go">┃ Gear: 0.0</span>
+<span class="go">┗</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examine_db.html" class="btn btn-neutral float-right" title="Examine the Contents of a Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="create_db.html" class="btn btn-neutral float-left" title="Create a Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

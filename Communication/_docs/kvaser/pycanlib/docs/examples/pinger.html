@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Send Random Messages on a Channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Validate a Memorator Configuration" href="validate_memo_config.html" />
+    <link rel="prev" title="Monitor a Channel" href="monitor.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="convert_kme_asc.html">Convert a .kme50 file to plain ASCII</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_db.html">Create a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbmonitor.html">Monitor a Channel Using a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examine_db.html">Examine the Contents of a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_channels.html">Print Information About All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html">Monitor a Channel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Send Random Messages on a Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#randomness">Randomness</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validate_memo_config.html">Validate a Memorator Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="write_memo_config.html">Write a Configuration to a Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Send Random Messages on a Channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/pinger.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="send-random-messages-on-a-channel">
+<h1>Send Random Messages on a Channel<a class="headerlink" href="#send-random-messages-on-a-channel" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;pinger.py -- Send random CAN messages based on a database</span>
+
+<span class="sd">This script uses canlib.canlib and canlib.kvadblib to send random messages from</span>
+<span class="sd">a database with random data.</span>
+
+<span class="sd">It requires a CANlib channel a connected device capable of sending CAN</span>
+<span class="sd">messages, something that receives those messages, and a database to inspect for</span>
+<span class="sd">the messages to send.</span>
+
+<span class="sd">Messages can be received and printed by e.g. the dbmonitor.py example script.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">kvadblib</span>
+
+
+<span class="n">bitrates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;1M&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_1M</span><span class="p">,</span>
+    <span class="s1">&#39;500K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">,</span>
+    <span class="s1">&#39;250K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_250K</span><span class="p">,</span>
+    <span class="s1">&#39;125K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_125K</span><span class="p">,</span>
+    <span class="s1">&#39;100K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_100K</span><span class="p">,</span>
+    <span class="s1">&#39;62K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_62K</span><span class="p">,</span>
+    <span class="s1">&#39;50K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_50K</span><span class="p">,</span>
+    <span class="s1">&#39;83K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_83K</span><span class="p">,</span>
+    <span class="s1">&#39;10K&#39;</span><span class="p">:</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_10K</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">set_random_framebox_signal</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">framebox</span><span class="p">,</span> <span class="n">signals</span><span class="p">):</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">signals</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">get_random_value</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span>
+    <span class="n">framebox</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">phys</span> <span class="o">=</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">get_random_value</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
+    <span class="n">limits</span> <span class="o">=</span> <span class="n">sig</span><span class="o">.</span><span class="n">limits</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">limits</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">limits</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+    <span class="c1"># round value depending on type...</span>
+    <span class="k">if</span> <span class="p">(</span>
+            <span class="n">sig</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalType</span><span class="o">.</span><span class="n">UNSIGNED</span> <span class="ow">or</span>
+            <span class="n">sig</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">SignalType</span><span class="o">.</span><span class="n">SIGNED</span>
+    <span class="p">):</span>
+        <span class="c1"># ...remove decimals if the signal was of type unsigned</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># ...otherwise, round to get only one decimal</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">ping_loop</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">num_messages</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">bitrate</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">Dbc</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">db_name</span><span class="p">)</span>
+
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canOPEN_ACCEPT_VIRTUAL</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canDRIVER_NORMAL</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_messages</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">used_messages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">used_messages</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="p">),</span> <span class="n">num_messages</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Randomly selecting signals from the following messages:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">used_messages</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seed used was &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># Create an empty framebox each time, ignoring previously set signal</span>
+        <span class="c1"># values.</span>
+        <span class="n">framebox</span> <span class="o">=</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">FrameBox</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+        <span class="c1"># Add all messages to the framebox, as we may use send any signal from</span>
+        <span class="c1"># any of them.</span>
+        <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">framebox</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Make a list of all signals (which framebox has found in all messages</span>
+        <span class="c1"># we gave it), so that set_random_framebox_signal() can pick a random</span>
+        <span class="c1"># one.</span>
+        <span class="n">signals</span> <span class="o">=</span> <span class="p">[</span><span class="n">bsig</span><span class="o">.</span><span class="n">signal</span> <span class="k">for</span> <span class="n">bsig</span> <span class="ow">in</span> <span class="n">framebox</span><span class="o">.</span><span class="n">signals</span><span class="p">()]</span>
+
+        <span class="c1"># Set some random signals to random values</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">quantity</span><span class="p">):</span>
+            <span class="n">set_random_framebox_signal</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">framebox</span><span class="p">,</span> <span class="n">signals</span><span class="p">)</span>
+
+        <span class="c1"># Send all messages/frames</span>
+        <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">framebox</span><span class="o">.</span><span class="n">frames</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sending frame&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+            <span class="n">ch</span><span class="o">.</span><span class="n">writeWait</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Send random CAN message based on a database.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The channel to send messages on.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--bitrate&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;500k&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;Bitrate, one of &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bitrates</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;engine_example.dbc&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The database file to base messages on.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-Q&#39;</span><span class="p">,</span> <span class="s1">&#39;--quantity&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The number of signals to send each tick.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-I&#39;</span><span class="p">,</span> <span class="s1">&#39;--interval&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The time, in seconds, between ticks.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--num-messages&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The number of message from the database to use, or -1 to use all.&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s1">&#39;--seed&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The seed used for choosing messages. If possible, will be converted to an int. If no argument is given, a random seed will be used.&quot;</span><span class="p">))</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">seed</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">seed</span>
+
+    <span class="n">ping_loop</span><span class="p">(</span>
+        <span class="n">channel_number</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span>
+        <span class="n">db_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">db</span><span class="p">,</span>
+        <span class="n">num_messages</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_messages</span><span class="p">,</span>
+        <span class="n">quantity</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
+        <span class="n">interval</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span>
+        <span class="n">bitrate</span><span class="o">=</span><span class="n">bitrates</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">bitrate</span><span class="o">.</span><span class="n">upper</span><span class="p">()],</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There must be some process reading the messages for <code class="docutils literal notranslate"><span class="pre">pinger.py</span></code> to work
+(see e.g. <a class="reference internal" href="dbmonitor.html"><span class="doc">Monitor a Channel Using a Database</span></a>).</p>
+</div>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ping_loop</span></code> will first extract a random list of messages (see <a class="reference internal" href="#randomness"><span class="std std-ref">Randomness</span></a>), and then enter a loop that creates a new <a class="reference internal" href="../reference/kvadblib/framebox.html#canlib.kvadblib.FrameBox" title="canlib.kvadblib.FrameBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.FrameBox</span></code></a> before adding some random signals with random values (the quantity specified by the <code class="xref py py-obj docutils literal notranslate"><span class="pre">quantity</span></code>/<code class="docutils literal notranslate"><span class="pre">--quantity</span></code> argument).</p>
+<p>Adding random signals is done with <code class="xref py py-obj docutils literal notranslate"><span class="pre">set_random_framebox_signal</span></code>, which picks a random signal from the framebox, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">get_random_value</span></code> which inspects the given signal and provides a random value based on the signal’s definition.</p>
+<p>Finally, the loop pauses for <code class="xref py py-obj docutils literal notranslate"><span class="pre">interval</span></code>/<code class="docutils literal notranslate"><span class="pre">--interval</span></code> seconds between sending messages.</p>
+<div class="section" id="randomness">
+<span id="id1"></span><h3>Randomness<a class="headerlink" href="#randomness" title="Permalink to this headline">¶</a></h3>
+<p>The random selection of messages is done with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">seed</span></code>/<code class="docutils literal notranslate"><span class="pre">--seed</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">num_messages</span></code>/<code class="docutils literal notranslate"><span class="pre">num-messages</span></code> arguments. If <code class="xref py py-obj docutils literal notranslate"><span class="pre">num_messages</span></code> is <code class="docutils literal notranslate"><span class="pre">-1</span></code>, all messages from the database will be used. Otherwise, <code class="xref py py-obj docutils literal notranslate"><span class="pre">num_message</span></code> specifies the number of messages to be randomly picked from the database.</p>
+<p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">seed</span></code> argument will be sent to <code class="xref py py-obj docutils literal notranslate"><span class="pre">random.seed</span></code> before the messages are
+selected (which is done with <code class="xref py py-obj docutils literal notranslate"><span class="pre">random.sample</span></code>), which means as long as the seed
+remains the same, the same messages are selected. The <code class="xref py py-obj docutils literal notranslate"><span class="pre">seed</span></code> can also be set to
+<code class="docutils literal notranslate"><span class="pre">None</span></code> for a pseudo-random seed.</p>
+</div>
+</div>
+<div class="section" id="sample-output">
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Randomly selecting signals from the following messages:</span>
+<span class="go">[Message(name=&#39;EngineData&#39;, id=100, flags=&lt;MessageFlag.0: 0&gt;, dlc=8, comment=&#39;&#39;), Message(name=&#39;GearBoxInfo&#39;, id=1020, flags=&lt;MessageFlag.0: 0&gt;, dlc=1, comment=&#39;&#39;)]</span>
+<span class="go">Seed used was &#39;0&#39;</span>
+
+<span class="go">Sending frame Frame(id=1020, data=bytearray(b&#39;\x00&#39;), dlc=1, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=100, data=bytearray(b&#39;\x00\x00\x16]\x00\x00\x00\x00&#39;), dlc=8, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=1020, data=bytearray(b&#39;\x00&#39;), dlc=1, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=100, data=bytearray(b&#39;\x00\x00\x00\xdd\x00\x00\x00\x00&#39;), dlc=8, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=1020, data=bytearray(b&#39;\x00&#39;), dlc=1, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=100, data=bytearray(b&#39;\x00\x00\x00\xe0\x00\x00`\t&#39;), dlc=8, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=1020, data=bytearray(b&#39;\x04&#39;), dlc=1, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=100, data=bytearray(b&#39;f\x07\n\x00\x00\x00\x00\x00&#39;), dlc=8, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=1020, data=bytearray(b&#39;\x00&#39;), dlc=1, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+<span class="go">Sending frame Frame(id=100, data=bytearray(b&#39;\x0c\x15-\x00\x00\x00\x00\x00&#39;), dlc=8, flags=&lt;MessageFlag.0: 0&gt;, timestamp=None)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="validate_memo_config.html" class="btn btn-neutral float-right" title="Validate a Memorator Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="monitor.html" class="btn btn-neutral float-left" title="Monitor a Channel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvadblib.enums &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvadblib.enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvadblib.enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span><span class="p">,</span> <span class="n">CFlag</span>
+
+
+<span class="c1"># In 32-bit Python 2, CFlag enums use C `long`, which is too short to contain</span>
+<span class="c1"># `EXT`, so fall back on a non-enum in that case</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">MessageFlag</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+        <span class="n">EXT</span> <span class="o">=</span> <span class="mh">0x80000000</span>  <span class="c1"># Message is an extended CAN message</span>
+        <span class="n">J1939</span> <span class="o">=</span> <span class="mh">0x00000001</span>  <span class="c1"># Message uses J1939 protocol, currently not used</span>
+        <span class="n">WAKEUP</span> <span class="o">=</span> <span class="mh">0x00000002</span>  <span class="c1"># Message is a wakeup frame, currently not used</span>
+
+<span class="k">except</span><span class="p">:</span>
+<div class="viewcode-block" id="MessageFlag"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.MessageFlag">[docs]</a>    <span class="k">class</span> <span class="nc">MessageFlag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="n">EXT</span> <span class="o">=</span> <span class="mh">0x80000000</span>  <span class="c1"># Message is an extended CAN message</span>
+        <span class="n">J1939</span> <span class="o">=</span> <span class="mh">0x00000001</span>  <span class="c1"># Message uses J1939 protocol, currently not used</span>
+        <span class="n">WAKEUP</span> <span class="o">=</span> <span class="mh">0x00000002</span>  <span class="c1"># Message is a wakeup frame, currently not used</span>
+
+        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">val</span></div>
+
+
+<span class="k">class</span> <span class="nc">ProtocolProperties</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;maxMessageDlc&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;maxSignalLength&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">),</span>
+    <span class="p">]</span>
+
+
+<div class="viewcode-block" id="ProtocolType"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.ProtocolType">[docs]</a><span class="k">class</span> <span class="nc">ProtocolType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">CAN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">VAN</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">LIN</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MOST</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">FLEXRAY</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">BEAN</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">ETHERNET</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">AFDX</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">J1708</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">CANFD</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">10</span></div>
+
+
+<div class="viewcode-block" id="SignalByteOrder"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.SignalByteOrder">[docs]</a><span class="k">class</span> <span class="nc">SignalByteOrder</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">INTEL</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MOTOROLA</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="SignalType"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.SignalType">[docs]</a><span class="k">class</span> <span class="nc">SignalType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">INVALID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">SIGNED</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">UNSIGNED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">FLOAT</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">DOUBLE</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">_ENUM_SEPARATOR</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">ENUM_SIGNED</span> <span class="o">=</span> <span class="mi">101</span>
+    <span class="n">ENUM_UNSIGNED</span> <span class="o">=</span> <span class="mi">102</span></div>
+
+
+<div class="viewcode-block" id="SignalMultiplexMode"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.SignalMultiplexMode">[docs]</a><span class="k">class</span> <span class="nc">SignalMultiplexMode</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">SIGNAL</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MUX_INDEPENDENT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">MUX_SIGNAL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="AttributeType"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.AttributeType">[docs]</a><span class="k">class</span> <span class="nc">AttributeType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">INVALID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">INTEGER</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">FLOAT</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">ENUM</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">STRING</span> <span class="o">=</span> <span class="mi">5</span></div>
+
+
+<div class="viewcode-block" id="AttributeOwner"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.AttributeOwner">[docs]</a><span class="k">class</span> <span class="nc">AttributeOwner</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">INVALID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">DB</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MESSAGE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">NODE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">SIGNAL</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">ENV</span> <span class="o">=</span> <span class="mi">5</span></div>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../reference/kvadblib/enums.html#canlib.kvadblib.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">FAIL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">NO_DATABASE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="n">PARAM</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+    <span class="n">NO_MSG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+    <span class="n">NO_SIGNAL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+    <span class="n">DB_FILE_OPEN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+    <span class="n">DATABASE_INTERNAL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+    <span class="n">NO_NODE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9</span>
+    <span class="n">NO_ATTRIB</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+    <span class="n">ONLY_ONE_ALLOWED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span>
+    <span class="n">WRONG_OWNER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span>
+    <span class="n">IN_USE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">13</span>
+    <span class="n">BUFFER_TOO_SMALL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>      <span class="c1"># The buffer provided was not large enough to contain the requested data.</span>
+    <span class="n">DB_FILE_PARSE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span>         <span class="c1"># Could not parse the database file</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
