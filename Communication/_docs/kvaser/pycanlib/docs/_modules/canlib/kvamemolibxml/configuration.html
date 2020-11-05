@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvamemolibxml.configuration &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvamemolibxml.configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvamemolibxml.configuration</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">ValidationWarning</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">kvaBufferToXml</span><span class="p">,</span> <span class="n">kvaXmlToBuffer</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">kvaXmlValidate</span><span class="p">,</span> <span class="n">xmlGetValidationError</span><span class="p">,</span> <span class="n">xmlGetValidationWarning</span>
+
+
+<div class="viewcode-block" id="load_lif"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.load_lif">[docs]</a><span class="k">def</span> <span class="nf">load_lif</span><span class="p">(</span><span class="n">lif_bytes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a `Configuration` from a param.lif `bytes`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lif_bytes (`bytes`): Binary configuration in param.lif format</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">lif</span><span class="o">=</span><span class="n">lif_bytes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_lif_file"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.load_lif_file">[docs]</a><span class="k">def</span> <span class="nf">load_lif_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Like `load_lif` but takes a path to a file containing the lif configuration&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lif_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">load_lif</span><span class="p">(</span><span class="n">lif_bytes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_xml"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.load_xml">[docs]</a><span class="k">def</span> <span class="nf">load_xml</span><span class="p">(</span><span class="n">xml_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a `Configuration` from an xml `string`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        xml_string (`str`): XML configuration</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">xml</span><span class="o">=</span><span class="n">xml_string</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_xml_file"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.load_xml_file">[docs]</a><span class="k">def</span> <span class="nf">load_xml_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Like `load_lif` but takes a path to a file containing the XML configuration&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">xml_string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">load_xml</span><span class="p">(</span><span class="n">xml_string</span><span class="p">)</span></div>
+
+
+<span class="n">ValidationResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ValidationResult&#39;</span><span class="p">,</span> <span class="s2">&quot;errors, warnings&quot;</span><span class="p">)</span>
+
+<span class="n">ValidationMessage</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ValidationMessage&#39;</span><span class="p">,</span> <span class="s2">&quot;code text&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ValidationErrorMessage"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.ValidationErrorMessage">[docs]</a><span class="k">class</span> <span class="nc">ValidationErrorMessage</span><span class="p">(</span><span class="n">ValidationMessage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An error found during validation&quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Error: </span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{code!s}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ValidationWarningMessage"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.ValidationWarningMessage">[docs]</a><span class="k">class</span> <span class="nc">ValidationWarningMessage</span><span class="p">(</span><span class="n">ValidationMessage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A warning found during validation&quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Warning: </span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{code!s}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Configuration"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.Configuration">[docs]</a><span class="k">class</span> <span class="nc">Configuration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Configuration data for Kvaser devices</span>
+
+<span class="sd">    It is usually preferred to create objects of this class with one of the</span>
+<span class="sd">    functions:</span>
+
+<span class="sd">    * `load_xml`</span>
+<span class="sd">    * `load_xml_file`</span>
+<span class="sd">    * `load_lif`</span>
+<span class="sd">    * `load_lif_file`</span>
+
+<span class="sd">    The XML and param.lif representation of this configuration can be accessed</span>
+<span class="sd">    with the `xml` and `lif` attributes, respectively.</span>
+
+<span class="sd">    Two `Configuration` objects can be tested for equality::</span>
+
+<span class="sd">        config1 == config2</span>
+
+<span class="sd">    This will test whether the objects are equivalent: whether they have the</span>
+<span class="sd">    same param.lif representation.</span>
+
+<span class="sd">    Finally, the configuration can be validated with `Configuration.validate`::</span>
+
+<span class="sd">        errors, warnings = configuration.validate()</span>
+<span class="sd">        for error in errors:</span>
+<span class="sd">            print(error)</span>
+<span class="sd">        for warning in warnings:</span>
+<span class="sd">            print(warning)</span>
+<span class="sd">        if errors:</span>
+<span class="sd">            raise ValueError(&quot;Invalid configuration&quot;)</span>
+
+<span class="sd">    .. versionadded: 1.6</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lif</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">xml</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lif</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Either xml or lif required&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xml</span> <span class="o">=</span> <span class="n">xml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lif</span> <span class="o">=</span> <span class="n">lif</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="c1"># Two xml strings might be formatted differently while still</span>
+        <span class="c1"># equivalent, so we need to compare the binary lif</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lif</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">lif</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The XML representation of this configuration&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xml</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xml</span> <span class="o">=</span> <span class="n">kvaBufferToXml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lif</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xml</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lif</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`bytes`: The param.lif representation of this configuration&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lif</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lif</span> <span class="o">=</span> <span class="n">kvaXmlToBuffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xml</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lif</span>
+
+<div class="viewcode-block" id="Configuration.validate"><a class="viewcode-back" href="../../../reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.Configuration.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate this configuration</span>
+
+<span class="sd">        Validates the XML representation of this configuration, and returns a</span>
+<span class="sd">        tuple ``(errors, warnings)`` where ``errors`` is a `list` of</span>
+<span class="sd">        `canlib.kvamemolibxml.ValidationError` and ``warnings`` is a `list`</span>
+<span class="sd">        `canlib.kvamemolibxml.ValidationWarning`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kvaXmlValidate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">())</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ValidationResult</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_warnings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">code</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">xmlGetValidationWarning</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">ValidationWarningMessage</span><span class="p">(</span><span class="n">ValidationWarning</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">code</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">xmlGetValidationError</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">ValidationErrorMessage</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

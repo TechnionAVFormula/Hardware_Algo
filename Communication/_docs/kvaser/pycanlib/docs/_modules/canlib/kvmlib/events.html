@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvmlib.events &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvmlib.events</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvmlib.events</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">frame</span><span class="p">,</span> <span class="n">canlib</span>
+
+
+<span class="k">def</span> <span class="nf">_eq_or_none</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span> <span class="ow">or</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="LogEvent"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.LogEvent">[docs]</a><span class="k">class</span> <span class="nc">LogEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">_comp_fields</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># if not None, these attributes will be used to</span>
+    <span class="c1"># compare objects</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;*t:&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; t:&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%14s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span> <span class="o">/</span> <span class="mf">1000000000.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;             - &quot;</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="c1"># In python 2, both __eq__ and __ne__ must be defined</span>
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">eq</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eq</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">eq</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">LogEvent</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comp_fields</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comp_fields</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_comp_fields</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="n">_eq_or_none</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comp_fields</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MessageEvent"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.MessageEvent">[docs]</a><span class="k">class</span> <span class="nc">MessageEvent</span><span class="p">(</span><span class="n">LogEvent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A CAN message recorded by a Memorator&quot;&quot;&quot;</span>
+
+    <span class="n">_comp_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;channel&#39;</span><span class="p">,</span> <span class="s1">&#39;dlc&#39;</span><span class="p">,</span> <span class="s1">&#39;flags&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;timeStamp&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MessageEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span> <span class="o">=</span> <span class="n">dlc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="n">dlc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">dlc</span><span class="p">:</span>
+                <span class="c1"># dlc is (often) number of bytes</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="n">dlc</span><span class="p">]</span>
+
+<div class="viewcode-block" id="MessageEvent.asframe"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.MessageEvent.asframe">[docs]</a>    <span class="k">def</span> <span class="nf">asframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert this event to a `canlib.Frame`</span>
+
+<span class="sd">        Creates a new `canlib.Frame` object with the same contents as this event.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">frame</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span>
+            <span class="n">id_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">MessageFlag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">),</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">MessageEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot; ch:</span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%x</span><span class="s2">&quot;</span> <span class="o">%</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;f:</span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot; -&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%5x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;id:</span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;   -&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%4x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;dlc:</span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">):</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">hex</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">NameError</span><span class="p">):</span>
+                <span class="nb">hex</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+            <span class="n">formatted_data</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">hex</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+                                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">hex</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;d:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">formatted_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;d: -  -  -  -  -  -  -  -&quot;</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">_asMrtEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert this event to a `canlib.events.memoLogMrtEx`</span>
+
+<span class="sd">        Creates a new `canlib.events.memoLogMrtEx` object with the same</span>
+<span class="sd">        contents as this event.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># In python 2, *self.data returns a str</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)(</span><span class="o">*</span><span class="nb">bytearray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">data</span> <span class="o">==</span> <span class="n">data</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">memoLogMsgEx</span><span class="p">(</span>
+            <span class="n">evType</span><span class="o">=</span><span class="n">memoLogEventEx</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_MSG</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">timeStamp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span><span class="p">,</span>
+            <span class="n">channel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">memoLogMrtEx</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RTCEvent"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.RTCEvent">[docs]</a><span class="k">class</span> <span class="nc">RTCEvent</span><span class="p">(</span><span class="n">LogEvent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An real-time clock message recorded by a Memorator&quot;&quot;&quot;</span>
+    <span class="n">_comp_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;calendartime&#39;</span><span class="p">,</span> <span class="s1">&#39;timeStamp&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calendartime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RTCEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calendartime</span> <span class="o">=</span> <span class="n">calendartime</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">RTCEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot; DateTime: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">calendartime</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">_asMrtEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert this event to a `canlib.events.memoLogMrtEx`</span>
+
+<span class="sd">        Creates a new `canlib.events.memoLogMrtEx` object with the same</span>
+<span class="sd">        contents as this event.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># datetime.timestamp does not exist in Python 2.7</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">calendar_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calendartime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>  <span class="c1"># only whole seconds</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">calendar_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calendartime</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="o">+</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">calendartime</span><span class="o">.</span><span class="n">microsecond</span><span class="o">/</span><span class="mf">1000000.0</span><span class="p">))</span>
+
+        <span class="n">rtc</span> <span class="o">=</span> <span class="n">memoLogRtcClockEx</span><span class="p">(</span>
+            <span class="n">evType</span><span class="o">=</span><span class="n">memoLogEventEx</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_CLOCK</span><span class="p">,</span>
+            <span class="n">calendarTime</span><span class="o">=</span><span class="n">calendar_time</span><span class="p">,</span>
+            <span class="n">timeStamp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">memoLogMrtEx</span><span class="p">(</span><span class="n">rtc</span><span class="o">=</span><span class="n">rtc</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TriggerEvent"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.TriggerEvent">[docs]</a><span class="k">class</span> <span class="nc">TriggerEvent</span><span class="p">(</span><span class="n">LogEvent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A trigger message recorded by a Memorator&quot;&quot;&quot;</span>
+    <span class="n">_comp_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;timeStamp&#39;</span><span class="p">,</span> <span class="s1">&#39;pretrigger&#39;</span><span class="p">,</span> <span class="s1">&#39;posttrigger&#39;</span><span class="p">,</span> <span class="s1">&#39;trigno&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pretrigger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">posttrigger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trigno</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TriggerEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pretrigger</span> <span class="o">=</span> <span class="n">pretrigger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posttrigger</span> <span class="o">=</span> <span class="n">posttrigger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigno</span> <span class="o">=</span> <span class="n">trigno</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TriggerEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;Log Trigger Event (&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;type: 0x</span><span class="si">%x</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;trigno: 0x</span><span class="si">%02x</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trigno</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;pre-trigger: </span><span class="si">%d</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pretrigger</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;post-trigger: </span><span class="si">%d</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posttrigger</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">_asMrtEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert this event to a `canlib.events.memoLogMrtEx`</span>
+
+<span class="sd">        Creates a new `canlib.events.memoLogMrtEx` object with the same</span>
+<span class="sd">        contents as this event.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_stamp_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span>
+        <span class="n">time_stamp_lo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeStamp</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+        <span class="n">trig</span> <span class="o">=</span> <span class="n">memoLogTriggerEx</span><span class="p">(</span>
+            <span class="n">evType</span><span class="o">=</span><span class="n">memoLogEventEx</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_TRIGGER</span><span class="p">,</span>
+            <span class="n">timeStampHi</span><span class="o">=</span><span class="n">time_stamp_hi</span><span class="p">,</span>
+            <span class="n">timeStampLo</span><span class="o">=</span><span class="n">time_stamp_lo</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="n">preTrigger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pretrigger</span><span class="p">,</span>
+            <span class="n">postTrigger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">posttrigger</span><span class="p">,</span>
+            <span class="n">trigNo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trigno</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">memoLogMrtEx</span><span class="p">(</span><span class="n">trig</span><span class="o">=</span><span class="n">trig</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VersionEvent"><a class="viewcode-back" href="../../../reference/kvmlib/events.html#canlib.kvmlib.VersionEvent">[docs]</a><span class="k">class</span> <span class="nc">VersionEvent</span><span class="p">(</span><span class="n">LogEvent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A version message recorded by a Memorator&quot;&quot;&quot;</span>
+    <span class="n">_comp_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;lioMajor&#39;</span><span class="p">,</span> <span class="s1">&#39;lioMinor&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;fwMajor&#39;</span><span class="p">,</span> <span class="s1">&#39;fwMinor&#39;</span><span class="p">,</span> <span class="s1">&#39;fwBuild&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;serialNumber&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;eanHi&#39;</span><span class="p">,</span> <span class="s1">&#39;eanLo&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lioMajor</span><span class="p">,</span> <span class="n">lioMinor</span><span class="p">,</span> <span class="n">fwMajor</span><span class="p">,</span> <span class="n">fwMinor</span><span class="p">,</span> <span class="n">fwBuild</span><span class="p">,</span>
+                 <span class="n">serialNumber</span><span class="p">,</span> <span class="n">eanHi</span><span class="p">,</span> <span class="n">eanLo</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">VersionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lioMajor</span> <span class="o">=</span> <span class="n">lioMajor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lioMinor</span> <span class="o">=</span> <span class="n">lioMinor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fwMajor</span> <span class="o">=</span> <span class="n">fwMajor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fwMinor</span> <span class="o">=</span> <span class="n">fwMinor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fwBuild</span> <span class="o">=</span> <span class="n">fwBuild</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serialNumber</span> <span class="o">=</span> <span class="n">serialNumber</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eanHi</span> <span class="o">=</span> <span class="n">eanHi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span> <span class="o">=</span> <span class="n">eanLo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">VersionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;EAN:</span><span class="si">%02x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%x</span><span class="s2">  &quot;</span> <span class="o">%</span>
+                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eanHi</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">,</span>
+                  <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">eanHi</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">),</span>
+                  <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfffff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">))</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;s/n:</span><span class="si">%d</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serialNumber</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;FW:v</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fwMajor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwMinor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwBuild</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;LIO:v</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lioMajor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lioMinor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="c1"># qqqmac remove!!!</span>
+    <span class="k">def</span> <span class="nf">_asMemoLogVersionEx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ver</span> <span class="o">=</span> <span class="n">memoLogVersionEx</span><span class="p">(</span>
+            <span class="n">evType</span><span class="o">=</span><span class="n">memoLogEventEx</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_VERSION</span><span class="p">,</span>
+            <span class="n">lioMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lioMajor</span><span class="p">,</span>
+            <span class="n">lioMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lioMinor</span><span class="p">,</span>
+            <span class="n">fwMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwMajor</span><span class="p">,</span>
+            <span class="n">fwMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwMinor</span><span class="p">,</span>
+            <span class="n">fwBuild</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwBuild</span><span class="p">,</span>
+            <span class="n">serialNumber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serialNumber</span><span class="p">,</span>
+            <span class="n">eanHi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eanHi</span><span class="p">,</span>
+            <span class="n">eanLo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ver</span>
+
+    <span class="k">def</span> <span class="nf">_asMrtEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert this event to a `canlib.events.memoLogMrtEx`</span>
+
+<span class="sd">        Creates a new `canlib.events.memoLogMrtEx` object with the same</span>
+<span class="sd">        contents as this event.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ver</span> <span class="o">=</span> <span class="n">memoLogVersionEx</span><span class="p">(</span>
+            <span class="n">evType</span><span class="o">=</span><span class="n">memoLogEventEx</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_VERSION</span><span class="p">,</span>
+            <span class="n">lioMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lioMajor</span><span class="p">,</span>
+            <span class="n">lioMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lioMinor</span><span class="p">,</span>
+            <span class="n">fwMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwMajor</span><span class="p">,</span>
+            <span class="n">fwMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwMinor</span><span class="p">,</span>
+            <span class="n">fwBuild</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fwBuild</span><span class="p">,</span>
+            <span class="n">serialNumber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serialNumber</span><span class="p">,</span>
+            <span class="n">eanHi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eanHi</span><span class="p">,</span>
+            <span class="n">eanLo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eanLo</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">memoLogMrtEx</span><span class="p">(</span><span class="n">ver</span><span class="o">=</span><span class="n">ver</span><span class="p">)</span></div>
+
+
+<span class="c1">####################################################################</span>
+<span class="c1"># Low level ctypes classes for interacting with dll</span>
+<span class="k">class</span> <span class="nc">memoLogMsgEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;evType&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>  <span class="c1"># The identifier</span>
+                <span class="p">(</span><span class="s1">&#39;timeStamp&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">),</span>   <span class="c1"># timestamp in units of 1 nanoseconds</span>
+                <span class="c1"># The channel on which the message arrived (0,1,...)</span>
+                <span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;dlc&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>  <span class="c1"># The length of the message</span>
+                <span class="p">(</span><span class="s1">&#39;flags&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>  <span class="c1"># Message flags</span>
+                <span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)]</span>  <span class="c1"># Message data (8 bytes)</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogRtcClockEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;evType&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;calendarTime&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>  <span class="c1"># RTC date (unix time format)</span>
+                <span class="p">(</span><span class="s1">&#39;timeStamp&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span> <span class="o">*</span> <span class="mi">24</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogTriggerEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;evType&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;preTrigger&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;postTrigger&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;trigNo&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>  <span class="c1"># Bitmask with the activated trigger(s)</span>
+
+                <span class="c1"># Timestamp in units of 1 nanoseconds; Can&#39;t use int64 here</span>
+                <span class="c1"># since it is not naturally aligned</span>
+                <span class="p">(</span><span class="s1">&#39;timeStampLo&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;timeStampHi&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+
+                <span class="p">(</span><span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogVersionEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;evType&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;lioMajor&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;lioMinor&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;fwMajor&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;fwMinor&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;fwBuild&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;serialNumber&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;eanHi&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;eanLo&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogRaw</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;evType&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span> <span class="o">*</span> <span class="mi">32</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogMrtEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Union</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;msg&#39;</span><span class="p">,</span> <span class="n">memoLogMsgEx</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;rtc&#39;</span><span class="p">,</span> <span class="n">memoLogRtcClockEx</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;trig&#39;</span><span class="p">,</span> <span class="n">memoLogTriggerEx</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;ver&#39;</span><span class="p">,</span> <span class="n">memoLogVersionEx</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> <span class="n">memoLogRaw</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">memoLogEventEx</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+
+    <span class="n">MEMOLOG_TYPE_INVALID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MEMOLOG_TYPE_CLOCK</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MEMOLOG_TYPE_MSG</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MEMOLOG_TYPE_TRIGGER</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MEMOLOG_TYPE_VERSION</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">memoLogMrtEx</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">createMemoEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">evType</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_CLOCK</span><span class="p">:</span>
+            <span class="n">cTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">rtc</span><span class="o">.</span><span class="n">calendarTime</span>
+            <span class="n">ct</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">cTime</span><span class="p">)</span>
+            <span class="n">memoEvent</span> <span class="o">=</span> <span class="n">RTCEvent</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">rtc</span><span class="o">.</span><span class="n">timeStamp</span><span class="p">,</span>
+                                 <span class="n">calendartime</span><span class="o">=</span><span class="n">ct</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_MSG</span><span class="p">:</span>
+            <span class="n">memoEvent</span> <span class="o">=</span> <span class="n">MessageEvent</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">timeStamp</span><span class="p">,</span>
+                                     <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                     <span class="n">channel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span>
+                                     <span class="n">dlc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span>
+                                     <span class="n">flags</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span>
+                                     <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_TRIGGER</span><span class="p">:</span>
+            <span class="n">tstamp</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">timeStampLo</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">timeStampHi</span> <span class="o">*</span> <span class="mi">4294967296</span><span class="p">))</span>
+            <span class="n">memoEvent</span> <span class="o">=</span> <span class="n">TriggerEvent</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">tstamp</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                                     <span class="n">pretrigger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">preTrigger</span><span class="p">,</span>
+                                     <span class="n">posttrigger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">postTrigger</span><span class="p">,</span>
+                                     <span class="n">trigno</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">trigNo</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_VERSION</span><span class="p">:</span>
+            <span class="n">memoEvent</span> <span class="o">=</span> <span class="n">VersionEvent</span><span class="p">(</span><span class="n">lioMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">lioMajor</span><span class="p">,</span>
+                                     <span class="n">lioMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">lioMinor</span><span class="p">,</span>
+                                     <span class="n">fwMajor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwMajor</span><span class="p">,</span>
+                                     <span class="n">fwMinor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwMinor</span><span class="p">,</span>
+                                     <span class="n">fwBuild</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwBuild</span><span class="p">,</span>
+                                     <span class="n">serialNumber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">serialNumber</span><span class="p">,</span>
+                                     <span class="n">eanHi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">eanHi</span><span class="p">,</span>
+                                     <span class="n">eanLo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">eanLo</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;createMemoEvent: Unknown event type :</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">memoEvent</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">evType</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Unkown type </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_CLOCK</span><span class="p">:</span>
+            <span class="n">cTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">rtc</span><span class="o">.</span><span class="n">calendarTime</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;t:</span><span class="si">%11f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">rtc</span><span class="o">.</span><span class="n">timeStamp</span> <span class="o">/</span> <span class="mf">1000000000.0</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;DateTime: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%d</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">cTime</span><span class="p">),</span> <span class="n">cTime</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_MSG</span><span class="p">:</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">timeStamp</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">channel</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">flags</span>
+            <span class="n">dlc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">dlc</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">frame</span><span class="o">.</span><span class="n">dlc_to_bytes</span><span class="p">(</span><span class="n">dlc</span><span class="p">,</span> <span class="n">canFd</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+            <span class="n">dataString</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;t:</span><span class="si">%11f</span><span class="s2"> ch:</span><span class="si">%x</span><span class="s2"> f:</span><span class="si">%5x</span><span class="s2"> id:</span><span class="si">%4x</span><span class="s2"> dlc:</span><span class="si">%2d</span><span class="s2"> d:</span><span class="si">%s</span><span class="s2">&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">timestamp</span> <span class="o">/</span> <span class="mf">1000000000.0</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span>
+                       <span class="n">dlc</span><span class="p">,</span> <span class="n">dataString</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_TRIGGER</span><span class="p">:</span>
+            <span class="c1"># evType = self.event.trig.evType</span>
+            <span class="n">ttype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">type</span>
+            <span class="n">preTrigger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">preTrigger</span>
+            <span class="n">postTrigger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">postTrigger</span>
+            <span class="n">trigNo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">trigNo</span>
+            <span class="n">tstamp</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">timeStampLo</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">trig</span><span class="o">.</span><span class="n">timeStampHi</span> <span class="o">*</span> <span class="mi">4294967296</span><span class="p">))</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;t:</span><span class="si">%11f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tstamp</span> <span class="o">/</span> <span class="mf">1000000000.0</span><span class="p">)</span>
+            <span class="c1"># text =  &quot;t  : %11x\n&quot; % (tstamp)</span>
+            <span class="c1"># text += &quot; et: %x (%x)\n&quot; % (evType, type)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;Log Trigger Event (&quot;</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;type: 0x</span><span class="si">%x</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ttype</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;trigNo: 0x</span><span class="si">%02x</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">trigNo</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;pre-trigger: </span><span class="si">%d</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">preTrigger</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;post-trigger: </span><span class="si">%d</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">postTrigger</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MEMOLOG_TYPE_VERSION</span><span class="p">:</span>
+            <span class="n">lioMajor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">lioMajor</span>
+            <span class="n">lioMinor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">lioMinor</span>
+            <span class="n">fwMajor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwMajor</span>
+            <span class="n">fwMinor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwMinor</span>
+            <span class="n">fwBuild</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">fwBuild</span>
+            <span class="n">serialNumber</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">serialNumber</span>
+            <span class="n">eanHi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">eanHi</span>
+            <span class="n">eanLo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">ver</span><span class="o">.</span><span class="n">eanLo</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;EAN:</span><span class="si">%02x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%x</span><span class="s2">, &quot;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="n">eanHi</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">,</span>
+                     <span class="p">((</span><span class="n">eanHi</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">eanLo</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">),</span>
+                     <span class="p">(</span><span class="n">eanLo</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfffff</span><span class="p">,</span> <span class="n">eanLo</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">))</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;S/N </span><span class="si">%d</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="n">serialNumber</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;FW v</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">, &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fwMajor</span><span class="p">,</span> <span class="n">fwMinor</span><span class="p">,</span> <span class="n">fwBuild</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;LIO v</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">lioMajor</span><span class="p">,</span> <span class="n">lioMinor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

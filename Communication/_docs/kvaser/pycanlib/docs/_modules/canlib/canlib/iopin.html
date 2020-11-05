@@ -1,0 +1,784 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.iopin &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.iopin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.iopin</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Experimental support for accessing IO-pins on sub modules of the Kvaser DIN</span>
+<span class="sd">Rail SE 400S and variants that was added to CANlib v5.26.</span>
+
+<span class="sd">.. versionadded:: 1.8</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span>
+<span class="kn">from</span> <span class="nn">..versionnumber</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">wrapper</span>
+
+<span class="n">dll</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">dll</span>
+
+
+<span class="k">def</span> <span class="nf">get_io_pin</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return io pin object for `index`</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        index (`int`): The global pin number</span>
+
+<span class="sd">    Returns subclass of `IoPin` depending on pin type and direction:</span>
+<span class="sd">    `AnalogIn`, `AnalogOut`, `DigitalIn`, `DigitalOut` or `Relay`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">io_pin</span> <span class="o">=</span> <span class="n">IoPin</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">pin_class</span> <span class="o">=</span> <span class="n">_PIN_CLASSES</span><span class="p">[</span><span class="n">io_pin</span><span class="o">.</span><span class="n">pin_type</span><span class="p">][</span><span class="n">io_pin</span><span class="o">.</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">my_io_pin</span> <span class="o">=</span> <span class="n">pin_class</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">my_io_pin</span>
+
+
+<span class="k">def</span> <span class="nf">module_pin_names</span><span class="p">(</span><span class="n">module_type</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a list of names for `module_type`</span>
+
+<span class="sd">    Returns a list of label names for the given type of module::</span>
+
+<span class="sd">        &gt;&gt;&gt; iopin.module_pin_names(iopin.ModuleType.ANALOG)</span>
+<span class="sd">        [&#39;AO1&#39;, &#39;AO2&#39;, &#39;AO3&#39;, &#39;AO4&#39;, &#39;AI1&#39;, &#39;AI2&#39;, &#39;AI3&#39;, &#39;AI4&#39;]</span>
+
+<span class="sd">        &gt;&gt;&gt; iopin.module_pin_names(iopin.ModuleType.RELAY)</span>
+<span class="sd">        [&#39;R1&#39;, &#39;R2&#39;, &#39;R3&#39;, &#39;R4&#39;, &#39;R5&#39;, &#39;R6&#39;, &#39;R7&#39;, &#39;R8&#39;, &#39;DI1&#39;, &#39;DI2&#39;, &#39;DI3&#39;,</span>
+<span class="sd">        &#39;DI4&#39;, &#39;DI5&#39;, &#39;DI6&#39;, &#39;DI7&#39;, &#39;DI8&#39;]</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_type (`iopin.ModuleType`) : Type of module</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">module_type</span> <span class="o">==</span> <span class="n">ModuleType</span><span class="o">.</span><span class="n">DIGITAL</span><span class="p">:</span>
+        <span class="n">pin_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">DO</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">)]</span>
+        <span class="n">pin_names</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">DI</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="n">module_type</span> <span class="o">==</span> <span class="n">ModuleType</span><span class="o">.</span><span class="n">ANALOG</span><span class="p">:</span>
+        <span class="n">pin_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">AO</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+        <span class="n">pin_names</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">AI</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="n">module_type</span> <span class="o">==</span> <span class="n">ModuleType</span><span class="o">.</span><span class="n">RELAY</span><span class="p">:</span>
+        <span class="n">pin_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">R</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+        <span class="n">pin_names</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">DI</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is an unknown ModuleType&quot;</span> <span class="o">%</span> <span class="n">module_type</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pin_names</span>
+
+
+<span class="k">def</span> <span class="nf">_create_pin_names</span><span class="p">(</span><span class="n">io_pins</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a list of names for the given list of `iopin.IoPin`.</span>
+
+<span class="sd">    Used by `iopin.Configuration` to create a list of label pin names</span>
+<span class="sd">    from a given list of `iopin.IoPin`s</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pin_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pin_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">pin_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">io_pins</span><span class="p">):</span>
+        <span class="n">module_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">module_pin_names</span><span class="p">(</span><span class="n">io_pins</span><span class="p">[</span><span class="n">pin_index</span><span class="p">]</span><span class="o">.</span><span class="n">module_type</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:&#39;</span> <span class="o">%</span> <span class="n">module_index</span><span class="p">)</span>
+        <span class="n">pin_names</span> <span class="o">+=</span> <span class="n">names</span>
+        <span class="n">pin_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pin_names</span>
+
+
+<div class="viewcode-block" id="AddonModule"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.AddonModule">[docs]</a><span class="k">class</span> <span class="nc">AddonModule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains information about one add-on module</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        module_type (`iopin.ModuleType`): The type of the add-on module.</span>
+<span class="sd">        sw_version (`canlib.Version`): The software version in the add-on module.</span>
+<span class="sd">        iopin.serial (int): The serial number of the add-on module.</span>
+<span class="sd">        first_index (int): The index of the add-on modules first pin.</span>
+
+<span class="sd">    .. versionadded:: 1.9</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_type</span><span class="p">,</span> <span class="n">fw_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">first_pin_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_type</span> <span class="o">=</span> <span class="n">module_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fw_version</span> <span class="o">=</span> <span class="n">fw_version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">=</span> <span class="n">serial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_pin_index</span> <span class="o">=</span> <span class="n">first_pin_index</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;AddonModule(module_type=</span><span class="si">{typ!r}</span><span class="s2">, fw_version=</span><span class="si">{fw!r}</span><span class="s2">, serial=</span><span class="si">{sn}</span><span class="s2">), first_pin_index=</span><span class="si">{fp}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">typ</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_type</span><span class="p">,</span> <span class="n">fw</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fw_version</span><span class="p">,</span> <span class="n">sn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">first_pin_index</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AddonModule.issubset"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.AddonModule.issubset">[docs]</a>    <span class="k">def</span> <span class="nf">issubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if current attributes are fulfilling attributes in spec</span>
+
+<span class="sd">        Any attribute in spec that is set to None is automatically considered fulfilled.</span>
+
+<span class="sd">        The `fw_version` attribute is considered fulfilled when</span>
+<span class="sd">        `self.fw_version &gt;= spec.fw_version`.</span>
+
+<span class="sd">        This can be used to check if a specific module fulfills a manually</span>
+<span class="sd">        created specification::</span>
+
+<span class="sd">            &gt;&gt;&gt; module_spec = [iopin.AddonModule(module_type=iopin.ModuleType.DIGITAL)]</span>
+<span class="sd">            ... config = iopin.Configuration(channel)</span>
+<span class="sd">            &gt;&gt;&gt; config.modules</span>
+<span class="sd">            [AddonModule(module_type=&lt;ModuleType.DIGITAL: 1&gt;, fw_version=VersionNumber(major=2, minor=5, release=None, build=None), serial=2342), first_pin_index=0]</span>
+<span class="sd">            &gt;&gt;&gt; config.issubset(module_spec)</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; module_spec = [iopin.AddonModule(</span>
+<span class="sd">                    module_type=iopin.ModuleType.DIGITAL,</span>
+<span class="sd">                    fw_version=VersionNumber(major=3, minor=1),</span>
+<span class="sd">                    serial=2342)]</span>
+
+<span class="sd">            &gt;&gt;&gt; config.issubset(module_spec)</span>
+<span class="sd">            False</span>
+
+<span class="sd">            &gt;&gt;&gt; module_spec = [</span>
+<span class="sd">                iopin.AddonModule(module_type=iopin.ModuleType.ANALOG),</span>
+<span class="sd">                iopin.AddonModule(module_type=iopin.ModuleType.DIGITAL,</span>
+<span class="sd">                                  fw_version=VersionNumber(major=3, minor=1),</span>
+<span class="sd">                                  serial=2342)]</span>
+
+<span class="sd">            &gt;&gt;&gt; config.issubset(module_spec)</span>
+<span class="sd">            False</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">module_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_type</span> <span class="o">!=</span> <span class="n">spec</span><span class="o">.</span><span class="n">module_type</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">fw_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fw_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">fw_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fw_version</span> <span class="o">&lt;</span> <span class="n">spec</span><span class="o">.</span><span class="n">fw_version</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">serial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">!=</span> <span class="n">spec</span><span class="o">.</span><span class="n">serial</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">first_pin_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_pin_index</span> <span class="o">!=</span> <span class="n">spec</span><span class="o">.</span><span class="n">first_pin_index</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="Configuration"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration">[docs]</a><span class="k">class</span> <span class="nc">Configuration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains I/O pins and the `.canlib.Channel` to find them on</span>
+
+<span class="sd">    Creating this object may take some time depending on the number of I/O pins</span>
+<span class="sd">    availably on the given `.canlib.Channel`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (&#39;canlib.Channel&#39;): The channel where the discovery of I/O pins</span>
+<span class="sd">        should take place.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        io_pins (list(`iopin.IoPin`)): All discovered I/O pins.</span>
+<span class="sd">        pin_names (list(str)): List of label I/O pin names.</span>
+<span class="sd">        pin_index (dict(str: int)): Dictionary with I/O pin label name as key, and pin index as value.</span>
+
+<span class="sd">    To create an `.iopin.Configuration` you need to supply the `.canlib.Channel`,</span>
+<span class="sd">    which is were we look for I/O pins:</span>
+
+<span class="sd">        &gt;&gt;&gt; from canlib.canlib import iopin</span>
+<span class="sd">        ... from canlib import canlib, Device, EAN</span>
+<span class="sd">        ... device = Device.find(ean=EAN(&#39;01059-8&#39;), serial=225)</span>
+<span class="sd">        ... channel = canlib.openChannel(device.channel_number(), canlib.Open.EXCLUSIVE)</span>
+<span class="sd">        ... config = iopin.Configuration(channel)</span>
+
+<span class="sd">    Now we can investigate a specific pin by index::</span>
+
+<span class="sd">        &gt;&gt;&gt; config.pin(index=80)</span>
+<span class="sd">        Pin 80: &lt;PinType.ANALOG: 2&gt; &lt;Direction.OUT: 8&gt; bits=12 range=0.0-10.0 (&lt;ModuleType.ANALOG: 2&gt;)</span>
+
+<span class="sd">    It is also possible to find the label name from the index and vice verse</span>
+<span class="sd">    for a pin, as well as access the pin using the label name::</span>
+
+<span class="sd">        &gt;&gt;&gt; config.name(80)</span>
+<span class="sd">        &#39;4:AO1&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; config.index(&#39;4:AO1&#39;)</span>
+<span class="sd">        80</span>
+
+<span class="sd">        &gt;&gt;&gt; config.pin(name=&#39;4:AO1&#39;)</span>
+<span class="sd">        Pin 80: &lt;PinType.ANALOG: 2&gt; &lt;Direction.OUT: 8&gt; bits=12 range=0.0-10.0 (&lt;ModuleType.ANALOG: 2&gt;)</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        A configuration needs to be confirmed using `.iopin.Configuration.confirm`</span>
+<span class="sd">        (which calls `canlib.channel.io_confirm_config`) before accessing pin values::</span>
+
+<span class="sd">            &gt;&gt;&gt; config.pin(name=&#39;4:AO1&#39;).value = 4</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">              File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="sd">              File &quot;...\\canlib\\canlib\\iopin.py&quot;, line 271, in value</span>
+<span class="sd">              File &quot;...\\canlib\\canlib\\dll.py&quot;, line 94, in _error_check</span>
+<span class="sd">                raise can_error(result)</span>
+<span class="sd">            canlib.canlib.exceptions.IoPinConfigurationNotConfirmed: I/O pin configuration is not confirmed (-45)</span>
+<span class="sd">            I/O pin configuration is not confirmed (-45)</span>
+
+<span class="sd">            &gt;&gt;&gt; config.confirm()</span>
+
+<span class="sd">            &gt;&gt;&gt; config.pin(name=&#39;4:AO1&#39;).value = 4</span>
+
+<span class="sd">    An `.iopin.Configuration` may be compared with an expected ordered list of</span>
+<span class="sd">    `.iopin.AddonModule` before confirming using `.iopin.AddonModule.issubset`</span>
+
+<span class="sd">    .. versionchanged:: 1.9</span>
+<span class="sd">       `.iopin.Configuration.modules` is now an attribute, containing an ordered list of `AddonModule` objects.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="o">.</span><span class="n">number_of_io_pins</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pin_names</span> <span class="o">=</span> <span class="n">_create_pin_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pin_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_names</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an iterator for all pins known in configuration&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return an up-to-date list of modules in the configuration&quot;&quot;&quot;</span>
+        <span class="n">modules</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pin_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">pin_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">):</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">AddonModule</span><span class="p">(</span>
+                <span class="n">module_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">[</span><span class="n">pin_index</span><span class="p">]</span><span class="o">.</span><span class="n">module_type</span><span class="p">,</span>
+                <span class="n">fw_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">[</span><span class="n">pin_index</span><span class="p">]</span><span class="o">.</span><span class="n">fw_version</span><span class="p">,</span>
+                <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">[</span><span class="n">pin_index</span><span class="p">]</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span>
+                <span class="n">first_pin_index</span><span class="o">=</span><span class="n">pin_index</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+            <span class="n">pin_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">module_pin_names</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">module_type</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">modules</span>
+
+<div class="viewcode-block" id="Configuration.confirm"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration.confirm">[docs]</a>    <span class="k">def</span> <span class="nf">confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Confirm current configuration</span>
+
+<span class="sd">        Convenience function that calls `.Channel.io_confirm_config`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="o">.</span><span class="n">io_confirm_config</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Configuration.index"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return index for pin with the given label name&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin_index</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Configuration.issubset"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration.issubset">[docs]</a>    <span class="k">def</span> <span class="nf">issubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if attributes of modules in self is fulfilled by given spec</span>
+
+<span class="sd">        This is a convenience method that calls `AddonModule.issubset` on all</span>
+<span class="sd">        modules given by `self.modules` which can be used to check if the</span>
+<span class="sd">        current configuration fulfills a manually created specification::</span>
+
+<span class="sd">            &gt;&gt;&gt; config = iopin.Configuration(channel)</span>
+<span class="sd">            &gt;&gt;&gt; config_spec = [iopin.AddonModule(module_type=iopin.ModuleType.ANALOG),</span>
+<span class="sd">                               iopin.AddonModule(module_type=iopin.ModuleType.DIGITAL,</span>
+<span class="sd">                                                 fw_version=VersionNumber(major=3, minor=1),</span>
+<span class="sd">                                                 serial=2342)]</span>
+
+<span class="sd">            &gt;&gt;&gt; config.issubset(config_spec)</span>
+<span class="sd">            False</span>
+
+<span class="sd">        .. versionadded:: 1.9</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">,</span> <span class="n">spec</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="Configuration.name"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return label name for pin with given index&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin_names</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Configuration.pin"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Configuration.pin">[docs]</a>    <span class="k">def</span> <span class="nf">pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return `IoPin` object using index or name</span>
+
+<span class="sd">        Either `index` or `name` must be given, if both are given, the name</span>
+<span class="sd">        will be used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): I/O pin index</span>
+<span class="sd">            name (str): I/O pin name</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin_index</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_pins</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="Info"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Info">[docs]</a><span class="k">class</span> <span class="nc">Info</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum used for calls to `kvIoPinGetInfo` and `kvIoPinSetInfo`&quot;&quot;&quot;</span>
+    <span class="n">MODULE_TYPE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">DIRECTION</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">PIN_TYPE</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">NUMBER_OF_BITS</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">RANGE_MIN</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">RANGE_MAX</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">DI_LOW_HIGH_FILTER</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># 0 - 65000, Default 5000 us</span>
+    <span class="n">DI_HIGH_LOW_FILTER</span> <span class="o">=</span> <span class="mi">9</span>  <span class="c1"># 0 - 65000, Default 5000 us</span>
+    <span class="n">AI_LP_FILTER_ORDER</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># 0 - 16, default 3 (sample time is 1 ms)</span>
+    <span class="n">AI_HYSTERESIS</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># 0 - 10, default 0.3</span>
+    <span class="n">MODULE_NUMBER</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">SERIAL_NUMBER</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">FW_VERSION</span> <span class="o">=</span> <span class="mi">16</span></div>
+
+
+<div class="viewcode-block" id="ModuleType"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.ModuleType">[docs]</a><span class="k">class</span> <span class="nc">ModuleType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum used for return values in `kvIoPinGetInfo`&quot;&quot;&quot;</span>
+    <span class="n">DIGITAL</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Digital Add-on (16 inputs, 16 outputs)</span>
+    <span class="n">ANALOG</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Analog Add-on (4 inputs, 4 outputs)</span>
+    <span class="n">RELAY</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Relay Add-on (8 inputs, 8 outputs)</span></div>
+
+
+<div class="viewcode-block" id="PinType"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.PinType">[docs]</a><span class="k">class</span> <span class="nc">PinType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum used for return values in `kvIoPinGetInfo`&quot;&quot;&quot;</span>
+    <span class="n">DIGITAL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ANALOG</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">RELAY</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="Direction"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Direction">[docs]</a><span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum used for return values in `kvIoPinGetInfo`&quot;&quot;&quot;</span>
+    <span class="n">IN</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">OUT</span> <span class="o">=</span> <span class="mi">8</span></div>
+
+
+<div class="viewcode-block" id="DigitalValue"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.DigitalValue">[docs]</a><span class="k">class</span> <span class="nc">DigitalValue</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum used digital values&quot;&quot;&quot;</span>
+    <span class="n">LOW</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="IoPin"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin">[docs]</a><span class="k">class</span> <span class="nc">IoPin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class of I/O ports&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pin</span> <span class="o">=</span> <span class="n">pin</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;Pin </span><span class="si">{p}</span><span class="s2">: </span><span class="si">{pt!r}</span><span class="s2"> </span><span class="si">{d!r}</span><span class="s2"> bits=</span><span class="si">{nb}</span><span class="s2"> range=</span><span class="si">{rmin}</span><span class="s2">-</span><span class="si">{rmax}</span><span class="s2"> (</span><span class="si">{mt!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">pt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_type</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">,</span>
+            <span class="n">rmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_min</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_max</span><span class="p">,</span> <span class="n">mt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txt</span>
+
+    <span class="k">def</span> <span class="nf">_get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">):</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">buf_type</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_set_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">c_value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinSetInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span>
+                           <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_value</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">c_value</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fw_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;VersionNumber: Firmware version in module (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">FW_VERSION</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="n">fw_version</span> <span class="o">=</span> <span class="n">VersionNumber</span><span class="p">((</span><span class="n">value</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fw_version</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`Direction`: Pin direction (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">DIRECTION</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Direction</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">module_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`ModuleType`: Type of module (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">MODULE_TYPE</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModuleType</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_of_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Resolution in number of bits (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">NUMBER_OF_BITS</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pin_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`PinType`: Type of pin (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">PIN_TYPE</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PinType</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">range_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: Lower range limit in volts (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">RANGE_MIN</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">range_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: Upper range limit in volts (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">RANGE_MAX</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Module serial number (Read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">SERIAL_NUMBER</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Base class does not implement value attribute&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t get attribute value&quot;</span><span class="p">)</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t set attribute value&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hysteresis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Base class does not implement hysteresis attribute&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t get attribute hysteresis&quot;</span><span class="p">)</span>
+
+    <span class="nd">@hysteresis</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">hysteresis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t set attribute hysteresis&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lp_filter_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Base class does not implement lp_filter_order attribute&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t get attribute lp_filter_order&quot;</span><span class="p">)</span>
+
+    <span class="nd">@lp_filter_order</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">lp_filter_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t set attribute lp_filter_order&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AnalogIn"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.AnalogIn">[docs]</a><span class="k">class</span> <span class="nc">AnalogIn</span><span class="p">(</span><span class="n">IoPin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;Pin </span><span class="si">{p}</span><span class="s2">: </span><span class="si">{pt!r}</span><span class="s2"> </span><span class="si">{d!r}</span><span class="s2"> bits=</span><span class="si">{nb}</span><span class="s2"> range=</span><span class="si">{rmin}</span><span class="s2">-</span><span class="si">{rmax}</span><span class="s2"> LP_filter_order=</span><span class="si">{lpfo}</span><span class="s2"> hysteresis=</span><span class="si">{h}</span><span class="s2"> (</span><span class="si">{mt!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">pt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_type</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">,</span>
+            <span class="n">rmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_min</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_max</span><span class="p">,</span> <span class="n">lpfo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lp_filter_order</span><span class="p">,</span>
+            <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hysteresis</span><span class="p">,</span> <span class="n">mt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hysteresis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The hysteresis in Volt for analog input pin&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">AI_HYSTERESIS</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@hysteresis</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">hysteresis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">AI_HYSTERESIS</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lp_filter_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The low-pass filter order for analog input pin&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">AI_LP_FILTER_ORDER</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@lp_filter_order</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">lp_filter_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">AI_LP_FILTER_ORDER</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Voltage level on the Analog input pin&quot;&quot;&quot;</span>
+        <span class="n">voltage</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetAnalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">voltage</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">voltage</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="AnalogOut"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.AnalogOut">[docs]</a><span class="k">class</span> <span class="nc">AnalogOut</span><span class="p">(</span><span class="n">IoPin</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Voltage level on the Analog output pin&quot;&quot;&quot;</span>
+        <span class="n">voltage</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetOutputAnalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">voltage</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">voltage</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">voltage</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinSetAnalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">voltage</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DigitalIn"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.DigitalIn">[docs]</a><span class="k">class</span> <span class="nc">DigitalIn</span><span class="p">(</span><span class="n">IoPin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;Pin </span><span class="si">{p}</span><span class="s2">: </span><span class="si">{pt!r}</span><span class="s2"> </span><span class="si">{d!r}</span><span class="s2"> bits=</span><span class="si">{nb}</span><span class="s2"> range=</span><span class="si">{rmin}</span><span class="s2">-</span><span class="si">{rmax}</span><span class="s2"> HL_filter=</span><span class="si">{hlf}</span><span class="s2"> LH_filter=</span><span class="si">{lhf}</span><span class="s2"> (</span><span class="si">{mt!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">pt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_type</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">,</span>
+            <span class="n">rmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_min</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">range_max</span><span class="p">,</span> <span class="n">lhf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">low_high_filter</span><span class="p">,</span>
+            <span class="n">hlf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">high_low_filter</span><span class="p">,</span> <span class="n">mt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">high_low_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter time in micro seconds when a digital pin goes from HIGH to LOW&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">DI_HIGH_LOW_FILTER</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@high_low_filter</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">high_low_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">DI_HIGH_LOW_FILTER</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">low_high_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter time in micro seconds when a digital pin goes from LOW to HIGH&quot;&quot;&quot;</span>
+        <span class="n">buf_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">DI_LOW_HIGH_FILTER</span><span class="p">,</span> <span class="n">buf_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@low_high_filter</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">low_high_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_info</span><span class="p">(</span><span class="n">Info</span><span class="o">.</span><span class="n">DI_LOW_HIGH_FILTER</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Value on digital input pin (0 or 1)&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetDigital</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="DigitalOut"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.DigitalOut">[docs]</a><span class="k">class</span> <span class="nc">DigitalOut</span><span class="p">(</span><span class="n">IoPin</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Value on digital output pin (0 or 1)&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetOutputDigital</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinSetDigital</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Relay"><a class="viewcode-back" href="../../../reference/canlib/iopin.html#canlib.canlib.iopin.Relay">[docs]</a><span class="k">class</span> <span class="nc">Relay</span><span class="p">(</span><span class="n">IoPin</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Value on relay (0:off, 1:on)&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinGetOutputRelay</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">c_value</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoPinSetRelay</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">c_value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;Pin </span><span class="si">{p}</span><span class="s2">: </span><span class="si">{pt!r}</span><span class="s2"> </span><span class="si">{d!r}</span><span class="s2"> bits=</span><span class="si">{nb}</span><span class="s2"> (</span><span class="si">{mt!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">pt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_type</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">,</span>
+            <span class="n">mt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txt</span></div>
+
+
+<span class="n">_PIN_CLASSES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PinType</span><span class="o">.</span><span class="n">RELAY</span><span class="p">:</span> <span class="p">{</span><span class="n">Direction</span><span class="o">.</span><span class="n">IN</span><span class="p">:</span> <span class="n">Relay</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">OUT</span><span class="p">:</span> <span class="n">Relay</span><span class="p">},</span>
+    <span class="n">PinType</span><span class="o">.</span><span class="n">ANALOG</span><span class="p">:</span> <span class="p">{</span><span class="n">Direction</span><span class="o">.</span><span class="n">IN</span><span class="p">:</span> <span class="n">AnalogIn</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">OUT</span><span class="p">:</span> <span class="n">AnalogOut</span><span class="p">},</span>
+    <span class="n">PinType</span><span class="o">.</span><span class="n">DIGITAL</span><span class="p">:</span> <span class="p">{</span><span class="n">Direction</span><span class="o">.</span><span class="n">IN</span><span class="p">:</span> <span class="n">DigitalIn</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">OUT</span><span class="p">:</span> <span class="n">DigitalOut</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1519 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ChannelData" href="channeldata.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">canlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Channel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#openchannel">openChannel()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#errorcounters">ErrorCounters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Channel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#canbusstatistics">CanBusStatistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="channeldata.html">ChannelData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="envvar.html">EnvVar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iocontrol.html">IOControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iopin.html">I/O pin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="txe.html">Script Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">canlib</a> &raquo;</li>
+        
+      <li>Channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/canlib/channel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="channel">
+<h1>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="openchannel">
+<h2>openChannel()<a class="headerlink" href="#openchannel" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.openChannel">
+<code class="descclassname">canlib.canlib.</code><code class="descname">openChannel</code><span class="sig-paren">(</span><em>channel</em>, <em>flags=0</em>, <em>bitrate=None</em>, <em>data_bitrate=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#openChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.openChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open CAN channel</p>
+<p>Retrieves a canChannel object for the given CANlib channel number using
+the supplied flags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>channel</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – CANlib channel number</li>
+<li><strong>flags</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Flags, a combination of the <a class="reference internal" href="enums.html#canlib.canlib.Open" title="canlib.canlib.Open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Open</span></code></a> flag values.
+Default is zero, i.e. no flags.</li>
+<li><strong>bitrate</strong> (<em>canBITRATE_XXX or canFD_BITRATE_XXX</em>) – The desired
+bitrate. Must be one of the predefined canBITRATE_XXX (for classic
+CAN) or canFD_BITRATE_XXX (for CAN FD) constants. For CAN FD, this
+is the arbitration bitrate.</li>
+<li><strong>data_bitrate</strong> (<em>canFD_BITRATE_XXX</em>) – The desired data bitrate for CAN
+FD. Must be one of the predefined canFD_BITRATE_XXX constants. This
+is only valid when opening a CAN FD channel.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference internal" href="#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> object created with channel and flags</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6: </span>The <em>bitrate</em> and <em>data_bitrate</em> arguments was added.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="errorcounters">
+<h2>ErrorCounters<a class="headerlink" href="#errorcounters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.channel.ErrorCounters">
+<em class="property">class </em><code class="descclassname">canlib.canlib.channel.</code><code class="descname">ErrorCounters</code><span class="sig-paren">(</span><em>tx</em>, <em>rx</em>, <em>overrun</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.canlib.channel.ErrorCounters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error counters returned by <a class="reference internal" href="#canlib.canlib.Channel.read_error_counters" title="canlib.canlib.Channel.read_error_counters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.read_error_counters</span></code></a>.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.channel.ErrorCounters.overrun">
+<code class="descname">overrun</code><a class="headerlink" href="#canlib.canlib.channel.ErrorCounters.overrun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.channel.ErrorCounters.rx">
+<code class="descname">rx</code><a class="headerlink" href="#canlib.canlib.channel.ErrorCounters.rx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.channel.ErrorCounters.tx">
+<code class="descname">tx</code><a class="headerlink" href="#canlib.canlib.channel.ErrorCounters.tx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Channel<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Channel">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>channel_number</em>, <em>flags=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper class that represents a CANlib channel.</p>
+<p>This class wraps the canlib class and tries to implement a more Pythonic
+interface to CANlib.</p>
+<p>Channels are automatically closed on garbage collection, and can
+also be used as context managers in which case they close as soon as the
+context exits.</p>
+<dl class="method">
+<dt id="canlib.canlib.Channel.busOff">
+<code class="descname">busOff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.busOff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.busOff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the specified channel off-bus.</p>
+<p>Closes the channel associated with the handle. If no other threads are
+using the CAN circuit, it is taken off bus. The handle can not be used
+for further references to the channel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.busOn">
+<code class="descname">busOn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.busOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.busOn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the specified channel on-bus.</p>
+<p>If you are using multiple handles to the same physical channel, for
+example if you are writing a threaded application, you must call
+busOn() once for each handle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.canAccept">
+<code class="descname">canAccept</code><span class="sig-paren">(</span><em>envelope</em>, <em>flag</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.canAccept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.canAccept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set acceptance filters mask or code.</p>
+<p>This routine sets the message acceptance filters on a CAN channel.</p>
+<p>Setting flag to <a class="reference internal" href="enums.html#canlib.canlib.AcceptFilterFlag.NULL_MASK" title="canlib.canlib.AcceptFilterFlag.NULL_MASK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcceptFilterFlag.NULL_MASK</span></code></a> (0) removes the filter.</p>
+<p>Note that not all CAN boards support different masks for standard and
+extended CAN identifiers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>envelope</strong> – The mask or code to set.</li>
+<li><strong>flag</strong> – Any of <a class="reference internal" href="enums.html#canlib.canlib.AcceptFilterFlag" title="canlib.canlib.AcceptFilterFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcceptFilterFlag</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.canSetAcceptanceFilter">
+<code class="descname">canSetAcceptanceFilter</code><span class="sig-paren">(</span><em>code</em>, <em>mask</em>, <em>is_extended=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.canSetAcceptanceFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.canSetAcceptanceFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set message acceptance filter.</p>
+<p>This routine sets the message acceptance filters on a CAN channel.
+The message is accepted <code class="xref py py-obj docutils literal notranslate"><span class="pre">if</span> <span class="pre">id</span> <span class="pre">AND</span> <span class="pre">mask</span> <span class="pre">==</span> <span class="pre">code</span></code> (this is actually
+imlepemented as <code class="xref py py-obj docutils literal notranslate"><span class="pre">if</span> <span class="pre">((code</span> <span class="pre">XOR</span> <span class="pre">id)</span> <span class="pre">AND</span> <span class="pre">mask)</span> <span class="pre">==</span> <span class="pre">0</span></code>).</p>
+<p>Using standard 11-bit CAN identifiers and setting</p>
+<ul class="simple">
+<li>mask = 0x7f0,</li>
+<li>code = 0x080</li>
+</ul>
+<p>accepts CAN messages with standard id 0x080 to 0x08f.</p>
+<p>Setting the <em>mask</em> to canFILTER_NULL_MASK (0) removes the filter.</p>
+<p>Note that not all CAN boards support different masks for standard and
+extended CAN identifiers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mask</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – A bit mask that indicates relevant bits with ‘1’.</li>
+<li><strong>code</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The expected state of the masked bits.</li>
+<li><strong>is_extended</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – If <code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code>, both mask and code applies
+to 29-bit CAN identifiers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.channel_data">
+<code class="descname">channel_data</code><a class="headerlink" href="#canlib.canlib.Channel.channel_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">canGetHandleData</span></code> helper object for this channel</p>
+<p>See the documentation for <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>/<code class="xref py py-obj docutils literal notranslate"><span class="pre">HandleData</span></code> for how it can be
+used to perform all functionality of the C function
+<code class="docutils literal notranslate"><span class="pre">canGetHandleData</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.13.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HandleData</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close CANlib channel</p>
+<p>Closes the channel associated with the handle. If no other threads are
+using the CAN circuit, it is taken off bus.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is normally not necessary to call this function directly, as the
+internal handle is automatically closed when the <a class="reference internal" href="#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> object
+is garbage collected.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileCopyFromDevice">
+<code class="descname">fileCopyFromDevice</code><span class="sig-paren">(</span><em>deviceFileName</em>, <em>hostFileName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileCopyFromDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileCopyFromDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy an arbitrary file from the device to the host.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>deviceFileName</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The device file name.</li>
+<li><strong>hostFileName</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – The target host file name.
+Defaults to deviceFileName.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileCopyToDevice">
+<code class="descname">fileCopyToDevice</code><span class="sig-paren">(</span><em>hostFileName</em>, <em>deviceFileName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileCopyToDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileCopyToDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy an arbitrary file from the host to the device.</p>
+<p>The filename must adhere to the FAT ‘8.3’ naming standard, max 8
+characters - a dot - max 3 characters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hostFileName</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The target host file name.</li>
+<li><strong>deviceFileName</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – The device file name.
+Defaults to the same as <em>hostFileName</em>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileDelete">
+<code class="descname">fileDelete</code><span class="sig-paren">(</span><em>deviceFileName</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileDelete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete file from device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileDiskFormat">
+<code class="descname">fileDiskFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileDiskFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileDiskFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the disk on the device, not supported by all devices.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileGetCount">
+<code class="descname">fileGetCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileGetCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileGetCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of files on the device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> – The number of files.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.fileGetName">
+<code class="descname">fileGetName</code><span class="sig-paren">(</span><em>fileNo</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.fileGetName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.fileGetName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the file with the supplied number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileNo</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The number of the file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> – The name of the file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.flashLeds">
+<code class="descname">flashLeds</code><span class="sig-paren">(</span><em>action</em>, <em>timeout_ms</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.flashLeds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.flashLeds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn Leds on or off.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>action</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – One of <a class="reference internal" href="enums.html#canlib.canlib.LEDAction" title="canlib.canlib.LEDAction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.LEDAction</span></code></a>, defining
+which LED to turn on or off.</li>
+<li><strong>timeout_ms</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Specifies the time, in milliseconds, during which
+the action is to be carried out. When the timeout
+expires, the LED(s) will return to its ordinary
+function.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.getBusOutputControl">
+<code class="descname">getBusOutputControl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getBusOutputControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getBusOutputControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get driver type</p>
+<p>This function retrieves the current CAN controller driver type. This
+corresponds loosely to the bus output control register in the CAN
+controller, hence the name of this function.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all CAN driver types are supported on all cards.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">drivertype (<a class="reference internal" href="enums.html#canlib.canlib.Driver" title="canlib.canlib.Driver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Driver</span></code></a>) – Driver type to set.</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.getBusParams">
+<code class="descname">getBusParams</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getBusParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getBusParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get bus timing parameters for classic CAN</p>
+<p>This function retrieves the current bus parameters for the specified
+channel.</p>
+<dl class="docutils">
+<dt>Returns: A tuple containing:</dt>
+<dd><p class="first"><em>freq</em>: Bitrate in bit/s.</p>
+<p><em>tseg1</em>: Number of quanta from but not including the Sync
+Segment to the sampling point.</p>
+<p><em>tseg2</em>: Number of quanta from the sampling point to the
+end of the bit.</p>
+<p><em>sjw</em>: The Synchronization Jump Width, can be 1,2,3, or 4.</p>
+<p><em>noSamp</em>: The number of sampling points, only 1 is supported.</p>
+<p class="last"><em>syncmode</em>: Unsupported, always read as zero.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.getBusParamsFd">
+<code class="descname">getBusParamsFd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getBusParamsFd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getBusParamsFd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get bus timing parameters for BRS in CAN FD</p>
+<p>This function retrieves the bus current timing parameters used in BRS
+(Bit rate switch) mode for the current CANlib channel.</p>
+<p>The library provides default values for tseg1_brs, tseg2_brs and
+sjw_brs when freq is specified to one of the pre-defined constants,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canFD_BITRATE_xxx</span></code></p>
+<p>If freq is any other value, no default values are supplied by the
+library.</p>
+<dl class="docutils">
+<dt>Returns: A tuple containing:</dt>
+<dd><p class="first"><em>freq_brs</em>: Bitrate in bit/s.</p>
+<p><em>tseg1_brs</em>: Number of quanta from (but not including) the Sync
+Segment to the sampling point.</p>
+<p><em>tseg2_brs</em>: Number of quanta from the sampling point to the
+end of the bit.</p>
+<p class="last"><em>sjw_brs</em>: The Synchronization Jump Width.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_CardNumber">
+<code class="descname">getChannelData_CardNumber</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_CardNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_CardNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).card_number</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_Chan_No_On_Card">
+<code class="descname">getChannelData_Chan_No_On_Card</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_Chan_No_On_Card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_Chan_No_On_Card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).chan_no_on_card</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_Cust_Name">
+<code class="descname">getChannelData_Cust_Name</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_Cust_Name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_Cust_Name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).custom_name</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_DriverName">
+<code class="descname">getChannelData_DriverName</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_DriverName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_DriverName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).driver_name</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_EAN">
+<code class="descname">getChannelData_EAN</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_EAN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_EAN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).card_upc_no</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_EAN_short">
+<code class="descname">getChannelData_EAN_short</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_EAN_short"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_EAN_short" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_Firmware">
+<code class="descname">getChannelData_Firmware</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_Firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_Firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).card_firmware_rev</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_Name">
+<code class="descname">getChannelData_Name</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_Name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_Name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).device_name</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.getChannelData_Serial">
+<code class="descname">getChannelData_Serial</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.getChannelData_Serial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.getChannelData_Serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a>; <code class="docutils literal notranslate"><span class="pre">ChannelData(Channel.index).card_serial_no</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.get_bus_statistics">
+<code class="descname">get_bus_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.get_bus_statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.get_bus_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return bus statistics.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#canlib.canlib.structures.CanBusStatistics" title="canlib.canlib.structures.CanBusStatistics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">structures.CanBusStatistics</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.get_io_pin">
+<code class="descname">get_io_pin</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.get_io_pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.get_io_pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return I/O pin using <em>index</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="iopin.html#canlib.canlib.iopin.IoPin" title="canlib.canlib.iopin.IoPin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.IoPin</span></code></a> – io pin object for <em>index</em> (Any of <a class="reference internal" href="iopin.html#canlib.canlib.iopin.AnalogIn" title="canlib.canlib.iopin.AnalogIn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.AnalogIn</span></code></a>, <a class="reference internal" href="iopin.html#canlib.canlib.iopin.DigitalOut" title="canlib.canlib.iopin.DigitalOut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.DigitalOut</span></code></a> etc)</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.ioCtl_flush_rx_buffer">
+<code class="descname">ioCtl_flush_rx_buffer</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.ioCtl_flush_rx_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.ioCtl_flush_rx_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a>; <code class="docutils literal notranslate"><span class="pre">Channel.iocontrol.flush_rx_buffer()</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.ioCtl_get_report_access_errors">
+<code class="descname">ioCtl_get_report_access_errors</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.ioCtl_get_report_access_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.ioCtl_get_report_access_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a>; <code class="docutils literal notranslate"><span class="pre">Channel.iocontrol.report_access_errors</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.ioCtl_set_report_access_errors">
+<code class="descname">ioCtl_set_report_access_errors</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.ioCtl_set_report_access_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.ioCtl_set_report_access_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a>; <code class="docutils literal notranslate"><span class="pre">Channel.iocontrol.report_access_errors</span> <span class="pre">=</span> <span class="pre">on</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.ioCtl_set_timer_scale">
+<code class="descname">ioCtl_set_timer_scale</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.ioCtl_set_timer_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.ioCtl_set_timer_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated function</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a>; <code class="docutils literal notranslate"><span class="pre">Channel.iocontrol.timer_scale</span> <span class="pre">=</span> <span class="pre">scale</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.io_confirm_config">
+<code class="descname">io_confirm_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.io_confirm_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.io_confirm_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Confirm current I/O configuration</p>
+<p>It is required to confirm a configuration by calling this function
+before accessing any I/O pins value.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.io_pins">
+<code class="descname">io_pins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.io_pins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.io_pins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator that returns all I/O pins one by one</p>
+<p>Returns object depending on pin type and direction: <a class="reference internal" href="iopin.html#canlib.canlib.iopin.AnalogIn" title="canlib.canlib.iopin.AnalogIn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.AnalogIn</span></code></a>,
+<a class="reference internal" href="iopin.html#canlib.canlib.iopin.AnalogOut" title="canlib.canlib.iopin.AnalogOut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.AnalogOut</span></code></a>, <a class="reference internal" href="iopin.html#canlib.canlib.iopin.DigitalIn" title="canlib.canlib.iopin.DigitalIn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.DigitalIn</span></code></a>, <a class="reference internal" href="iopin.html#canlib.canlib.iopin.DigitalOut" title="canlib.canlib.iopin.DigitalOut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.DigitalOut</span></code></a> or
+<a class="reference internal" href="iopin.html#canlib.canlib.iopin.Relay" title="canlib.canlib.iopin.Relay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iopin.Relay</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.iocontrol">
+<code class="descname">iocontrol</code><a class="headerlink" href="#canlib.canlib.Channel.iocontrol" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">canIoCtl</span></code> helper object for this channel</p>
+<p>See the documentation for <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a> for how it can be used to perform
+all functionality of the C function <code class="docutils literal notranslate"><span class="pre">canIoCtl</span></code>.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">iocontrol</span><span class="o">.</span><span class="n">timer_scale</span>
+<span class="go">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">iocontrol</span><span class="o">.</span><span class="n">local_txecho</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IOControl</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.kvDeviceGetMode">
+<code class="descname">kvDeviceGetMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.kvDeviceGetMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.kvDeviceGetMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the current device’s mode.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The mode is device specific, which means that not all modes are
+implemented in all products.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> – One of <a class="reference internal" href="enums.html#canlib.canlib.DeviceMode" title="canlib.canlib.DeviceMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceMode</span></code></a>, indicating which mode is in use.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.kvDeviceSetMode">
+<code class="descname">kvDeviceSetMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.kvDeviceSetMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.kvDeviceSetMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current device’s mode.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The mode is device specific, which means that not all modes are
+implemented in all products.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – One of <a class="reference internal" href="enums.html#canlib.canlib.DeviceMode" title="canlib.canlib.DeviceMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.DeviceMode</span></code></a>, defining which
+mode to use.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.number_of_io_pins">
+<code class="descname">number_of_io_pins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.number_of_io_pins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.number_of_io_pins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the total number of available I/O pins</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>timeout=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a CAN message and metadata.</p>
+<p>Reads a message from the receive buffer. If no message is available,
+the function waits until a message arrives or a timeout occurs.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you are using the same channel via multiple handles, the default
+behaviour is that the different handles will “hear” each other just
+as if each handle referred to a channel of its own. If you open,
+say, channel 0 from thread A and thread B and then send a message
+from thread A, it will be “received” by thread B.</p>
+<p>This behaviour can be changed by setting <code class="xref py py-obj docutils literal notranslate"><span class="pre">local_txecho</span></code> to <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>
+(using <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.IOControl</span></code></a>):</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">iocontrol</span><span class="o">.</span><span class="n">local_txecho</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Timeout in milliseconds, -1 gives an
+infinite timeout.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.readDeviceCustomerData">
+<code class="descname">readDeviceCustomerData</code><span class="sig-paren">(</span><em>userNumber=100</em>, <em>itemNumber=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.readDeviceCustomerData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.readDeviceCustomerData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read customer data stored in device</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.readSpecificSkip">
+<code class="descname">readSpecificSkip</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.readSpecificSkip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.readSpecificSkip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a message with specified identifier</p>
+<p>Reads a message with a specified identifier from the receive
+buffer. Any preceding message not matching the specified identifier
+will be removed in the receive buffer. If no message with the specified
+identifier is available, the function returns immediately with an error
+code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.readStatus">
+<code class="descname">readStatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.readStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.readStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return status for the current channel</p>
+<p>Returns the latest status reported by the hardware in a combination of
+the flags <a class="reference internal" href="enums.html#canlib.canlib.Stat" title="canlib.canlib.Stat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stat</span></code></a> (bus on/error passive + status etc).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="enums.html#canlib.canlib.Stat" title="canlib.canlib.Stat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Stat</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.readSyncSpecific">
+<code class="descname">readSyncSpecific</code><span class="sig-paren">(</span><em>id_</em>, <em>timeout=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.readSyncSpecific"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.readSyncSpecific" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until the receive queue contains a message with the specified id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.readTimer">
+<code class="descname">readTimer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.readTimer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.readTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the hardware clock on the specified device</p>
+<p>Returns the time value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.read_error_counters">
+<code class="descname">read_error_counters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.read_error_counters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.read_error_counters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the error counters of the CAN controller</p>
+<p>Returns the latest known values of the error counters in the specified
+circuit. If the error counters change values precisely when
+<a class="reference internal" href="#canlib.canlib.Channel.read_error_counters" title="canlib.canlib.Channel.read_error_counters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_error_counters</span></code></a> is called, it may not be reflected in the
+returned result.</p>
+<p>Use <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl.clear_error_counters" title="canlib.canlib.IOControl.clear_error_counters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_error_counters</span></code></a> via <a class="reference internal" href="#canlib.canlib.Channel.iocontrol" title="canlib.canlib.Channel.iocontrol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.iocontrol</span></code></a> to clear
+the counters.</p>
+<dl class="docutils">
+<dt>Returns (<a class="reference internal" href="#canlib.canlib.channel.ErrorCounters" title="canlib.canlib.channel.ErrorCounters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ErrorCounters</span></code></a>) <span class="classifier-delimiter">:</span> <span class="classifier">A named tuple containing:</span></dt>
+<dd><p class="first"><em>rx</em>: Receive error counter</p>
+<p><em>tx</em>: Transmit error counter</p>
+<p class="last"><em>overrun</em>: Number of overrun errors.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.requestChipStatus">
+<code class="descname">requestChipStatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.requestChipStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.requestChipStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request chip status messages</p>
+<p>Requests that the hardware report the chip status (bus on/error passive
+status etc.) to the driver. The chip status can later be retrieved
+using <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.readStatus</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="#canlib.canlib.Channel.requestChipStatus" title="canlib.canlib.Channel.requestChipStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">requestChipStatus</span></code></a> function is asynchronous, that is, it
+completes before the answer is returned from the hardware.  The
+time between a call to <a class="reference internal" href="#canlib.canlib.Channel.requestChipStatus" title="canlib.canlib.Channel.requestChipStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">requestChipStatus</span></code></a> and the point in time
+where the chip status is actually available via a call to
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.readStatus</span></code> is not defined. The
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.readStatus</span></code> always returns the latest data reported
+by the hardware.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarClose">
+<code class="descname">scriptEnvvarClose</code><span class="sig-paren">(</span><em>envHandle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarClose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarClose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to close an Envvar</p>
+<p>This should normally not by used directly, instead opening and closing
+of an envvar is automatically done when accessing via the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a>
+class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.scriptEnvvarGetData">
+<code class="descname">scriptEnvvarGetData</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarGetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarGetData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarGetFloat">
+<code class="descname">scriptEnvvarGetFloat</code><span class="sig-paren">(</span><em>envHandle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarGetFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarGetFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to read an Envvar of type float</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarGetInt">
+<code class="descname">scriptEnvvarGetInt</code><span class="sig-paren">(</span><em>envHandle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarGetInt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarGetInt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to read an Envvar of type int</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarOpen">
+<code class="descname">scriptEnvvarOpen</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarOpen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarOpen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to open an Envvar</p>
+<p>This should normally not by used directly, instead opening and closing
+of an envvar is automatically done when accessing via the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a>
+class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Channel.scriptEnvvarSetData">
+<code class="descname">scriptEnvvarSetData</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarSetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarSetData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarSetFloat">
+<code class="descname">scriptEnvvarSetFloat</code><span class="sig-paren">(</span><em>envHandle</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarSetFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarSetFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to set an Envvar of type float</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptEnvvarSetInt">
+<code class="descname">scriptEnvvarSetInt</code><span class="sig-paren">(</span><em>envHandle</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptEnvvarSetInt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptEnvvarSetInt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to set an Envvar of type int</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptGetText">
+<code class="descname">scriptGetText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptGetText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptGetText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read text from subscribed script slots</p>
+<p>Text-subscriptions must first be set up with
+<a class="reference internal" href="#canlib.canlib.Channel.scriptRequestText" title="canlib.canlib.Channel.scriptRequestText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.scriptRequestText</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="wrapper.html#canlib.canlib.ScriptText" title="canlib.canlib.ScriptText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScriptText</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="exceptions.html#canlib.canlib.CanNoMsg" title="canlib.canlib.CanNoMsg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.CanNoMsg</span></code></a> – No more text is currently available.</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptLoadFile">
+<code class="descname">scriptLoadFile</code><span class="sig-paren">(</span><em>slot</em>, <em>filePathOnPC</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptLoadFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptLoadFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load compiled script file from host(PC)</p>
+<p>Loads a compiled script file (.txe) stored on the host (PC) into a
+script slot on the device. The scripts default channel will be the same
+channel used when this Channel object was created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – slot containing the running script we want to stop.</li>
+<li><strong>filePathOnPC</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Path to compiled script (.txe) to load.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptLoadFileOnDevice">
+<code class="descname">scriptLoadFileOnDevice</code><span class="sig-paren">(</span><em>slot</em>, <em>localFile</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptLoadFileOnDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptLoadFileOnDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load compiled, locally stored, script file</p>
+<p>Loads a compiled script file (.txe) stored locally on the device (SD
+card) into a script slot on the device. The scripts default channel
+will be the same channel used when this Channel object was created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – slot containing the running script we want to stop.</li>
+<li><strong>localFile</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Name of compiled script (.txe) to load.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptRequestText">
+<code class="descname">scriptRequestText</code><span class="sig-paren">(</span><em>slot</em>, <em>request=&lt;ScriptRequest.SUBSCRIBE: 2&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptRequestText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptRequestText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a printf subscription to a selected script slot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The script slot to subscribe/unsubscribe from.</li>
+<li><strong>request</strong> (<a class="reference internal" href="enums.html#canlib.canlib.ScriptRequest" title="canlib.canlib.ScriptRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ScriptRequest</span></code></a>) – Whether to subscribe or unsubscribe.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Text printed with <code class="docutils literal notranslate"><span class="pre">printf()</span></code> by a t-script that you are subscribed to
+is saved and can be retrieved with <a class="reference internal" href="#canlib.canlib.Channel.scriptGetText" title="canlib.canlib.Channel.scriptGetText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.scriptGetText</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptSendEvent">
+<code class="descname">scriptSendEvent</code><span class="sig-paren">(</span><em>slotNo=0</em>, <em>eventType=1</em>, <em>eventNo=97</em>, <em>data=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptSendEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptSendEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send specified event to specified t script</p>
+<p>Send an event with given type, event number, and associated data to a
+script running in a specific slot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptStart">
+<code class="descname">scriptStart</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptStart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start previously loaded script in specified slot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptStatus">
+<code class="descname">scriptStatus</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retreives t program status for selected slot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Slot number to be queried</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ScriptStatus</span></code></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptStop">
+<code class="descname">scriptStop</code><span class="sig-paren">(</span><em>slot</em>, <em>mode=&lt;ScriptStop.NORMAL: 0&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptStop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptStop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop script running in specified slot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – slot containing the running script we want to stop.</li>
+<li><strong>mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ScriptStop</span></code>) – Default mode is <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ScriptStop.NORMAL</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.scriptUnload">
+<code class="descname">scriptUnload</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.scriptUnload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.scriptUnload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload previously stopped script in specified slot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.script_envvar_get_data">
+<code class="descname">script_envvar_get_data</code><span class="sig-paren">(</span><em>envHandle</em>, <em>len</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.script_envvar_get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.script_envvar_get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to read a slice of an Envvar of type char</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.10.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.script_envvar_set_data">
+<code class="descname">script_envvar_set_data</code><span class="sig-paren">(</span><em>envHandle</em>, <em>value</em>, <em>len</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.script_envvar_set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.script_envvar_set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low level function to write a slice of an Envvar of type char</p>
+<p>This should normally not by used directly, instead set and get the
+value of an envvar using the <a class="reference internal" href="envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvVar</span></code></a> class through <code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.envvar</span></code></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code> needs to be a bytes-like object or list</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.10.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.setBusOutputControl">
+<code class="descname">setBusOutputControl</code><span class="sig-paren">(</span><em>drivertype=&lt;Driver.NORMAL: 4&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.setBusOutputControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.setBusOutputControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set driver type</p>
+<p>This function sets the driver type for a CAN controller to e.g. silent
+mode. This corresponds loosely to the bus output control register in
+the CAN controller, hence the name of this function.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all CAN driver types are supported on all cards.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>drivertype</strong> (<a class="reference internal" href="enums.html#canlib.canlib.Driver" title="canlib.canlib.Driver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Driver</span></code></a>) – Driver type to set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.setBusParams">
+<code class="descname">setBusParams</code><span class="sig-paren">(</span><em>freq</em>, <em>tseg1=0</em>, <em>tseg2=0</em>, <em>sjw=0</em>, <em>noSamp=0</em>, <em>syncmode=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.setBusParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.setBusParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set bus timing parameters for classic CAN</p>
+<p>This function sets the bus timing parameters for the specified CAN
+controller.</p>
+<p>The library provides default values for tseg1, tseg2, sjw and noSamp
+when freq is specified to one of the pre-defined constants,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canBITRATE_xxx</span></code>.</p>
+<p>If freq is any other value, no default values are supplied by the
+library.</p>
+<p>If you are using multiple handles to the same physical channel, for
+example if you are writing a threaded application, you must call
+busOff() once for each handle. The same applies to busOn() - the
+physical channel will not go off bus until the last handle to the
+channel goes off bus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>freq</strong> – Bitrate in bit/s.</li>
+<li><strong>tseg1</strong> – Number of quanta from (but not including) the Sync Segment
+to the sampling point.</li>
+<li><strong>tseg2</strong> – Number of quanta from the sampling point to the end of
+the bit.</li>
+<li><strong>sjw</strong> – The Synchronization Jump Width, can be 1,2,3, or 4.</li>
+<li><strong>nosamp</strong> – The number of sampling points, only 1 is supported.</li>
+<li><strong>syncMode</strong> – Unsupported and ignored.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.setBusParamsFd">
+<code class="descname">setBusParamsFd</code><span class="sig-paren">(</span><em>freq_brs</em>, <em>tseg1_brs=0</em>, <em>tseg2_brs=0</em>, <em>sjw_brs=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.setBusParamsFd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.setBusParamsFd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set bus timing parameters for BRS in CAN FD</p>
+<p>This function sets the bus timing parameters used in BRS (Bit rate
+switch) mode for the current CANlib channel.</p>
+<p>The library provides default values for tseg1_brs, tseg2_brs and
+sjw_brs when freq is specified to one of the pre-defined constants,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canFD_BITRATE_xxx</span></code></p>
+<p>If freq is any other value, no default values are supplied by the
+library.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>freq_brs</strong> – Bitrate in bit/s.</li>
+<li><strong>tseg1_brs</strong> – Number of quanta from (but not including) the Sync
+Segment to the sampling point.</li>
+<li><strong>tseg2_brs</strong> – Number of quanta from the sampling point to the
+end of the bit.</li>
+<li><strong>sjw_brs</strong> – The Synchronization Jump Width.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.set_callback">
+<code class="descname">set_callback</code><span class="sig-paren">(</span><em>function</em>, <em>event</em>, <em>context=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.set_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.set_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register callback function</p>
+<p>This will register a callback function which is called when certain
+events occur. You can register at most one callback function per handle
+at any time.</p>
+<p>Note:</p>
+<p>The callback function is called in the context of a high-priority
+thread created by CANlib. You should take precaution not to do any time
+consuming tasks in the callback.</p>
+<p>Small example of usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Declare callback function</span>
+<span class="k">def</span> <span class="nf">callback_func</span><span class="p">(</span><span class="n">hnd</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="c1"># The nonlocal statement causes the listed identifiers to refer</span>
+    <span class="c1"># to previously bound variables in the nearest enclosing scope</span>
+    <span class="c1"># excluding globals.</span>
+    <span class="k">nonlocal</span> <span class="n">callback_has_been_called</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Callback called, context:</span><span class="si">{}</span><span class="s2">, event:</span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
+    <span class="c1"># Notify the main program by setting the flag</span>
+    <span class="n">callback_has_been_called</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># setup communication variable and callback</span>
+<span class="n">callback_has_been_called</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">callback</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">dll</span><span class="o">.</span><span class="n">KVCALLBACK_T</span><span class="p">(</span><span class="n">callback_func</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">set_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="mi">121</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Notify</span><span class="o">.</span><span class="n">BUSONOFF</span><span class="p">)</span>
+<span class="c1"># trigger the callback</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="c1"># do something else</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># Verify that the callback was triggered</span>
+<span class="k">assert</span> <span class="n">callback_has_been_called</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<p>It is very important to make sure that you keep a reference to the
+callback type (<code class="docutils literal notranslate"><span class="pre">callback</span></code> in the sample above) for as long as any C
+library might call it. If it gets deleted by the garbage collector,
+calling it from C is likely to either cause a segfault or maybe even
+interpret random memory as machine language.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>function</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.KVCALLBACK_T</span></code>) – A ctypes wrapped Python function</li>
+<li><strong>event</strong> (<a class="reference internal" href="enums.html#canlib.canlib.Notify" title="canlib.canlib.Notify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Notify</span></code></a>) – A combination of flags to indicate
+what events to trigger on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>frame=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a CAN message.</p>
+<p>This function sends a Frame object as a CAN message. Note that the
+message has been queued for transmission when this calls return. It has
+not necessarily been sent.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you are using the same channel via multiple handles, the default
+behaviour is that the different handles will “hear” each other just
+as if each handle referred to a channel of its own. If you open,
+say, channel 0 from thread A and thread B and then send a message
+from thread A, it will be “received” by thread B.</p>
+<p>This behaviour can be changed by setting <code class="xref py py-obj docutils literal notranslate"><span class="pre">local_txecho</span></code> to <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>
+(using <a class="reference internal" href="iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.IOControl</span></code></a>):</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">iocontrol</span><span class="o">.</span><span class="n">local_txecho</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<p>Also see <a class="reference internal" href="#canlib.canlib.Channel.write_raw" title="canlib.canlib.Channel.write_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.write_raw</span></code></a> for sending messages without constructing
+<a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> objects.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Sending the <a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> contents as separate arguments; this
+functionality has been taken over by <a class="reference internal" href="#canlib.canlib.Channel.write_raw" title="canlib.canlib.Channel.write_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_raw</span></code></a>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> (<a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.writeSync">
+<code class="descname">writeSync</code><span class="sig-paren">(</span><em>timeout</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.writeSync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.writeSync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for queued messages to be sent</p>
+<p>Waits until all CAN messages for the specified handle are sent, or the
+timeout period expires.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The timeout in milliseconds, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">0xFFFFFFFF</span></code> for
+an infinite timeout.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.writeWait">
+<code class="descname">writeWait</code><span class="sig-paren">(</span><em>frame</em>, <em>timeout</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.writeWait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.writeWait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a CAN message and waits for it to be sent.</p>
+<p>This function sends a CAN message. It returns when the message is sent,
+or the timeout expires. This is a convenience function that combines
+write() and writeSync().</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Sending the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code> contents as separate arguments; this
+functionality has been taken over by <a class="reference internal" href="#canlib.canlib.Channel.writeWait_raw" title="canlib.canlib.Channel.writeWait_raw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeWait_raw</span></code></a>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>frame</strong> (<a class="reference internal" href="../frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a>) – Frame containing the CAN data to be sent</li>
+<li><strong>timeout</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The timeout, in milliseconds. 0xFFFFFFFF gives an infinite
+timeout.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.writeWait_raw">
+<code class="descname">writeWait_raw</code><span class="sig-paren">(</span><em>id_</em>, <em>msg</em>, <em>flag=0</em>, <em>dlc=0</em>, <em>timeout=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.writeWait_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.writeWait_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a CAN message and waits for it to be sent.</p>
+<p>This function sends a CAN message. It returns when the message is sent,
+or the timeout expires. This is a convenience function that combines
+write() and writeSync().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id_</strong> – The identifier of the CAN message to send.</li>
+<li><strong>msg</strong> – An array or bytearray of the message data</li>
+<li><strong>flag</strong> – A combination of <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag" title="canlib.canlib.MessageFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.MessageFlag</span></code></a>. Use this
+parameter e.g. to send extended (29-bit) frames.</li>
+<li><strong>dlc</strong> – The length of the message in bytes. For Classic CAN dlc can
+be at most 8, unless <a class="reference internal" href="enums.html#canlib.canlib.Open.ACCEPT_LARGE_DLC" title="canlib.canlib.Open.ACCEPT_LARGE_DLC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Open.ACCEPT_LARGE_DLC</span></code></a> is
+used. For CAN FD dlc can be one of the following 0-8, 12, 16,
+20, 24, 32, 48, 64. Optional, if omitted, dlc is calculated
+from the msg array.</li>
+<li><strong>timeout</strong> – The timeout, in milliseconds. 0xFFFFFFFF gives an infinite
+timeout.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.canlib.Channel.write_raw">
+<code class="descname">write_raw</code><span class="sig-paren">(</span><em>id_</em>, <em>msg</em>, <em>flag=0</em>, <em>dlc=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#Channel.write_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Channel.write_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a CAN message</p>
+<p>See docstring of <a class="reference internal" href="#canlib.canlib.Channel.write" title="canlib.canlib.Channel.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.write</span></code></a> for general information about sending
+CAN messages.</p>
+<p>The variable name id (as used by canlib) is a built-in function in
+Python, so the name <code class="xref py py-obj docutils literal notranslate"><span class="pre">id_</span></code> is used instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id_</strong> – The identifier of the CAN message to send.</li>
+<li><strong>msg</strong> – An array or bytearray of the message data</li>
+<li><strong>flag</strong> – A combination of <a class="reference internal" href="enums.html#canlib.canlib.MessageFlag" title="canlib.canlib.MessageFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.MessageFlag</span></code></a>. Use this
+parameter e.g. to send extended (29-bit) frames.</li>
+<li><strong>dlc</strong> – The length of the message in bytes. For Classic CAN dlc can
+be at most 8, unless <a class="reference internal" href="enums.html#canlib.canlib.Open.ACCEPT_LARGE_DLC" title="canlib.canlib.Open.ACCEPT_LARGE_DLC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Open.ACCEPT_LARGE_DLC</span></code></a> is
+used. For CAN FD dlc can be one of the following 0-8, 12, 16,
+20, 24, 32, 48, 64. Optional, if omitted, dlc is calculated
+from the msg array.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="canbusstatistics">
+<h2>CanBusStatistics<a class="headerlink" href="#canbusstatistics" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.structures.CanBusStatistics">
+<em class="property">class </em><code class="descclassname">canlib.canlib.structures.</code><code class="descname">CanBusStatistics</code><a class="reference internal" href="../../_modules/canlib/canlib/structures.html#CanBusStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.structures.CanBusStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result from reading bus statistics using <a class="reference internal" href="#canlib.canlib.Channel.get_bus_statistics" title="canlib.canlib.Channel.get_bus_statistics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.get_bus_statistics</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>busLoad</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The bus load, expressed as an integer in the interval
+0 - 10000 representing 0.00% - 100.00% bus load.</li>
+<li><strong>errFrame</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Number of error frames.</li>
+<li><strong>extData</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Number of received extended (29-bit identifiers) data frames.</li>
+<li><strong>extRemote</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Number of received extended (29-bit identifiers) remote frames.</li>
+<li><strong>overruns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The number of overruns detected by the hardware, firmware or driver.</li>
+<li><strong>stdData</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Number of received standard (11-bit identifiers) data frames.</li>
+<li><strong>stdRemote</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Number of received standard (11-bit identifiers) remote frames.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="channeldata.html" class="btn btn-neutral float-right" title="ChannelData" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

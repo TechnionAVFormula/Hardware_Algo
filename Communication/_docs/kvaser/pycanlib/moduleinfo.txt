@@ -1,0 +1,3 @@
+module=pycanlib
+version=1_13_390
+hgid=4c63e1bd6b15 tip

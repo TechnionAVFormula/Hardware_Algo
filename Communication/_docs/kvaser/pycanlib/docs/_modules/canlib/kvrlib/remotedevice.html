@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.remotedevice &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.remotedevice</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.remotedevice</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">.address</span> <span class="k">import</span> <span class="n">Address</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ConfigMode</span><span class="p">,</span> <span class="n">NetworkState</span><span class="p">,</span> <span class="n">BasicServiceSet</span><span class="p">,</span> <span class="n">RegulatoryDomain</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvrBlank</span><span class="p">,</span> <span class="n">KvrNoAnswer</span><span class="p">,</span> <span class="n">KvrPasswordError</span><span class="p">,</span> <span class="n">KvrUnreachable</span>
+<span class="kn">from</span> <span class="nn">.structures</span> <span class="k">import</span> <span class="n">kvrAddress</span><span class="p">,</span> <span class="n">kvrCipherInfoElement</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span><span class="p">,</span> <span class="n">HOST_NAME_MIN_SIZE</span>
+
+
+<span class="n">AddressInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;AddressInfo&#39;</span><span class="p">,</span> <span class="s2">&quot;adress1 address2 netmask gateway is_dhcp&quot;</span><span class="p">)</span>
+<span class="n">ConnectionStatus</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ConnectionStatus&#39;</span><span class="p">,</span> <span class="s2">&quot;state tx_rate rx_rate channel_number rssi tx_power&quot;</span><span class="p">)</span>
+<span class="n">ConnectionTestResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ConnectionTestResult&#39;</span><span class="p">,</span> <span class="s2">&quot;rssi rtt&quot;</span><span class="p">)</span>
+<span class="n">WlanScanResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;WlanScanResult&#39;</span><span class="p">,</span> <span class="s2">&quot;rssi channel_number mac bss_type ssid security_text&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="openDevice"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.openDevice">[docs]</a><span class="k">def</span> <span class="nf">openDevice</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">validate_password</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a `RemoteDevice` object bound to a channel number</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel_number (`int`): CANlib channel number of the device to open</span>
+<span class="sd">        password (`str`): Password of the device, if any</span>
+<span class="sd">        validate_password (`bool`): Whether the password should be validated</span>
+<span class="sd">            (defaults to `False`).</span>
+
+<span class="sd">    This function checks that a remote-capable device is currently connection</span>
+<span class="sd">    on the channel `channel_number`. If `validate_password` is ``True``, it</span>
+<span class="sd">    also checks that the password supplied is correct. If any of these checks</span>
+<span class="sd">    fail, a `ValueError` will be raised.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># quickly check that a remote device is connected to this channel number</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigNoProfilesGet</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">KvrUnreachable</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No remote device on channel &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">channel_number</span><span class="p">))</span>
+
+    <span class="n">rdev</span> <span class="o">=</span> <span class="n">RemoteDevice</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">validate_password</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rdev</span><span class="o">.</span><span class="n">password_valid</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong password supplied&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rdev</span></div>
+
+
+<div class="viewcode-block" id="RemoteDevice"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice">[docs]</a><span class="k">class</span> <span class="nc">RemoteDevice</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A remote-capable Kvaser device</span>
+
+<span class="sd">    This class is normally instantiated with `canlib.kvrlib.openDevice`::</span>
+
+<span class="sd">        rdev = kvrlib.openDevice(CHANNEL_NUMBER)</span>
+
+<span class="sd">    Once this is done, the currently active profile can be accessed::</span>
+
+<span class="sd">        active = rdev.active_profile</span>
+
+<span class="sd">    All profiles, including the active one, are `canlib.kvrlib.ConfigProfile`</span>
+<span class="sd">    objects, see that documentation for all the operations available for</span>
+<span class="sd">    profile objects.</span>
+
+<span class="sd">    The full list of profiles a device has can be inspected using</span>
+<span class="sd">    ``rdev.profiles``. This is a `RemoteDevice.ProfileList` object, which works</span>
+<span class="sd">    much like a list::</span>
+
+<span class="sd">        # The profile list can be indexed</span>
+<span class="sd">        first = rdev.profiles[0]</span>
+
+<span class="sd">        # We can check if a configuration belongs to this device with &#39;in&#39;</span>
+<span class="sd">        assert first in rdev.profiles</span>
+
+<span class="sd">        # The length of the profile list is the number of profiles</span>
+<span class="sd">        num_profiles = len(rdev.profiles)</span>
+
+<span class="sd">        # Using the number of profiles, we can get the last one</span>
+<span class="sd">        last = rdev.profiles[num_profiles - 1]</span>
+
+<span class="sd">        # But negative indexes also work and are a better way of getting</span>
+<span class="sd">        # the last profile</span>
+<span class="sd">        last = rdev.profiles[-1]</span>
+
+<span class="sd">        # You can also iterate over all profiles</span>
+<span class="sd">        for profile in rdev.profiles:</span>
+<span class="sd">            ...</span>
+
+<span class="sd">    `RemoteDevice` also lets you access a variety of information about the</span>
+<span class="sd">    specific device, as well as the ability to do a WLAN scan with</span>
+<span class="sd">    `RemoteDevice.wlan_scan`.</span>
+
+<span class="sd">    If the device is password protected, that password can be passed to</span>
+<span class="sd">    `canlib.kvrlib.openDevice`::</span>
+
+<span class="sd">        protected_device = kvrlib.openDevice(0, password=&quot;Once upon a playground rainy&quot;)</span>
+
+<span class="sd">    After the object is created, the password is available as::</span>
+
+<span class="sd">        password = protected_device.password</span>
+
+<span class="sd">    The password can be changed with::</span>
+
+<span class="sd">        protected_device.password = &quot;Wolves without teeth&quot;</span>
+
+<span class="sd">    The reason the password is stored as clear-text is because it must be</span>
+<span class="sd">    supplied to the underlying library each time an operation is done using</span>
+<span class="sd">    this and related classes. This also means that the password is only</span>
+<span class="sd">    validated, and required, when one of the functions requiring a password is</span>
+<span class="sd">    called.</span>
+
+<span class="sd">    If the device is not password-protected, the password should be an empty string::</span>
+
+<span class="sd">        unprotected_device = kvrlib.openDevice(1)</span>
+<span class="sd">        assert unprotected_device.password == &#39;&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RemoteDevice.ProfileList"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice.ProfileList">[docs]</a>    <span class="k">class</span> <span class="nc">ProfileList</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The available profiles in a remote-capable device</span>
+
+<span class="sd">        This is the type of `RemoteDevice.profiles`. It implements the following:</span>
+
+<span class="sd">        * ``len(profiles)``</span>
+<span class="sd">        * ``profile in profiles``</span>
+<span class="sd">        * ``profile[index]``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_number</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">=</span> <span class="n">channel_number</span>
+
+        <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigNoProfilesGet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">num</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">ConfigProfile</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">profile</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">:</span>
+                <span class="c1"># Multichannel devices must use same CANlib channel</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">profile</span><span class="o">.</span><span class="n">profile_number</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="n">index</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">ConfigProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">profile</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">profile</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_number</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">=</span> <span class="n">channel_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProfileList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.ConfigProfile`: The currently active profile</span>
+
+<span class="sd">        Activating another profile is done by assigning this attribute to</span>
+<span class="sd">        another profile::</span>
+
+<span class="sd">            new_profile = remote_device.profiles[index]</span>
+<span class="sd">            remote_device.active_profile = new_profile</span>
+
+<span class="sd">        The value assigned to this property must be a</span>
+<span class="sd">        `canlib.kvrlib.ConfigProfile` that belongs to this device, i.e. the</span>
+<span class="sd">        following must be ``True``::</span>
+
+<span class="sd">            new_profile in remote_device.profiles</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">profile_number</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigActiveProfileGet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">profile_number</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ConfigProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile_number</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@active_profile</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">active_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="c1"># pause required</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">ConfigProfile</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;active_profile must be a kvrlib.ConfigProfile object&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;active_profile must be a profile of this device&quot;</span><span class="p">)</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigActiveProfileSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">val</span><span class="o">.</span><span class="n">profile_number</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">address_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.AddressInfo`: Information about network address settings</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Accessing this attribute requires the correct password be set on the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">address1</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+        <span class="n">address2</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+        <span class="n">netmask</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+        <span class="n">gateway</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+        <span class="n">dhcp</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGetAddressInfo</span><span class="p">(</span>
+                <span class="n">handle</span><span class="p">,</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">address1</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">address2</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">netmask</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">gateway</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">dhcp</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">address1</span><span class="p">)</span>
+        <span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">address2</span><span class="p">)</span>
+        <span class="n">netmask</span> <span class="o">=</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">netmask</span><span class="p">)</span>
+        <span class="n">gateway</span> <span class="o">=</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+        <span class="n">dhcp</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dhcp</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">AddressInfo</span><span class="p">(</span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span><span class="p">,</span> <span class="n">netmask</span><span class="p">,</span> <span class="n">gateway</span><span class="p">,</span> <span class="n">dhcp</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.ConnectionStatus`: Connection status information</span>
+
+<span class="sd">        The returned tuple is a ``(state, tx_rate, rx_rate, channel, rssi,</span>
+<span class="sd">        tx_power)`` namedtuple of:</span>
+
+<span class="sd">        #. ``state`` (`canlib.kvrlib.NetworkState`): Network connection state</span>
+<span class="sd">        #. ``tx_rate`` (`int`): Transmit rate in kbit/s</span>
+<span class="sd">        #. ``rx_rate`` (`int`): Receive rate in kbit/s</span>
+<span class="sd">        #. ``channel`` (`int`): Channel</span>
+<span class="sd">        #. ``rssi`` (`int`): Receive Signal Strength Indicator</span>
+<span class="sd">        #. ``tx_power`` (`int`): Transmit power level in dB</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Accessing this attribute requires the correct password be set on the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">tx_rate</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">rx_rate</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">rssi</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">tx_power</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGetConnectionStatus</span><span class="p">(</span>
+                <span class="n">handle</span><span class="p">,</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tx_rate</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rx_rate</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">channel</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rssi</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tx_power</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">NetworkState</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">tx_rate</span> <span class="o">=</span> <span class="n">tx_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">rx_rate</span> <span class="o">=</span> <span class="n">rx_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">rssi</span> <span class="o">=</span> <span class="n">rssi</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">tx_power</span> <span class="o">=</span> <span class="n">tx_power</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">ConnectionStatus</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">tx_rate</span><span class="p">,</span> <span class="n">rx_rate</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">rssi</span><span class="p">,</span> <span class="n">tx_power</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: Device&#39;s hostname</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Accessing this attribute requires the correct password be set on the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">HOST_NAME_MIN_SIZE</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGetHostName</span><span class="p">(</span>
+                <span class="n">handle</span><span class="p">,</span>
+                <span class="n">buf</span><span class="p">,</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RemoteDevice.connection_test"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice.connection_test">[docs]</a>    <span class="k">def</span> <span class="nf">connection_test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a connection test for this device</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.kvrlib.ConnectionTest`</span>
+
+<span class="sd">        See the documentation of `canlib.kvrlib.ConnectionTest` for more</span>
+<span class="sd">        information.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Accessing this attribute requires the correct password be set on the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loose_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ConnectionTest</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteDevice.password_valid"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice.password_valid">[docs]</a>    <span class="k">def</span> <span class="nf">password_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether the password set is valid</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `bool`: ``True`` if the password is valid, ``False`` otherwise.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loose_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvrPasswordError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RemoteDevice.wlan_scan"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice.wlan_scan">[docs]</a>    <span class="k">def</span> <span class="nf">wlan_scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bss_type</span><span class="o">=</span><span class="n">BasicServiceSet</span><span class="o">.</span><span class="n">ANY</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">RegulatoryDomain</span><span class="o">.</span><span class="n">WORLD</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates and starts a wlan scan for this device</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.kvrlib.WlanScan`</span>
+
+<span class="sd">        See the documentation of `canlib.kvrlib.WlanScan` for more</span>
+<span class="sd">        information.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Accessing this attribute requires the correct password be set on the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loose_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">scan</span> <span class="o">=</span> <span class="n">WlanScan</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">_start</span><span class="p">(</span><span class="n">active</span><span class="p">,</span> <span class="n">bss_type</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scan</span></div>
+
+    <span class="k">def</span> <span class="nf">_loose_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigOpen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">ConfigMode</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">handle</span>
+
+    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">_config_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loose_config_handle</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+        <span class="k">yield</span> <span class="n">handle</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConfigProfile"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConfigProfile">[docs]</a><span class="k">class</span> <span class="nc">ConfigProfile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A configuration profile of a remote-capable device</span>
+
+<span class="sd">    The active profile for a `canlib.kvrlib.RemoteDevice`, ``rdev``, is accessed with::</span>
+
+<span class="sd">        profile = rdev.active_profile</span>
+
+<span class="sd">    Other profiles are accessed with ``profiles``::</span>
+
+<span class="sd">        first = rdev.profiles[0]</span>
+
+<span class="sd">    See the documentation for `canlib.kvrlib.RemoteDevice` for more information</span>
+<span class="sd">    on how to get `ConfigProfile` objects.</span>
+
+<span class="sd">    The specific configuration of a profile can be read::</span>
+
+<span class="sd">        xml_string = profile.read()</span>
+
+<span class="sd">    And it can also be written back::</span>
+
+<span class="sd">        profile.write(xml_string)</span>
+
+<span class="sd">    The password used by this object is taken from its parent `RemoteDevice`</span>
+<span class="sd">    object. See that documentation for how to set the password.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">XML_BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">2046</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">profile_number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_number</span> <span class="o">=</span> <span class="n">profile_number</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;ConfigProfile number </span><span class="si">{pn}</span><span class="s2"> of device on CANlib channel </span><span class="si">{cn}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">pn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_number</span><span class="p">,</span> <span class="n">cn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channel_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`int`: The CANlib channel number used to communicate with the device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="o">.</span><span class="n">channel_number</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: A simplified version of the configuration</span>
+
+<span class="sd">        It is not necessary to know the configuration password to access this</span>
+<span class="sd">        information. Note that the partial XML data returned is not enough to</span>
+<span class="sd">        reconfigure a device.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xml_buffer</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XML_BUFFER_SIZE</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigInfoGet</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_number</span><span class="p">,</span> <span class="n">xml_buffer</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">xml_buffer</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvrBlank</span><span class="p">:</span>
+            <span class="n">xml</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xml</span> <span class="o">=</span> <span class="n">xml_buffer</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">xml</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The password used to communicate with the device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="o">.</span><span class="n">password</span>
+
+<div class="viewcode-block" id="ConfigProfile.clear"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConfigProfile.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clear the configuration</span>
+
+<span class="sd">        This will also clear any previously set device password.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method requires the parent `RemoteDevice` to have the correct password.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pause required</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">ConfigMode</span><span class="o">.</span><span class="n">ERASE</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClear</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConfigProfile.read"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConfigProfile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the configuration</span>
+
+<span class="sd">        Returns either an XML string, or `None` if there is no configuration.</span>
+
+<span class="sd">        Note that `ConfigProfile.write` can handle `None`; in other words::</span>
+
+<span class="sd">            xml = profile.read()</span>
+
+<span class="sd">            # Do anything, including writing new configurations</span>
+<span class="sd">            ...</span>
+
+<span class="sd">            profile.write(xml)</span>
+
+<span class="sd">        Will always work even if ``xml`` is `None`. This would mean that the</span>
+<span class="sd">        profile originally had an empty configuration, and it will once again</span>
+<span class="sd">        have an empty configuration at the end.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method requires the parent `RemoteDevice` to have the correct password.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xml_buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XML_BUFFER_SIZE</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">ConfigMode</span><span class="o">.</span><span class="n">R</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigGet</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">xml_buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">xml_buf</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvrBlank</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">xml_buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ConfigProfile.write"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConfigProfile.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write the configuration area</span>
+
+<span class="sd">        This function takes as its single argument either an xml string that</span>
+<span class="sd">        will be written to this profile, or `None` in which case the</span>
+<span class="sd">        configuration will be cleared.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method requires the parent `RemoteDevice` to have the correct password.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">xml</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xml_buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">xml</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">ConfigMode</span><span class="o">.</span><span class="n">RW</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigSet</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">xml_buf</span><span class="p">)</span></div>
+
+    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigOpenEx</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span>
+            <span class="n">mode</span><span class="p">,</span>
+            <span class="n">password</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">handle</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_number</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">yield</span> <span class="n">handle</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConnectionTest"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest">[docs]</a><span class="k">class</span> <span class="nc">ConnectionTest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A connection test for a specific device</span>
+
+<span class="sd">    A connection test for a `RemoteDevice`, ``rdev``, is created by::</span>
+
+<span class="sd">        test = rdev.connection_test()</span>
+
+<span class="sd">    While a connection test is running, the device will connect and start</span>
+<span class="sd">    pinging itself to measure round-trip time (RTT) and Receive Signal Strength</span>
+<span class="sd">    Indicator (RSSI).</span>
+
+<span class="sd">    A `ConnectionTest` is started with `ConnectionTest.start` and stopped with</span>
+<span class="sd">    `ConnectionTest.stop`, after which its results are retrieved by</span>
+<span class="sd">    `ConnectionTest.results`. If it is acceptable to block while the test is</span>
+<span class="sd">    running, these three calls can be combined into `ConnectionTest.run`::</span>
+
+<span class="sd">        results = test.run(duration=10)</span>
+<span class="sd">        print(results)</span>
+
+<span class="sd">    Connection tests are automatically closed when garbage-collected, but they</span>
+<span class="sd">    can also be closed manually with `ConnectionTest.close`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">config_handle</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ConnectionTest.close"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close the internal handle&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ConnectionTest.results"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest.results">[docs]</a>    <span class="k">def</span> <span class="nf">results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxresults</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the results from a connection test</span>
+
+<span class="sd">        The test must have been running for any results to be available.</span>
+
+<span class="sd">        This function returns a `ConnectionTestResult`, which is a namedtuple</span>
+<span class="sd">        of ``(rssi, rtt)``. Both ``rssi`` and ``rtt`` are tuples containing a</span>
+<span class="sd">        number of individual results for RSSI and RTT.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            maxresults (`int`): The maximum number of rssi and rtt numbers to</span>
+<span class="sd">                return. The returned ``rssi`` and ``rtt`` will be tuples with</span>
+<span class="sd">                this long or the number of results available long, whichever is</span>
+<span class="sd">                shortest.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rssi_size</span> <span class="o">=</span> <span class="n">maxresults</span>
+        <span class="n">rssi</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span> <span class="o">*</span> <span class="n">rssi_size</span><span class="p">)()</span>
+        <span class="n">rssi_count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">rtt_size</span> <span class="o">=</span> <span class="n">maxresults</span>
+        <span class="n">rtt</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span> <span class="o">*</span> <span class="n">rtt_size</span><span class="p">)()</span>
+        <span class="n">rtt_count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGetRssiRtt</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span>
+            <span class="n">rssi</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">rssi</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rssi_count</span><span class="p">),</span>
+            <span class="n">rtt</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">rtt</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rtt_count</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">rssi</span> <span class="o">=</span> <span class="n">rssi</span><span class="p">[:</span><span class="n">rssi_count</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+        <span class="n">rtt</span> <span class="o">=</span> <span class="n">rtt</span><span class="p">[:</span><span class="n">rtt_count</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ConnectionTestResult</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">rssi</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rtt</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionTest.run"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">maxresults</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run a connection test and return its results.</span>
+
+<span class="sd">        This function calls `ConnectionTest.start`, then blocks for `duration`</span>
+<span class="sd">        seconds, then calls `ConnectionTest.stop` before finally returning the</span>
+<span class="sd">        `ConnectionTestResult` from `ConnectionTest.results`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            duration (`int`): Seconds to run the test for.</span>
+<span class="sd">            maxresults (`int`): Passed to `ConnectionTest.results` as ``maxlen``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">(</span><span class="n">maxresults</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionTest.start"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start the connection test&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkConnectionTest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionTest.stop"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.ConnectionTest.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop the connection test&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkConnectionTest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="WlanScan"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.WlanScan">[docs]</a><span class="k">class</span> <span class="nc">WlanScan</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A wlan scan for this device</span>
+
+<span class="sd">    The device starts scanning as soon as this object is created by `RemoteDevice.wlan_scan`::</span>
+
+<span class="sd">        scan = rdev.wlan_scan()</span>
+
+<span class="sd">    When calling `RemoteDevice.wlan_scan`, you can also specify whether the</span>
+<span class="sd">    scan should be an active one, the Basic Service Set (bss) to use, and the</span>
+<span class="sd">    regulatory domain::</span>
+
+<span class="sd">        scan = rdev.wlan_scan(</span>
+<span class="sd">            active=True,</span>
+<span class="sd">            bss=kvrlib.BasicServiceSet.INFRASTRUCTURE,</span>
+<span class="sd">            domain=kvrlib.RegulatoryDomain.EUROPE_ETSI,</span>
+<span class="sd">        )</span>
+
+<span class="sd">    Results from the scan are retrieved by iterating over the `WlanScan` object:</span>
+
+<span class="sd">        for result in scan:</span>
+<span class="sd">            print(result)</span>
+
+<span class="sd">    When getting the next result, the code will block until a new result is</span>
+<span class="sd">    available or until no more results are available, in which case the</span>
+<span class="sd">    iteration stops.</span>
+
+<span class="sd">    Wlan scans are automatically closed when garbage-collected, but they</span>
+<span class="sd">    can also be closed manually with `WlanScan.close`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">config_handle</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result</span><span class="p">()</span>
+                <span class="k">except</span> <span class="n">KvrNoAnswer</span><span class="p">:</span>
+                    <span class="c1"># &quot;waiting for further scan results&quot;</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvrBlank</span><span class="p">:</span>
+            <span class="c1"># &quot;no further scan results are available&quot;</span>
+            <span class="k">return</span>
+
+<div class="viewcode-block" id="WlanScan.close"><a class="viewcode-back" href="../../../reference/kvrlib/remotedevice.html#canlib.kvrlib.WlanScan.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the internal handle&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rssi</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">mac</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+        <span class="n">bss_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">ssid</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+        <span class="n">capability</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">type_wpa</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+        <span class="n">wpa_info</span> <span class="o">=</span> <span class="n">kvrCipherInfoElement</span><span class="p">()</span>
+        <span class="n">rsn_info</span> <span class="o">=</span> <span class="n">kvrCipherInfoElement</span><span class="p">()</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrWlanGetScanResults</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rssi</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">channel</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mac</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">bss_type</span><span class="p">),</span>
+            <span class="n">ssid</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">capability</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">type_wpa</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">wpa_info</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rsn_info</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">security_text</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrWlanGetSecurityText</span><span class="p">(</span>
+            <span class="n">security_text</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">security_text</span><span class="p">),</span>
+            <span class="n">capability</span><span class="p">,</span>
+            <span class="n">type_wpa</span><span class="p">,</span>
+            <span class="n">wpa_info</span><span class="p">,</span>
+            <span class="n">rsn_info</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WlanScanResult</span><span class="p">(</span>
+            <span class="n">rssi</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">channel</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">mac</span><span class="p">),</span>
+            <span class="n">BasicServiceSet</span><span class="p">(</span><span class="n">bss_type</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">ssid</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">security_text</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active</span><span class="p">,</span> <span class="n">bss_type</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrWlanStartScan</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span>
+            <span class="n">active</span><span class="p">,</span>
+            <span class="n">bss_type</span><span class="p">,</span>
+            <span class="n">domain</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

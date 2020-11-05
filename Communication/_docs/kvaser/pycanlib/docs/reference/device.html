@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Device &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Frames" href="frame.html" />
+    <link rel="prev" title="EAN" href="ean.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ean.html">EAN</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Device</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connected-devices">connected_devices()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference</a> &raquo;</li>
+        
+      <li>Device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/device.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="device">
+<h1>Device<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="canlib.Device">
+<em class="property">class </em><code class="descclassname">canlib.</code><code class="descname">Device</code><span class="sig-paren">(</span><em>ean</em>, <em>serial</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for keeping track of a physical device</p>
+<p>This class represents a physical device regardless of whether it is
+currently connected or not, and on which channel it is connected.</p>
+<p>If the device is currently connected, <a class="reference internal" href="#canlib.Device.find" title="canlib.Device.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.find</span></code></a> can be used to get a
+<a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a> object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="n">EAN</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s1">&#39;67890-1&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#canlib.Device.find" title="canlib.Device.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.find</span></code></a> supports searching for devices based on a variety of
+information, and will return a <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a> object corresponding to the first
+physical device that matched its arguments. In this case, it would be the
+first device found with an EAN of 73-30130-67890-1.</p>
+<p>If the device wanted is not currently connected, <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a> objects can be
+created with their EAN and serial number (as this is the minimal
+information needed to uniquely identify a specific device):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="n">EAN</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s1">&#39;67890-1&#39;</span><span class="p">),</span> <span class="n">serial</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Two <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a> objects can be checked for equality (whether they refer to the same
+device) and be converted to a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>. <a class="reference internal" href="#canlib.Device.probe_info" title="canlib.Device.probe_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.probe_info</span></code></a> can also be used
+for a more verbose string representation that queries the device (if
+connected) for various pieces of information.</p>
+<p>This class also provides functions for creating the other objects of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib</span></code>:</p>
+<ul class="simple">
+<li><a class="reference internal" href="canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel</span></code></a> – <a class="reference internal" href="#canlib.Device.channel" title="canlib.Device.channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.channel</span></code></a></li>
+<li><a class="reference internal" href="canlib/channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ChannelData</span></code></a> – <a class="reference internal" href="#canlib.Device.channel_data" title="canlib.Device.channel_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.channel_data</span></code></a></li>
+<li><a class="reference internal" href="canlib/iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.IOControl</span></code></a> – <a class="reference internal" href="#canlib.Device.iocontrol" title="canlib.Device.iocontrol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.iocontrol</span></code></a></li>
+<li><a class="reference internal" href="kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kvmlib.Memorator</span></code></a>– <a class="reference internal" href="#canlib.Device.memorator" title="canlib.Device.memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.memorator</span></code></a></li>
+<li><a class="reference internal" href="linlib/channel.html#canlib.linlib.Channel" title="canlib.linlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linlib.Channel</span></code></a> – <a class="reference internal" href="#canlib.Device.lin_master" title="canlib.Device.lin_master"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.lin_master</span></code></a> and <a class="reference internal" href="#canlib.Device.lin_slave" title="canlib.Device.lin_slave"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.lin_slave</span></code></a></li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="#canlib.Device.ean" title="canlib.Device.ean"><strong>Device.ean</strong></a> (<a class="reference internal" href="ean.html#canlib.EAN" title="canlib.EAN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.EAN</span></code></a>) – The EAN of this device.</li>
+<li><a class="reference internal" href="#canlib.Device.serial" title="canlib.Device.serial"><strong>Device.serial</strong></a> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The serial number of this device.</li>
+<li><a class="reference internal" href="#canlib.Device.last_channel_number" title="canlib.Device.last_channel_number"><strong>last_channel_number</strong></a> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The channel number this device was last
+found on (used as an optimization; while the device stays on the
+same CANlib channel there is no need for a linear search of all
+channels).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+<dl class="method">
+<dt id="canlib.Device.channel">
+<code class="descname">channel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel</span></code></a> for this device’s first channel</p>
+<p>The experimental attribute <code class="xref py py-obj docutils literal notranslate"><span class="pre">_chan_no_on_card</span></code> may be given, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>
+provided will be added (without any verifications) to the
+<a class="reference internal" href="#canlib.Device.channel_number" title="canlib.Device.channel_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_number</span></code></a> where this device was found on, and may thus be used
+to open a specific local channel on this device.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">_chan_no_on_card</span></code> attribute, you must make sure
+that the card actually have the assumed number of local channels.
+Using this argument with a too large <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> could return a channel
+belonging to a different device.</p>
+</div>
+<p>Arguments to <a class="reference internal" href="canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.openChannel</span></code></a> other than the channel number
+can be passed to this function.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.13: </span>Added attribute <code class="xref py py-obj docutils literal notranslate"><span class="pre">_chan_no_on_card</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.channel_data">
+<code class="descname">channel_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.channel_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.channel_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="canlib/channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ChannelData</span></code></a> for this device’s first channel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.channel_number">
+<code class="descname">channel_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.channel_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.channel_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> with this device’s CANlib channel number</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.Device.ean">
+<code class="descname">ean</code><a class="headerlink" href="#canlib.Device.ean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="canlib.Device.find">
+<em class="property">classmethod </em><code class="descname">find</code><span class="sig-paren">(</span><em>channel_number=None</em>, <em>ean=None</em>, <em>serial=None</em>, <em>channel_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches for a specific device</p>
+<p>Goes through all CANlib channels (from zero and up), until one of them
+matches the given arguments. If an argument is omitted or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>, any
+device will match it. If no devices matches a
+<a class="reference internal" href="canlib/exceptions.html#canlib.canlib.CanNotFound" title="canlib.canlib.CanNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.CanNotFound</span></code></a> exception will be raised.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>channel_number</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Find a device on this CANlib channel (number).</li>
+<li><strong>ean</strong> (<a class="reference internal" href="ean.html#canlib.EAN" title="canlib.EAN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.EAN</span></code></a>) – Find a device with this EAN.</li>
+<li><strong>serial</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Find a device with this serial number.</li>
+<li><strong>channel_name</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Find a device with this CANlib channel name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.iocontrol">
+<code class="descname">iocontrol</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.iocontrol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.iocontrol" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="canlib/iocontrol.html#canlib.canlib.IOControl" title="canlib.canlib.IOControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.IOControl</span></code></a> for this device’s first channel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.isconnected">
+<code class="descname">isconnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.isconnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.isconnected" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> whether this device can currently be found</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.issubset">
+<code class="descname">issubset</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.issubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.issubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if device is a subset of other Device.</p>
+<p>This can be used to see if a found device fulfills criteria specified
+in other.  Setting an attribute to None is regarded as a Any. This
+means that e.g. any serial number will be a subset of a serial number
+specified as None.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.Device.last_channel_number">
+<code class="descname">last_channel_number</code><a class="headerlink" href="#canlib.Device.last_channel_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.lin_master">
+<code class="descname">lin_master</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.lin_master"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.lin_master" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="linlib/channel.html#canlib.linlib.Channel" title="canlib.linlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linlib.Channel</span></code></a> master for this device’s first channel</p>
+<p>Arguments to <a class="reference internal" href="linlib/channel.html#canlib.linlib.openMaster" title="canlib.linlib.openMaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linlib.openMaster</span></code></a> other than the channel number
+can be passed to this function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.lin_slave">
+<code class="descname">lin_slave</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.lin_slave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.lin_slave" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="linlib/channel.html#canlib.linlib.Channel" title="canlib.linlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linlib.Channel</span></code></a> slave for this device’s first channel</p>
+<p>Arguments to <a class="reference internal" href="linlib/channel.html#canlib.linlib.openSlave" title="canlib.linlib.openSlave"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linlib.openSlave</span></code></a> other than the channel number
+can be passed to this function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.memorator">
+<code class="descname">memorator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.memorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.memorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Memorator</span></code></a> for this device’s first channel</p>
+<p>Arguments to <a class="reference internal" href="canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.openChannel</span></code></a> other than the channel number
+can be passed to this function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.probe_info">
+<code class="descname">probe_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.probe_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.probe_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> with information about this device</p>
+<p>This function is useful when the <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a>’s <code class="xref py py-obj docutils literal notranslate"><span class="pre">str()</span></code> does not give
+enough information while debugging. When the device is connected
+various pieces of information such as the device name, firmware, and
+driver name is given. When the device is not connected only basic
+information can be given.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Never inspect the return value of this function, only use it for
+displaying information. Exactly what is shown depends on whether
+the device is connected or not, and is not guaranteed to stay
+consistent between versions.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.Device.remote">
+<code class="descname">remote</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#Device.remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.Device.remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="kvrlib/remotedevice.html#canlib.kvrlib.RemoteDevice" title="canlib.kvrlib.RemoteDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.RemoteDevice</span></code></a> for this device</p>
+<p>Arguments to <a class="reference internal" href="kvrlib/remotedevice.html#canlib.kvrlib.openDevice" title="canlib.kvrlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.openDevice</span></code></a> other than the channel number
+can be passed to this function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.Device.serial">
+<code class="descname">serial</code><a class="headerlink" href="#canlib.Device.serial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="connected-devices">
+<h2>connected_devices()<a class="headerlink" href="#connected-devices" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.connected_devices">
+<code class="descclassname">canlib.</code><code class="descname">connected_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/canlib/device.html#connected_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.connected_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all currently connected devices as <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a>s</p>
+<p>Returns an iterator of <a class="reference internal" href="#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a> object, one object for every physical
+device currently connected.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.7: </span><a class="reference internal" href="#canlib.Device.last_channel_number" title="canlib.Device.last_channel_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.last_channel_number</span></code></a> will now be set.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="frame.html" class="btn btn-neutral float-right" title="Frames" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ean.html" class="btn btn-neutral float-left" title="EAN" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

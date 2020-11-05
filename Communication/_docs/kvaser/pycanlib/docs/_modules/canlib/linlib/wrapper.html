@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.linlib.wrapper &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.linlib.wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.linlib.wrapper</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">dllLoader</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">..ean</span> <span class="k">import</span> <span class="n">EAN</span>
+<span class="kn">from</span> <span class="nn">.dll</span> <span class="k">import</span> <span class="n">LINLibDll</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ChannelData</span>
+
+
+<span class="n">_ct_dll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;linlib.dll&#39;</span><span class="p">,</span>
+                             <span class="n">linux_name</span><span class="o">=</span><span class="s1">&#39;liblinlib.so&#39;</span><span class="p">)</span>
+<span class="n">dll</span> <span class="o">=</span> <span class="n">LINLibDll</span><span class="p">(</span><span class="n">_ct_dll</span><span class="p">)</span>
+<span class="n">dll</span><span class="o">.</span><span class="n">linInitializeLibrary</span><span class="p">()</span>
+
+
+<span class="n">TransceiverData</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;TransceiverData&#39;</span><span class="p">,</span> <span class="s1">&#39;ean serial type&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="getChannelData"><a class="viewcode-back" href="../../../reference/linlib/wrapper.html#canlib.linlib.getChannelData">[docs]</a><span class="k">def</span> <span class="nf">getChannelData</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="n">ChannelData</span><span class="o">.</span><span class="n">CARD_FIRMWARE_REV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function can be used to retrieve certain pieces of information about a channel.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        You must pass a channel number and not a channel handle.</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        channel (int): The number of the channel you are interested in. Channel</span>
+<span class="sd">            numbers are integers in the interval beginning at 0.</span>
+
+<span class="sd">        item (linlib.ChannelData): This parameter specifies what data to obtain</span>
+<span class="sd">            for the specified channel. Currently the only item available is</span>
+<span class="sd">            `ChannelData.CARD_FIRMWARE_REV`, which is the default.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (major, minor, release, build) :: A four-tuple of the firmware</span>
+<span class="sd">            version. (For `ChannelData.CARD_FIRMWARE_REV`)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="n">ChannelData</span><span class="o">.</span><span class="n">CARD_FIRMWARE_REV</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;linlib.getChannelData only supports getting CARD_FIRMWARE_REV&quot;</span><span class="p">)</span>
+    <span class="c1"># buffer points to a 64-bit (8 bytes) area which receives the firmware</span>
+    <span class="c1"># revision number on the card. This number consists of four 16-bit words:</span>
+    <span class="c1"># the major revision, the minor revision, the release number and the build</span>
+    <span class="c1"># number, listed in order from the most significant to the least</span>
+    <span class="c1"># significant. qqqdaca</span>
+    <span class="n">buff</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">linGetChannelData</span><span class="p">(</span>
+        <span class="n">channel_number</span><span class="p">,</span>
+        <span class="n">item</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buff</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buff</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="c1"># Based on a similar function in the CANlib wrapper, the version number is</span>
+    <span class="c1"># unpacked with native byte order</span>
+    <span class="n">build</span><span class="p">,</span> <span class="n">release</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">major</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;HHHH&#39;</span><span class="p">,</span> <span class="n">buff</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+    <span class="c1"># We ignore the release number, because it&#39;s not used in canlib and ignored</span>
+    <span class="c1"># in the Device Guide</span>
+    <span class="k">return</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">build</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="getTransceiverData"><a class="viewcode-back" href="../../../reference/linlib/wrapper.html#canlib.linlib.getTransceiverData">[docs]</a><span class="k">def</span> <span class="nf">getTransceiverData</span><span class="p">(</span><span class="n">channel_number</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the transceiver information for a CAN channel</span>
+
+<span class="sd">    The application typically uses this call to find out whether a particular</span>
+<span class="sd">    CAN channel has a LIN interface connected to it. For a Kvaser LIN Leaf it</span>
+<span class="sd">    retrieves the transceiver type and device information.</span>
+
+<span class="sd">    This function call will open the CAN channel, but no CAN messages are</span>
+<span class="sd">    transmitted on it. In other words, it&#39;s risk-free to use even if no LIN</span>
+<span class="sd">    interface is connected, or if the channel is connected to a CAN system.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        Attempts to use the channel for LIN communication will be meaningful</span>
+<span class="sd">        only if the returned `TransceiverData`&#39;s ~type~ attribute is one of</span>
+<span class="sd">        `canlib.canlib.TransceiverType.LIN` or</span>
+<span class="sd">        `canlib.canlib.TransceiverType.CANFD_LIN`</span>
+
+<span class="sd">        A LIN interface need not be powered for this call to succeed.</span>
+
+<span class="sd">        The information may not always be accurate. Especially after changing</span>
+<span class="sd">        transceiver on a running LAPcan card, you should go on bus and off bus</span>
+<span class="sd">        again to be sure the transceiver information is updated.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ean</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">serial</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">ttype</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">linGetTransceiverData</span><span class="p">(</span>
+        <span class="n">channel_number</span><span class="p">,</span> <span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ttype</span><span class="p">))</span>
+
+    <span class="n">ean</span> <span class="o">=</span> <span class="n">EAN</span><span class="o">.</span><span class="n">from_bcd</span><span class="p">(</span><span class="n">ean</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">serial</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">serial</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="c1"># Python 2 doesn&#39;t have int.from_bytes</span>
+        <span class="n">serial</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">serial</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">ttype</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">TransceiverType</span><span class="p">(</span><span class="n">ttype</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">TransceiverData</span><span class="p">(</span><span class="n">ean</span><span class="o">=</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="n">serial</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ttype</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="initializeLibrary"><a class="viewcode-back" href="../../../reference/linlib/wrapper.html#canlib.linlib.initializeLibrary">[docs]</a><span class="k">def</span> <span class="nf">initializeLibrary</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Initialize LINlib</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        LINlib is automatically initialized when `canlib.linlib` is</span>
+<span class="sd">        imported. This function is only necessary when LINlib has been manually</span>
+<span class="sd">        unloaded with `unloadLibrary`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">linInitializeLibrary</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="unloadLibrary"><a class="viewcode-back" href="../../../reference/linlib/wrapper.html#canlib.linlib.unloadLibrary">[docs]</a><span class="k">def</span> <span class="nf">unloadLibrary</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Deinitialize LINlib</span>
+
+<span class="sd">    This function de-initializes the LIN library. After this function is called</span>
+<span class="sd">    `linInitializeLibrary` must be called before any other LIN function is</span>
+<span class="sd">    called.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">linUnloadLibrary</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="dllversion"><a class="viewcode-back" href="../../../reference/linlib/wrapper.html#canlib.linlib.dllversion">[docs]</a><span class="k">def</span> <span class="nf">dllversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve the LIN library version.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Requires CANlib v5.3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">major</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">minor</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">build</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">linGetVersion</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">major</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">minor</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">build</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">major</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">minor</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">build</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

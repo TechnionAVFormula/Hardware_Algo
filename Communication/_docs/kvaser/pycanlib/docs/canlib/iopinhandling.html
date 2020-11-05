@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>I/O Pin Handling &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Using Threads" href="usingthreads.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devicesandchannels.html">Devices and Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openchannel.html">Open Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sendandreceive.html">Send and Receive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buserrors.html">Bus Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">I/O Pin Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initialize">Initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pin-information">Pin Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-o-pin-types">I/O pin types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analog-pins">Analog Pins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#digital-pins">Digital Pins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#relay-pins">Relay Pins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>I/O Pin Handling</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/iopinhandling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="i-o-pin-handling">
+<h1>I/O Pin Handling<a class="headerlink" href="#i-o-pin-handling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="initialize">
+<h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
+<p>Some Kvaser products feature I/O pins that can be used in real-time
+applications using a part of the API dedicated to I/O Pin Handling. This API is
+initialized by confirming the I/O pin configuration, see
+kvIoConfirmConfig. Before the configuration is confirmed the user can only
+retrieve information about the pins.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">Device</span>
+<span class="gp">... </span><span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">serial</span><span class="o">=</span><span class="mi">66666</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">channel</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">channel_number</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">config</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">iopin</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">ch</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="mi">86</span><span class="p">)</span><span class="o">.</span><span class="n">pin_type</span>
+<span class="go">&lt;PinType.ANALOG: 2&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">pin</span><span class="p">)</span>
+<span class="go">Pin 0: &lt;PinType.DIGITAL: 1&gt; &lt;Direction.OUT: 8&gt; bits=1 range=0.0-24.0 (&lt;ModuleType.DIGITAL: 1&gt;)</span>
+<span class="go">Pin 1: &lt;PinType.DIGITAL: 1&gt; &lt;Direction.OUT: 8&gt; bits=1 range=0.0-24.0 (&lt;ModuleType.DIGITAL: 1&gt;)</span>
+<span class="go"> :</span>
+<span class="go">Pin 31: &lt;PinType.DIGITAL: 1&gt; &lt;Direction.IN: 4&gt; bits=1 range=0.0-24.0 HL_filter=5000 LH_filter=5000 (&lt;ModuleType.DIGITAL: 1&gt;)</span>
+</pre></div>
+</div>
+<p>After the configuration has been confirmed the user may set or read any values
+of the I/O pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">confirm</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pin-information">
+<h2>Pin Information<a class="headerlink" href="#pin-information" title="Permalink to this headline">¶</a></h2>
+<p>Pins are identified by their pin number, which is a number from zero up to, but
+not including, the value returned by <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.number_of_io_pins" title="canlib.canlib.Channel.number_of_io_pins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.number_of_io_pins</span></code></a>. Using
+the pin number, the specific properties of any pin is retrieved and set using
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin" title="canlib.canlib.iopin.IoPin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.iopin.IoPin</span></code></a>.</p>
+</div>
+<div class="section" id="i-o-pin-types">
+<h2>I/O pin types<a class="headerlink" href="#i-o-pin-types" title="Permalink to this headline">¶</a></h2>
+<p>There are currently three types of pins that is supported by the API dedicated
+to I/O Pin Handling. These include analog, digital and relay pins. To learn
+what pin type a given pin is, use <a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.pin_type" title="canlib.canlib.iopin.IoPin.pin_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.iopin.IoPin.pin_type</span></code></a>. See
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.PinType" title="canlib.canlib.iopin.PinType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.iopin.PinType</span></code></a> to see all supported types.</p>
+<div class="section" id="analog-pins">
+<h3>Analog Pins<a class="headerlink" href="#analog-pins" title="Permalink to this headline">¶</a></h3>
+<p>The analog pins are represented by multiple bits, the number of bits can be
+retrieved by calling <a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.number_of_bits" title="canlib.canlib.iopin.IoPin.number_of_bits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.iopin.IoPin.number_of_bits</span></code></a>. The value of an
+analog pin is within in the interval given by <a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.range_min" title="canlib.canlib.iopin.IoPin.range_min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">range_min</span></code></a>
+and <a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.range_min" title="canlib.canlib.iopin.IoPin.range_min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">range_min</span></code></a>. The analog input pin has two configurable
+properties, namely the low pass filter order and the hysteresis. See
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.AnalogIn.lp_filter_order" title="canlib.canlib.iopin.AnalogIn.lp_filter_order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lp_filter_order</span></code></a> and
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.AnalogIn.hysteresis" title="canlib.canlib.iopin.AnalogIn.hysteresis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hysteresis</span></code></a>. Pins are read and set using
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.value" title="canlib.canlib.iopin.IoPin.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>. When reading an output, the latest value set is
+retrieved.</p>
+</div>
+<div class="section" id="digital-pins">
+<h3>Digital Pins<a class="headerlink" href="#digital-pins" title="Permalink to this headline">¶</a></h3>
+<p>The digital pins have two configurable properties, namely the low-to-high and
+the high-to-low filter time. See <a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.DigitalIn.high_low_filter" title="canlib.canlib.iopin.DigitalIn.high_low_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.iopin.DigitalIn.high_low_filter</span></code></a> and
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.DigitalIn.low_high_filter" title="canlib.canlib.iopin.DigitalIn.low_high_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">low_high_filter</span></code></a>. Pins are read and set using
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.value" title="canlib.canlib.iopin.IoPin.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>. When reading an output, the latest value set is
+retrieved.</p>
+</div>
+<div class="section" id="relay-pins">
+<h3>Relay Pins<a class="headerlink" href="#relay-pins" title="Permalink to this headline">¶</a></h3>
+<p>The relay pins have no configurable properties. All of these pins are
+considered as outputs. Pins are set and read using
+<a class="reference internal" href="../reference/canlib/iopin.html#canlib.canlib.iopin.IoPin.value" title="canlib.canlib.iopin.IoPin.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usingthreads.html" class="btn btn-neutral float-left" title="Using Threads" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

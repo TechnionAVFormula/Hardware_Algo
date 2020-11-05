@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvadblib.dbc &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvadblib.dbc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvadblib.dbc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Wrapper for Kvaser Database API (kvaDbLib).  For more info, see the kvaDbLib</span>
+<span class="sd">   help files which are availible in the CANlib SDK.</span>
+<span class="sd">   https://www.kvaser.com/developer/canlib-sdk/</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">.message</span> <span class="k">import</span> <span class="n">Message</span>
+<span class="kn">from</span> <span class="nn">.node</span> <span class="k">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">.attribute</span> <span class="k">import</span> <span class="n">Attribute</span>
+<span class="kn">from</span> <span class="nn">.attributedef</span> <span class="k">import</span> <span class="n">AttributeDefinition</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span><span class="p">,</span> <span class="n">get_last_parse_error</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">AttributeOwner</span><span class="p">,</span> <span class="n">ProtocolType</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvdNoMessage</span><span class="p">,</span> <span class="n">KvdNoNode</span><span class="p">,</span> <span class="n">KvdNoAttribute</span><span class="p">,</span> <span class="n">KvdOnlyOneAllowed</span><span class="p">,</span> <span class="n">KvdWrongOwner</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvdDbFileParse</span>
+
+<span class="n">DATABASE_FLAG_J1939</span> <span class="o">=</span> <span class="mh">0x0001</span>
+
+
+<div class="viewcode-block" id="Dbc"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc">[docs]</a><span class="k">class</span> <span class="nc">Dbc</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Holds a dbc database.</span>
+
+
+<span class="sd">    There are three ways to create a database:</span>
+
+<span class="sd">    1. To load data from an existing database file, only set filename to</span>
+<span class="sd">       the database filename.</span>
+
+<span class="sd">    2. To add an empty database, set only name.</span>
+
+<span class="sd">    3. To load data from an existing database file and give it a new name, set</span>
+<span class="sd">       name to the new name and filename to the existing database filename.</span>
+
+<span class="sd">    Either a name or a filename must be given.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str, optional): The existing database file is read.</span>
+<span class="sd">        name (str, optional): The database name will be set.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        KvdDbFileParse: If the database file can&#39;t be parsed.</span>
+
+<span class="sd">    When parsing a database file fails, `get_last_parse_error` can be called::</span>
+
+<span class="sd">            try:</span>
+<span class="sd">                kvadblib.Dbc(filename=&quot;database.dbc&quot;)</span>
+<span class="sd">            except kvadblib.KvdDbFileParse:</span>
+<span class="sd">                print(kvadblib.get_last_parse_error())</span>
+
+
+<span class="sd">    .. versionchanged:: 1.10</span>
+<span class="sd">    </span>
+<span class="sd">        `Dbc` now raises specific errors depending on the situation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Either a name or filename must to be given.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbOpen</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">handle</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">handle</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbCreate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvdDbFileParse</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">get_last_parse_error</span><span class="p">())</span>
+            <span class="k">raise</span>
+
+        <span class="c1"># set default protocol to CAN</span>
+        <span class="k">if</span> <span class="n">protocol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">protocol</span>
+        <span class="k">if</span> <span class="n">protocol</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">==</span> <span class="n">ProtocolType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">ProtocolType</span><span class="o">.</span><span class="n">CAN</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator of all normal database messages.</span>
+
+<span class="sd">            Equivalent to Dbc.messages(show_all=False).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">(</span><span class="n">show_all</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns number of messages in database.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Dbc </span><span class="si">{}</span><span class="s2">: flags:</span><span class="si">{}</span><span class="s2">, protocol:</span><span class="si">{}</span><span class="s2">, messages:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span>
+                <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="Dbc.attribute_definitions"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.attribute_definitions">[docs]</a>    <span class="k">def</span> <span class="nf">attribute_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator over all database attribute definitions.&quot;&quot;&quot;</span>
+        <span class="n">adh</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">nadh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstAttributeDefinition</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nadh</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">nadh</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">adh</span><span class="p">,</span> <span class="n">nadh</span> <span class="o">=</span> <span class="n">nadh</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">AttributeDefinition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adh</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextAttributeDefinition</span><span class="p">(</span>
+                    <span class="n">adh</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nadh</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Dbc.attributes"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator over all database attributes.</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">nah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">nah</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ah</span><span class="p">,</span> <span class="n">nah</span> <span class="o">=</span> <span class="n">nah</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextAttribute</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nah</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+                <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Dbc.close"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close an open database handle.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.delete_attribute"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.delete_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">delete_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete attribute from database.</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetAttributeByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.delete_attribute_definition"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.delete_attribute_definition">[docs]</a>    <span class="k">def</span> <span class="nf">delete_attribute_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete attribute definition from database.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetAttributeDefinitionByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">adh</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteAttributeDefinition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">adh</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.delete_message"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.delete_message">[docs]</a>    <span class="k">def</span> <span class="nf">delete_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete message from database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (:obj:`Message`): message to be deleted</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteMsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.delete_node"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.delete_node">[docs]</a>    <span class="k">def</span> <span class="nf">delete_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete node from database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (:obj:`Node`): node to be deleted</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.get_attribute_definition_by_name"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_attribute_definition_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_attribute_definition_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find attribute definition using name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): name of attribute definition</span>
+
+<span class="sd">        Returns an attribute definition object depending on type, e.g. if the</span>
+<span class="sd">        type is AttributeType.INTEGER, an :obj:`IntegerAttributeDefinition` is</span>
+<span class="sd">        returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetAttributeDefinitionByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">adh</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">AttributeDefinition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adh</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.get_attribute_value"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_attribute_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_attribute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return attribute value</span>
+
+<span class="sd">        If the attribute is not set on the database, we return the attribute</span>
+<span class="sd">        definition default value.</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+
+        <span class="c1"># Try and find attribute on message</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetAttributeByName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="c1"># Lookup the attribute definition</span>
+            <span class="n">atr_def</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_definition_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="c1"># only attributes with database as owner are valid, name is also</span>
+            <span class="c1"># unique accross all attributes so it is enough to check this one</span>
+            <span class="c1"># for owner</span>
+            <span class="k">if</span> <span class="n">atr_def</span><span class="o">.</span><span class="n">owner</span> <span class="o">!=</span> <span class="n">AttributeOwner</span><span class="o">.</span><span class="n">DB</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">KvdWrongOwner</span><span class="p">()</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">atr_def</span><span class="o">.</span><span class="n">definition</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attribute</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="Dbc.get_message"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find message by id or name</span>
+
+<span class="sd">        If both id and name is given, both most match.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id (str): message id to look for</span>
+<span class="sd">            name (str): message name to look for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Message`</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            KvdNoMessage: If no match was found, or if none of `id` and</span>
+<span class="sd">                `name` were given.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="c1"># Both arguments were given</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_message_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="c1"># attempts to search both for messages with and without EXT flag</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">message</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">KvdNoMessage</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_message_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_message_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.get_message_by_id"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_message_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_message_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find message by id</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id (str): message id to look for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Message`</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            KvdNoMessage: If no match was found.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgById</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mh</span><span class="p">))</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="o">=</span><span class="n">mh</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">message</span></div>
+
+<div class="viewcode-block" id="Dbc.get_message_by_name"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_message_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_message_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find message by name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): message name to look for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Message`</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            KvdNoMessage: If no match was found.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mh</span><span class="p">))</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mh</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">message</span></div>
+
+<div class="viewcode-block" id="Dbc.get_node_by_name"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.get_node_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find node by name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): node name to look for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Node`</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            KvdNoNode: If no match was found.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNodeByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.messages"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.messages">[docs]</a>    <span class="k">def</span> <span class="nf">messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator of all database messages.</span>
+
+<span class="sd">        If you would like to omit the special message</span>
+<span class="sd">        &#39;VECTOR__INDEPENDENT_SIG_MSG&#39;, which is used to collect removed signals</span>
+<span class="sd">        under, set show_all to False or use the Dbc iterator directly::</span>
+
+<span class="sd">            db = kvadblib.Dbc(filename=&#39;mydb.dbc&#39;)</span>
+<span class="sd">            for message in db:</span>
+<span class="sd">                print(msg)</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            show_all (`bool`): If true, all messages, including any special</span>
+<span class="sd">                message such as &#39;VECTOR__INDEPENDENT_SIG_MSG&#39; will be returned</span>
+
+<span class="sd">        .. versionchanged:: 1.8</span>
+<span class="sd">           Added argument show_all.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstMsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mh</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoMessage</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">mh</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mh</span><span class="p">)</span>
+            <span class="c1"># The special message name VECTOR__INDEPENDENT_SIG_MSG is used in</span>
+            <span class="c1"># .dbc files to collect unused signals into</span>
+            <span class="c1"># Only return special message if show_all is True</span>
+            <span class="k">if</span> <span class="n">show_all</span> <span class="ow">or</span> <span class="n">msg</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;VECTOR__INDEPENDENT_SIG_MSG&#39;</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">msg</span>
+            <span class="n">mh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextMsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mh</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvdNoMessage</span><span class="p">:</span>
+                <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Dbc.interpret"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.interpret">[docs]</a>    <span class="k">def</span> <span class="nf">interpret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Interprets a given Frame object, returning a BoundMessage&quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_message_by_id</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dbc.new_attribute_definition"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.new_attribute_definition">[docs]</a>    <span class="k">def</span> <span class="nf">new_attribute_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">definition</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new attribute definition in the database.</span>
+
+<span class="sd">        The owner specify where the attribute is applicable,</span>
+<span class="sd">        e.g. :obj:`AttributeOwner.MESSAGE` specifies that this attribute is</span>
+<span class="sd">        only applicable on messages (:obj:`Message`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): a unique name.</span>
+<span class="sd">            owner (:obj:`AttributeOwner`): the owner type</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`AttributeDefinition`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddAttributeDefinition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">adh</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetAttributeDefinitionType</span><span class="p">(</span><span class="n">adh</span><span class="p">,</span> <span class="nb">type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetAttributeDefinitionName</span><span class="p">(</span><span class="n">adh</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetAttributeDefinitionOwner</span><span class="p">(</span><span class="n">adh</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
+
+        <span class="n">atr_def</span> <span class="o">=</span> <span class="n">AttributeDefinition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adh</span><span class="p">,</span> <span class="n">definition</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">atr_def</span></div>
+
+<div class="viewcode-block" id="Dbc.new_message"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.new_message">[docs]</a>    <span class="k">def</span> <span class="nf">new_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new message in the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): name of message</span>
+<span class="sd">            id (int): message id</span>
+<span class="sd">            flags (int, optional): message flags, e.g. `kvadblib.MessageFlag.EXT`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`canlib.kvadblib.message.Message`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddMsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mh</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mh</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">comment</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvdOnlyOneAllowed</span><span class="p">:</span>
+            <span class="c1"># If KvdOnlyOneAllowed is thrown, the message was created but not</span>
+            <span class="c1"># named properly, in which case we need to delete the message</span>
+            <span class="c1"># before calling the users attention</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteMsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">mh</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">return</span> <span class="n">message</span></div>
+
+<div class="viewcode-block" id="Dbc.new_node"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.new_node">[docs]</a>    <span class="k">def</span> <span class="nf">new_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new node in the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): name of message</span>
+<span class="sd">            comment (str, optional): message comment</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Node`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">comment</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvdOnlyOneAllowed</span><span class="p">:</span>
+            <span class="c1"># If KvdOnlyOneAllowed is thrown, the node was created but not</span>
+            <span class="c1"># named properly, in which case we need to delete the node</span>
+            <span class="c1"># before calling the users attention</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="Dbc.node_in_signal"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.node_in_signal">[docs]</a>    <span class="k">def</span> <span class="nf">node_in_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if signal has been added to node.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True:  signals contains node</span>
+<span class="sd">            False: otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSignalContainsReceiveNode</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvdNoNode</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Dbc.nodes"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.nodes">[docs]</a>    <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator containing all database nodes.&quot;&quot;&quot;</span>
+        <span class="n">nh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoNode</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">nh</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span>
+            <span class="n">nh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvdNoNode</span><span class="p">:</span>
+                <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Dbc.set_attribute_value"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.set_attribute_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_attribute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set value of attribute *name* on database.</span>
+
+<span class="sd">        If no attribute called *name* is set on database, attach a database</span>
+<span class="sd">        attribute from the database attribute definition first.</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+
+        <span class="c1"># Try and find attribute on database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetAttributeByName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="c1"># If no attribute was found, lookup the attribute definition and</span>
+            <span class="c1"># add a new attribute to the message</span>
+            <span class="n">attrib_def</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_definition_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddAttribute</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">attrib_def</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="c1"># Set the value in the message attribute</span>
+        <span class="n">attribute</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+        <span class="n">attribute</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="Dbc.write_file"><a class="viewcode-back" href="../../../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.write_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a database to file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): file to write database to</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbWriteFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the database flags.</span>
+
+<span class="sd">        E.g. DATABASE_FLAG_J1939</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFlags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">flags</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">flags</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@flags</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the database flags.</span>
+
+<span class="sd">        E.g. DATABASE_FLAG_J1939</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetFlags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The current database name (read-only)&quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetDatabaseName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`ProtocolType`: The database protocol&quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetProtocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ProtocolType</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@protocol</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetProtocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

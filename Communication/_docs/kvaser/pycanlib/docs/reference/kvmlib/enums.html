@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enumerations &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Events" href="events.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvmlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Enumerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#device">Device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error">Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filetype">FileType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loggerdataformat">LoggerDataFormat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logfiletype">LogFileType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log.html">Log files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kme.html">kme files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kmf.html">kmf files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="memorator.html">Memorator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvmlib</a> &raquo;</li>
+        
+      <li>Enumerations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvmlib/enums.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="enumerations">
+<h1>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="device">
+<h2>Device<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.Device">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.</code><code class="descname">Device</code><a class="reference internal" href="../../_modules/canlib/kvmlib/enums.html#Device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvmDEVICE_xxx</p>
+<p>Device type, used to connect to a Memorator device.</p>
+<dl class="attribute">
+<dt id="canlib.kvmlib.Device.MHYDRA">
+<code class="descname">MHYDRA</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.kvmlib.Device.MHYDRA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Device.MHYDRA_EXT">
+<code class="descname">MHYDRA_EXT</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.kvmlib.Device.MHYDRA_EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="error">
+<h2>Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.Error">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.</code><code class="descname">Error</code><a class="reference internal" href="../../_modules/canlib/kvmlib/enums.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.Error" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvmlib.Error.CONFIG_ERROR">
+<code class="descname">CONFIG_ERROR</code><em class="property"> = -41</em><a class="headerlink" href="#canlib.kvmlib.Error.CONFIG_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.CRC_ERROR">
+<code class="descname">CRC_ERROR</code><em class="property"> = -21</em><a class="headerlink" href="#canlib.kvmlib.Error.CRC_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.DEVICE_COMM_ERROR">
+<code class="descname">DEVICE_COMM_ERROR</code><em class="property"> = -37</em><a class="headerlink" href="#canlib.kvmlib.Error.DEVICE_COMM_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.DISKFULL_DATA">
+<code class="descname">DISKFULL_DATA</code><em class="property"> = -26</em><a class="headerlink" href="#canlib.kvmlib.Error.DISKFULL_DATA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.DISKFULL_DIR">
+<code class="descname">DISKFULL_DIR</code><em class="property"> = -25</em><a class="headerlink" href="#canlib.kvmlib.Error.DISKFULL_DIR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.DISK_ERROR">
+<code class="descname">DISK_ERROR</code><em class="property"> = -24</em><a class="headerlink" href="#canlib.kvmlib.Error.DISK_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.EOF">
+<code class="descname">EOF</code><em class="property"> = -12</em><a class="headerlink" href="#canlib.kvmlib.Error.EOF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FAIL">
+<code class="descname">FAIL</code><em class="property"> = -1</em><a class="headerlink" href="#canlib.kvmlib.Error.FAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FATAL_ERROR">
+<code class="descname">FATAL_ERROR</code><em class="property"> = -31</em><a class="headerlink" href="#canlib.kvmlib.Error.FATAL_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FILE_ERROR">
+<code class="descname">FILE_ERROR</code><em class="property"> = -23</em><a class="headerlink" href="#canlib.kvmlib.Error.FILE_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FILE_NOT_FOUND">
+<code class="descname">FILE_NOT_FOUND</code><em class="property"> = -33</em><a class="headerlink" href="#canlib.kvmlib.Error.FILE_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FILE_SYSTEM_CORRUPT">
+<code class="descname">FILE_SYSTEM_CORRUPT</code><em class="property"> = -28</em><a class="headerlink" href="#canlib.kvmlib.Error.FILE_SYSTEM_CORRUPT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.FIRMWARE">
+<code class="descname">FIRMWARE</code><em class="property"> = -40</em><a class="headerlink" href="#canlib.kvmlib.Error.FIRMWARE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.ILLEGAL_REQUEST">
+<code class="descname">ILLEGAL_REQUEST</code><em class="property"> = -32</em><a class="headerlink" href="#canlib.kvmlib.Error.ILLEGAL_REQUEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.LOGFILEOPEN">
+<code class="descname">LOGFILEOPEN</code><em class="property"> = -8</em><a class="headerlink" href="#canlib.kvmlib.Error.LOGFILEOPEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.LOGFILEREAD">
+<code class="descname">LOGFILEREAD</code><em class="property"> = -14</em><a class="headerlink" href="#canlib.kvmlib.Error.LOGFILEREAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.LOGFILEWRITE">
+<code class="descname">LOGFILEWRITE</code><em class="property"> = -11</em><a class="headerlink" href="#canlib.kvmlib.Error.LOGFILEWRITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.NOLOGMSG">
+<code class="descname">NOLOGMSG</code><em class="property"> = -10</em><a class="headerlink" href="#canlib.kvmlib.Error.NOLOGMSG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.NOSTARTTIME">
+<code class="descname">NOSTARTTIME</code><em class="property"> = -9</em><a class="headerlink" href="#canlib.kvmlib.Error.NOSTARTTIME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.NOT_FORMATTED">
+<code class="descname">NOT_FORMATTED</code><em class="property"> = -34</em><a class="headerlink" href="#canlib.kvmlib.Error.NOT_FORMATTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.NOT_IMPLEMENTED">
+<code class="descname">NOT_IMPLEMENTED</code><em class="property"> = -30</em><a class="headerlink" href="#canlib.kvmlib.Error.NOT_IMPLEMENTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.NO_DISK">
+<code class="descname">NO_DISK</code><em class="property"> = -13</em><a class="headerlink" href="#canlib.kvmlib.Error.NO_DISK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.OCCUPIED">
+<code class="descname">OCCUPIED</code><em class="property"> = -38</em><a class="headerlink" href="#canlib.kvmlib.Error.OCCUPIED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.PARAM">
+<code class="descname">PARAM</code><em class="property"> = -3</em><a class="headerlink" href="#canlib.kvmlib.Error.PARAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.QUEUE_FULL">
+<code class="descname">QUEUE_FULL</code><em class="property"> = -20</em><a class="headerlink" href="#canlib.kvmlib.Error.QUEUE_FULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.RESULT_TOO_BIG">
+<code class="descname">RESULT_TOO_BIG</code><em class="property"> = -43</em><a class="headerlink" href="#canlib.kvmlib.Error.RESULT_TOO_BIG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.SECTOR_ERASED">
+<code class="descname">SECTOR_ERASED</code><em class="property"> = -22</em><a class="headerlink" href="#canlib.kvmlib.Error.SECTOR_ERASED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.SEQ_ERROR">
+<code class="descname">SEQ_ERROR</code><em class="property"> = -27</em><a class="headerlink" href="#canlib.kvmlib.Error.SEQ_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.TIMEOUT">
+<code class="descname">TIMEOUT</code><em class="property"> = -36</em><a class="headerlink" href="#canlib.kvmlib.Error.TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.UNSUPPORTED_VERSION">
+<code class="descname">UNSUPPORTED_VERSION</code><em class="property"> = -29</em><a class="headerlink" href="#canlib.kvmlib.Error.UNSUPPORTED_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.USER_CANCEL">
+<code class="descname">USER_CANCEL</code><em class="property"> = -39</em><a class="headerlink" href="#canlib.kvmlib.Error.USER_CANCEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.WRITE_PROT">
+<code class="descname">WRITE_PROT</code><em class="property"> = -42</em><a class="headerlink" href="#canlib.kvmlib.Error.WRITE_PROT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.Error.WRONG_DISK_TYPE">
+<code class="descname">WRONG_DISK_TYPE</code><em class="property"> = -35</em><a class="headerlink" href="#canlib.kvmlib.Error.WRONG_DISK_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="filetype">
+<h2>FileType<a class="headerlink" href="#filetype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.FileType">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.</code><code class="descname">FileType</code><a class="reference internal" href="../../_modules/canlib/kvmlib/enums.html#FileType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.FileType" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvmFILE_xxx</p>
+<p>KME file type, a binary file format representing log data.</p>
+<dl class="attribute">
+<dt id="canlib.kvmlib.FileType.KME24">
+<code class="descname">KME24</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.kvmlib.FileType.KME24" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.FileType.KME25">
+<code class="descname">KME25</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.kvmlib.FileType.KME25" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.FileType.KME40">
+<code class="descname">KME40</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.kvmlib.FileType.KME40" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.FileType.KME50">
+<code class="descname">KME50</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.kvmlib.FileType.KME50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="loggerdataformat">
+<h2>LoggerDataFormat<a class="headerlink" href="#loggerdataformat" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.LoggerDataFormat">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.</code><code class="descname">LoggerDataFormat</code><a class="reference internal" href="../../_modules/canlib/kvmlib/enums.html#LoggerDataFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.LoggerDataFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvmLDF_MAJOR_xxx</p>
+<p>Logged data format (LDF) version.</p>
+<dl class="attribute">
+<dt id="canlib.kvmlib.LoggerDataFormat.MAJOR_CAN">
+<code class="descname">MAJOR_CAN</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.kvmlib.LoggerDataFormat.MAJOR_CAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.LoggerDataFormat.MAJOR_CAN64">
+<code class="descname">MAJOR_CAN64</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.kvmlib.LoggerDataFormat.MAJOR_CAN64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="logfiletype">
+<h2>LogFileType<a class="headerlink" href="#logfiletype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvmlib.enums.LogFileType">
+<em class="property">class </em><code class="descclassname">canlib.kvmlib.enums.</code><code class="descname">LogFileType</code><a class="reference internal" href="../../_modules/canlib/kvmlib/enums.html#LogFileType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvmlib.enums.LogFileType" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvmLogFileType_xxx</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.11.</span></p>
+</div>
+<dl class="attribute">
+<dt id="canlib.kvmlib.enums.LogFileType.ALL">
+<code class="descname">ALL</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.kvmlib.enums.LogFileType.ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvmlib.enums.LogFileType.ERR">
+<code class="descname">ERR</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.kvmlib.enums.LogFileType.ERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

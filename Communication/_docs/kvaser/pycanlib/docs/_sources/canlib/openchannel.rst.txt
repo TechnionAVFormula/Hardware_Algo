@@ -1,0 +1,140 @@
+Open Channel
+============
+
+Once we have imported `canlib.canlib` to enumerate the connected Kvaser CAN
+devices, the next call is likely to be a call to `~canlib.canlib.openChannel`,
+which returns a `~canlib.canlib.Channel` object for the specific CAN
+circuit. This object is then used for subsequent calls to the library. The
+`~canlib.canlib.openChannel` function's first argument is the number of the
+desired channel, the second argument is modifier flags `canlib.canlib.Open`.
+
+`~canlib.canlib.openChannel` may raise several different exceptions, one of
+which is `~canlib.canlib.CanNotFound`. This means that the channel specified in
+the first parameter was not found, or that the flags passed to
+`~canlib.canlib.openChannel` is not applicable to the specified channel.
+
+
+Open as CAN
+-----------
+
+No special `canlib.canlib.Open` modifier flag is needed in the flags argument to `~canlib.canlib.openChannel` when opening a channel in CAN mode.
+
+    >>> from canlib import canlib
+    >>> canlib.openChannel(channel=0, flags=canlib.Open.EXCLUSIVE)
+    <canlib.canlib.channel.Channel object at 0x0000015B787EDA90>
+
+
+Open as CAN FD
+--------------
+
+To open a channel in CAN FD mode, either `~canlib.canlib.Open.CAN_FD` or
+`~canlib.canlib.Open.CAN_FD_NONISO` needs to be given in the flags argument to
+`~canlib.canlib.openChannel`.
+
+This example opens channel 0 in CAN FD mode for exclusive usage by this application::
+
+    >>> from canlib import canlib
+    >>> ch = canlib.openChannel(
+    ...     channel=0,
+    ...     flags=canlib.Open.CAN_FD | canlib.Open.EXCLUSIVE,
+    ... )
+    >>> ch.close()
+
+
+Close Channel
+-------------
+
+Closing a channel is done using `~canlib.canlib.Channel.close`. If no other
+handles are referencing the same CANlib channel, the channel is taken off
+bus.
+
+The CAN channel can also be opened and closed using a context manager::
+
+    >>> from canlib import canlib
+    >>> with canlib.openChannel(channel=1) as ch:
+    ...     ...
+
+
+Set CAN Bitrate
+---------------
+
+Use `~canlib.canlib.Channel.setBusParams` to set the CAN bus parameters. The bus parameters include the bit rate, the position of the sampling point etc, they are also described in most CAN controller data sheets. CANlib provides a few default set of parameters for the most common bus speeds through the `canlib.canlib.canBITRATE_xxx` constants.
+
+To set the bus speed to 500 kbit/s::
+
+    >>> from canlib import canlib
+    >>> ch = canlib.openChannel(channel=1)
+    >>> ch.setBusParams(canlib.canBITRATE_500K)
+    >>> ch.close()
+
+The predefined bit rates may also be set directly in the call to `~canlib.canlib.openChannel`::
+
+    >>> ch = canlib.openChannel(channel=1, bitrate=canlib.canBITRATE_500K)
+
+To set a bit rate that is not predefined, you have to calculate the appropriate
+bus parameters yourself.
+
+Set the speed to 125 kbit/s, each bit comprising 8 (= 1 + 4 + 3) quanta, the
+sampling point occurs at 5/8 of a bit; SJW = 1; one sampling point::
+
+   >>> ch.setBusParams(freq=125000, tseg1=4, tseg2=3, sjw=1, noSamp=1)
+
+
+Set the speed to 111111 kbit/s, the sampling point to 75%, the SJW to 2 and the
+number of samples to 1::
+
+   >>> ch.setBusParams(freq=111111, tseg1=5, tseg2=2, sjw=2, noSamp=1)
+
+If you do not set a bus speed, a default of 500 kbit/s will be used.
+
+
+Set CAN FD Bitrate
+------------------
+
+In CAN FD we need to set both the arbitration/nominal bitrate, using
+`~canlib.canlib.Channel.setBusParams`, and the data phase bitrate, using
+`~canlib.canlib.Channel.setBusParams`. CANlib provides a few default set of
+parameters for the most common CAN FD bus speeds through the
+`canlib.canlib.canFD_BITRATE_xxx` constants.
+
+Set the nominal bitrate to 500 kbit/s, with sampling point at 80% and the data phase bitrate to 1000 kbit/s, with sampling point at 80%::
+
+    >>> with canlib.openChannel(channel=1, flags=canlib.Open.CAN_FD) as ch:
+    ...     ch.setBusParams(canlib.canBITRATE_500K)
+    ...     ch.setBusParamsFd(canlib.canFD_BITRATE_1M_80P)
+    ...     ...
+
+
+The predefined bit rates may also be set directly in the call to `~canlib.canlib.openChannel`::
+
+    >>> ch = canlib.openChannel(
+    ...     channel=1,
+    ...     flags=canlib.Open.CAN_FD,
+    ...     bitrate=canlib.canBITRATE_500K,
+    ...     data_bitrate=canlib.canFD_BITRATE_1M_80P,
+    ... )
+
+For more copmplex settings of CAN FD bitrates, use the `Bit Timing Calculator
+for CAN FD
+<https://www.kvaser.com/support/calculators/can-fd-bit-timing-calculator/>`_
+available on the Kvaser web site.
+
+.. _can-driver-modes:
+
+CAN Driver Modes
+----------------
+
+Use `~canlib.canlib.Channel.setBusOutputControl` to set the bus driver
+mode. This is usually set to `canlib.canlib.Driver.NORMAL` to obtain the
+standard push-pull type of driver. Some controllers also support
+`canlib.canlib.Driver.SILENT` which makes the controller receive only, not
+transmit anything, not even ACK bits. This might be handy for e.g. when
+listening to a CAN bus without interfering.
+
+
+    >>> from canlib import canlib
+    >>> with canlib.openChannel(channel=1) as ch:
+    ...     ch.setBusOutputControl(canlib.Driver.SILENT)
+    ...     ...
+
+`canlib.canlib.Driver.NORMAL` is set by default.

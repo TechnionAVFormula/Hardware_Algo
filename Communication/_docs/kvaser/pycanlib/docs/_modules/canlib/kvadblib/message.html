@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvadblib.message &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvadblib.message</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvadblib.message</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Wrapper for Kvaser Database API (kvaDbLib).&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..canlib</span> <span class="k">import</span> <span class="n">MessageFlag</span> <span class="k">as</span> <span class="n">CanMessageFlag</span>
+<span class="kn">from</span> <span class="nn">..frame</span> <span class="k">import</span> <span class="n">Frame</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">wrapper</span>
+<span class="kn">from</span> <span class="nn">.attribute</span> <span class="k">import</span> <span class="n">Attribute</span>
+<span class="kn">from</span> <span class="nn">.bound_message</span> <span class="k">import</span> <span class="n">BoundMessage</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">MessageFlag</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">AttributeOwner</span><span class="p">,</span> <span class="n">SignalByteOrder</span><span class="p">,</span> <span class="n">SignalMultiplexMode</span><span class="p">,</span> <span class="n">SignalType</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvdNoAttribute</span><span class="p">,</span> <span class="n">KvdWrongOwner</span><span class="p">,</span> <span class="n">KvdNoMessage</span><span class="p">,</span> <span class="n">KvdNoSignal</span>
+<span class="kn">from</span> <span class="nn">.node</span> <span class="k">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">.signal</span> <span class="k">import</span> <span class="n">EnumSignal</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">ValueScaling</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+
+<span class="k">def</span> <span class="nf">_signal_object</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Instantiate either a `Signal` or an `EnumSignal`</span>
+
+<span class="sd">    This function checks whether the signal pointed to by ``handle`` has any</span>
+<span class="sd">    enumeration values; if it does, an `EnumSignal` is created and</span>
+<span class="sd">    returned -- otherwise, a `Signal` is created and returned.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstEnumValue</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">EnumSignal</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Message"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message">[docs]</a><span class="k">class</span> <span class="nc">Message</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Database message, holds signals.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a message and optionally set name, id and/or flags.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_data</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>  <span class="c1"># for signal data</span>
+        <span class="c1"># We need to save a pointer to the database since the API does not have</span>
+        <span class="c1"># a way to get database handle from a message handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span>
+        <span class="k">if</span> <span class="n">dlc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span> <span class="o">=</span> <span class="n">dlc</span>
+        <span class="k">if</span> <span class="n">comment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="s1">&#39;comment dlc id flags name&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns number of signals in message.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Message(name=</span><span class="si">{!r}</span><span class="s2">, id=</span><span class="si">{!r}</span><span class="s2">, flags=</span><span class="si">{!r}</span><span class="s2">, dlc=</span><span class="si">{!r}</span><span class="s2">, comment=</span><span class="si">{!r}</span><span class="s2">)&quot;</span><span class="o">.</span>
+                <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Message.asframe"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.asframe">[docs]</a>    <span class="k">def</span> <span class="nf">asframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Frame object with empty data matching this message&quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">dlc_to_bytes</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># convert flags from kvaDbLib format to CANlib format</span>
+        <span class="n">can_flags</span> <span class="o">=</span> <span class="n">CanMessageFlag</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">MessageFlag</span><span class="o">.</span><span class="n">EXT</span><span class="p">:</span>
+            <span class="n">can_flags</span> <span class="o">|=</span> <span class="n">CanMessageFlag</span><span class="o">.</span><span class="n">EXT</span>
+        <span class="k">return</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">length</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">can_flags</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Message.attributes"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator over all message attributes.&quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">nah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstMsgAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">nah</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ah</span><span class="p">,</span> <span class="n">nah</span> <span class="o">=</span> <span class="n">nah</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextAttribute</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nah</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+                <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Message.bind"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.bind">[docs]</a>    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Bind this message to a frame</span>
+
+<span class="sd">        Creates a new BoundMessage object representing this message bound to</span>
+<span class="sd">        the given Frame object, or a new Frame object if `frame` is `None`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BoundMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">asframe</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Message.delete_attribute"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.delete_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">delete_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete attribute from message.&quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgAttributeByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteMsgAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Message.delete_signal"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.delete_signal">[docs]</a>    <span class="k">def</span> <span class="nf">delete_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete signal from message.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            signal (:obj:`Signal`): signal to be deleted</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbDeleteSignal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Message.get_attribute_value"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.get_attribute_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_attribute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return attribute value</span>
+
+<span class="sd">        If the attribute is not set on the message, we return the attribute</span>
+<span class="sd">        definition default value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+
+        <span class="c1"># Try and find attribute on message</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgAttributeByName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="c1"># Lookup the attribute definition</span>
+            <span class="n">atr_def</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">get_attribute_definition_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="c1"># only attributes with message as owner are valid, name is also</span>
+            <span class="c1"># unique accross all attributes so it is enough to check this one</span>
+            <span class="c1"># for owner</span>
+            <span class="k">if</span> <span class="n">atr_def</span><span class="o">.</span><span class="n">owner</span> <span class="o">!=</span> <span class="n">AttributeOwner</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">KvdWrongOwner</span><span class="p">()</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">atr_def</span><span class="o">.</span><span class="n">definition</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attribute</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="Message.get_signal"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.get_signal">[docs]</a>    <span class="k">def</span> <span class="nf">get_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find signal in message by name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_signal_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Message.get_signal_by_name"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.get_signal_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_signal_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find signal in message by name.&quot;&quot;&quot;</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetSignalByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sh</span><span class="p">))</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="n">_signal_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">signal</span></div>
+
+<div class="viewcode-block" id="Message.new_signal"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.new_signal">[docs]</a>    <span class="k">def</span> <span class="nf">new_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SignalType</span><span class="o">.</span><span class="n">UNSIGNED</span><span class="p">,</span>
+                   <span class="n">byte_order</span><span class="o">=</span><span class="n">SignalByteOrder</span><span class="o">.</span><span class="n">INTEL</span><span class="p">,</span>
+                   <span class="n">mode</span><span class="o">=</span><span class="n">SignalMultiplexMode</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">,</span>
+                   <span class="n">representation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">scaling</span><span class="o">=</span><span class="n">ValueScaling</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                   <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">enums</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;Create and add a new signal to the message.&quot;&quot;&quot;</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddSignal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sh</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">&gt;</span> <span class="n">SignalType</span><span class="o">.</span><span class="n">_ENUM_SEPARATOR</span><span class="p">:</span>
+            <span class="nb">type</span> <span class="o">-=</span> <span class="n">SignalType</span><span class="o">.</span><span class="n">_ENUM_SEPARATOR</span>
+            <span class="n">signal</span> <span class="o">=</span> <span class="n">EnumSignal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span>
+                                <span class="n">byte_order</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">scaling</span><span class="p">,</span> <span class="n">limits</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span>
+                                <span class="n">comment</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">enums</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">signal</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span>
+                            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span> <span class="n">byte_order</span><span class="o">=</span><span class="n">byte_order</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                            <span class="n">representation</span><span class="o">=</span><span class="n">representation</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+                            <span class="n">scaling</span><span class="o">=</span><span class="n">scaling</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="n">limits</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span>
+                            <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">signal</span></div>
+
+<div class="viewcode-block" id="Message.set_attribute_value"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.set_attribute_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_attribute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set value of attribute &#39;name&#39; on message.</span>
+
+<span class="sd">        If no attribute called &#39;name&#39; is set on message, attach a message</span>
+<span class="sd">        attribute from the database attribute definition first.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ah</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+
+        <span class="c1"># Try and find attribute on message</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgAttributeByName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">KvdNoAttribute</span><span class="p">:</span>
+            <span class="c1"># If no attribute was found, lookup the attribute definition and</span>
+            <span class="c1"># add a new attribute to the message</span>
+            <span class="n">attrib_def</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">get_attribute_definition_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbAddMsgAttribute</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">attrib_def</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ah</span><span class="p">))</span>
+        <span class="c1"># Set the value in the message attribute</span>
+        <span class="n">attribute</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="n">ah</span><span class="p">)</span>
+        <span class="n">attribute</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="Message.signals"><a class="viewcode-back" href="../../../reference/kvadblib/message.html#canlib.kvadblib.Message.signals">[docs]</a>    <span class="k">def</span> <span class="nf">signals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator of all signals in message.&quot;&quot;&quot;</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetFirstSignal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sh</span><span class="p">))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">KvdNoSignal</span><span class="p">,</span> <span class="n">KvdNoMessage</span><span class="p">):</span>
+            <span class="c1"># KvdNoMessage is reported with older (5.22?) dlls</span>
+            <span class="k">return</span>
+        <span class="k">while</span> <span class="n">sh</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">_signal_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">)</span>
+            <span class="n">sh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetNextSignal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sh</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">KvdNoSignal</span><span class="p">,</span> <span class="n">KvdNoMessage</span><span class="p">):</span>
+                <span class="c1"># KvdNoMessage is reported with older (5.22?) dlls</span>
+                <span class="k">return</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: Comment message&quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgComment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@comment</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgComment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dlc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`int`: The message dlc&quot;&quot;&quot;</span>
+        <span class="n">c_dlc</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgDlc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_dlc</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">c_dlc</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@dlc</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">dlc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dlc</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgDlc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">dlc</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`int`: The message identifier&quot;&quot;&quot;</span>
+        <span class="n">c_id</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgIdEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">c_id</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgIdEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`MessageFlag`: The message flags&quot;&quot;&quot;</span>
+        <span class="n">c_flags</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgFlags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">c_flags</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># There is no guarantee the flags from the dbc file will be valid</span>
+            <span class="c1"># MessageFlags</span>
+            <span class="k">return</span> <span class="n">MessageFlag</span><span class="p">(</span><span class="n">c_flags</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c_flags</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@flags</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the message flags.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgFlags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The message name&quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">qualified_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The qualified message name</span>
+
+<span class="sd">        Returns database and message names separated by a dot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgQualifiedName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">send_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`Node`: The send node for this message.&quot;&quot;&quot;</span>
+        <span class="n">nh</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbGetMsgSendNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span>
+
+    <span class="nd">@send_node</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">send_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaDbSetMsgSendNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">_handle</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

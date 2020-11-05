@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Devices and Channels &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Open Channel" href="openchannel.html" />
+    <link rel="prev" title="Initialization" href="initialization.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Devices and Channels</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#identifying-devices-and-channels">Identifying Devices and Channels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#channel-information">Channel Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customized-channel-name">Customized Channel Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-channels">Virtual Channels</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="openchannel.html">Open Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sendandreceive.html">Send and Receive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buserrors.html">Bus Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iopinhandling.html">I/O Pin Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>Devices and Channels</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/devicesandchannels.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="devices-and-channels">
+<h1>Devices and Channels<a class="headerlink" href="#devices-and-channels" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="identifying-devices-and-channels">
+<h2>Identifying Devices and Channels<a class="headerlink" href="#identifying-devices-and-channels" title="Permalink to this headline">¶</a></h2>
+<p>Once we have imported <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code> which enumerates the connected Kvaser CAN
+devices, we can call <a class="reference internal" href="../reference/canlib/wrapper.html#canlib.canlib.getNumberOfChannels" title="canlib.canlib.getNumberOfChannels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getNumberOfChannels</span></code></a> to get the number of
+enumerated channels in our system.</p>
+<p>This code snippet reads the number of enumerated channels found in the PC:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canlib</span><span class="o">.</span><span class="n">getNumberOfChannels</span><span class="p">()</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="channel-information">
+<h2>Channel Information<a class="headerlink" href="#channel-information" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="../reference/canlib/channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a> to obtain data for a specific channel, for
+example, the hardware type of the CAN interface.</p>
+<p>We can use <a class="reference internal" href="../reference/canlib/channeldata.html#canlib.canlib.ChannelData" title="canlib.canlib.ChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData</span></code></a> for the CANlib channel numbers 0, 1,
+2,…, n-1 (where n is the number returned by
+<a class="reference internal" href="../reference/canlib/wrapper.html#canlib.canlib.getNumberOfChannels" title="canlib.canlib.getNumberOfChannels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getNumberOfChannels</span></code></a>) to get information about that specific
+channel.</p>
+<p>To uniquely identify a device, we need to look at both the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData.card_upc_no</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData.card_serial_no</span></code>.</p>
+<p>The following code snippet loops through all known channels and prints the type
+of the CAN card they’re on.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="n">num_channels</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">getNumberOfChannels</span><span class="p">()</span>
+<span class="gp">... </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found </span><span class="si">%d</span><span class="s2"> channels&quot;</span> <span class="o">%</span> <span class="n">num_channels</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">chdata</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">. </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+<span class="gp">... </span>        <span class="n">channel</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">chdata</span><span class="o">.</span><span class="n">channel_name</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">chdata</span><span class="o">.</span><span class="n">card_upc_no</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">chdata</span><span class="o">.</span><span class="n">card_serial_no</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="go">Found 8 channels</span>
+<span class="go">0. Kvaser Leaf Light HS (channel 0) (73-30130-00241-8 / 1346)</span>
+<span class="go">1. Kvaser Memorator Pro 2xHS v2 (channel 0) (73-30130-00819-9 / 11573)</span>
+<span class="go">2. Kvaser Memorator Pro 2xHS v2 (channel 1) (73-30130-00819-9 / 11573)</span>
+<span class="go">3. Kvaser Leaf Pro HS v2 (channel 0) (73-30130-00843-4 / 10012)</span>
+<span class="go">4. Kvaser Hybrid 2xCAN/LIN (channel 0) (73-30130-00965-3 / 1100)</span>
+<span class="go">5. Kvaser Hybrid 2xCAN/LIN (channel 1) (73-30130-00965-3 / 1100)</span>
+<span class="go">6. Kvaser Virtual CAN Driver (channel 0) (00-00000-00000-0 / 0)</span>
+<span class="go">7. Kvaser Virtual CAN Driver (channel 1) (00-00000-00000-0 / 0)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="customized-channel-name">
+<h2>Customized Channel Name<a class="headerlink" href="#customized-channel-name" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to set the customized name returned by <code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelData.card_serial_no</span></code> on the device using Kvaser Device Guide by right clicking on the device channel and selecting “Edit Channel Name”</p>
+<div class="figure align-center" id="id1">
+<img alt="../_images/editchannelname.png" src="../_images/editchannelname.png" />
+<p class="caption"><span class="caption-text">Setting the device’s Channel Name from inside Kvaser Device Guide</span></p>
+</div>
+<p>Now we can read the customized name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chdata</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">channel_number</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chdata</span><span class="o">.</span><span class="n">custom_name</span>
+<span class="go">&#39;Red Channel&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtual-channels">
+<h2>Virtual Channels<a class="headerlink" href="#virtual-channels" title="Permalink to this headline">¶</a></h2>
+<p>CANlib supports virtual channels that you can use for development, test or
+demonstration purposes when you don’t have any hardware installed.</p>
+<p>To open a virtual channel, call <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.openChannel</span></code></a> with the
+appropriate channel number, and specify <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Open.ACCEPT_VIRTUAL" title="canlib.canlib.Open.ACCEPT_VIRTUAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ACCEPT_VIRTUAL</span></code></a> in the
+flags argument to canOpenChannel().</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="openchannel.html" class="btn btn-neutral float-right" title="Open Channel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="initialization.html" class="btn btn-neutral float-left" title="Initialization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

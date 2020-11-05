@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Miscellaneous &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="kvadblib" href="../kvadblib/index.html" />
+    <link rel="prev" title="Script Container" href="txe.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">canlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channeldata.html">ChannelData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="envvar.html">EnvVar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iocontrol.html">IOControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iopin.html">I/O pin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="txe.html">Script Container</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Miscellaneous</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bitratesetting">bitrateSetting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dllversion">dllversion()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geterrortext">getErrorText()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getnumberofchannels">getNumberOfChannels()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getversion">getVersion()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prodversion">prodversion()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reinitializelibrary">reinitializeLibrary()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scripttext">ScriptText</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#translatebaud">translateBaud()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unloadlibrary">unloadLibrary()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">canlib</a> &raquo;</li>
+        
+      <li>Miscellaneous</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/canlib/wrapper.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="miscellaneous">
+<h1>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bitratesetting">
+<h2>bitrateSetting<a class="headerlink" href="#bitratesetting" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.bitrateSetting">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">bitrateSetting</code><span class="sig-paren">(</span><em>freq=1000000</em>, <em>tseg1=4</em>, <em>tseg2=3</em>, <em>sjw=1</em>, <em>nosamp=1</em>, <em>syncMode=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#bitrateSetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.bitrateSetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that holds bitrate setting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>freq</strong> – Bitrate in bit/s.</li>
+<li><strong>tseg1</strong> – Number of quanta from (but not including) the Sync Segment to
+the sampling point.</li>
+<li><strong>tseg2</strong> – Number of quanta from the sampling point to the end of the bit.</li>
+<li><strong>sjw</strong> – The Synchronization Jump Width, can be 1,2,3, or 4.</li>
+<li><strong>nosamp</strong> – The number of sampling points, only 1 is supported.</li>
+<li><strong>syncMode</strong> – Unsupported and ignored.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dllversion">
+<h2>dllversion()<a class="headerlink" href="#dllversion" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.dllversion">
+<code class="descclassname">canlib.canlib.</code><code class="descname">dllversion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#dllversion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.dllversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CANlib DLL version number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">BetaVersionNumber</span></code> if the CANlib DLL is marked as beta
+(preview), otherwise returns <code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionNumber</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.6.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="geterrortext">
+<h2>getErrorText()<a class="headerlink" href="#geterrortext" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.getErrorText">
+<code class="descclassname">canlib.canlib.</code><code class="descname">getErrorText</code><span class="sig-paren">(</span><em>error_code</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#getErrorText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.getErrorText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return error text for supplied error_code</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getnumberofchannels">
+<h2>getNumberOfChannels()<a class="headerlink" href="#getnumberofchannels" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.getNumberOfChannels">
+<code class="descclassname">canlib.canlib.</code><code class="descname">getNumberOfChannels</code><span class="sig-paren">(</span><em>driver=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#getNumberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.getNumberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of available CAN channels.</p>
+<p>Returns the number of available CAN channels in the computer. The
+virtual channels are included in this number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>chanCount (int)</em> – Number of available CAN channels</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="getversion">
+<h2>getVersion()<a class="headerlink" href="#getversion" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.getVersion">
+<code class="descclassname">canlib.canlib.</code><code class="descname">getVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#getVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.getVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CANlib DLL version number as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.5: </span>Use <a class="reference internal" href="#canlib.canlib.dllversion" title="canlib.canlib.dllversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dllversion</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="prodversion">
+<h2>prodversion()<a class="headerlink" href="#prodversion" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.prodversion">
+<code class="descclassname">canlib.canlib.</code><code class="descname">prodversion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#prodversion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.prodversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CANlib Product version number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">BetaVersionNumber</span></code> if the CANlib driver/DLL is marked as beta
+(preview), otherwise returns <code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionNumber</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="reinitializelibrary">
+<h2>reinitializeLibrary()<a class="headerlink" href="#reinitializelibrary" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.reinitializeLibrary">
+<code class="descclassname">canlib.canlib.</code><code class="descname">reinitializeLibrary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#reinitializeLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.reinitializeLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reinitializes the CANlib driver.</p>
+<p>Convenience function that calls <a class="reference internal" href="#canlib.canlib.unloadLibrary" title="canlib.canlib.unloadLibrary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unloadLibrary</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">initializeLibrary</span></code>
+in succession.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="scripttext">
+<h2>ScriptText<a class="headerlink" href="#scripttext" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ScriptText">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ScriptText</code><a class="reference internal" href="../../_modules/canlib/canlib/channel.html#ScriptText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ScriptText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text returned by <a class="reference internal" href="channel.html#canlib.canlib.Channel.scriptGetText" title="canlib.canlib.Channel.scriptGetText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.scriptGetText</span></code></a></p>
+<p>Subclass of built-in <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, so it can be used just like a normal string.</p>
+<p>It also has the following attributes:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slot</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Which script-slot the text came from.</li>
+<li><strong>time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Timestamp of when the text was printed.</li>
+<li><strong>ScriptText.flags</strong> (<a class="reference internal" href="enums.html#canlib.canlib.Stat" title="canlib.canlib.Stat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Stat</span></code></a>) – Any flags associated with the text.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="translatebaud">
+<h2>translateBaud()<a class="headerlink" href="#translatebaud" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.translateBaud">
+<code class="descclassname">canlib.canlib.</code><code class="descname">translateBaud</code><span class="sig-paren">(</span><em>freq</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#translateBaud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.translateBaud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate bitrate constant</p>
+<p>This function translates the canBITRATE_xxx constants to their
+corresponding bus parameter values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>freq</strong> – Any of the predefined constants canBITRATE_xxx</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A bitrateSetting object containing the actual values of</dt>
+<dd>frequency, tseg1, tseg2 etc.</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="unloadlibrary">
+<h2>unloadLibrary()<a class="headerlink" href="#unloadlibrary" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.canlib.unloadLibrary">
+<code class="descclassname">canlib.canlib.</code><code class="descname">unloadLibrary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/wrapper.html#unloadLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.unloadLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload CANlib</p>
+<p>Unload canlib and release all internal handles.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Calling <a class="reference internal" href="#canlib.canlib.unloadLibrary" title="canlib.canlib.unloadLibrary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unloadLibrary</span></code></a> invalidates every canlib-object. Use at your
+own risk.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kvadblib/index.html" class="btn btn-neutral float-right" title="kvadblib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="txe.html" class="btn btn-neutral float-left" title="Script Container" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

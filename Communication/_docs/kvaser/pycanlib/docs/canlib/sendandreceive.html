@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Send and Receive &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bus Errors" href="buserrors.html" />
+    <link rel="prev" title="CAN Frames" href="canframes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devicesandchannels.html">Devices and Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openchannel.html">Open Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Send and Receive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bus-on-bus-off">Bus On / Bus Off</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reading-messages">Reading Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acceptance-filters">Acceptance Filters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#code-and-mask-format">Code and Mask Format</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sending-messages">Sending Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-extended-can-can-2-0b">Using Extended CAN (CAN 2.0B)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#object-buffers">Object Buffers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="buserrors.html">Bus Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iopinhandling.html">I/O Pin Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>Send and Receive</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/sendandreceive.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="send-and-receive">
+<h1>Send and Receive<a class="headerlink" href="#send-and-receive" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bus-on-bus-off">
+<h2>Bus On / Bus Off<a class="headerlink" href="#bus-on-bus-off" title="Permalink to this headline">¶</a></h2>
+<p>When the CAN controller is on bus, it is receiving messages and is sending
+acknowledge bits in response to all correctly received messages. A controller
+that is off bus is not taking part in the bus communication at all.</p>
+<p>When you have a <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a> object, use
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.busOn" title="canlib.canlib.Channel.busOn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">busOn</span></code></a> to go on bus and <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.busOff" title="canlib.canlib.Channel.busOff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">busOff</span></code></a>
+to go off bus.</p>
+<p>If you have multiple <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> objects to the same controller,
+the controller will go off bus when the last of the <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a>
+objects go off bus (i.e. all <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> objects must be off bus
+for the controller to be off bus). You can use
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.readStatus" title="canlib.canlib.Channel.readStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readStatus</span></code></a> and watch the flag
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Stat.BUS_OFF" title="canlib.canlib.Stat.BUS_OFF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BUS_OFF</span></code></a> to see if the controller has gone off
+bus.</p>
+<p>You can set a channel to silent mode by using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">SILENT</span></code> mode
+if you want it to be on-bus without interfering with the traffic in any way,
+see <a class="reference internal" href="openchannel.html#can-driver-modes"><span class="std std-ref">CAN Driver Modes</span></a>.</p>
+<p>This example opens a channel, takes it on-bus, then takes it off-bus and closes it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">... </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="o">...</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-messages">
+<h2>Reading Messages<a class="headerlink" href="#reading-messages" title="Permalink to this headline">¶</a></h2>
+<p>Incoming messages are placed in a queue in the driver. In most cases the
+hardware does message buffering as well. You can read the first message in the
+queue by calling <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>, which will raise the exception
+<a class="reference internal" href="../reference/canlib/exceptions.html#canlib.canlib.CanNoMsg" title="canlib.canlib.CanNoMsg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.CanNoMsg</span></code></a> if there was no message available.</p>
+<p>The <a class="reference internal" href="../reference/frame.html#canlib.Frame.flags" title="canlib.Frame.flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flags</span></code></a> attribute of the <a class="reference internal" href="../reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code></a> returned by
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> contains a combination of the
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag" title="canlib.canlib.MessageFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag</span></code></a> flags, including <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.FDF" title="canlib.canlib.MessageFlag.FDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FDF</span></code></a>,
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.BRS" title="canlib.canlib.MessageFlag.BRS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BRS</span></code></a>, and <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.ESI" title="canlib.canlib.MessageFlag.ESI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ESI</span></code></a> if the
+CAN FD protocol is enabled, and error flags such as
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.OVERRUN" title="canlib.canlib.MessageFlag.OVERRUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OVERRUN</span></code></a> which provides you with more information
+about the message; for example, a frame with a 29-bit identifier will have the
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.EXT" title="canlib.canlib.MessageFlag.EXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EXT</span></code></a> bit set, and a remote frame will have the
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.RTR" title="canlib.canlib.MessageFlag.RTR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RTR</span></code></a> bit set. Note that the flag argument is a
+combination of the <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag" title="canlib.canlib.MessageFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageFlag</span></code></a>, so more than one flag might be
+set.</p>
+<p>See <a class="reference internal" href="canframes.html#can-frames"><span class="std std-ref">CAN Frames</span></a> for more information.</p>
+<p>Sometimes it is desirable to have a peek into the more remote parts of the
+queue. Is there, for example, any message waiting that has a certain
+identifier?</p>
+<blockquote>
+<div><ul class="simple">
+<li>If you want to read just a message with a specified identifier, and throw
+all others away, you can call
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.readSpecificSkip" title="canlib.canlib.Channel.readSpecificSkip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readSpecificSkip</span></code></a>. This routine will return the
+first message with the specified identifier, discarding any other message
+in front of the desired one.</li>
+<li>If you want to wait until a message arrives (or a timeout occurs) and
+then read it, call <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> with a timeout.</li>
+<li>If you want to wait until there is at least one message in the queue with
+a certain identifier, but you don’t want to read it, call
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.readSyncSpecific" title="canlib.canlib.Channel.readSyncSpecific"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readSyncSpecific</span></code></a>.</li>
+</ul>
+</div></blockquote>
+<p>The following code fragment reads the next available CAN message, (using
+default bitrate 500 kbit/s):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">... </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">frame</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span>
+<span class="go">Frame(id=709, data=bytearray(b&#39;\xb5R&#39;), dlc=2, flags=&lt;MessageFlag.STD: 2&gt;, timestamp=3)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="acceptance-filters">
+<h2>Acceptance Filters<a class="headerlink" href="#acceptance-filters" title="Permalink to this headline">¶</a></h2>
+<p>You can set filters to reduce the number of received messages. CANlib supports
+setting of the hardware filters on the CAN interface board. This is done with
+the <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.canAccept" title="canlib.canlib.Channel.canAccept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.canAccept</span></code></a> function.</p>
+<p>You set an acceptance code and an acceptance mask which together determine
+which CAN identifiers are accepted or rejected.</p>
+<p>If you want to remove an acceptance filter, call
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.canAccept" title="canlib.canlib.Channel.canAccept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.canAccept</span></code></a> with the mask set to
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">NULL_MASK</span></code>.</p>
+<p>To set the mask to 0xF0 and the code to 0x60:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">canAccept</span><span class="p">(</span><span class="mh">0x0f0</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">AcceptFilterFlag</span><span class="o">.</span><span class="n">SET_MASK_STD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">canAccept</span><span class="p">(</span><span class="mh">0x060</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">AcceptFilterFlag</span><span class="o">.</span><span class="n">SET_CODE_STD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This code snippet will cause all messages having a standard (11-bit) identifier
+with bit 7 - bit 4 in the identifier equal to 0110 (binary) will pass
+through. Other messages with standard identifiers will be rejected.</p>
+<p>How acceptance filters can be used in a smaller project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The acceptance filter only have to be called once for each ch object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">canAccept</span><span class="p">(</span><span class="mh">0x0f0</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">AcceptFilterFlag</span><span class="o">.</span><span class="n">SET_MASK_STD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">canAccept</span><span class="p">(</span><span class="mh">0x060</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">AcceptFilterFlag</span><span class="o">.</span><span class="n">SET_CODE_STD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We can now run the rest of the program and the acceptance filter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># will reject unwanted CAN messages.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">frame</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="code-and-mask-format">
+<h3>Code and Mask Format<a class="headerlink" href="#code-and-mask-format" title="Permalink to this headline">¶</a></h3>
+<p>Explanation of the code and mask format used by the <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.canAccept" title="canlib.canlib.Channel.canAccept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.canAccept</span></code></a> function:</p>
+<blockquote>
+<div>A binary 1 in a mask means “the corresponding bit in the code is relevant”
+A binary 0 in a mask means “the corresponding bit in the code is not relevant”
+A relevant binary 1 in a code means “the corresponding bit in the identifier must be 1”
+A relevant binary 0 in a code means “the corresponding bit in the identifier must be 0”</div></blockquote>
+<p>In other words, the message is accepted if ((code XOR id) AND mask) == 0.</p>
+</div>
+</div>
+<div class="section" id="sending-messages">
+<h2>Sending Messages<a class="headerlink" href="#sending-messages" title="Permalink to this headline">¶</a></h2>
+<p>You transmit messages by calling <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.write" title="canlib.canlib.Channel.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.write</span></code></a>. Outgoing CAN messages are buffered
+in a transmit queue and sent on a First-In First-Out basis. You can use
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.writeSync" title="canlib.canlib.Channel.writeSync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.writeSync</span></code></a> to wait until the messages in the queue have been sent.</p>
+<p>Sending a CAN message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">Frame</span>
+<span class="gp">... </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">234</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-extended-can-can-2-0b">
+<h2>Using Extended CAN (CAN 2.0B)<a class="headerlink" href="#using-extended-can-can-2-0b" title="Permalink to this headline">¶</a></h2>
+<p>“Standard” CAN has 11-bit identifiers in the range 0 - 2047. “Extended” CAN,
+also called CAN 2.0B, has 29-bit identifiers. You specify which kind of
+identifiers you want to use in your call to canWrite(): if you set the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">EXT</span></code> flag in the flag argument, the message will be
+transmitted with a 29-bit identifier. Conversely, received 29-bit-identifier
+messages have the <code class="xref py py-obj docutils literal notranslate"><span class="pre">EXT</span></code> flag set.</p>
+<p>The following code fragment sends a CAN message on an already open channel. The
+CAN message will have identifier 1234 (extended) and DLC = 8. The contents of
+the data bytes will be whatever the data array happens to contain:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">MessageFlag</span><span class="o">.</span><span class="n">EXT</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span>
+<span class="go">Frame(id=1234, data=bytearray(b&#39;\x01\x02\x03\x04\x05\x06\x07\x08&#39;), dlc=8, flags=&lt;MessageFlag.EXT: 4&gt;, timestamp=None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="object-buffers">
+<h2>Object Buffers<a class="headerlink" href="#object-buffers" title="Permalink to this headline">¶</a></h2>
+<p>Object buffers are currently not supported in the Python wrapper.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="buserrors.html" class="btn btn-neutral float-right" title="Bus Errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="canframes.html" class="btn btn-neutral float-left" title="CAN Frames" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,2078 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enumerations &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="IOControl" href="iocontrol.html" />
+    <link rel="prev" title="EnvVar" href="envvar.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">canlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channeldata.html">ChannelData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="envvar.html">EnvVar</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Enumerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acceptfilterflag">AcceptFilterFlag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bustypegroup">BusTypeGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#channelcap">ChannelCap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#channeldataitem">ChannelDataItem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#channelflags">ChannelFlags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#devicemode">DeviceMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#driver">Driver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drivercap">DriverCap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#envvartype">EnvVarType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error">Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hardwaretype">HardwareType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iocontrolitem">IOControlItem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ledaction">LEDAction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loggertype">LoggerType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#messageflag">MessageFlag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notify">Notify</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open">Open</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operationalmode">OperationalMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remotetype">RemoteType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scriptrequest">ScriptRequest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scriptstatus">ScriptStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scriptstop">ScriptStop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stat">Stat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transceivertype">TransceiverType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#txedataitem">TxeDataItem</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="iocontrol.html">IOControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iopin.html">I/O pin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="txe.html">Script Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">canlib</a> &raquo;</li>
+        
+      <li>Enumerations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/canlib/enums.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="enumerations">
+<h1>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="acceptfilterflag">
+<h2>AcceptFilterFlag<a class="headerlink" href="#acceptfilterflag" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.AcceptFilterFlag">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">AcceptFilterFlag</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#AcceptFilterFlag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag" title="Permalink to this definition">¶</a></dt>
+<dd><p>canFILTER_SET_xxx</p>
+<dl class="attribute">
+<dt id="canlib.canlib.AcceptFilterFlag.NULL_MASK">
+<code class="descname">NULL_MASK</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag.NULL_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.AcceptFilterFlag.SET_CODE_EXT">
+<code class="descname">SET_CODE_EXT</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag.SET_CODE_EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.AcceptFilterFlag.SET_CODE_STD">
+<code class="descname">SET_CODE_STD</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag.SET_CODE_STD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.AcceptFilterFlag.SET_MASK_EXT">
+<code class="descname">SET_MASK_EXT</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag.SET_MASK_EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.AcceptFilterFlag.SET_MASK_STD">
+<code class="descname">SET_MASK_STD</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.AcceptFilterFlag.SET_MASK_STD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="bustypegroup">
+<h2>BusTypeGroup<a class="headerlink" href="#bustypegroup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.BusTypeGroup">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">BusTypeGroup</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#BusTypeGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.BusTypeGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvBUSTYPE_GROUP_xxx</p>
+<p>Bus type group.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.BusTypeGroup.INTERNAL">
+<code class="descname">INTERNAL</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.BusTypeGroup.INTERNAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.BusTypeGroup.LOCAL">
+<code class="descname">LOCAL</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.BusTypeGroup.LOCAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.BusTypeGroup.REMOTE">
+<code class="descname">REMOTE</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.BusTypeGroup.REMOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.BusTypeGroup.VIRTUAL">
+<code class="descname">VIRTUAL</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.BusTypeGroup.VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="channelcap">
+<h2>ChannelCap<a class="headerlink" href="#channelcap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ChannelCap">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ChannelCap</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ChannelCap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ChannelCap" title="Permalink to this definition">¶</a></dt>
+<dd><p>canCHANNEL_CAP_xxx</p>
+<p>Channel capabilities.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.8.</span></p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.BUS_STATISTICS">
+<code class="descname">BUS_STATISTICS</code><em class="property"> = &lt;ChannelCap.BUS_STATISTICS: 2&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.BUS_STATISTICS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.CAN_FD">
+<code class="descname">CAN_FD</code><em class="property"> = &lt;ChannelCap.CAN_FD: 524288&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.CAN_FD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.CAN_FD_NONISO">
+<code class="descname">CAN_FD_NONISO</code><em class="property"> = &lt;ChannelCap.CAN_FD_NONISO: 1048576&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.CAN_FD_NONISO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.DIAGNOSTICS">
+<code class="descname">DIAGNOSTICS</code><em class="property"> = &lt;ChannelCap.DIAGNOSTICS: 268435456&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.DIAGNOSTICS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.ERROR_COUNTERS">
+<code class="descname">ERROR_COUNTERS</code><em class="property"> = &lt;ChannelCap.ERROR_COUNTERS: 4&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.ERROR_COUNTERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.EXTENDED_CAN">
+<code class="descname">EXTENDED_CAN</code><em class="property"> = &lt;ChannelCap.EXTENDED_CAN: 1&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.EXTENDED_CAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.GENERATE_ERROR">
+<code class="descname">GENERATE_ERROR</code><em class="property"> = &lt;ChannelCap.GENERATE_ERROR: 16&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.GENERATE_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.GENERATE_OVERLOAD">
+<code class="descname">GENERATE_OVERLOAD</code><em class="property"> = &lt;ChannelCap.GENERATE_OVERLOAD: 32&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.GENERATE_OVERLOAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.IO_API">
+<code class="descname">IO_API</code><em class="property"> = &lt;ChannelCap.IO_API: 134217728&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.IO_API" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.LIN_HYBRID">
+<code class="descname">LIN_HYBRID</code><em class="property"> = &lt;ChannelCap.LIN_HYBRID: 67108864&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.LIN_HYBRID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.LOGGER">
+<code class="descname">LOGGER</code><em class="property"> = &lt;ChannelCap.LOGGER: 8388608&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.LOGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.REMOTE_ACCESS">
+<code class="descname">REMOTE_ACCESS</code><em class="property"> = &lt;ChannelCap.REMOTE_ACCESS: 16777216&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.REMOTE_ACCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.RESERVED_1">
+<code class="descname">RESERVED_1</code><em class="property"> = &lt;ChannelCap.RESERVED_1: 262144&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.RESERVED_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.RESERVED_2">
+<code class="descname">RESERVED_2</code><em class="property"> = &lt;ChannelCap.RESERVED_2: 8&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.RESERVED_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.SCRIPT">
+<code class="descname">SCRIPT</code><em class="property"> = &lt;ChannelCap.SCRIPT: 33554432&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.SCRIPT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.SILENT_MODE">
+<code class="descname">SILENT_MODE</code><em class="property"> = &lt;ChannelCap.SILENT_MODE: 2097152&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.SILENT_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.SIMULATED">
+<code class="descname">SIMULATED</code><em class="property"> = &lt;ChannelCap.SIMULATED: 131072&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.SIMULATED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.SINGLE_SHOT">
+<code class="descname">SINGLE_SHOT</code><em class="property"> = &lt;ChannelCap.SINGLE_SHOT: 4194304&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.SINGLE_SHOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.TXACKNOWLEDGE">
+<code class="descname">TXACKNOWLEDGE</code><em class="property"> = &lt;ChannelCap.TXACKNOWLEDGE: 128&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.TXACKNOWLEDGE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.TXREQUEST">
+<code class="descname">TXREQUEST</code><em class="property"> = &lt;ChannelCap.TXREQUEST: 64&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.TXREQUEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelCap.VIRTUAL">
+<code class="descname">VIRTUAL</code><em class="property"> = &lt;ChannelCap.VIRTUAL: 65536&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelCap.VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="channeldataitem">
+<h2>ChannelDataItem<a class="headerlink" href="#channeldataitem" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ChannelDataItem">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ChannelDataItem</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ChannelDataItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ChannelDataItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.BUS_TYPE">
+<code class="descname">BUS_TYPE</code><em class="property"> = 30</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.BUS_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_FIRMWARE_REV">
+<code class="descname">CARD_FIRMWARE_REV</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_FIRMWARE_REV" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_HARDWARE_REV">
+<code class="descname">CARD_HARDWARE_REV</code><em class="property"> = 10</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_HARDWARE_REV" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_NUMBER">
+<code class="descname">CARD_NUMBER</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_SERIAL_NO">
+<code class="descname">CARD_SERIAL_NO</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_SERIAL_NO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_TYPE">
+<code class="descname">CARD_TYPE</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CARD_UPC_NO">
+<code class="descname">CARD_UPC_NO</code><em class="property"> = 11</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CARD_UPC_NO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHANNEL_CAP">
+<code class="descname">CHANNEL_CAP</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHANNEL_CAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHANNEL_CAP_MASK">
+<code class="descname">CHANNEL_CAP_MASK</code><em class="property"> = 38</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHANNEL_CAP_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHANNEL_FLAGS">
+<code class="descname">CHANNEL_FLAGS</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHANNEL_FLAGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHANNEL_NAME">
+<code class="descname">CHANNEL_NAME</code><em class="property"> = 13</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHANNEL_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHANNEL_QUALITY">
+<code class="descname">CHANNEL_QUALITY</code><em class="property"> = 28</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHANNEL_QUALITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CHAN_NO_ON_CARD">
+<code class="descname">CHAN_NO_ON_CARD</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CHAN_NO_ON_CARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.CUST_CHANNEL_NAME">
+<code class="descname">CUST_CHANNEL_NAME</code><em class="property"> = 39</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.CUST_CHANNEL_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DEVDESCR_ASCII">
+<code class="descname">DEVDESCR_ASCII</code><em class="property"> = 26</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DEVDESCR_ASCII" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DEVDESCR_UNICODE">
+<code class="descname">DEVDESCR_UNICODE</code><em class="property"> = 25</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DEVDESCR_UNICODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DEVICE_PHYSICAL_POSITION">
+<code class="descname">DEVICE_PHYSICAL_POSITION</code><em class="property"> = 18</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DEVICE_PHYSICAL_POSITION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DEVNAME_ASCII">
+<code class="descname">DEVNAME_ASCII</code><em class="property"> = 31</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DEVNAME_ASCII" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DLL_FILETYPE">
+<code class="descname">DLL_FILETYPE</code><em class="property"> = 16</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DLL_FILETYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DLL_FILE_VERSION">
+<code class="descname">DLL_FILE_VERSION</code><em class="property"> = 14</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DLL_FILE_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DLL_PRODUCT_VERSION">
+<code class="descname">DLL_PRODUCT_VERSION</code><em class="property"> = 15</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DLL_PRODUCT_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DRIVER_FILE_VERSION">
+<code class="descname">DRIVER_FILE_VERSION</code><em class="property"> = 21</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DRIVER_FILE_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DRIVER_NAME">
+<code class="descname">DRIVER_NAME</code><em class="property"> = 27</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DRIVER_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.DRIVER_PRODUCT_VERSION">
+<code class="descname">DRIVER_PRODUCT_VERSION</code><em class="property"> = 22</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.DRIVER_PRODUCT_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.FEATURE_EAN">
+<code class="descname">FEATURE_EAN</code><em class="property"> = 44</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.FEATURE_EAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.HW_STATUS">
+<code class="descname">HW_STATUS</code><em class="property"> = 43</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.HW_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.IS_REMOTE">
+<code class="descname">IS_REMOTE</code><em class="property"> = 40</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.IS_REMOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.LOGGER_TYPE">
+<code class="descname">LOGGER_TYPE</code><em class="property"> = 42</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.LOGGER_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.MAX_BITRATE">
+<code class="descname">MAX_BITRATE</code><em class="property"> = 37</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.MAX_BITRATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.MFGNAME_ASCII">
+<code class="descname">MFGNAME_ASCII</code><em class="property"> = 24</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.MFGNAME_ASCII" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.MFGNAME_UNICODE">
+<code class="descname">MFGNAME_UNICODE</code><em class="property"> = 23</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.MFGNAME_UNICODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.REMOTE_HOST_NAME">
+<code class="descname">REMOTE_HOST_NAME</code><em class="property"> = 35</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.REMOTE_HOST_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.REMOTE_MAC">
+<code class="descname">REMOTE_MAC</code><em class="property"> = 36</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.REMOTE_MAC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.REMOTE_OPERATIONAL_MODE">
+<code class="descname">REMOTE_OPERATIONAL_MODE</code><em class="property"> = 33</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.REMOTE_OPERATIONAL_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.REMOTE_PROFILE_NAME">
+<code class="descname">REMOTE_PROFILE_NAME</code><em class="property"> = 34</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.REMOTE_PROFILE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.REMOTE_TYPE">
+<code class="descname">REMOTE_TYPE</code><em class="property"> = 41</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.REMOTE_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.ROUNDTRIP_TIME">
+<code class="descname">ROUNDTRIP_TIME</code><em class="property"> = 29</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.ROUNDTRIP_TIME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TIMESYNC_ENABLED">
+<code class="descname">TIMESYNC_ENABLED</code><em class="property"> = 20</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TIMESYNC_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TIME_SINCE_LAST_SEEN">
+<code class="descname">TIME_SINCE_LAST_SEEN</code><em class="property"> = 32</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TIME_SINCE_LAST_SEEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TRANS_CAP">
+<code class="descname">TRANS_CAP</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TRANS_CAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TRANS_SERIAL_NO">
+<code class="descname">TRANS_SERIAL_NO</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TRANS_SERIAL_NO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TRANS_TYPE">
+<code class="descname">TRANS_TYPE</code><em class="property"> = 17</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TRANS_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.TRANS_UPC_NO">
+<code class="descname">TRANS_UPC_NO</code><em class="property"> = 12</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.TRANS_UPC_NO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelDataItem.UI_NUMBER">
+<code class="descname">UI_NUMBER</code><em class="property"> = 19</em><a class="headerlink" href="#canlib.canlib.ChannelDataItem.UI_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="channelflags">
+<h2>ChannelFlags<a class="headerlink" href="#channelflags" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ChannelFlags">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ChannelFlags</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ChannelFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ChannelFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>canCHANNEL_IS_xxx</p>
+<p>These channel flags are used in conjunction with <a class="reference internal" href="#canlib.canlib.ChannelDataItem.CHANNEL_FLAGS" title="canlib.canlib.ChannelDataItem.CHANNEL_FLAGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChannelDataItem.CHANNEL_FLAGS</span></code></a>.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_CANFD">
+<code class="descname">IS_CANFD</code><em class="property"> = &lt;ChannelFlags.IS_CANFD: 4&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_CANFD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_EXCLUSIVE">
+<code class="descname">IS_EXCLUSIVE</code><em class="property"> = &lt;ChannelFlags.IS_EXCLUSIVE: 1&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_EXCLUSIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_LIN">
+<code class="descname">IS_LIN</code><em class="property"> = &lt;ChannelFlags.IS_LIN: 16&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_LIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_LIN_MASTER">
+<code class="descname">IS_LIN_MASTER</code><em class="property"> = &lt;ChannelFlags.IS_LIN_MASTER: 32&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_LIN_MASTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_LIN_SLAVE">
+<code class="descname">IS_LIN_SLAVE</code><em class="property"> = &lt;ChannelFlags.IS_LIN_SLAVE: 64&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_LIN_SLAVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ChannelFlags.IS_OPEN">
+<code class="descname">IS_OPEN</code><em class="property"> = &lt;ChannelFlags.IS_OPEN: 2&gt;</em><a class="headerlink" href="#canlib.canlib.ChannelFlags.IS_OPEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="devicemode">
+<h2>DeviceMode<a class="headerlink" href="#devicemode" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.DeviceMode">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">DeviceMode</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#DeviceMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.DeviceMode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.DeviceMode.INTERFACE">
+<code class="descname">INTERFACE</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.DeviceMode.INTERFACE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.DeviceMode.LOGGER">
+<code class="descname">LOGGER</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.DeviceMode.LOGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="driver">
+<h2>Driver<a class="headerlink" href="#driver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Driver">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Driver</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#Driver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Driver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.Driver.NORMAL">
+<code class="descname">NORMAL</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.Driver.NORMAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Driver.OFF">
+<code class="descname">OFF</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.Driver.OFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Driver.SELFRECEPTION">
+<code class="descname">SELFRECEPTION</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.Driver.SELFRECEPTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Driver.SILENT">
+<code class="descname">SILENT</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.Driver.SILENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="drivercap">
+<h2>DriverCap<a class="headerlink" href="#drivercap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.DriverCap">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">DriverCap</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#DriverCap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.DriverCap" title="Permalink to this definition">¶</a></dt>
+<dd><p>canDRIVER_CAP_xxx</p>
+<p>Driver (transceiver) capabilities.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.DriverCap.HIGHSPEED">
+<code class="descname">HIGHSPEED</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.DriverCap.HIGHSPEED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="envvartype">
+<h2>EnvVarType<a class="headerlink" href="#envvartype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.EnvVarType">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">EnvVarType</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#EnvVarType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.EnvVarType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.EnvVarType.FLOAT">
+<code class="descname">FLOAT</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.EnvVarType.FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.EnvVarType.INT">
+<code class="descname">INT</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.EnvVarType.INT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.EnvVarType.STRING">
+<code class="descname">STRING</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.EnvVarType.STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="error">
+<h2>Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Error">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Error</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Error" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.Error.HARDWARE">
+<code class="descname">HARDWARE</code><em class="property"> = -15</em><a class="headerlink" href="#canlib.canlib.Error.HARDWARE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.INVALID_PASSWORD">
+<code class="descname">INVALID_PASSWORD</code><em class="property"> = -128</em><a class="headerlink" href="#canlib.canlib.Error.INVALID_PASSWORD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.INVALID_SESSION">
+<code class="descname">INVALID_SESSION</code><em class="property"> = -131</em><a class="headerlink" href="#canlib.canlib.Error.INVALID_SESSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.INVHANDLE">
+<code class="descname">INVHANDLE</code><em class="property"> = -10</em><a class="headerlink" href="#canlib.canlib.Error.INVHANDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.IO_CONFIG_CHANGED">
+<code class="descname">IO_CONFIG_CHANGED</code><em class="property"> = -46</em><a class="headerlink" href="#canlib.canlib.Error.IO_CONFIG_CHANGED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.IO_NOT_CONFIRMED">
+<code class="descname">IO_NOT_CONFIRMED</code><em class="property"> = -45</em><a class="headerlink" href="#canlib.canlib.Error.IO_NOT_CONFIRMED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.IO_NO_VALID_CONFIG">
+<code class="descname">IO_NO_VALID_CONFIG</code><em class="property"> = -48</em><a class="headerlink" href="#canlib.canlib.Error.IO_NO_VALID_CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.IO_PENDING">
+<code class="descname">IO_PENDING</code><em class="property"> = -47</em><a class="headerlink" href="#canlib.canlib.Error.IO_PENDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOCARD">
+<code class="descname">NOCARD</code><em class="property"> = -26</em><a class="headerlink" href="#canlib.canlib.Error.NOCARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOCHANNELS">
+<code class="descname">NOCHANNELS</code><em class="property"> = -5</em><a class="headerlink" href="#canlib.canlib.Error.NOCHANNELS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOMSG">
+<code class="descname">NOMSG</code><em class="property"> = -2</em><a class="headerlink" href="#canlib.canlib.Error.NOMSG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOTFOUND">
+<code class="descname">NOTFOUND</code><em class="property"> = -3</em><a class="headerlink" href="#canlib.canlib.Error.NOTFOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOT_AUTHORIZED">
+<code class="descname">NOT_AUTHORIZED</code><em class="property"> = -130</em><a class="headerlink" href="#canlib.canlib.Error.NOT_AUTHORIZED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NOT_IMPLEMENTED">
+<code class="descname">NOT_IMPLEMENTED</code><em class="property"> = -32</em><a class="headerlink" href="#canlib.canlib.Error.NOT_IMPLEMENTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.NO_SUCH_FUNCTION">
+<code class="descname">NO_SUCH_FUNCTION</code><em class="property"> = -129</em><a class="headerlink" href="#canlib.canlib.Error.NO_SUCH_FUNCTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.PARAM">
+<code class="descname">PARAM</code><em class="property"> = -1</em><a class="headerlink" href="#canlib.canlib.Error.PARAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.SCRIPT_FAIL">
+<code class="descname">SCRIPT_FAIL</code><em class="property"> = -39</em><a class="headerlink" href="#canlib.canlib.Error.SCRIPT_FAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.TIMEOUT">
+<code class="descname">TIMEOUT</code><em class="property"> = -7</em><a class="headerlink" href="#canlib.canlib.Error.TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Error.TXBUFOFL">
+<code class="descname">TXBUFOFL</code><em class="property"> = -13</em><a class="headerlink" href="#canlib.canlib.Error.TXBUFOFL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="hardwaretype">
+<h2>HardwareType<a class="headerlink" href="#hardwaretype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.HardwareType">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">HardwareType</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#HardwareType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.HardwareType" title="Permalink to this definition">¶</a></dt>
+<dd><p>canHWTYPE_xxx</p>
+<p>The following constants can be returned from canGetChannelData(), using
+the canCHANNELDATA_CARD_TYPE item code. They identify the hardware type
+for the channel specified in the call to canGetChannelData().</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The members indicate a hardware type, but not necessarily a specific
+product. For example, canHWTYPE_LAPCAN is returned both for LAPcan and
+LAPcan II. (You can use canGetChannelData() to obtain the UPC/EAN code
+for the device. This number uniquely identifies the product.)</p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.ACQUISITOR">
+<code class="descname">ACQUISITOR</code><em class="property"> = 46</em><a class="headerlink" href="#canlib.canlib.HardwareType.ACQUISITOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.BAGEL">
+<code class="descname">BAGEL</code><em class="property"> = 64</em><a class="headerlink" href="#canlib.canlib.HardwareType.BAGEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.BLACKBIRD">
+<code class="descname">BLACKBIRD</code><em class="property"> = 58</em><a class="headerlink" href="#canlib.canlib.HardwareType.BLACKBIRD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.BLACKBIRD_V2">
+<code class="descname">BLACKBIRD_V2</code><em class="property"> = 64</em><a class="headerlink" href="#canlib.canlib.HardwareType.BLACKBIRD_V2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.CANLINHYBRID">
+<code class="descname">CANLINHYBRID</code><em class="property"> = 84</em><a class="headerlink" href="#canlib.canlib.HardwareType.CANLINHYBRID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.CANPARI">
+<code class="descname">CANPARI</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.HardwareType.CANPARI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.DINRAIL">
+<code class="descname">DINRAIL</code><em class="property"> = 86</em><a class="headerlink" href="#canlib.canlib.HardwareType.DINRAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.EAGLE">
+<code class="descname">EAGLE</code><em class="property"> = 62</em><a class="headerlink" href="#canlib.canlib.HardwareType.EAGLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.ETHERCAN">
+<code class="descname">ETHERCAN</code><em class="property"> = 70</em><a class="headerlink" href="#canlib.canlib.HardwareType.ETHERCAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.IRIS">
+<code class="descname">IRIS</code><em class="property"> = 58</em><a class="headerlink" href="#canlib.canlib.HardwareType.IRIS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.LAPCAN">
+<code class="descname">LAPCAN</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.HardwareType.LAPCAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.LEAF">
+<code class="descname">LEAF</code><em class="property"> = 48</em><a class="headerlink" href="#canlib.canlib.HardwareType.LEAF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.LEAF2">
+<code class="descname">LEAF2</code><em class="property"> = 80</em><a class="headerlink" href="#canlib.canlib.HardwareType.LEAF2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MEMORATOR_II">
+<code class="descname">MEMORATOR_II</code><em class="property"> = 54</em><a class="headerlink" href="#canlib.canlib.HardwareType.MEMORATOR_II" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MEMORATOR_LIGHT">
+<code class="descname">MEMORATOR_LIGHT</code><em class="property"> = 60</em><a class="headerlink" href="#canlib.canlib.HardwareType.MEMORATOR_LIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MEMORATOR_PRO">
+<code class="descname">MEMORATOR_PRO</code><em class="property"> = 54</em><a class="headerlink" href="#canlib.canlib.HardwareType.MEMORATOR_PRO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MEMORATOR_PRO2">
+<code class="descname">MEMORATOR_PRO2</code><em class="property"> = 78</em><a class="headerlink" href="#canlib.canlib.HardwareType.MEMORATOR_PRO2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MEMORATOR_V2">
+<code class="descname">MEMORATOR_V2</code><em class="property"> = 82</em><a class="headerlink" href="#canlib.canlib.HardwareType.MEMORATOR_V2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MINIHYDRA">
+<code class="descname">MINIHYDRA</code><em class="property"> = 62</em><a class="headerlink" href="#canlib.canlib.HardwareType.MINIHYDRA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.MINIPCIE">
+<code class="descname">MINIPCIE</code><em class="property"> = 66</em><a class="headerlink" href="#canlib.canlib.HardwareType.MINIPCIE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.NONE">
+<code class="descname">NONE</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.HardwareType.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PC104_PLUS">
+<code class="descname">PC104_PLUS</code><em class="property"> = 50</em><a class="headerlink" href="#canlib.canlib.HardwareType.PC104_PLUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PCCAN">
+<code class="descname">PCCAN</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.HardwareType.PCCAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PCICAN">
+<code class="descname">PCICAN</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.canlib.HardwareType.PCICAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PCICANX_II">
+<code class="descname">PCICANX_II</code><em class="property"> = 52</em><a class="headerlink" href="#canlib.canlib.HardwareType.PCICANX_II" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PCICAN_II">
+<code class="descname">PCICAN_II</code><em class="property"> = 40</em><a class="headerlink" href="#canlib.canlib.HardwareType.PCICAN_II" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.PCIE_V2">
+<code class="descname">PCIE_V2</code><em class="property"> = 76</em><a class="headerlink" href="#canlib.canlib.HardwareType.PCIE_V2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.SIMULATED">
+<code class="descname">SIMULATED</code><em class="property"> = 44</em><a class="headerlink" href="#canlib.canlib.HardwareType.SIMULATED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN">
+<code class="descname">USBCAN</code><em class="property"> = 11</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN_II">
+<code class="descname">USBCAN_II</code><em class="property"> = 42</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN_II" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN_KLINE">
+<code class="descname">USBCAN_KLINE</code><em class="property"> = 68</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN_KLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN_LIGHT">
+<code class="descname">USBCAN_LIGHT</code><em class="property"> = 72</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN_LIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN_PRO">
+<code class="descname">USBCAN_PRO</code><em class="property"> = 56</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN_PRO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.USBCAN_PRO2">
+<code class="descname">USBCAN_PRO2</code><em class="property"> = 74</em><a class="headerlink" href="#canlib.canlib.HardwareType.USBCAN_PRO2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.HardwareType.VIRTUAL">
+<code class="descname">VIRTUAL</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.HardwareType.VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iocontrolitem">
+<h2>IOControlItem<a class="headerlink" href="#iocontrolitem" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.IOControlItem">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">IOControlItem</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#IOControlItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.IOControlItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.CLEAR_ERROR_COUNTERS">
+<code class="descname">CLEAR_ERROR_COUNTERS</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.IOControlItem.CLEAR_ERROR_COUNTERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.CONNECT_TO_VIRTUAL_BUS">
+<code class="descname">CONNECT_TO_VIRTUAL_BUS</code><em class="property"> = 22</em><a class="headerlink" href="#canlib.canlib.IOControlItem.CONNECT_TO_VIRTUAL_BUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.DISCONNECT_FROM_VIRTUAL_BUS">
+<code class="descname">DISCONNECT_FROM_VIRTUAL_BUS</code><em class="property"> = 23</em><a class="headerlink" href="#canlib.canlib.IOControlItem.DISCONNECT_FROM_VIRTUAL_BUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.FLUSH_RX_BUFFER">
+<code class="descname">FLUSH_RX_BUFFER</code><em class="property"> = 10</em><a class="headerlink" href="#canlib.canlib.IOControlItem.FLUSH_RX_BUFFER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.FLUSH_TX_BUFFER">
+<code class="descname">FLUSH_TX_BUFFER</code><em class="property"> = 11</em><a class="headerlink" href="#canlib.canlib.IOControlItem.FLUSH_TX_BUFFER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_BUS_TYPE">
+<code class="descname">GET_BUS_TYPE</code><em class="property"> = 36</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_BUS_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_CHANNEL_QUALITY">
+<code class="descname">GET_CHANNEL_QUALITY</code><em class="property"> = 34</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_CHANNEL_QUALITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_DEVNAME_ASCII">
+<code class="descname">GET_DEVNAME_ASCII</code><em class="property"> = 37</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_DEVNAME_ASCII" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_DRIVERHANDLE">
+<code class="descname">GET_DRIVERHANDLE</code><em class="property"> = 17</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_DRIVERHANDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_EVENTHANDLE">
+<code class="descname">GET_EVENTHANDLE</code><em class="property"> = 14</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_EVENTHANDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_REPORT_ACCESS_ERRORS">
+<code class="descname">GET_REPORT_ACCESS_ERRORS</code><em class="property"> = 21</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_REPORT_ACCESS_ERRORS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_ROUNDTRIP_TIME">
+<code class="descname">GET_ROUNDTRIP_TIME</code><em class="property"> = 35</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_ROUNDTRIP_TIME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_RX_BUFFER_LEVEL">
+<code class="descname">GET_RX_BUFFER_LEVEL</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_RX_BUFFER_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_THROTTLE_SCALED">
+<code class="descname">GET_THROTTLE_SCALED</code><em class="property"> = 42</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_THROTTLE_SCALED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_TIMER_SCALE">
+<code class="descname">GET_TIMER_SCALE</code><em class="property"> = 12</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_TIMER_SCALE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_TIME_SINCE_LAST_SEEN">
+<code class="descname">GET_TIME_SINCE_LAST_SEEN</code><em class="property"> = 38</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_TIME_SINCE_LAST_SEEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_TREF_LIST">
+<code class="descname">GET_TREF_LIST</code><em class="property"> = 39</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_TREF_LIST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_TXACK">
+<code class="descname">GET_TXACK</code><em class="property"> = 31</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_TXACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_TX_BUFFER_LEVEL">
+<code class="descname">GET_TX_BUFFER_LEVEL</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_TX_BUFFER_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_USB_THROTTLE">
+<code class="descname">GET_USB_THROTTLE</code><em class="property"> = 29</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_USB_THROTTLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_USER_IOPORT">
+<code class="descname">GET_USER_IOPORT</code><em class="property"> = 25</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_USER_IOPORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.GET_WAKEUP">
+<code class="descname">GET_WAKEUP</code><em class="property"> = 19</em><a class="headerlink" href="#canlib.canlib.IOControlItem.GET_WAKEUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.LIN_MODE">
+<code class="descname">LIN_MODE</code><em class="property"> = 45</em><a class="headerlink" href="#canlib.canlib.IOControlItem.LIN_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.MAP_RXQUEUE">
+<code class="descname">MAP_RXQUEUE</code><em class="property"> = 18</em><a class="headerlink" href="#canlib.canlib.IOControlItem.MAP_RXQUEUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.PREFER_EXT">
+<code class="descname">PREFER_EXT</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.IOControlItem.PREFER_EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.PREFER_STD">
+<code class="descname">PREFER_STD</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.IOControlItem.PREFER_STD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.RESET_OVERRUN_COUNT">
+<code class="descname">RESET_OVERRUN_COUNT</code><em class="property"> = 44</em><a class="headerlink" href="#canlib.canlib.IOControlItem.RESET_OVERRUN_COUNT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_BRLIMIT">
+<code class="descname">SET_BRLIMIT</code><em class="property"> = 43</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_BRLIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_BUFFER_WRAPAROUND_MODE">
+<code class="descname">SET_BUFFER_WRAPAROUND_MODE</code><em class="property"> = 26</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_BUFFER_WRAPAROUND_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_BUSON_TIME_AUTO_RESET">
+<code class="descname">SET_BUSON_TIME_AUTO_RESET</code><em class="property"> = 30</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_BUSON_TIME_AUTO_RESET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_BYPASS_MODE">
+<code class="descname">SET_BYPASS_MODE</code><em class="property"> = 15</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_BYPASS_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_ERROR_FRAMES_REPORTING">
+<code class="descname">SET_ERROR_FRAMES_REPORTING</code><em class="property"> = 33</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_ERROR_FRAMES_REPORTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_LOCAL_TXECHO">
+<code class="descname">SET_LOCAL_TXECHO</code><em class="property"> = 32</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_LOCAL_TXECHO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_REPORT_ACCESS_ERRORS">
+<code class="descname">SET_REPORT_ACCESS_ERRORS</code><em class="property"> = 20</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_REPORT_ACCESS_ERRORS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_RX_QUEUE_SIZE">
+<code class="descname">SET_RX_QUEUE_SIZE</code><em class="property"> = 27</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_RX_QUEUE_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_THROTTLE_SCALED">
+<code class="descname">SET_THROTTLE_SCALED</code><em class="property"> = 41</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_THROTTLE_SCALED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_TIMER_SCALE">
+<code class="descname">SET_TIMER_SCALE</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_TIMER_SCALE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_TXACK">
+<code class="descname">SET_TXACK</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_TXACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_TXRQ">
+<code class="descname">SET_TXRQ</code><em class="property"> = 13</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_TXRQ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_USB_THROTTLE">
+<code class="descname">SET_USB_THROTTLE</code><em class="property"> = 28</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_USB_THROTTLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_USER_IOPORT">
+<code class="descname">SET_USER_IOPORT</code><em class="property"> = 24</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_USER_IOPORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.SET_WAKEUP">
+<code class="descname">SET_WAKEUP</code><em class="property"> = 16</em><a class="headerlink" href="#canlib.canlib.IOControlItem.SET_WAKEUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.IOControlItem.TX_INTERVAL">
+<code class="descname">TX_INTERVAL</code><em class="property"> = 40</em><a class="headerlink" href="#canlib.canlib.IOControlItem.TX_INTERVAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ledaction">
+<h2>LEDAction<a class="headerlink" href="#ledaction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.LEDAction">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">LEDAction</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#LEDAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.LEDAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvLED_ACTION_xxx</p>
+<p>The following can be used together with <a class="reference internal" href="channel.html#canlib.canlib.Channel.flashLeds" title="canlib.canlib.Channel.flashLeds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.flashLeds</span></code></a>.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.ALL_LEDS_OFF">
+<code class="descname">ALL_LEDS_OFF</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.LEDAction.ALL_LEDS_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn all LEDs off.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.ALL_LEDS_ON">
+<code class="descname">ALL_LEDS_ON</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.LEDAction.ALL_LEDS_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn all LEDs on.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_0_OFF">
+<code class="descname">LED_0_OFF</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_0_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 0 off.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_0_ON">
+<code class="descname">LED_0_ON</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_0_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 0 on.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_1_OFF">
+<code class="descname">LED_1_OFF</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_1_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 1 off.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_1_ON">
+<code class="descname">LED_1_ON</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_1_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 1 on.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_2_OFF">
+<code class="descname">LED_2_OFF</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_2_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 2 off.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_2_ON">
+<code class="descname">LED_2_ON</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_2_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 2 on.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_3_OFF">
+<code class="descname">LED_3_OFF</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_3_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 3 off.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LEDAction.LED_3_ON">
+<code class="descname">LED_3_ON</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.LEDAction.LED_3_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn LED 3 on.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="loggertype">
+<h2>LoggerType<a class="headerlink" href="#loggertype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.LoggerType">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">LoggerType</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#LoggerType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.LoggerType" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvLOGGER_TYPE_xxx</p>
+<p>Logger type, returned when using canCHANNELDATA_LOGGER_TYPE</p>
+<dl class="attribute">
+<dt id="canlib.canlib.LoggerType.NOT_A_LOGGER">
+<code class="descname">NOT_A_LOGGER</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.LoggerType.NOT_A_LOGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LoggerType.V1">
+<code class="descname">V1</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.LoggerType.V1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.LoggerType.V2">
+<code class="descname">V2</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.LoggerType.V2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="messageflag">
+<h2>MessageFlag<a class="headerlink" href="#messageflag" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.MessageFlag">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">MessageFlag</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#MessageFlag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.MessageFlag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message information flags</p>
+<p>The following flags can be returned from <a class="reference internal" href="channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.read</span></code></a> et al, or passed to
+<a class="reference internal" href="channel.html#canlib.canlib.Channel.write" title="canlib.canlib.Channel.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.write</span></code></a>.</p>
+<p>This enum is a combination of flags for messages, CAN FD messages, and
+message errors. Normal messages flags are the flags covered by <a class="reference internal" href="#canlib.canlib.MessageFlag.MSG_MASK" title="canlib.canlib.MessageFlag.MSG_MASK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MSG_MASK</span></code></a>,
+CAN FD message flags are those covered by <a class="reference internal" href="#canlib.canlib.MessageFlag.FDMSG_MASK" title="canlib.canlib.MessageFlag.FDMSG_MASK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FDMSG_MASK</span></code></a>, and message errors
+are those covered by <a class="reference internal" href="#canlib.canlib.MessageFlag.MSGERR_MASK" title="canlib.canlib.MessageFlag.MSGERR_MASK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MSGERR_MASK</span></code></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><a class="reference internal" href="#canlib.canlib.MessageFlag.FDF" title="canlib.canlib.MessageFlag.FDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FDF</span></code></a>, <a class="reference internal" href="#canlib.canlib.MessageFlag.BRS" title="canlib.canlib.MessageFlag.BRS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BRS</span></code></a>, and <a class="reference internal" href="#canlib.canlib.MessageFlag.ESI" title="canlib.canlib.MessageFlag.ESI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ESI</span></code></a> require CAN FD.</p>
+<p><a class="reference internal" href="#canlib.canlib.MessageFlag.RTR" title="canlib.canlib.MessageFlag.RTR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RTR</span></code></a> cannot be set for CAN FD messages.</p>
+<p class="last">Not all hardware platforms can detect the difference between hardware
+overruns and software overruns, so your application should test for
+both conditions. You can use the symbol <a class="reference internal" href="#canlib.canlib.MessageFlag.OVERRUN" title="canlib.canlib.MessageFlag.OVERRUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OVERRUN</span></code></a> for this
+purpose.</p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.BIT">
+<code class="descname">BIT</code><em class="property"> = &lt;MessageFlag.BIT: 49152&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.BIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.BIT0">
+<code class="descname">BIT0</code><em class="property"> = &lt;MessageFlag.BIT0: 16384&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.BIT0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.BIT1">
+<code class="descname">BIT1</code><em class="property"> = &lt;MessageFlag.BIT1: 32768&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.BIT1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.BRS">
+<code class="descname">BRS</code><em class="property"> = &lt;MessageFlag.BRS: 131072&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.BRS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.BUSERR">
+<code class="descname">BUSERR</code><em class="property"> = &lt;MessageFlag.BUSERR: 63488&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.BUSERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.CRC">
+<code class="descname">CRC</code><em class="property"> = &lt;MessageFlag.CRC: 8192&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.CRC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.ERROR_FRAME">
+<code class="descname">ERROR_FRAME</code><em class="property"> = &lt;MessageFlag.ERROR_FRAME: 32&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.ERROR_FRAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.ESI">
+<code class="descname">ESI</code><em class="property"> = &lt;MessageFlag.ESI: 262144&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.ESI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.EXT">
+<code class="descname">EXT</code><em class="property"> = &lt;MessageFlag.EXT: 4&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.FDF">
+<code class="descname">FDF</code><em class="property"> = &lt;MessageFlag.FDF: 65536&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.FDF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.FDMSG_MASK">
+<code class="descname">FDMSG_MASK</code><em class="property"> = &lt;MessageFlag.FDMSG_MASK: 16711680&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.FDMSG_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.FORM">
+<code class="descname">FORM</code><em class="property"> = &lt;MessageFlag.FORM: 4096&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.FORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.HW_OVERRUN">
+<code class="descname">HW_OVERRUN</code><em class="property"> = &lt;MessageFlag.HW_OVERRUN: 512&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.HW_OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.MSGERR_MASK">
+<code class="descname">MSGERR_MASK</code><em class="property"> = &lt;MessageFlag.MSGERR_MASK: 65280&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.MSGERR_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.MSG_MASK">
+<code class="descname">MSG_MASK</code><em class="property"> = &lt;MessageFlag.MSG_MASK: 255&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.MSG_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.NERR">
+<code class="descname">NERR</code><em class="property"> = &lt;MessageFlag.NERR: 16&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.NERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.OVERRUN">
+<code class="descname">OVERRUN</code><em class="property"> = &lt;MessageFlag.OVERRUN: 1536&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.RTR">
+<code class="descname">RTR</code><em class="property"> = &lt;MessageFlag.RTR: 1&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.RTR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.STD">
+<code class="descname">STD</code><em class="property"> = &lt;MessageFlag.STD: 2&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.STD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.STUFF">
+<code class="descname">STUFF</code><em class="property"> = &lt;MessageFlag.STUFF: 2048&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.STUFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.SW_OVERRUN">
+<code class="descname">SW_OVERRUN</code><em class="property"> = &lt;MessageFlag.SW_OVERRUN: 1024&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.SW_OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.TXACK">
+<code class="descname">TXACK</code><em class="property"> = &lt;MessageFlag.TXACK: 64&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.TXACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.TXRQ">
+<code class="descname">TXRQ</code><em class="property"> = &lt;MessageFlag.TXRQ: 128&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.TXRQ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.MessageFlag.WAKEUP">
+<code class="descname">WAKEUP</code><em class="property"> = &lt;MessageFlag.WAKEUP: 8&gt;</em><a class="headerlink" href="#canlib.canlib.MessageFlag.WAKEUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="notify">
+<h2>Notify<a class="headerlink" href="#notify" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Notify">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#Notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>canNOTIFY_xxx</p>
+<p>These notify flags are used in <a class="reference internal" href="channel.html#canlib.canlib.Channel.set_callback" title="canlib.canlib.Channel.set_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.set_callback</span></code></a> to indicate
+different kind of events.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.BUSONOFF">
+<code class="descname">BUSONOFF</code><em class="property"> = &lt;Notify.BUSONOFF: 32&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.BUSONOFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.ENVVAR">
+<code class="descname">ENVVAR</code><em class="property"> = &lt;Notify.ENVVAR: 16&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.ENVVAR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.ERROR">
+<code class="descname">ERROR</code><em class="property"> = &lt;Notify.ERROR: 4&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.NONE">
+<code class="descname">NONE</code><em class="property"> = &lt;Notify.NONE: 0&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.REMOVED">
+<code class="descname">REMOVED</code><em class="property"> = &lt;Notify.REMOVED: 64&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.REMOVED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.RX">
+<code class="descname">RX</code><em class="property"> = &lt;Notify.RX: 1&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.RX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.STATUS">
+<code class="descname">STATUS</code><em class="property"> = &lt;Notify.STATUS: 8&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Notify.TX">
+<code class="descname">TX</code><em class="property"> = &lt;Notify.TX: 2&gt;</em><a class="headerlink" href="#canlib.canlib.Notify.TX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="open">
+<h2>Open<a class="headerlink" href="#open" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Open">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Open</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#Open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Open" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.Open.ACCEPT_LARGE_DLC">
+<code class="descname">ACCEPT_LARGE_DLC</code><em class="property"> = &lt;Open.ACCEPT_LARGE_DLC: 512&gt;</em><a class="headerlink" href="#canlib.canlib.Open.ACCEPT_LARGE_DLC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.ACCEPT_VIRTUAL">
+<code class="descname">ACCEPT_VIRTUAL</code><em class="property"> = &lt;Open.ACCEPT_VIRTUAL: 32&gt;</em><a class="headerlink" href="#canlib.canlib.Open.ACCEPT_VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.CAN_FD">
+<code class="descname">CAN_FD</code><em class="property"> = &lt;Open.CAN_FD: 1024&gt;</em><a class="headerlink" href="#canlib.canlib.Open.CAN_FD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.CAN_FD_NONISO">
+<code class="descname">CAN_FD_NONISO</code><em class="property"> = &lt;Open.CAN_FD_NONISO: 2048&gt;</em><a class="headerlink" href="#canlib.canlib.Open.CAN_FD_NONISO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.EXCLUSIVE">
+<code class="descname">EXCLUSIVE</code><em class="property"> = &lt;Open.EXCLUSIVE: 8&gt;</em><a class="headerlink" href="#canlib.canlib.Open.EXCLUSIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.NO_INIT_ACCESS">
+<code class="descname">NO_INIT_ACCESS</code><em class="property"> = &lt;Open.NO_INIT_ACCESS: 256&gt;</em><a class="headerlink" href="#canlib.canlib.Open.NO_INIT_ACCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.OVERRIDE_EXCLUSIVE">
+<code class="descname">OVERRIDE_EXCLUSIVE</code><em class="property"> = &lt;Open.OVERRIDE_EXCLUSIVE: 64&gt;</em><a class="headerlink" href="#canlib.canlib.Open.OVERRIDE_EXCLUSIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.REQUIRE_EXTENDED">
+<code class="descname">REQUIRE_EXTENDED</code><em class="property"> = &lt;Open.REQUIRE_EXTENDED: 16&gt;</em><a class="headerlink" href="#canlib.canlib.Open.REQUIRE_EXTENDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Open.REQUIRE_INIT_ACCESS">
+<code class="descname">REQUIRE_INIT_ACCESS</code><em class="property"> = &lt;Open.REQUIRE_INIT_ACCESS: 128&gt;</em><a class="headerlink" href="#canlib.canlib.Open.REQUIRE_INIT_ACCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="operationalmode">
+<h2>OperationalMode<a class="headerlink" href="#operationalmode" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.OperationalMode">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">OperationalMode</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#OperationalMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.OperationalMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>canCHANNEL_OPMODE_xxx</p>
+<p>Current WLAN operational mode.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.OperationalMode.ADH">
+<code class="descname">ADH</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.OperationalMode.ADH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.OperationalMode.INFRASTRUCTURE">
+<code class="descname">INFRASTRUCTURE</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.OperationalMode.INFRASTRUCTURE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.OperationalMode.NONE">
+<code class="descname">NONE</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.OperationalMode.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.OperationalMode.RESERVED">
+<code class="descname">RESERVED</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.OperationalMode.RESERVED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="remotetype">
+<h2>RemoteType<a class="headerlink" href="#remotetype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.RemoteType">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">RemoteType</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#RemoteType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.RemoteType" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvREMOTE_TYPExxx</p>
+<p>Remote type, returned when using canCHANNELDATA_REMOTE_TYPE</p>
+<dl class="attribute">
+<dt id="canlib.canlib.RemoteType.LAN">
+<code class="descname">LAN</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.RemoteType.LAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.RemoteType.NOT_REMOTE">
+<code class="descname">NOT_REMOTE</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.RemoteType.NOT_REMOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.RemoteType.WLAN">
+<code class="descname">WLAN</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.RemoteType.WLAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scriptrequest">
+<h2>ScriptRequest<a class="headerlink" href="#scriptrequest" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ScriptRequest">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ScriptRequest</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ScriptRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ScriptRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>kvSCRIPT_REQUEST_TEXT_xxx</p>
+<p>These defines are used in kvScriptRequestText() for printf message
+subscribe/unsubscribe.</p>
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptRequest.ALL_SLOTS">
+<code class="descname">ALL_SLOTS</code><em class="property"> = 255</em><a class="headerlink" href="#canlib.canlib.ScriptRequest.ALL_SLOTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptRequest.SUBSCRIBE">
+<code class="descname">SUBSCRIBE</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.ScriptRequest.SUBSCRIBE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptRequest.UNSUBSCRIBE">
+<code class="descname">UNSUBSCRIBE</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.ScriptRequest.UNSUBSCRIBE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scriptstatus">
+<h2>ScriptStatus<a class="headerlink" href="#scriptstatus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ScriptStatus">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ScriptStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ScriptStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ScriptStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status of t program</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.7: </span>Is now based on <code class="xref py py-obj docutils literal notranslate"><span class="pre">IntFlag</span></code> instead of <code class="xref py py-obj docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptStatus.IDLE">
+<code class="descname">IDLE</code><em class="property"> = &lt;ScriptStatus.IDLE: 0&gt;</em><a class="headerlink" href="#canlib.canlib.ScriptStatus.IDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptStatus.LOADED">
+<code class="descname">LOADED</code><em class="property"> = &lt;ScriptStatus.LOADED: 1&gt;</em><a class="headerlink" href="#canlib.canlib.ScriptStatus.LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptStatus.RUNNING">
+<code class="descname">RUNNING</code><em class="property"> = &lt;ScriptStatus.RUNNING: 2&gt;</em><a class="headerlink" href="#canlib.canlib.ScriptStatus.RUNNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scriptstop">
+<h2>ScriptStop<a class="headerlink" href="#scriptstop" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.ScriptStop">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">ScriptStop</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#ScriptStop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.ScriptStop" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.ScriptStop.FORCED">
+<code class="descname">FORCED</code><em class="property"> = -9</em><a class="headerlink" href="#canlib.canlib.ScriptStop.FORCED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.ScriptStop.NORMAL">
+<code class="descname">NORMAL</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.ScriptStop.NORMAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stat">
+<h2>Stat<a class="headerlink" href="#stat" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.Stat">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">Stat</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#Stat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.Stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>canSTAT_xxx</p>
+<p>The following circuit status flags are returned by <a class="reference internal" href="channel.html#canlib.canlib.Channel.readStatus" title="canlib.canlib.Channel.readStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.readStatus</span></code></a>.
+Note that more than one flag might be set at any one time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Usually both canSTAT_HW_OVERRUN and canSTAT_SW_OVERRUN are set when
+overrun has occurred. This is because the kernel driver can’t see the
+difference between a software overrun and a hardware overrun. So the
+code should always test for both types of overrun using the flag.</p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.BUS_OFF">
+<code class="descname">BUS_OFF</code><em class="property"> = &lt;Stat.BUS_OFF: 2&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.BUS_OFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.ERROR_ACTIVE">
+<code class="descname">ERROR_ACTIVE</code><em class="property"> = &lt;Stat.ERROR_ACTIVE: 8&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.ERROR_ACTIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.ERROR_PASSIVE">
+<code class="descname">ERROR_PASSIVE</code><em class="property"> = &lt;Stat.ERROR_PASSIVE: 1&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.ERROR_PASSIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.ERROR_WARNING">
+<code class="descname">ERROR_WARNING</code><em class="property"> = &lt;Stat.ERROR_WARNING: 4&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.ERROR_WARNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.HW_OVERRUN">
+<code class="descname">HW_OVERRUN</code><em class="property"> = &lt;Stat.HW_OVERRUN: 512&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.HW_OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.OVERRUN">
+<code class="descname">OVERRUN</code><em class="property"> = &lt;Stat.OVERRUN: 1536&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.RESERVED_1">
+<code class="descname">RESERVED_1</code><em class="property"> = &lt;Stat.RESERVED_1: 64&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.RESERVED_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.RXERR">
+<code class="descname">RXERR</code><em class="property"> = &lt;Stat.RXERR: 256&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.RXERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.RX_PENDING">
+<code class="descname">RX_PENDING</code><em class="property"> = &lt;Stat.RX_PENDING: 32&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.RX_PENDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.SW_OVERRUN">
+<code class="descname">SW_OVERRUN</code><em class="property"> = &lt;Stat.SW_OVERRUN: 1024&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.SW_OVERRUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.TXERR">
+<code class="descname">TXERR</code><em class="property"> = &lt;Stat.TXERR: 128&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.TXERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.Stat.TX_PENDING">
+<code class="descname">TX_PENDING</code><em class="property"> = &lt;Stat.TX_PENDING: 16&gt;</em><a class="headerlink" href="#canlib.canlib.Stat.TX_PENDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="transceivertype">
+<h2>TransceiverType<a class="headerlink" href="#transceivertype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.TransceiverType">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">TransceiverType</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#TransceiverType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.TransceiverType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transceiver (logical) types</p>
+<p>The following constants can be returned from canGetChannelData(), using the
+canCHANNELDATA_TRANS_TYPE item code. They identify the bus transceiver type
+for the channel specified in the call to canGetChannelData.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If the type starts with a number <code class="docutils literal notranslate"><span class="pre">T_</span></code> has been prepended to the name.</p>
+<p class="last">They indicate a hardware type, but not necessarily a specific circuit
+or product.</p>
+</div>
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.CANFD">
+<code class="descname">CANFD</code><em class="property"> = 22</em><a class="headerlink" href="#canlib.canlib.TransceiverType.CANFD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.CANFD_LIN">
+<code class="descname">CANFD_LIN</code><em class="property"> = 24</em><a class="headerlink" href="#canlib.canlib.TransceiverType.CANFD_LIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.DNOPTO">
+<code class="descname">DNOPTO</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.TransceiverType.DNOPTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.EVA">
+<code class="descname">EVA</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.canlib.TransceiverType.EVA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.FIBER">
+<code class="descname">FIBER</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.canlib.TransceiverType.FIBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.K">
+<code class="descname">K</code><em class="property"> = 10</em><a class="headerlink" href="#canlib.canlib.TransceiverType.K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.K251">
+<code class="descname">K251</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.canlib.TransceiverType.K251" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.KONE">
+<code class="descname">KONE</code><em class="property"> = 20</em><a class="headerlink" href="#canlib.canlib.TransceiverType.KONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LIN">
+<code class="descname">LIN</code><em class="property"> = 19</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LINX_J1708">
+<code class="descname">LINX_J1708</code><em class="property"> = 66</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LINX_J1708" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LINX_K">
+<code class="descname">LINX_K</code><em class="property"> = 68</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LINX_K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LINX_LIN">
+<code class="descname">LINX_LIN</code><em class="property"> = 64</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LINX_LIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LINX_LS">
+<code class="descname">LINX_LS</code><em class="property"> = 72</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LINX_LS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.LINX_SWC">
+<code class="descname">LINX_SWC</code><em class="property"> = 70</em><a class="headerlink" href="#canlib.canlib.TransceiverType.LINX_SWC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.RS485">
+<code class="descname">RS485</code><em class="property"> = 18</em><a class="headerlink" href="#canlib.canlib.TransceiverType.RS485" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.SWC">
+<code class="descname">SWC</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.TransceiverType.SWC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.SWC_OPTO">
+<code class="descname">SWC_OPTO</code><em class="property"> = 12</em><a class="headerlink" href="#canlib.canlib.TransceiverType.SWC_OPTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.SWC_PROTO">
+<code class="descname">SWC_PROTO</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.TransceiverType.SWC_PROTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.TT">
+<code class="descname">TT</code><em class="property"> = 13</em><a class="headerlink" href="#canlib.canlib.TransceiverType.TT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_1041">
+<code class="descname">T_1041</code><em class="property"> = 16</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_1041" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_1041_OPTO">
+<code class="descname">T_1041_OPTO</code><em class="property"> = 17</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_1041_OPTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_1050">
+<code class="descname">T_1050</code><em class="property"> = 14</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_1050" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_1050_OPTO">
+<code class="descname">T_1050_OPTO</code><em class="property"> = 15</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_1050_OPTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_1054_OPTO">
+<code class="descname">T_1054_OPTO</code><em class="property"> = 11</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_1054_OPTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_251">
+<code class="descname">T_251</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_251" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.T_252">
+<code class="descname">T_252</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.TransceiverType.T_252" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.UNKNOWN">
+<code class="descname">UNKNOWN</code><em class="property"> = 0</em><a class="headerlink" href="#canlib.canlib.TransceiverType.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TransceiverType.W210">
+<code class="descname">W210</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.TransceiverType.W210" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="txedataitem">
+<h2>TxeDataItem<a class="headerlink" href="#txedataitem" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.canlib.TxeDataItem">
+<em class="property">class </em><code class="descclassname">canlib.canlib.</code><code class="descname">TxeDataItem</code><a class="reference internal" href="../../_modules/canlib/canlib/enums.html#TxeDataItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.canlib.TxeDataItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.COMPILER_VERSION">
+<code class="descname">COMPILER_VERSION</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.COMPILER_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.DATE">
+<code class="descname">DATE</code><em class="property"> = 3</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.DATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.DESCRIPTION">
+<code class="descname">DESCRIPTION</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.DESCRIPTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.FILE_VERSION">
+<code class="descname">FILE_VERSION</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.FILE_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.IS_ENCRYPTED">
+<code class="descname">IS_ENCRYPTED</code><em class="property"> = 7</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.IS_ENCRYPTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.SIZE_OF_CODE">
+<code class="descname">SIZE_OF_CODE</code><em class="property"> = 6</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.SIZE_OF_CODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.canlib.TxeDataItem.SOURCE">
+<code class="descname">SOURCE</code><em class="property"> = 5</em><a class="headerlink" href="#canlib.canlib.TxeDataItem.SOURCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="iocontrol.html" class="btn btn-neutral float-right" title="IOControl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="envvar.html" class="btn btn-neutral float-left" title="EnvVar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.enums &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span><span class="p">,</span> <span class="n">CFlag</span>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">PARAM</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">NOMSG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="n">NOTFOUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+    <span class="n">NOCHANNELS</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">TIMEOUT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+    <span class="n">INVHANDLE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+    <span class="n">TXBUFOFL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">13</span>
+    <span class="n">HARDWARE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span>
+    <span class="n">NOCARD</span> <span class="o">=</span> <span class="o">-</span><span class="mi">26</span>
+    <span class="n">SCRIPT_FAIL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">39</span>
+    <span class="n">NOT_IMPLEMENTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32</span>
+    <span class="n">IO_NOT_CONFIRMED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">45</span>
+    <span class="n">IO_CONFIG_CHANGED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">46</span>
+    <span class="n">IO_PENDING</span> <span class="o">=</span> <span class="o">-</span><span class="mi">47</span>
+    <span class="n">IO_NO_VALID_CONFIG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">48</span>
+
+    <span class="c1"># Used in REST API</span>
+    <span class="n">INVALID_PASSWORD</span> <span class="o">=</span> <span class="o">-</span><span class="mi">128</span>
+    <span class="n">NO_SUCH_FUNCTION</span> <span class="o">=</span> <span class="o">-</span><span class="mi">129</span>
+    <span class="n">NOT_AUTHORIZED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">130</span>
+    <span class="n">INVALID_SESSION</span> <span class="o">=</span> <span class="o">-</span><span class="mi">131</span></div>
+
+
+<div class="viewcode-block" id="Open"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.Open">[docs]</a><span class="k">class</span> <span class="nc">Open</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="c1"># canOpen_xxx</span>
+    <span class="n">EXCLUSIVE</span> <span class="o">=</span> <span class="mh">0x0008</span>
+    <span class="n">REQUIRE_EXTENDED</span> <span class="o">=</span> <span class="mh">0x0010</span>
+    <span class="n">ACCEPT_VIRTUAL</span> <span class="o">=</span> <span class="mh">0x0020</span>
+    <span class="n">OVERRIDE_EXCLUSIVE</span> <span class="o">=</span> <span class="mh">0x0040</span>
+    <span class="n">REQUIRE_INIT_ACCESS</span> <span class="o">=</span> <span class="mh">0x0080</span>
+    <span class="n">NO_INIT_ACCESS</span> <span class="o">=</span> <span class="mh">0x0100</span>
+    <span class="n">ACCEPT_LARGE_DLC</span> <span class="o">=</span> <span class="mh">0x0200</span>
+    <span class="n">CAN_FD</span> <span class="o">=</span> <span class="mh">0x0400</span>
+    <span class="n">CAN_FD_NONISO</span> <span class="o">=</span> <span class="mh">0x0800</span></div>
+
+
+<div class="viewcode-block" id="IOControlItem"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.IOControlItem">[docs]</a><span class="k">class</span> <span class="nc">IOControlItem</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">PREFER_EXT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PREFER_STD</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">CLEAR_ERROR_COUNTERS</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SET_TIMER_SCALE</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">SET_TXACK</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">GET_RX_BUFFER_LEVEL</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">GET_TX_BUFFER_LEVEL</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">FLUSH_RX_BUFFER</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">FLUSH_TX_BUFFER</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">GET_TIMER_SCALE</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">SET_TXRQ</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">GET_EVENTHANDLE</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">SET_BYPASS_MODE</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">SET_WAKEUP</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">GET_DRIVERHANDLE</span> <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">MAP_RXQUEUE</span> <span class="o">=</span> <span class="mi">18</span>
+    <span class="n">GET_WAKEUP</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">SET_REPORT_ACCESS_ERRORS</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">GET_REPORT_ACCESS_ERRORS</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">CONNECT_TO_VIRTUAL_BUS</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">DISCONNECT_FROM_VIRTUAL_BUS</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">SET_USER_IOPORT</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">GET_USER_IOPORT</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">SET_BUFFER_WRAPAROUND_MODE</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">SET_RX_QUEUE_SIZE</span> <span class="o">=</span> <span class="mi">27</span>
+    <span class="n">SET_USB_THROTTLE</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">GET_USB_THROTTLE</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="n">SET_BUSON_TIME_AUTO_RESET</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">GET_TXACK</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">SET_LOCAL_TXECHO</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">SET_ERROR_FRAMES_REPORTING</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">GET_CHANNEL_QUALITY</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">GET_ROUNDTRIP_TIME</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">GET_BUS_TYPE</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">GET_DEVNAME_ASCII</span> <span class="o">=</span> <span class="mi">37</span>
+    <span class="n">GET_TIME_SINCE_LAST_SEEN</span> <span class="o">=</span> <span class="mi">38</span>
+    <span class="n">GET_TREF_LIST</span> <span class="o">=</span> <span class="mi">39</span>
+    <span class="n">TX_INTERVAL</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">SET_THROTTLE_SCALED</span> <span class="o">=</span> <span class="mi">41</span>
+    <span class="n">GET_THROTTLE_SCALED</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="n">SET_BRLIMIT</span> <span class="o">=</span> <span class="mi">43</span>
+    <span class="n">RESET_OVERRUN_COUNT</span> <span class="o">=</span> <span class="mi">44</span>
+    <span class="n">LIN_MODE</span> <span class="o">=</span> <span class="mi">45</span></div>
+
+
+<div class="viewcode-block" id="ChannelDataItem"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ChannelDataItem">[docs]</a><span class="k">class</span> <span class="nc">ChannelDataItem</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">CHANNEL_CAP</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">TRANS_CAP</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">CHANNEL_FLAGS</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CARD_TYPE</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">CARD_NUMBER</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">CHAN_NO_ON_CARD</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">CARD_SERIAL_NO</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">TRANS_SERIAL_NO</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">CARD_FIRMWARE_REV</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">CARD_HARDWARE_REV</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">CARD_UPC_NO</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">TRANS_UPC_NO</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">CHANNEL_NAME</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">DLL_FILE_VERSION</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">DLL_PRODUCT_VERSION</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">DLL_FILETYPE</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">TRANS_TYPE</span> <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">DEVICE_PHYSICAL_POSITION</span> <span class="o">=</span> <span class="mi">18</span>
+    <span class="n">UI_NUMBER</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">TIMESYNC_ENABLED</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">DRIVER_FILE_VERSION</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">DRIVER_PRODUCT_VERSION</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">MFGNAME_UNICODE</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">MFGNAME_ASCII</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">DEVDESCR_UNICODE</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">DEVDESCR_ASCII</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">DRIVER_NAME</span> <span class="o">=</span> <span class="mi">27</span>
+    <span class="n">CHANNEL_QUALITY</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">ROUNDTRIP_TIME</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="n">BUS_TYPE</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">DEVNAME_ASCII</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">TIME_SINCE_LAST_SEEN</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">REMOTE_OPERATIONAL_MODE</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">REMOTE_PROFILE_NAME</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">REMOTE_HOST_NAME</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">REMOTE_MAC</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">MAX_BITRATE</span> <span class="o">=</span> <span class="mi">37</span>
+    <span class="n">CHANNEL_CAP_MASK</span> <span class="o">=</span> <span class="mi">38</span>
+    <span class="n">CUST_CHANNEL_NAME</span> <span class="o">=</span> <span class="mi">39</span>
+    <span class="n">IS_REMOTE</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">REMOTE_TYPE</span> <span class="o">=</span> <span class="mi">41</span>
+    <span class="n">LOGGER_TYPE</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="n">HW_STATUS</span> <span class="o">=</span> <span class="mi">43</span>
+    <span class="n">FEATURE_EAN</span> <span class="o">=</span> <span class="mi">44</span></div>
+
+
+<div class="viewcode-block" id="Stat"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.Stat">[docs]</a><span class="k">class</span> <span class="nc">Stat</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canSTAT_xxx</span>
+
+<span class="sd">    The following circuit status flags are returned by `Channel.readStatus`.</span>
+<span class="sd">    Note that more than one flag might be set at any one time.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        Usually both canSTAT_HW_OVERRUN and canSTAT_SW_OVERRUN are set when</span>
+<span class="sd">        overrun has occurred. This is because the kernel driver can&#39;t see the</span>
+<span class="sd">        difference between a software overrun and a hardware overrun. So the</span>
+<span class="sd">        code should always test for both types of overrun using the flag.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ERROR_PASSIVE</span> <span class="o">=</span> <span class="mh">0x00000001</span>  <span class="c1"># The circuit is error passive</span>
+    <span class="n">BUS_OFF</span> <span class="o">=</span> <span class="mh">0x00000002</span>  <span class="c1"># The circuit is Off Bus</span>
+    <span class="n">ERROR_WARNING</span> <span class="o">=</span> <span class="mh">0x00000004</span>  <span class="c1"># At least one error counter &gt; 96</span>
+    <span class="n">ERROR_ACTIVE</span> <span class="o">=</span> <span class="mh">0x00000008</span>  <span class="c1"># The circuit is error active.</span>
+    <span class="n">TX_PENDING</span> <span class="o">=</span> <span class="mh">0x00000010</span>  <span class="c1"># There are messages pending transmission</span>
+    <span class="n">RX_PENDING</span> <span class="o">=</span> <span class="mh">0x00000020</span>  <span class="c1"># There are messages in the receive buffer</span>
+    <span class="n">RESERVED_1</span> <span class="o">=</span> <span class="mh">0x00000040</span>
+    <span class="n">TXERR</span> <span class="o">=</span> <span class="mh">0x00000080</span>  <span class="c1"># There has been at least one TX error</span>
+    <span class="n">RXERR</span> <span class="o">=</span> <span class="mh">0x00000100</span>  <span class="c1"># There has been at least one RX error of some sort</span>
+    <span class="n">HW_OVERRUN</span> <span class="o">=</span> <span class="mh">0x00000200</span>  <span class="c1"># There has been at least one HW buffer overflow</span>
+    <span class="n">SW_OVERRUN</span> <span class="o">=</span> <span class="mh">0x00000400</span>  <span class="c1"># There has been at least one SW buffer overflow</span>
+    <span class="n">OVERRUN</span> <span class="o">=</span> <span class="p">(</span><span class="n">HW_OVERRUN</span> <span class="o">|</span> <span class="n">SW_OVERRUN</span><span class="p">)</span>  <span class="c1"># For convenience.</span></div>
+
+
+<div class="viewcode-block" id="MessageFlag"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.MessageFlag">[docs]</a><span class="k">class</span> <span class="nc">MessageFlag</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Message information flags</span>
+
+<span class="sd">    The following flags can be returned from `Channel.read` et al, or passed to</span>
+<span class="sd">    `Channel.write`.</span>
+
+<span class="sd">    This enum is a combination of flags for messages, CAN FD messages, and</span>
+<span class="sd">    message errors. Normal messages flags are the flags covered by `MSG_MASK`,</span>
+<span class="sd">    CAN FD message flags are those covered by `FDMSG_MASK`, and message errors</span>
+<span class="sd">    are those covered by `MSGERR_MASK`.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        `FDF`, `BRS`, and `ESI` require CAN FD.</span>
+
+<span class="sd">        `RTR` cannot be set for CAN FD messages.</span>
+
+<span class="sd">        Not all hardware platforms can detect the difference between hardware</span>
+<span class="sd">        overruns and software overruns, so your application should test for</span>
+<span class="sd">        both conditions. You can use the symbol `OVERRUN` for this</span>
+<span class="sd">        purpose.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># canMSG_xxx</span>
+    <span class="n">MSG_MASK</span> <span class="o">=</span> <span class="mh">0x00ff</span>
+    <span class="n">RTR</span> <span class="o">=</span> <span class="mh">0x0001</span>
+    <span class="n">STD</span> <span class="o">=</span> <span class="mh">0x0002</span>
+    <span class="n">EXT</span> <span class="o">=</span> <span class="mh">0x0004</span>
+    <span class="n">WAKEUP</span> <span class="o">=</span> <span class="mh">0x0008</span>
+    <span class="n">NERR</span> <span class="o">=</span> <span class="mh">0x0010</span>
+    <span class="n">ERROR_FRAME</span> <span class="o">=</span> <span class="mh">0x0020</span>
+    <span class="n">TXACK</span> <span class="o">=</span> <span class="mh">0x0040</span>
+    <span class="n">TXRQ</span> <span class="o">=</span> <span class="mh">0x0080</span>
+
+    <span class="c1"># canFDMSG_xxx</span>
+    <span class="n">FDMSG_MASK</span> <span class="o">=</span> <span class="mh">0xff0000</span>  <span class="c1"># obsolete</span>
+    <span class="n">EDL</span> <span class="o">=</span> <span class="mh">0x010000</span>  <span class="c1"># obsolete</span>
+    <span class="n">FDF</span> <span class="o">=</span> <span class="mh">0x010000</span>
+    <span class="n">BRS</span> <span class="o">=</span> <span class="mh">0x020000</span>
+    <span class="n">ESI</span> <span class="o">=</span> <span class="mh">0x040000</span>
+
+    <span class="c1"># canMSGERR_xxx</span>
+    <span class="n">MSGERR_MASK</span> <span class="o">=</span> <span class="mh">0xff00</span>
+    <span class="n">HW_OVERRUN</span> <span class="o">=</span> <span class="mh">0x0200</span>
+    <span class="n">SW_OVERRUN</span> <span class="o">=</span> <span class="mh">0x0400</span>
+    <span class="n">STUFF</span> <span class="o">=</span> <span class="mh">0x0800</span>
+    <span class="n">FORM</span> <span class="o">=</span> <span class="mh">0x1000</span>
+    <span class="n">CRC</span> <span class="o">=</span> <span class="mh">0x2000</span>
+    <span class="n">BIT0</span> <span class="o">=</span> <span class="mh">0x4000</span>
+    <span class="n">BIT1</span> <span class="o">=</span> <span class="mh">0x8000</span>
+    <span class="n">OVERRUN</span> <span class="o">=</span> <span class="mh">0x0600</span>
+    <span class="n">BIT</span> <span class="o">=</span> <span class="mh">0xC000</span>
+    <span class="n">BUSERR</span> <span class="o">=</span> <span class="mh">0xF800</span></div>
+
+
+<div class="viewcode-block" id="Driver"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.Driver">[docs]</a><span class="k">class</span> <span class="nc">Driver</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">NORMAL</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">SILENT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">SELFRECEPTION</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">OFF</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="ScriptStatus"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ScriptStatus">[docs]</a><span class="k">class</span> <span class="nc">ScriptStatus</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Status of t program</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+
+<span class="sd">    .. versionchanged:: 1.7</span>
+<span class="sd">       Is now based on `IntFlag` instead of `IntEnum`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">LOADED</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">RUNNING</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="ScriptStop"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ScriptStop">[docs]</a><span class="k">class</span> <span class="nc">ScriptStop</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">NORMAL</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">FORCED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9</span></div>
+
+
+<div class="viewcode-block" id="TxeDataItem"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.TxeDataItem">[docs]</a><span class="k">class</span> <span class="nc">TxeDataItem</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">FILE_VERSION</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">COMPILER_VERSION</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">DATE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">SOURCE</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SIZE_OF_CODE</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">IS_ENCRYPTED</span> <span class="o">=</span> <span class="mi">7</span></div>
+
+
+<div class="viewcode-block" id="DeviceMode"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.DeviceMode">[docs]</a><span class="k">class</span> <span class="nc">DeviceMode</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="c1"># kvDEVICE_MODE_xxx</span>
+    <span class="n">INTERFACE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">LOGGER</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="EnvVarType"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.EnvVarType">[docs]</a><span class="k">class</span> <span class="nc">EnvVarType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">INT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">FLOAT</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">STRING</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="AcceptFilterFlag"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.AcceptFilterFlag">[docs]</a><span class="k">class</span> <span class="nc">AcceptFilterFlag</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canFILTER_SET_xxx&quot;&quot;&quot;</span>
+    <span class="c1"># Flags for canAccept().</span>
+    <span class="n">SET_CODE_STD</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">SET_MASK_STD</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">SET_CODE_EXT</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SET_MASK_EXT</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">NULL_MASK</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="LEDAction"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.LEDAction">[docs]</a><span class="k">class</span> <span class="nc">LEDAction</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvLED_ACTION_xxx</span>
+
+<span class="sd">    The following can be used together with `canlib.canlib.Channel.flashLeds`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ALL_LEDS_ON</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1">#: Turn all LEDs on.</span>
+    <span class="n">ALL_LEDS_OFF</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1">#: Turn all LEDs off.</span>
+    <span class="n">LED_0_ON</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1">#: Turn LED 0 on.</span>
+    <span class="n">LED_0_OFF</span> <span class="o">=</span> <span class="mi">3</span>   <span class="c1">#: Turn LED 0 off.</span>
+    <span class="n">LED_1_ON</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1">#: Turn LED 1 on.</span>
+    <span class="n">LED_1_OFF</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1">#: Turn LED 1 off.</span>
+    <span class="n">LED_2_ON</span> <span class="o">=</span> <span class="mi">6</span>   <span class="c1">#: Turn LED 2 on.</span>
+    <span class="n">LED_2_OFF</span> <span class="o">=</span> <span class="mi">7</span>   <span class="c1">#: Turn LED 2 off.</span>
+    <span class="n">LED_3_ON</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c1">#: Turn LED 3 on.</span>
+    <span class="n">LED_3_OFF</span> <span class="o">=</span> <span class="mi">9</span>   <span class="c1">#: Turn LED 3 off.</span></div>
+
+
+<div class="viewcode-block" id="TransceiverType"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.TransceiverType">[docs]</a><span class="k">class</span> <span class="nc">TransceiverType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transceiver (logical) types</span>
+
+<span class="sd">    The following constants can be returned from canGetChannelData(), using the</span>
+<span class="sd">    canCHANNELDATA_TRANS_TYPE item code. They identify the bus transceiver type</span>
+<span class="sd">    for the channel specified in the call to canGetChannelData.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        If the type starts with a number ``T_`` has been prepended to the name.</span>
+
+<span class="sd">        They indicate a hardware type, but not necessarily a specific circuit</span>
+<span class="sd">        or product.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Unknown or undefined</span>
+    <span class="n">T_251</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 82c251</span>
+    <span class="n">T_252</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># 82c252, TJA1053, TJA1054</span>
+    <span class="n">DNOPTO</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Optoisolated 82C251</span>
+    <span class="n">W210</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">SWC_PROTO</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># AU5790 prototype</span>
+    <span class="n">SWC</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># AU5790</span>
+    <span class="n">EVA</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">FIBER</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># 82c251 with fibre extension</span>
+    <span class="n">K251</span> <span class="o">=</span> <span class="mi">9</span>  <span class="c1"># K-line + 82c251</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># K-line, without CAN.</span>
+    <span class="n">T_1054_OPTO</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># TJA1054 with optical isolation</span>
+    <span class="n">SWC_OPTO</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># AU5790 with optical isolation</span>
+    <span class="n">TT</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c1"># B10011S Truck-And-Trailer</span>
+    <span class="n">T_1050</span> <span class="o">=</span> <span class="mi">14</span>  <span class="c1"># TJA1050</span>
+    <span class="n">T_1050_OPTO</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># TJA1050 with optical isolation</span>
+    <span class="n">T_1041</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># TJA1041</span>
+    <span class="n">T_1041_OPTO</span> <span class="o">=</span> <span class="mi">17</span>  <span class="c1"># TJA1041 with optical isolation</span>
+    <span class="n">RS485</span> <span class="o">=</span> <span class="mi">18</span>  <span class="c1"># RS485 (i.e. J1708)</span>
+    <span class="n">LIN</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">KONE</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">CANFD</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">CANFD_LIN</span> <span class="o">=</span> <span class="mi">24</span>  <span class="c1"># HYBRID CAN-FD/LIN</span>
+    <span class="n">LINX_LIN</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">LINX_J1708</span> <span class="o">=</span> <span class="mi">66</span>
+    <span class="n">LINX_K</span> <span class="o">=</span> <span class="mi">68</span>
+    <span class="n">LINX_SWC</span> <span class="o">=</span> <span class="mi">70</span>
+    <span class="n">LINX_LS</span> <span class="o">=</span> <span class="mi">72</span></div>
+
+
+<div class="viewcode-block" id="Notify"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.Notify">[docs]</a><span class="k">class</span> <span class="nc">Notify</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canNOTIFY_xxx</span>
+
+<span class="sd">    These notify flags are used in `Channel.set_callback` to indicate</span>
+<span class="sd">    different kind of events.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Turn notifications off.</span>
+    <span class="n">RX</span> <span class="o">=</span> <span class="mh">0x0001</span>  <span class="c1"># CAN message reception notification</span>
+    <span class="n">TX</span> <span class="o">=</span> <span class="mh">0x0002</span>  <span class="c1"># CAN message transmission notification</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="mh">0x0004</span>  <span class="c1"># CAN bus error notification</span>
+    <span class="n">STATUS</span> <span class="o">=</span> <span class="mh">0x0008</span>  <span class="c1"># CAN chip status change</span>
+    <span class="n">ENVVAR</span> <span class="o">=</span> <span class="mh">0x0010</span>  <span class="c1"># An environment variable was changed by a script. Note that you will not be notified when an environment variable is updated from the Canlib API.</span>
+    <span class="n">BUSONOFF</span> <span class="o">=</span> <span class="mh">0x0020</span>  <span class="c1"># Notify on bus on/off status changed</span>
+    <span class="n">REMOVED</span> <span class="o">=</span> <span class="mh">0x0040</span>  <span class="c1"># Notify on device removed</span></div>
+
+
+<div class="viewcode-block" id="ChannelFlags"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ChannelFlags">[docs]</a><span class="k">class</span> <span class="nc">ChannelFlags</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canCHANNEL_IS_xxx</span>
+
+<span class="sd">    These channel flags are used in conjunction with `ChannelDataItem.CHANNEL_FLAGS`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">IS_EXCLUSIVE</span> <span class="o">=</span> <span class="mh">0x0001</span>
+    <span class="n">IS_OPEN</span> <span class="o">=</span> <span class="mh">0x0002</span>
+    <span class="n">IS_CANFD</span> <span class="o">=</span> <span class="mh">0x0004</span>
+    <span class="n">IS_LIN</span> <span class="o">=</span> <span class="mh">0x0010</span>
+    <span class="n">IS_LIN_MASTER</span> <span class="o">=</span> <span class="mh">0x0020</span>
+    <span class="n">IS_LIN_SLAVE</span> <span class="o">=</span> <span class="mh">0x0040</span></div>
+
+
+<div class="viewcode-block" id="BusTypeGroup"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.BusTypeGroup">[docs]</a><span class="k">class</span> <span class="nc">BusTypeGroup</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvBUSTYPE_GROUP_xxx</span>
+
+<span class="sd">    Bus type group.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">VIRTUAL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">LOCAL</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># kvBUSTYPE_USB</span>
+    <span class="n">REMOTE</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># kvBUSTYPE_WLAN, kvBUSTYPE_LAN</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># kvBUSTYPE_PCI, kvBUSTYPE_PCMCIA, ...</span></div>
+
+
+<div class="viewcode-block" id="HardwareType"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.HardwareType">[docs]</a><span class="k">class</span> <span class="nc">HardwareType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canHWTYPE_xxx</span>
+
+<span class="sd">    The following constants can be returned from canGetChannelData(), using</span>
+<span class="sd">    the canCHANNELDATA_CARD_TYPE item code. They identify the hardware type</span>
+<span class="sd">    for the channel specified in the call to canGetChannelData().</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">        The members indicate a hardware type, but not necessarily a specific</span>
+<span class="sd">        product. For example, canHWTYPE_LAPCAN is returned both for LAPcan and</span>
+<span class="sd">        LAPcan II. (You can use canGetChannelData() to obtain the UPC/EAN code</span>
+<span class="sd">        for the device. This number uniquely identifies the product.)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Unknown or undefined.</span>
+    <span class="n">VIRTUAL</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># The virtual CAN bus.</span>
+    <span class="n">LAPCAN</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># LAPcan Family.</span>
+    <span class="n">PCCAN</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># PCcan Family.</span>
+    <span class="n">PCICAN</span> <span class="o">=</span> <span class="mi">9</span>  <span class="c1"># PCIcan Family.</span>
+    <span class="n">PCICAN_II</span> <span class="o">=</span> <span class="mi">40</span>  <span class="c1"># PCIcan II family.</span>
+    <span class="n">USBCAN_II</span> <span class="o">=</span> <span class="mi">42</span>  <span class="c1"># USBcan II, USBcan Rugged, Kvaser Memorator.</span>
+    <span class="n">LEAF</span> <span class="o">=</span> <span class="mi">48</span>  <span class="c1"># Kvaser Leaf Family.</span>
+    <span class="n">PC104_PLUS</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># Kvaser PC104+.</span>
+    <span class="n">PCICANX_II</span> <span class="o">=</span> <span class="mi">52</span>  <span class="c1"># Kvaser PCIcanx II.</span>
+    <span class="n">MEMORATOR_II</span> <span class="o">=</span> <span class="mi">54</span>  <span class="c1"># Kvaser Memorator Professional family.</span>
+    <span class="n">MEMORATOR_PRO</span> <span class="o">=</span> <span class="mi">54</span>  <span class="c1"># Kvaser Memorator Professional family.</span>
+    <span class="n">USBCAN_PRO</span> <span class="o">=</span> <span class="mi">56</span>  <span class="c1"># Kvaser USBcan Professional.</span>
+    <span class="n">BLACKBIRD</span> <span class="o">=</span> <span class="mi">58</span>  <span class="c1"># Kvaser BlackBird.</span>
+    <span class="n">MEMORATOR_LIGHT</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># Kvaser Memorator Light.</span>
+    <span class="n">EAGLE</span> <span class="o">=</span> <span class="mi">62</span>  <span class="c1"># Kvaser Eagle family.</span>
+    <span class="n">BLACKBIRD_V2</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># Kvaser BlackBird v2.</span>
+    <span class="n">MINIPCIE</span> <span class="o">=</span> <span class="mi">66</span>  <span class="c1"># Kvaser Mini PCI Express.</span>
+    <span class="n">USBCAN_KLINE</span> <span class="o">=</span> <span class="mi">68</span>  <span class="c1"># USBcan Pro HS/K-Line.</span>
+    <span class="n">ETHERCAN</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1"># Kvaser Ethercan.</span>
+    <span class="n">USBCAN_LIGHT</span> <span class="o">=</span> <span class="mi">72</span>  <span class="c1"># Kvaser USBcan Light.</span>
+    <span class="n">USBCAN_PRO2</span> <span class="o">=</span> <span class="mi">74</span>  <span class="c1"># Kvaser USBcan Pro 5xHS and variants.</span>
+    <span class="n">PCIE_V2</span> <span class="o">=</span> <span class="mi">76</span>  <span class="c1"># Kvaser PCIEcan 4xHS and variants.</span>
+    <span class="n">MEMORATOR_PRO2</span> <span class="o">=</span> <span class="mi">78</span>  <span class="c1"># Kvaser Memorator Pro 5xHS and variants.</span>
+    <span class="n">LEAF2</span> <span class="o">=</span> <span class="mi">80</span>  <span class="c1"># Kvaser Leaf Pro HS v2 and variants.</span>
+    <span class="n">MEMORATOR_V2</span> <span class="o">=</span> <span class="mi">82</span>  <span class="c1"># Kvaser Memorator (2nd generation)</span>
+    <span class="n">CANLINHYBRID</span> <span class="o">=</span> <span class="mi">84</span>  <span class="c1"># Kvaser Hybrid CAN/LIN.</span>
+    <span class="n">DINRAIL</span> <span class="o">=</span> <span class="mi">86</span>  <span class="c1"># Kvaser DIN Rail SE400S and variants</span>
+
+    <span class="c1"># Obsolete</span>
+    <span class="n">CANPARI</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># CANpari (obsolete).</span>
+    <span class="n">USBCAN</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># USBcan (obsolete).</span>
+    <span class="n">SIMULATED</span> <span class="o">=</span> <span class="mi">44</span>  <span class="c1"># Simulated CAN bus for Kvaser Creator (obsolete).</span>
+    <span class="n">ACQUISITOR</span> <span class="o">=</span> <span class="mi">46</span>  <span class="c1"># Kvaser Acquisitor (obsolete).</span>
+    <span class="n">IRIS</span> <span class="o">=</span> <span class="mi">58</span>  <span class="c1"># Obsolete name, use BLACKBIRD instead.</span>
+    <span class="n">MINIHYDRA</span> <span class="o">=</span> <span class="mi">62</span>  <span class="c1"># Obsolete name, use EAGLE instead.</span>
+    <span class="n">BAGEL</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># Obsolete name, use BLACKBIRD_V2 instead.</span></div>
+
+
+<div class="viewcode-block" id="ChannelCap"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ChannelCap">[docs]</a><span class="k">class</span> <span class="nc">ChannelCap</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canCHANNEL_CAP_xxx</span>
+
+<span class="sd">    Channel capabilities.</span>
+
+<span class="sd">    .. versionchanged:: 1.8</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">EXTENDED_CAN</span> <span class="o">=</span> <span class="mh">0x00000001</span>  <span class="c1"># Can use extended identifiers.</span>
+    <span class="n">BUS_STATISTICS</span> <span class="o">=</span> <span class="mh">0x00000002</span>  <span class="c1"># Can report busload etc.</span>
+    <span class="n">ERROR_COUNTERS</span> <span class="o">=</span> <span class="mh">0x00000004</span>  <span class="c1"># Can return error counters.</span>
+    <span class="n">RESERVED_2</span> <span class="o">=</span> <span class="mh">0x00000008</span>  <span class="c1"># Obsolete, only used by LAPcan driver</span>
+    <span class="n">GENERATE_ERROR</span> <span class="o">=</span> <span class="mh">0x00000010</span>  <span class="c1"># Can send error frames.</span>
+    <span class="n">GENERATE_OVERLOAD</span> <span class="o">=</span> <span class="mh">0x00000020</span>  <span class="c1"># Can send CAN overload frame.</span>
+    <span class="n">TXREQUEST</span> <span class="o">=</span> <span class="mh">0x00000040</span>  <span class="c1"># Can report when a CAN messsage transmission is initiated.</span>
+    <span class="n">TXACKNOWLEDGE</span> <span class="o">=</span> <span class="mh">0x00000080</span>  <span class="c1"># Can report when a CAN messages has been transmitted.</span>
+    <span class="n">VIRTUAL</span> <span class="o">=</span> <span class="mh">0x00010000</span>  <span class="c1"># Virtual CAN channel.</span>
+    <span class="n">SIMULATED</span> <span class="o">=</span> <span class="mh">0x00020000</span>  <span class="c1"># Simulated CAN channel.</span>
+    <span class="n">RESERVED_1</span> <span class="o">=</span> <span class="mh">0x00040000</span>  <span class="c1"># Obsolete, use canCHANNEL_CAP_REMOTE_ACCESS or canGetChannelData() instead.</span>
+    <span class="n">CAN_FD</span> <span class="o">=</span> <span class="mh">0x00080000</span>  <span class="c1"># CAN-FD ISO compliant channel.</span>
+    <span class="n">CAN_FD_NONISO</span> <span class="o">=</span> <span class="mh">0x00100000</span>  <span class="c1"># CAN-FD NON-ISO compliant channel.</span>
+    <span class="n">SILENT_MODE</span> <span class="o">=</span> <span class="mh">0x00200000</span>  <span class="c1"># Channel supports Silent mode.</span>
+    <span class="n">SINGLE_SHOT</span> <span class="o">=</span> <span class="mh">0x00400000</span>  <span class="c1"># Channel supports Single Shot messages.</span>
+    <span class="n">LOGGER</span> <span class="o">=</span> <span class="mh">0x00800000</span>  <span class="c1"># Channel has logger capabilities.</span>
+    <span class="n">REMOTE_ACCESS</span> <span class="o">=</span> <span class="mh">0x01000000</span>  <span class="c1"># Channel has remote capabilities.</span>
+    <span class="n">SCRIPT</span> <span class="o">=</span> <span class="mh">0x02000000</span>  <span class="c1"># Channel has script capabilities.</span>
+    <span class="n">LIN_HYBRID</span> <span class="o">=</span> <span class="mh">0x04000000</span>  <span class="c1"># Channel has LIN capabilities.</span>
+    <span class="n">IO_API</span> <span class="o">=</span> <span class="mh">0x08000000</span>  <span class="c1"># Channel has diagnostic capabilities.</span>
+    <span class="n">DIAGNOSTICS</span> <span class="o">=</span> <span class="mh">0x10000000</span>  <span class="c1"># Channel has diagnostic capabilities.</span></div>
+
+
+<div class="viewcode-block" id="LoggerType"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.LoggerType">[docs]</a><span class="k">class</span> <span class="nc">LoggerType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvLOGGER_TYPE_xxx</span>
+
+<span class="sd">    Logger type, returned when using canCHANNELDATA_LOGGER_TYPE</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NOT_A_LOGGER</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">V1</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">V2</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="OperationalMode"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.OperationalMode">[docs]</a><span class="k">class</span> <span class="nc">OperationalMode</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canCHANNEL_OPMODE_xxx</span>
+
+<span class="sd">    Current WLAN operational mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">INFRASTRUCTURE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">RESERVED</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">ADH</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="RemoteType"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.RemoteType">[docs]</a><span class="k">class</span> <span class="nc">RemoteType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvREMOTE_TYPExxx</span>
+
+<span class="sd">    Remote type, returned when using canCHANNELDATA_REMOTE_TYPE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NOT_REMOTE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">WLAN</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">LAN</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="DriverCap"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.DriverCap">[docs]</a><span class="k">class</span> <span class="nc">DriverCap</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;canDRIVER_CAP_xxx</span>
+
+<span class="sd">    Driver (transceiver) capabilities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">HIGHSPEED</span> <span class="o">=</span> <span class="mh">0x00000001</span></div>
+
+
+<div class="viewcode-block" id="ScriptRequest"><a class="viewcode-back" href="../../../reference/canlib/enums.html#canlib.canlib.ScriptRequest">[docs]</a><span class="k">class</span> <span class="nc">ScriptRequest</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvSCRIPT_REQUEST_TEXT_xxx</span>
+
+<span class="sd">    These defines are used in kvScriptRequestText() for printf message</span>
+<span class="sd">    subscribe/unsubscribe.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">UNSUBSCRIBE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">SUBSCRIBE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ALL_SLOTS</span> <span class="o">=</span> <span class="mi">255</span></div>
+
+
+<span class="k">class</span> <span class="nc">VersionEx</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">VERSION</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">PRODVER</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PRODVER32</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">BETA</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.discovery &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.discovery</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.discovery</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">EAN</span><span class="p">,</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.address</span> <span class="k">import</span> <span class="n">Address</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">AddressTypeFlag</span><span class="p">,</span> <span class="n">Availability</span><span class="p">,</span> <span class="n">StartInfo</span><span class="p">,</span> <span class="n">ServiceState</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">DeviceUsage</span><span class="p">,</span> <span class="n">Accessibility</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvrBlank</span>
+<span class="kn">from</span> <span class="nn">.structures</span> <span class="k">import</span> <span class="n">kvrAddress</span><span class="p">,</span> <span class="n">kvrDeviceInfo</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+<span class="c1"># kvrDiscoveryStoreDevices</span>
+<span class="c1"># kvrDeviceGetServiceStatusText</span>
+
+<span class="n">_ASSUMED_NUMBER_OF_DEFAULT_ADDRESSES</span> <span class="o">=</span> <span class="mi">20</span>
+
+
+<span class="n">ServiceStatus</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ServiceStatus&#39;</span><span class="p">,</span> <span class="s2">&quot;state start_info text&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_default_discovery_addresses"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.get_default_discovery_addresses">[docs]</a><span class="k">def</span> <span class="nf">get_default_discovery_addresses</span><span class="p">(</span><span class="n">broadcast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stored</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve the default discovery addresses</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        broadcast (`bool`): If ``True`` (the default), then the returned list</span>
+<span class="sd">            will contain broadcast addresses.</span>
+
+<span class="sd">        stored (`bool`): If ``True`` (defaults to ``False``), then the returned</span>
+<span class="sd">            list will contain earlier stored addresses.</span>
+
+<span class="sd">    If both arguments are ``False``, a `ValueError` will be raised.</span>
+
+<span class="sd">    Retruns a `list` of `canlib.kvrlib.Address` objects.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">_ASSUMED_NUMBER_OF_DEFAULT_ADDRESSES</span>
+    <span class="n">address_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrAddress</span> <span class="o">*</span> <span class="n">num</span><span class="p">)()</span>
+    <span class="n">returned_num</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">broadcast</span> <span class="ow">and</span> <span class="n">stored</span><span class="p">:</span>
+        <span class="n">address_type_flags</span> <span class="o">=</span> <span class="n">AddressTypeFlag</span><span class="o">.</span><span class="n">ALL</span>
+    <span class="k">elif</span> <span class="n">broadcast</span><span class="p">:</span>
+        <span class="n">address_type_flags</span> <span class="o">=</span> <span class="n">AddressTypeFlag</span><span class="o">.</span><span class="n">BROADCAST</span>
+    <span class="k">elif</span> <span class="n">stored</span><span class="p">:</span>
+        <span class="n">address_type_flags</span> <span class="o">=</span> <span class="n">AddressTypeFlag</span><span class="o">.</span><span class="n">STORED</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;broadcast or stored argument must be True&#39;</span><span class="p">)</span>
+
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryGetDefaultAddresses</span><span class="p">(</span>
+        <span class="n">address_list</span><span class="p">,</span>
+        <span class="n">num</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">returned_num</span><span class="p">),</span>
+        <span class="n">address_type_flags</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># kvrDiscoveryGetDefaultAddresses doesn&#39;t tell us how large address_list</span>
+    <span class="c1"># needs to be for all answers to fit, so we enlarge it by doubling every</span>
+    <span class="c1"># time we might have missed some results.</span>
+    <span class="k">while</span> <span class="n">num</span> <span class="o">==</span> <span class="n">returned_num</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">*=</span> <span class="mi">2</span>
+        <span class="n">address_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrAddress</span> <span class="o">*</span> <span class="n">num</span><span class="p">)()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryGetDefaultAddresses</span><span class="p">(</span>
+            <span class="n">address_list</span><span class="p">,</span>
+            <span class="n">num</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">returned_num</span><span class="p">),</span>
+            <span class="n">address_type_flags</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="n">default_addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="n">c_addr</span><span class="p">)</span> <span class="k">for</span> <span class="n">c_addr</span> <span class="ow">in</span> <span class="n">address_list</span><span class="p">[:</span><span class="n">returned_num</span><span class="o">.</span><span class="n">value</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">default_addresses</span></div>
+
+
+<div class="viewcode-block" id="openDiscovery"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.openDiscovery">[docs]</a><span class="k">def</span> <span class="nf">openDiscovery</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creates and returns a `canlib.kvrlib.Discovery` object</span>
+
+<span class="sd">    Device discovery is normally done using `canlib.kvrlib.discover_info_set`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryOpen</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">handle</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Discovery</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_clear_stored_devices_on_exit"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.set_clear_stored_devices_on_exit">[docs]</a><span class="k">def</span> <span class="nf">set_clear_stored_devices_on_exit</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets whether kvrlib should clear stored devices when the application exist&quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryClearDevicesAtExit</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="store_devices"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.store_devices">[docs]</a><span class="k">def</span> <span class="nf">store_devices</span><span class="p">(</span><span class="n">devices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Store a collection of `canlib.kvrlib.DeviceInfo` objects in the registry</span>
+
+<span class="sd">    See `canlib.kvrlib.DeviceInfoSet` for a simpler way of dealing with device</span>
+<span class="sd">    infos and the registry.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Previously stored devices are cleared.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DevArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrDeviceInfo</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">))</span>
+    <span class="n">devarray</span> <span class="o">=</span> <span class="n">DevArray</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">device_info</span> <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">))</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryStoreDevices</span><span class="p">(</span><span class="n">devarray</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">devarray</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="start_discovery"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.start_discovery">[docs]</a><span class="k">def</span> <span class="nf">start_discovery</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">addresses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">report_stored</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start and return a `canlib.kvrlib.Discovery`</span>
+
+<span class="sd">    Device discovery is normally done using `canlib.kvrlib.discover_info_set`.</span>
+
+<span class="sd">    The returned object should usually be used as a context handler::</span>
+
+<span class="sd">        with kvrlib.start_discovery(delay=100, timeout=1000) as disc:</span>
+<span class="sd">            for result in disc.results():</span>
+<span class="sd">                # process the discovery result</span>
+<span class="sd">                print(result)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">disc</span> <span class="o">=</span> <span class="n">openDiscovery</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">addresses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">addresses</span> <span class="o">=</span> <span class="n">get_default_discovery_addresses</span><span class="p">()</span>
+    <span class="n">disc</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">addresses</span>
+    <span class="n">disc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">report_stored</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">disc</span></div>
+
+
+<div class="viewcode-block" id="stored_devices"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.stored_devices">[docs]</a><span class="k">def</span> <span class="nf">stored_devices</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Read the devices stored in the registry as a tuple of `canlib.kvrlib.DeviceInfo` objects&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">start_discovery</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">report_stored</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">disc</span><span class="p">:</span>
+        <span class="n">stored</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dev</span> <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">disc</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="k">if</span> <span class="n">dev</span><span class="o">.</span><span class="n">availability</span> <span class="o">&amp;</span> <span class="n">Availability</span><span class="o">.</span><span class="n">STORED</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stored</span></div>
+
+
+<div class="viewcode-block" id="Discovery"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.Discovery">[docs]</a><span class="k">class</span> <span class="nc">Discovery</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A kvrlib &quot;Discovery&quot; process</span>
+
+<span class="sd">    Most of the time the discovery process can be handled by</span>
+<span class="sd">    `canlib.kvrlib.discover_info_set`, which returns the results of the</span>
+<span class="sd">    discovery as a `canlib.kvrlib.DeviceInfoSet`.</span>
+
+<span class="sd">    Even when interacted with directly, instnances of this class are normally</span>
+<span class="sd">    not instantiated directly, but created using</span>
+<span class="sd">    `canlib.kvrlib.start_discovery`, or sometimes using</span>
+<span class="sd">    `canlib.kvrlib.openDiscovery`.</span>
+
+<span class="sd">    Instances of this class can be used as context handlers, in which case the</span>
+<span class="sd">    discovery will be closed when the context is exited. The discovery will</span>
+<span class="sd">    also be closed when the instance is garbage collected, if it hasn&#39;t</span>
+<span class="sd">    already.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">handle</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;The list of addresses to use for discovery</span>
+
+<span class="s2">        Note:</span>
+<span class="s2">            This attribute is write-only.</span>
+
+<span class="s2">        This attribute should be a list of `canlib.kvrlib.Address` objects.</span>
+
+<span class="s2">        If the `Discovery` object was created by</span>
+<span class="s2">        `canlib.kvrlib.start_discovery`, the addresses are automatically</span>
+<span class="s2">        set. Otherwise, they must be assigned before `Discovery.start` can be</span>
+<span class="s2">        called.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="nd">@addresses</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">address_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrAddress</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">))(</span><span class="o">*</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">val</span><span class="p">])</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetAddresses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">address_list</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Discovery.close"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.Discovery.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close the discovery process</span>
+
+<span class="sd">        This function is called when the `Discovery` object is</span>
+<span class="sd">        garbage-collected.</span>
+
+<span class="sd">        If the `Discovery` object is used as a context handler, this function</span>
+<span class="sd">        will be called when the context exits.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Discovery.results"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.Discovery.results">[docs]</a>    <span class="k">def</span> <span class="nf">results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return an iterator of the result from the discovery</span>
+
+<span class="sd">        The results are yielded as `DeviceInfo` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="n">kvrDeviceInfo</span><span class="p">()</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryGetResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+                <span class="k">yield</span> <span class="n">DeviceInfo</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">KvrBlank</span><span class="p">:</span>
+            <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Discovery.start"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.Discovery.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">report_stored</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run the discovery</span>
+
+<span class="sd">        If the `Discovery` object was created by</span>
+<span class="sd">        `canlib.kvrlib.start_discovery`, the discovery has already been run,</span>
+<span class="sd">        and this function does not need to be called.</span>
+
+<span class="sd">        After the discovery has been run, its results can be retrieved using</span>
+<span class="sd">        `Discovery.results`.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            delay (`int`): The millisecond delay between sending discovery</span>
+<span class="sd">                messages to addresses in the address list.</span>
+
+<span class="sd">            timeout (`int`): The millisecond timeout after all discovery</span>
+<span class="sd">                messages have been sent, before returning.</span>
+
+<span class="sd">            report_stored (`bool`): if ``True`` (the default), stored devices</span>
+<span class="sd">                will be discovered.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryStartEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">report_stored</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="DeviceInfo"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.DeviceInfo">[docs]</a><span class="k">class</span> <span class="nc">DeviceInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Information about a device that can be written to the registry</span>
+
+<span class="sd">    See `canlib.kvrlib.DeviceInfoSet` for information about how to get</span>
+<span class="sd">    `DeviceInfo` objects, process them, and then write them to the registry.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">device_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">device_info</span> <span class="o">=</span> <span class="n">kvrDeviceInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span> <span class="o">=</span> <span class="n">device_info</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">{cls}</span><span class="s1"> </span><span class="si">{name}</span><span class="s1">(</span><span class="si">{hostname}</span><span class="s1">) - </span><span class="si">{ean}</span><span class="s1">:</span><span class="si">{serial}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+            <span class="n">ean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ean</span><span class="p">,</span>
+            <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">accessibility</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.Accessibility`: The accessibility of this device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Accessibility</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">accessibility</span><span class="p">)</span>
+
+    <span class="nd">@accessibility</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">accessibility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Accessibility</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="s2">&quot; not a valid Accessibility&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">accessibility</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">availability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.Availability`: The availability of this device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Availability</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">availability</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">base_station_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.Address`: Address of the base station&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">base_station_id</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">client_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.Address`: Address of connected client&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">client_address</span><span class="p">)</span>
+
+    <span class="nd">@client_address</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">client_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">Address</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; received, exptected &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Address</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">client_address</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`bool`: Whether the service should connect to this device&quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">request_connection</span>
+        <span class="c1"># The attribute can also, secretly, be set to ``3`` to flush dns.</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="nd">@connect</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">request_connection</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.Address`: Address of remote device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Address</span><span class="o">.</span><span class="n">from_c</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">device_address</span><span class="p">)</span>
+
+    <span class="nd">@device_address</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">device_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">Address</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; received, exptected &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Address</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">device_address</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.ean.EAN`: EAN of device&quot;&quot;&quot;</span>
+        <span class="n">ean</span> <span class="o">=</span> <span class="n">EAN</span><span class="o">.</span><span class="n">from_hilo</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ean_hi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ean_lo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ean</span>
+
+    <span class="nd">@ean</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">ean</span> <span class="o">=</span> <span class="n">EAN</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ean_hi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ean_lo</span> <span class="o">=</span> <span class="n">ean</span><span class="o">.</span><span class="n">hilo</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">firmware_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.versionnumber.VersionNumber`: Firmware version&quot;&quot;&quot;</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">VersionNumber</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">fw_major_ver</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">fw_minor_ver</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">fw_build_ver</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">version</span>
+
+    <span class="n">encryption_key</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;`bytes`: The encryption key to use when encrypting communication</span>
+
+<span class="s2">        Note:</span>
+<span class="s2">            This attribute is write-only.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="nd">@encryption_key</span><span class="o">.</span><span class="n">setter</span> <span class="c1"># noqa</span>
+    <span class="k">def</span> <span class="nf">encryption_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetEncryptionKey</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: DNS hostname if available, otherwise an empty string&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">host_name</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@hostname</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">host_name</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: User-defined name of device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="n">password</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;`str`: The accessibility password to use when connecting to a device</span>
+
+<span class="s2">        Note:</span>
+<span class="s2">            This attribute is write-only.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="nd">@password</span><span class="o">.</span><span class="n">setter</span>  <span class="c1"># noqa</span>
+    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetPassword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`int`: The serial number of the device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ser_no</span>
+
+    <span class="nd">@serial</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Serial number must be an int&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">ser_no</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">service_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.ServiceStatus`: A tuple with the service status of the device</span>
+
+<span class="sd">        The returned tuple has the format ``(state, start_info, text)``, where</span>
+<span class="sd">        ``state`` is a `canlib.kvrlib.ServiceState`, ``start_info`` is a</span>
+<span class="sd">        `canlib.kvrlib.StartInfo`, and ``text`` is a `str` with local</span>
+<span class="sd">        connection status.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c_state</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">c_start_info</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">c_text</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDeviceGetServiceStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="p">,</span> <span class="n">c_state</span><span class="p">,</span> <span class="n">c_start_info</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDeviceGetServiceStatusText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="p">,</span> <span class="n">c_text</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">c_text</span><span class="p">))</span>
+
+        <span class="c1"># python 2 requires converting from long to int</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">ServiceState</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c_state</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">start_info</span> <span class="o">=</span> <span class="n">StartInfo</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c_start_info</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">c_text</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">ServiceStatus</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">start_info</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stored</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`bool`: Whether this `DeviceInfo` was read from the registry&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">availability</span> <span class="ow">is</span> <span class="n">Availability</span><span class="o">.</span><span class="n">STORED</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`canlib.kvrlib.DeviceUsage`: Usage status (Free/Remote/USB/Config)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DeviceUsage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_info</span><span class="o">.</span><span class="n">usage</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DeviceInfo.info"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.DeviceInfo.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a string with information about the `DeviceInfo`</span>
+
+<span class="sd">        To be used when the ``str()`` representation is not detailed enough.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;ean&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;serial&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;hostname&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;connect&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;firmware_version&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;device_address&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;client_address&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;base_station_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;usage&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;accessibility&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;availability&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="nb">format</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="s1">&#39;&lt;20&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span></div>
+
+<div class="viewcode-block" id="DeviceInfo.update"><a class="viewcode-back" href="../../../reference/kvrlib/discovery.html#canlib.kvrlib.DeviceInfo.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the attributes of this instance</span>
+
+<span class="sd">        This function takes a `dict`, and will set the attributes given by the</span>
+<span class="sd">        keys to the corresponding value (on this object).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

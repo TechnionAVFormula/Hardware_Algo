@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.ean &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.ean</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.ean</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>  <span class="c1"># python 2 checking</span>
+
+
+<span class="n">PRODUCT_EAN_LENGTH</span> <span class="o">=</span> <span class="mi">7</span>
+
+
+<span class="k">def</span> <span class="nf">bcd_digits</span><span class="p">(</span><span class="n">bcd_bytes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split a byte sequence into four-bit BCD digits</span>
+
+<span class="sd">    Used internally by `EAN` to decode BCD.</span>
+
+<span class="sd">    For example 0x12345 is turned into 1, 2, 3, 4, 5.</span>
+
+<span class="sd">    `bcd_bytes` must be an iterable of eight bit objects supporting `&amp;` and</span>
+<span class="sd">    `&gt;&gt;`.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The byteorder is currently assumed to be &#39;little&#39;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># byteorder is assumed to be &#39;little&#39;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">bcd_bytes</span><span class="p">:</span>
+        <span class="c1"># Python 2 doesn&#39;t have bytes, only string</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">char</span> <span class="o">&amp;</span> <span class="mh">0xF</span>
+        <span class="k">yield</span> <span class="n">char</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+
+
+<span class="k">def</span> <span class="nf">int_from_digits</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Joins a sequence of decimal digits into a decimal number</span>
+
+<span class="sd">    Used internally by `EAN`.</span>
+
+<span class="sd">    For example (1, 2, 3, 4, 5) is turned into 54321.</span>
+
+<span class="sd">    Iterating through `digits` is assumed to only yield integers between 0 and</span>
+<span class="sd">    9, inclusive.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">decimal</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">digit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">digits</span><span class="p">):</span>
+        <span class="n">decimal</span> <span class="o">+=</span> <span class="n">digit</span> <span class="o">*</span> <span class="n">base</span><span class="o">**</span><span class="n">pos</span>
+    <span class="k">return</span> <span class="n">decimal</span>
+
+
+<span class="k">class</span> <span class="nc">IllegalEAN</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Could not parse EAN&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="EAN"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN">[docs]</a><span class="k">class</span> <span class="nc">EAN</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;Helper object for dealing with European Article Numbers</span>
+
+<span class="sd">    Depending on the format the ean is in, `EAN` objects are created in</span>
+<span class="sd">    different ways;</span>
+
+<span class="sd">    For strings::</span>
+
+<span class="sd">        EAN(&#39;73-30130-01234-5&#39;)</span>
+
+<span class="sd">    For integers::</span>
+
+<span class="sd">        EAN(7330130012345)</span>
+
+<span class="sd">    For iterables of integers::</span>
+
+<span class="sd">        EAN([7, 3, 3, 0, 1, 3, 0, 0, 1, 2, 3, 4, 5])</span>
+
+<span class="sd">    For BCD-coded bytes or bytearrays (str in python 2)::</span>
+
+<span class="sd">        EAN.from_bcd(b&#39;\x45\x23\x01\x30\x01\x33\x07&#39;)</span>
+
+<span class="sd">    For &quot;hi-lo&quot; format, i.e. two 32-bit integers containing half the ean each,</span>
+<span class="sd">    both BCD-coded::</span>
+
+<span class="sd">        EAN.from_hilo([eanHi, eanLo])</span>
+
+<span class="sd">    The various representations can then be produced from the resulting object::</span>
+
+<span class="sd">        &gt;&gt;&gt; str(ean)</span>
+<span class="sd">        &#39;73-30130-01234-5&#39;</span>
+<span class="sd">        &gt;&gt;&gt; int(ean)</span>
+<span class="sd">        7330130012345</span>
+<span class="sd">        &gt;&gt;&gt; tuple(ean)  # or list(), or any other sequence type</span>
+<span class="sd">        (7, 3, 3, 0, 1, 3, 0, 0, 1, 2, 3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; ean.bcd()</span>
+<span class="sd">        b&#39;E#\x010\x013\x07&#39;</span>
+<span class="sd">        &gt;&gt;&gt; ean.hilo()</span>
+<span class="sd">        (805380933, 471809)</span>
+
+<span class="sd">    Sometimes it is easier to only use the last six digits of the ean, the</span>
+<span class="sd">    product code and check digit. This is supported when working with string</span>
+<span class="sd">    representations; the constructor supports six-digit (seven-character) input::</span>
+
+<span class="sd">        EAN(&#39;01234-5&#39;)</span>
+
+<span class="sd">    In that cases, the country and manufacturer code is assumed to be that of</span>
+<span class="sd">    Kvaser AB (73-30130).</span>
+
+<span class="sd">    A string containing only the product code and check digit can also be retrieved::</span>
+
+<span class="sd">        ean.product()</span>
+
+<span class="sd">    Instances can also be indexed which yields specific digits as integers::</span>
+
+<span class="sd">        &gt;&gt;&gt; ean[7]</span>
+<span class="sd">        0</span>
+<span class="sd">        &gt;&gt;&gt; ean[7:]</span>
+<span class="sd">        (0, 1, 2, 3, 4, 5)</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The byteorder is currently always assumed to be &#39;little&#39;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;##-#####-#####-#&quot;</span>
+    <span class="n">num_digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">fmt</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="EAN.from_bcd"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.from_bcd">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_bcd</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">bcd_bytes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create an EAN object from a binary coded bytes-like object</span>
+
+<span class="sd">        The EAN is automatically shortened to the correct length.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># The digits are in reverse order, and there is an extra zero</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">bcd_digits</span><span class="p">(</span><span class="n">bcd_bytes</span><span class="p">))[:</span><span class="n">cls</span><span class="o">.</span><span class="n">num_digits</span><span class="p">]</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EAN.from_string"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ean_string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create an EAN object from a specially formatted string</span>
+
+<span class="sd">        .. deprecated:: 1.6</span>
+<span class="sd">           Use the constructor, `EAN(ean_string)`, instead.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">ean_string</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EAN.from_hilo"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.from_hilo">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_hilo</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">hilo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create an EAN object from a pair of 32-bit integers, (eanHi, eanLo)&quot;&quot;&quot;</span>
+        <span class="c1"># Python 2 does not have int.to_bytes. And also has longs.</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">hi</span><span class="p">,</span> <span class="n">lo</span> <span class="o">=</span> <span class="n">hilo</span>
+            <span class="n">conc</span> <span class="o">=</span> <span class="p">(</span><span class="n">hi</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">)</span> <span class="o">+</span> <span class="n">lo</span>
+            <span class="n">digits</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">conc</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+                <span class="n">digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="n">conc</span> <span class="o">=</span> <span class="n">conc</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+            <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">digits</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]))</span>
+
+        <span class="n">high</span><span class="p">,</span> <span class="n">low</span> <span class="o">=</span> <span class="n">hilo</span>
+        <span class="c1"># we get three extra digits in &#39;high&#39;</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">bcd_digits</span><span class="p">(</span><span class="n">high</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">)))[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">low</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">bcd_digits</span><span class="p">(</span><span class="n">low</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">high</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">low</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># and the digits are reversed</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_int</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ean_int</span><span class="p">):</span>
+        <span class="n">digits_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ean_int</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">num_digits</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+        <span class="n">internal</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">digits_string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cls</span><span class="o">.</span><span class="n">num_digits</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">IllegalEAN</span><span class="p">(</span><span class="s2">&quot;Too large EAN integer: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ean_int</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">internal</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_str</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ean_string</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ean_string</span><span class="p">)</span> <span class="o">==</span> <span class="n">PRODUCT_EAN_LENGTH</span><span class="p">:</span>
+            <span class="n">ean_string</span> <span class="o">=</span> <span class="s2">&quot;73-30130-&quot;</span> <span class="o">+</span> <span class="n">ean_string</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ean_string</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">fmt</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">IllegalEAN</span><span class="p">(</span><span class="s2">&quot;Wrong length for EAN string: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ean_string</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">fmt</span><span class="p">,</span> <span class="n">ean_string</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">IllegalEAN</span><span class="p">(</span><span class="s2">&quot;Unreconized format for EAN string: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ean_string</span><span class="p">))</span>
+
+        <span class="n">internal</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">fmt</span><span class="p">,</span> <span class="n">ean_string</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">internal</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_str</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_int</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">long</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_int</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Assumed to be a iterable</span>
+            <span class="n">internal</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_digits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">IllegalEAN</span><span class="p">(</span><span class="s2">&quot;Wrong length of EAN sequence (</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">internal</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">internal</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">IllegalEAN</span><span class="p">(</span><span class="s2">&quot;EAN sequence must contain only ints&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span> <span class="o">=</span> <span class="n">internal</span>
+
+    <span class="c1"># required in python 2</span>
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">EAN</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_internal</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">int_from_digits</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">num_only</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="c1"># In python 2, map returns a list</span>
+            <span class="n">num_only</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">num_only</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="nb">next</span><span class="p">(</span><span class="n">num_only</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="k">else</span> <span class="n">s</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
+            <span class="c1"># check that all digits where printed</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">num_only</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rest</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">{cls}</span><span class="s2">: </span><span class="si">{s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+<div class="viewcode-block" id="EAN.bcd"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.bcd">[docs]</a>    <span class="k">def</span> <span class="nf">bcd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a binary-coded bytes object with this EAN&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="c1"># python 2</span>
+            <span class="n">bcd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">digits</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">d1</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">:</span>
+                <span class="n">d0</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span>
+                <span class="n">bcd</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">d1</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">d0</span><span class="p">)</span>
+            <span class="n">bcd</span> <span class="o">=</span> <span class="n">bcd</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">bcd</span>
+
+        <span class="n">digits_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">)</span>
+        <span class="c1"># fromhex requires an even number of digits</span>
+        <span class="n">bcd</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="n">digits_string</span><span class="p">)</span>
+        <span class="n">bcd</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">bcd</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">bcd</span></div>
+
+<div class="viewcode-block" id="EAN.hilo"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.hilo">[docs]</a>    <span class="k">def</span> <span class="nf">hilo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a pair of 32-bit integers, (eanHi, eanLo), with this EAN&quot;&quot;&quot;</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">[:</span><span class="o">-</span><span class="mi">8</span><span class="p">]</span>
+        <span class="n">low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="n">int_from_digits</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">high</span><span class="p">),</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">low</span> <span class="o">=</span> <span class="n">int_from_digits</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">low</span><span class="p">),</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">high</span><span class="p">,</span> <span class="n">low</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EAN.product"><a class="viewcode-back" href="../../reference/ean.html#canlib.EAN.product">[docs]</a>    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return only the product code and check digit of the string representation&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="o">-</span><span class="n">PRODUCT_EAN_LENGTH</span><span class="p">:]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

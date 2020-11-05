@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bus Errors &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Time Measurement" href="timemeasurement.html" />
+    <link rel="prev" title="Send and Receive" href="sendandreceive.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devicesandchannels.html">Devices and Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openchannel.html">Open Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sendandreceive.html">Send and Receive</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bus Errors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-bus-status-information">Obtaining Bus Status Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overruns">Overruns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-frames">Error Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iopinhandling.html">I/O Pin Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>Bus Errors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/buserrors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bus-errors">
+<h1>Bus Errors<a class="headerlink" href="#bus-errors" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="obtaining-bus-status-information">
+<h2>Obtaining Bus Status Information<a class="headerlink" href="#obtaining-bus-status-information" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read_error_counters" title="canlib.canlib.Channel.read_error_counters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_error_counters</span></code></a> to read the error counters of
+the CAN controller. There are two such counters in a CAN controller (they are
+required by the protocol definition). Not all CAN controllers allow access to
+the error counters, so CANlib may provide you with an “educated guess” instead.</p>
+<p>Use <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.readStatus" title="canlib.canlib.Channel.readStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readStatus</span></code></a> to obtain the bus status (error active,
+error passive, bus off; as defined by the CAN standard).</p>
+</div>
+<div class="section" id="overruns">
+<h2>Overruns<a class="headerlink" href="#overruns" title="Permalink to this headline">¶</a></h2>
+<p>If the CAN interface or the driver runs out of buffer space, or if the bus load
+is so high that the CAN controller can’t keep up with the traffic, an overload
+condition is flagged to the application.</p>
+<p>The driver will set the <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.HW_OVERRUN" title="canlib.canlib.MessageFlag.HW_OVERRUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HW_OVERRUN</span></code></a> and/or
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.SW_OVERRUN" title="canlib.canlib.MessageFlag.SW_OVERRUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SW_OVERRUN</span></code></a> flags in the flag argument of <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> and
+its relatives. The flag(s) will be set in the first message read from the
+driver after the overrun or overload condition happened.</p>
+<p>Not all hardware platforms can detect the difference between hardware overruns
+and software overruns, so your application should test for both conditions. You
+can use the symbol <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.OVERRUN" title="canlib.canlib.MessageFlag.OVERRUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OVERRUN</span></code></a> for this purpose.</p>
+</div>
+<div class="section" id="error-frames">
+<h2>Error Frames<a class="headerlink" href="#error-frames" title="Permalink to this headline">¶</a></h2>
+<p>When a CAN controller detects an error, it transmits an error frame. This is a
+special CAN message that causes all other CAN controllers on the bus to notice
+that an error has occurred.</p>
+<p>CANlib will report error frames to the application just like it reports any
+other CAN message, but the <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.MessageFlag.ERROR_FRAME" title="canlib.canlib.MessageFlag.ERROR_FRAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERROR_FRAME</span></code></a> flag will be set in the
+flags parameter when e.g. <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.read" title="canlib.canlib.Channel.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a> returns.</p>
+<p>When an error frame is received, its identifier, DLC and data bytes will be
+undefined. You should test if a message is an error frame before checking its
+identifier, DLC or data bytes.</p>
+<p>In an healthy CAN system, error frames should rarely, if ever, occur. Error
+frames usually mean there is some type of serious problem in the system, such
+as a bad connector, a bad cable, bus termination missing or faulty, or another
+node transmitting at wrong bit rate, and so on.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="timemeasurement.html" class="btn btn-neutral float-right" title="Time Measurement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sendandreceive.html" class="btn btn-neutral float-left" title="Send and Receive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

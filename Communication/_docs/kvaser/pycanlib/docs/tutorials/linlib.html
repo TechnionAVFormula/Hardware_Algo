@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linlib &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using canlib (CANlib)" href="../canlib/index.html" />
+    <link rel="prev" title="kvrlib" href="kvrlib.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="canlib.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib.html">kvrlib</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">linlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-master-slave-usage">Basic master slave usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sending-message-from-master">Sending message from master</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requesting-lin-2-0-message">Requesting LIN 2.0 message</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>linlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/linlib.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linlib">
+<h1>linlib<a class="headerlink" href="#linlib" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>The following sections contain sample code for inspiration on how to use Kvaser Python linlib.</p>
+<div class="section" id="basic-master-slave-usage">
+<h2>Basic master slave usage<a class="headerlink" href="#basic-master-slave-usage" title="Permalink to this headline">¶</a></h2>
+<p>This code opens up one master and one slave, sets bitrate and then the slave sends a wakeup message to the master.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the linlib wrapper from the canlib package</span>
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">linlib</span>
+
+<span class="c1"># print information about device firmware version</span>
+<span class="k">print</span><span class="p">(</span><span class="n">linlib</span><span class="o">.</span><span class="n">getChannelData</span><span class="p">(</span><span class="n">channel_number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">item</span><span class="o">=</span><span class="n">linlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="o">.</span><span class="n">CARD_FIRMWARE_REV</span><span class="p">))</span>
+
+<span class="c1"># open the first channel as a Master</span>
+<span class="n">master</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">channel_type</span><span class="o">=</span><span class="n">linlib</span><span class="o">.</span><span class="n">ChannelType</span><span class="o">.</span><span class="n">MASTER</span><span class="p">)</span>
+
+<span class="c1"># open the next channel as a Slave</span>
+<span class="n">slave</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">channel_type</span><span class="o">=</span><span class="n">linlib</span><span class="o">.</span><span class="n">ChannelType</span><span class="o">.</span><span class="n">SLAVE</span><span class="p">)</span>
+
+<span class="c1"># setup bitrate</span>
+<span class="n">master</span><span class="o">.</span><span class="n">setBitrate</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">setBitrate</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># activate the LIN interface by going bus on</span>
+<span class="n">master</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+<span class="c1"># send a wakeup frame from the slave</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">writeWakeup</span><span class="p">()</span>
+
+<span class="c1"># read the frame when it arrives at the master</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">master</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># go bus off</span>
+<span class="n">master</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-message-from-master">
+<h2>Sending message from master<a class="headerlink" href="#sending-message-from-master" title="Permalink to this headline">¶</a></h2>
+<p>Our next example uses two shorthand helper functions to open the channels. We then send some messages from the master and see that they arrive.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">linlib</span><span class="p">,</span> <span class="n">Frame</span>
+
+<span class="c1"># open the first channel as Master, using helper function</span>
+<span class="n">master</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openMaster</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># open the next channel as a Slave, using helper function</span>
+<span class="n">slave</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openSlave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># go bus on</span>
+<span class="n">master</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+<span class="c1"># send some messages from master</span>
+<span class="n">NUM_MESSAGES</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_MESSAGES</span><span class="p">):</span>
+    <span class="n">master</span><span class="o">.</span><span class="n">writeMessage</span><span class="p">(</span><span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]))</span>
+<span class="n">master</span><span class="o">.</span><span class="n">writeSync</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># print the received messages at the slave</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_MESSAGES</span><span class="p">):</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">slave</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># the master should also have recorded the messages</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_MESSAGES</span><span class="p">):</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">master</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># go bus off</span>
+<span class="n">master</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="requesting-lin-2-0-message">
+<h2>Requesting LIN 2.0 message<a class="headerlink" href="#requesting-lin-2-0-message" title="Permalink to this headline">¶</a></h2>
+<p>As a last example, let’s look at using LIN 2.0 and setting up a message, using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code> object, on the slave which is then requested by the master.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">linlib</span><span class="p">,</span> <span class="n">Frame</span>
+
+
+<span class="n">ID</span> <span class="o">=</span> <span class="mh">0x17</span>
+<span class="n">DATA</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># open the first channel as Master, using helper function</span>
+<span class="n">master</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openMaster</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
+
+<span class="c1"># open the next channel as a Slave, using helper function</span>
+<span class="n">slave</span> <span class="o">=</span> <span class="n">linlib</span><span class="o">.</span><span class="n">openSlave</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">master</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+<span class="c1"># configure channels to use LIN 2.0</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">setupLIN</span><span class="p">(</span><span class="n">flags</span><span class="o">=</span><span class="n">linlib</span><span class="o">.</span><span class="n">Setup</span><span class="o">.</span><span class="n">ENHANCED_CHECKSUM</span> <span class="o">|</span> <span class="n">linlib</span><span class="o">.</span><span class="n">Setup</span><span class="o">.</span><span class="n">VARIABLE_DLC</span><span class="p">)</span>
+<span class="n">master</span><span class="o">.</span><span class="n">setupLIN</span><span class="p">(</span><span class="n">flags</span><span class="o">=</span><span class="n">linlib</span><span class="o">.</span><span class="n">Setup</span><span class="o">.</span><span class="n">ENHANCED_CHECKSUM</span> <span class="o">|</span> <span class="n">linlib</span><span class="o">.</span><span class="n">Setup</span><span class="o">.</span><span class="n">VARIABLE_DLC</span><span class="p">)</span>
+
+<span class="c1"># setup a message in the slave</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">updateMessage</span><span class="p">(</span><span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="n">ID</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">DATA</span><span class="p">))</span>
+
+<span class="c1"># request the message and print it</span>
+<span class="n">master</span><span class="o">.</span><span class="n">requestMessage</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">master</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># clear the message</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">clearMessage</span><span class="p">(</span><span class="mh">0x17</span><span class="p">)</span>
+
+<span class="c1"># we should now get an empty message</span>
+<span class="n">master</span><span class="o">.</span><span class="n">requestMessage</span><span class="p">(</span><span class="mh">0x17</span><span class="p">)</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">master</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="c1"># go bus off</span>
+<span class="n">master</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../canlib/index.html" class="btn btn-neutral float-right" title="Using canlib (CANlib)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kvrlib.html" class="btn btn-neutral float-left" title="kvrlib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

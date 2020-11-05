@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examine the Contents of a Database &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Print Information About All Channels" href="list_channels.html" />
+    <link rel="prev" title="Monitor a Channel Using a Database" href="dbmonitor.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="convert_kme_asc.html">Convert a .kme50 file to plain ASCII</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_db.html">Create a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbmonitor.html">Monitor a Channel Using a Database</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examine the Contents of a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="list_channels.html">Print Information About All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html">Monitor a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pinger.html">Send Random Messages on a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_memo_config.html">Validate a Memorator Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="write_memo_config.html">Write a Configuration to a Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Examine the Contents of a Database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/examine_db.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="examine-the-contents-of-a-database">
+<h1>Examine the Contents of a Database<a class="headerlink" href="#examine-the-contents-of-a-database" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># examine_db.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">This script uses canlib.kvadblib to parse a database and print its contents.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">kvadblib</span>
+
+<span class="n">INDENT</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">4</span>
+
+
+<span class="k">def</span> <span class="nf">print_db</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DATABASE&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">db_lines</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">adef_lines</span><span class="p">(</span><span class="n">adef</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="s1">&#39;type: &#39;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">adef</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">yield</span> <span class="s1">&#39;definition: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">adef</span><span class="o">.</span><span class="n">definition</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;owner: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">adef</span><span class="o">.</span><span class="n">owner</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">attr_lines</span><span class="p">(</span><span class="n">attrib</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="nb">str</span><span class="p">(</span><span class="n">attrib</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">attrib</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">db_lines</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="s1">&#39;flags: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;protocol: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">protocol</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">yield</span> <span class="s1">&#39;ATTRIBUTE DEFINITIONS&#39;</span>
+    <span class="k">for</span> <span class="n">adef</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">attribute_definitions</span><span class="p">():</span>
+        <span class="k">yield</span> <span class="nb">str</span><span class="p">(</span><span class="n">adef</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">adef_lines</span><span class="p">(</span><span class="n">adef</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">INDENT</span> <span class="o">+</span> <span class="n">line</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">yield</span> <span class="s1">&#39;MESSAGES&#39;</span>
+    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">msg_lines</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">INDENT</span> <span class="o">+</span> <span class="n">line</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">enum_lines</span><span class="p">(</span><span class="n">enums</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">enums</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">yield</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">msg_lines</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="s1">&#39;id: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;flags: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;dlc: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">dlc</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;comment: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">yield</span> <span class="s1">&#39;ATTRIBUTES&#39;</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">attributes</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">attr_lines</span><span class="p">(</span><span class="n">attr</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">line</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">yield</span> <span class="s1">&#39;SIGNALS&#39;</span>
+    <span class="k">for</span> <span class="n">signal</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">str</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sig_lines</span><span class="p">(</span><span class="n">signal</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">INDENT</span> <span class="o">+</span> <span class="n">line</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">sig_lines</span><span class="p">(</span><span class="n">signal</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;byte_order&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;scaling&#39;</span><span class="p">,</span> <span class="s1">&#39;limits&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="s1">&#39;comment&#39;</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">enums</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">enums</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="s1">&#39;ENUMERATIONS&#39;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">enum_lines</span><span class="p">(</span><span class="n">enums</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">line</span>
+        <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">yield</span> <span class="s1">&#39;ATTRIBUTES&#39;</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">signal</span><span class="o">.</span><span class="n">attributes</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">attr_lines</span><span class="p">(</span><span class="n">attr</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">line</span>
+    <span class="k">yield</span> <span class="s1">&#39;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">examine_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">kvadblib</span><span class="o">.</span><span class="n">Dbc</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">db_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">print_db</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;database.dbc&gt;&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The dbc database file to examine.&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">examine_database</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>The script is structured into several generator functions that take a
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code> object and yield lines of information about it. This allows
+one function to add indentation to any other functions it uses.</p>
+<p>Generally each function first yields information in the following order:</p>
+<ol class="arabic simple">
+<li>Any information about the object itself (e.g. <code class="docutils literal notranslate"><span class="pre">db.flags</span></code> and <code class="docutils literal notranslate"><span class="pre">db.protocol</span></code>)</li>
+<li>An empty string</li>
+<li>For each type of sub-object (e.g. attribute definitions):<ol class="arabic">
+<li>A heading (e.g. <code class="docutils literal notranslate"><span class="pre">'ATTRIBUTE_DEFINTIONS'</span></code>)</li>
+<li>For each object of that type (e.g. iterating through
+<a class="reference internal" href="../reference/kvadblib/dbc.html#canlib.kvadblib.Dbc.attribute_definitions" title="canlib.kvadblib.Dbc.attribute_definitions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib.Dbc.attribute_definitions</span></code></a>):<ol class="arabic">
+<li>The objects name</li>
+<li>All lines from the <code class="docutils literal notranslate"><span class="pre">*_lines</span></code> function for the object type
+(e.g. <code class="xref py py-obj docutils literal notranslate"><span class="pre">adef_lines</span></code>), with added indentation</li>
+</ol>
+</li>
+<li>An empty string</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="sample-output">
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<p>Running this script on the database created by <a class="reference internal" href="create_db.html"><span class="doc">Create a Database</span></a> gives the
+following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DATABASE</span>
+<span class="go">engine_example</span>
+<span class="go">    flags: 0</span>
+<span class="go">    protocol: ProtocolType.CAN</span>
+
+<span class="go">    ATTRIBUTE DEFINITIONS</span>
+<span class="go">    BusType</span>
+<span class="go">        type: StringDefinition</span>
+<span class="go">        definition: DefaultDefinition(default=&#39;&#39;)</span>
+<span class="go">        owner: AttributeOwner.DB</span>
+
+<span class="go">    MESSAGES</span>
+<span class="go">    EngineData</span>
+<span class="go">        id: 100</span>
+<span class="go">        flags: MessageFlag.0</span>
+<span class="go">        dlc: 8</span>
+<span class="go">        comment:</span>
+
+<span class="go">        ATTRIBUTES</span>
+
+<span class="go">        SIGNALS</span>
+<span class="go">        PetrolLevel</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=24, length=8)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=255.0)</span>
+<span class="go">            unit: l</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        EngPower</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=48, length=16)</span>
+<span class="go">            scaling: ValueScaling(factor=0.01, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=150.0)</span>
+<span class="go">            unit: kW</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        EngForce</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=32, length=16)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=0.0)</span>
+<span class="go">            unit: N</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        IdleRunning</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: 0</span>
+<span class="go">            size: ValueSize(startbit=23, length=1)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=0.0)</span>
+<span class="go">            unit:</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ENUMERATIONS</span>
+<span class="go">            Running = 0</span>
+<span class="go">            Idle = 1</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        EngTemp</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=16, length=7)</span>
+<span class="go">            scaling: ValueScaling(factor=2.0, offset=-50.0)</span>
+<span class="go">            limits: ValueLimits(min=-50.0, max=150.0)</span>
+<span class="go">            unit: °C</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        EngSpeed</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=0, length=16)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=8000.0)</span>
+<span class="go">            unit: rpm</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+
+<span class="go">    GearBoxInfo</span>
+<span class="go">        id: 1020</span>
+<span class="go">        flags: MessageFlag.0</span>
+<span class="go">        dlc: 1</span>
+<span class="go">        comment:</span>
+
+<span class="go">        ATTRIBUTES</span>
+
+<span class="go">        SIGNALS</span>
+<span class="go">        EcoMode</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: -1</span>
+<span class="go">            size: ValueSize(startbit=6, length=2)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=1.0)</span>
+<span class="go">            unit:</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        ShiftRequest</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: 0</span>
+<span class="go">            size: ValueSize(startbit=3, length=1)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=0.0)</span>
+<span class="go">            unit:</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ENUMERATIONS</span>
+<span class="go">            Shift_Request_On = 1</span>
+<span class="go">            Shift_Request_Off = 0</span>
+
+<span class="go">            ATTRIBUTES</span>
+
+<span class="go">        Gear</span>
+<span class="go">            type: SignalType.UNSIGNED</span>
+<span class="go">            byte_order: SignalByteOrder.INTEL</span>
+<span class="go">            mode: 0</span>
+<span class="go">            size: ValueSize(startbit=0, length=3)</span>
+<span class="go">            scaling: ValueScaling(factor=1.0, offset=0.0)</span>
+<span class="go">            limits: ValueLimits(min=0.0, max=5.0)</span>
+<span class="go">            unit:</span>
+<span class="go">            comment:</span>
+
+<span class="go">            ENUMERATIONS</span>
+<span class="go">            Gear_5 = 5</span>
+<span class="go">            Gear_1 = 1</span>
+<span class="go">            Gear_3 = 3</span>
+<span class="go">            Idle = 0</span>
+<span class="go">            Gear_4 = 4</span>
+<span class="go">            Gear_2 = 2</span>
+
+<span class="go">            ATTRIBUTES</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="list_channels.html" class="btn btn-neutral float-right" title="Print Information About All Channels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dbmonitor.html" class="btn btn-neutral float-left" title="Monitor a Channel Using a Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

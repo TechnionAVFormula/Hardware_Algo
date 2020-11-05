@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvlclib.enums &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvlclib.enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvlclib.enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span><span class="p">,</span> <span class="n">CFlag</span>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../reference/kvlclib/enums.html#canlib.kvlclib.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">FAIL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>   <span class="c1"># Generic error.</span>
+    <span class="n">PARAM</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>   <span class="c1"># Error in supplied parameters.</span>
+    <span class="n">EOF</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>   <span class="c1"># End of input file reached.</span>
+    <span class="n">NOT_IMPLEMENTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>   <span class="c1"># Not implemented.</span>
+    <span class="n">FILE_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>   <span class="c1"># File I/O error.</span>
+    <span class="n">FILE_EXISTS</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>   <span class="c1"># Output file already exists.</span>
+    <span class="n">INTERNAL_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>   <span class="c1"># Unhandled internal error.</span>
+    <span class="n">NULL_POINTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>   <span class="c1"># Unexpected null pointer.</span>
+    <span class="n">FILE_TOO_LARGE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>   <span class="c1"># File size too large for specified format.</span>
+    <span class="n">TYPE_MISMATCH</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span>   <span class="c1"># Supplied parameter has incorrect type.</span>
+    <span class="n">NO_FREE_HANDLES</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span>   <span class="c1"># Too many open KvlcHandle handles.</span>
+    <span class="n">NO_INPUT_SELECTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">13</span>  <span class="c1"># Missing call to kvlcSetInputFile or kvlcFeedSelectFormat.</span>
+    <span class="n">CONVERTING</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>   <span class="c1"># Call failed since conversion is running.</span>
+    <span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span>   <span class="c1"># Supplied buffer too small to hold the result.</span>
+    <span class="n">INVALID_LOG_EVENT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">30</span>   <span class="c1"># Event is unknown to converter.</span>
+    <span class="n">NO_TIME_REFERENCE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">31</span>   <span class="c1"># Required timestamp missing.</span>
+    <span class="n">TIME_DECREASING</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32</span>   <span class="c1"># Decreasing time between files.</span>
+    <span class="n">MIXED_ENDIANESS</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span>   <span class="c1"># Wrong data type in MDF.</span>
+    <span class="n">RESULT_TOO_BIG</span>  <span class="o">=</span> <span class="o">-</span><span class="mi">34</span>   <span class="c1"># Result is too big for an out-parameter</span></div>
+
+<div class="viewcode-block" id="FileFormat"><a class="viewcode-back" href="../../../reference/kvlclib/enums.html#canlib.kvlclib.FileFormat">[docs]</a><span class="k">class</span> <span class="nc">FileFormat</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;FILE_FORMAT_xxx</span>
+
+<span class="sd">    Format used for input and output, used in kvlcSetInputFile(),</span>
+<span class="sd">    kvlcFeedSelectFormat().</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Not all formats are valid as both output and input format.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">INVALID</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Invalid file format</span>
+    <span class="n">KME24</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c1"># Input and output file format.</span>
+    <span class="n">KME25</span> <span class="o">=</span> <span class="mi">2</span>    <span class="c1"># Input and output file format.</span>
+    <span class="n">VECTOR_ASC</span> <span class="o">=</span> <span class="mi">3</span>    <span class="c1"># Output file format.</span>
+    <span class="n">CSV</span> <span class="o">=</span> <span class="mi">4</span>    <span class="c1"># Output file format.</span>
+    <span class="n">PLAIN_ASC</span> <span class="o">=</span> <span class="mi">5</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MEMO_LOG</span> <span class="o">=</span> <span class="mi">6</span>    <span class="c1"># Input (internal device logfile format).</span>
+    <span class="n">KME40</span> <span class="o">=</span> <span class="mi">7</span>    <span class="c1"># Input and output file format.</span>
+    <span class="n">VECTOR_BLF</span> <span class="o">=</span> <span class="mi">8</span>    <span class="c1"># Output file format.</span>
+    <span class="n">KME50</span> <span class="o">=</span> <span class="mi">9</span>    <span class="c1"># Input and output file format.</span>
+    <span class="n">CSV_SIGNAL</span> <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MDF</span> <span class="o">=</span> <span class="mi">101</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MATLAB</span> <span class="o">=</span> <span class="mi">102</span>    <span class="c1"># Output file format.</span>
+    <span class="n">J1587</span> <span class="o">=</span> <span class="mi">103</span>    <span class="c1"># Output file format.</span>
+    <span class="n">J1587_ALT</span> <span class="o">=</span> <span class="mi">104</span>    <span class="c1"># Obsolete.</span>
+    <span class="n">FAMOS</span> <span class="o">=</span> <span class="mi">105</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MDF_SIGNAL</span> <span class="o">=</span> <span class="mi">106</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MDF_4X</span> <span class="o">=</span> <span class="mi">107</span>    <span class="c1"># Output file format.</span>
+    <span class="n">MDF_4X_SIGNAL</span> <span class="o">=</span> <span class="mi">108</span>    <span class="c1"># Output file format.</span>
+    <span class="n">XCP</span> <span class="o">=</span> <span class="mi">200</span>    <span class="c1"># Output file format.</span>
+    <span class="n">FAMOS_XCP</span> <span class="o">=</span> <span class="mi">201</span>    <span class="c1"># Output file format.</span>
+    <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># Reserved for debug.</span></div>
+
+
+<div class="viewcode-block" id="ChannelMask"><a class="viewcode-back" href="../../../reference/kvlclib/enums.html#canlib.kvlclib.ChannelMask">[docs]</a><span class="k">class</span> <span class="nc">ChannelMask</span><span class="p">(</span><span class="n">CFlag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Masking channels</span>
+
+<span class="sd">    The `ChannelMask` is used in `Converter.addDatabaseFile` to indicate which channels to use.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ONE</span> <span class="o">=</span> <span class="mh">0x01</span>
+    <span class="n">TWO</span> <span class="o">=</span> <span class="mh">0x02</span>
+    <span class="n">THREE</span> <span class="o">=</span> <span class="mh">0x04</span>
+    <span class="n">FOUR</span> <span class="o">=</span> <span class="mh">0x08</span>
+    <span class="n">FIVE</span> <span class="o">=</span> <span class="mh">0x10</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvamemolibxml.wrapper &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvamemolibxml.wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvamemolibxml.wrapper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">dllLoader</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.dll</span> <span class="k">import</span> <span class="n">KvaMemoLibXmlDll</span>
+
+<span class="n">_ct_dll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;kvaMemoLibXML.dll&#39;</span><span class="p">,</span>
+                             <span class="n">linux_name</span><span class="o">=</span><span class="s1">&#39;libkvamemolibxml.so&#39;</span><span class="p">)</span>
+<span class="n">dll</span> <span class="o">=</span> <span class="n">KvaMemoLibXmlDll</span><span class="p">(</span><span class="n">_ct_dll</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">KvaMemoLibXml</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deprecated wrapper class for the Kvaser kvaMemoLibXml</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+
+<span class="sd">    All functionality of this class has been moved to the kvamemolibxml module itself::</span>
+
+<span class="sd">      # deprecated</span>
+<span class="sd">      from canlib import kvamemolibxml</span>
+<span class="sd">      cl = kvamemolibxml.KvaMemoLibXml()  # or kvamemolibxml.kvaMemoLibXml()</span>
+<span class="sd">      cl.functionName()</span>
+
+<span class="sd">      # use this instead</span>
+<span class="sd">      from canlib import kvamemolibxml</span>
+<span class="sd">      kvamemolibxml.functionName()</span>
+
+<span class="sd">    Differences:</span>
+
+<span class="sd">    `xmlGetLastError` Does not take any argument, and returns a two-tuple.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span> <span class="o">=</span> <span class="n">dll</span>
+
+    <span class="c1"># These two variables seem to serve no purpose at all, so they will be</span>
+    <span class="c1"># removed along with KvaMemoLibXml.</span>
+    <span class="n">kvaMemoLibXmlDll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;kvaMemoLibXML.dll&#39;</span><span class="p">,</span>
+                                          <span class="n">linux_name</span><span class="o">=</span><span class="s1">&#39;libkvamemolibxml.so&#39;</span><span class="p">)</span>
+    <span class="n">installDir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KVDLLPATH&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">deprecation</span><span class="o">.</span><span class="n">manual_warn</span><span class="p">(</span>
+            <span class="s2">&quot;Creating KvaMemoLibXml objects is deprecated, &quot;</span>
+            <span class="s2">&quot;all functionality has been moved to the kvamemolib module itself.&quot;</span><span class="p">)</span>
+        <span class="c1"># since=1.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{t}</span><span class="s2"> object has no attribute </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">xmlGetLastError</span><span class="p">(</span><span class="n">kvaERR</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the last error message (if any).</span>
+
+<span class="sd">        Get the last error message (if any) from conversion in human redable</span>
+<span class="sd">        format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kvaERR (int): kvaMemoLibXml error code.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           msg (string): Error message associated with kvaERR.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">kvaERR</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetLastError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">value</span>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s1">&#39;dllversion&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getVersion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the kvaMemoLibXml DLL version number as a `str`</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `dllversion` instead.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">dllversion</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="dllversion"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.dllversion">[docs]</a><span class="k">def</span> <span class="nf">dllversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the kvaMemoLibXML DLL version number as a `VersionNumber`&quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetVersion</span><span class="p">()</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">major</span><span class="o">=</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">,</span> <span class="n">minor</span><span class="o">=</span><span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">version</span></div>
+
+
+<div class="viewcode-block" id="kvaBufferToXml"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.kvaBufferToXml">[docs]</a><span class="k">def</span> <span class="nf">kvaBufferToXml</span><span class="p">(</span><span class="n">conf_lif</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a buffer containg param.lif to XML settings.</span>
+
+<span class="sd">    Scripts from the param.lif will be written to current working</span>
+<span class="sd">    directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conf_lif (string): Buffer containing param.lif to convert.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xml_buf (string): Buffer containing converted XML settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">xml_buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">xml_size</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">xml_buf</span><span class="p">))</span>
+    <span class="n">script_path</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaBufferToXml</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">conf_lif</span><span class="p">),</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">conf_lif</span><span class="p">),</span>
+        <span class="n">xml_buf</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">xml_size</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
+        <span class="n">script_path</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">xml_buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="kvaXmlToBuffer"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.kvaXmlToBuffer">[docs]</a><span class="k">def</span> <span class="nf">kvaXmlToBuffer</span><span class="p">(</span><span class="n">conf_xml</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert XML settings to param.lif buffer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conf_xml (string): XML settings to convert.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        lif_buf (string): Buffer containing converted param.lif.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">lif_buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">320</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">lif_size</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">lif_buf</span><span class="p">))</span>
+    <span class="n">c_conf_xml</span> <span class="o">=</span> <span class="n">conf_xml</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlToBuffer</span><span class="p">(</span>
+        <span class="n">c_conf_xml</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">c_conf_xml</span><span class="p">),</span>
+        <span class="n">lif_buf</span><span class="p">,</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">lif_size</span><span class="p">),</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">lif_buf</span><span class="o">.</span><span class="n">raw</span><span class="p">[:</span><span class="n">lif_size</span><span class="o">.</span><span class="n">value</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="kvaXmlToFile"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.kvaXmlToFile">[docs]</a><span class="k">def</span> <span class="nf">kvaXmlToFile</span><span class="p">(</span><span class="n">xml_filename</span><span class="p">,</span> <span class="n">binary_filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert XML file to binary configuration file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        infile (string): Filename of file containing the XML settings.</span>
+<span class="sd">        outfile (string): Filename of binary configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlToFile</span><span class="p">(</span><span class="n">xml_filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">binary_filename</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="kvaXmlValidate"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.kvaXmlValidate">[docs]</a><span class="k">def</span> <span class="nf">kvaXmlValidate</span><span class="p">(</span><span class="n">conf_xml</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate a buffer with XML settings.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conf_xml (string): string containing the XML settings to validate.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        countErr (int):  Number of XML validation errors.</span>
+<span class="sd">        countWarn (int): Number of XML validation warnings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlValidate</span><span class="p">(</span><span class="n">conf_xml</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">conf_xml</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">xmlGetValidationStatusCount</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="xmlGetValidationStatusCount"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.xmlGetValidationStatusCount">[docs]</a><span class="k">def</span> <span class="nf">xmlGetValidationStatusCount</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the number of validation statuses (if any).</span>
+
+<span class="sd">    Call after kvaXmlValidate().</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        countErr (int):  Number of XML validation errors.</span>
+<span class="sd">        countWarn (int): Number of XML validation warnings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">countErr</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">countWarn</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetValidationStatusCount</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">countErr</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">countWarn</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">countErr</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">countWarn</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="xmlGetValidationError"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.xmlGetValidationError">[docs]</a><span class="k">def</span> <span class="nf">xmlGetValidationError</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get validation errors (if any).</span>
+
+<span class="sd">    Call after kvaXmlValidate() until return status is</span>
+<span class="sd">    KvaXmlValidationStatusOK.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        validationStatus (int): Validation status code.</span>
+<span class="sd">        text (string):          Validation status message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">validationStatus</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="o">-</span><span class="mi">666</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">1048</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetValidationError</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">validationStatus</span><span class="p">),</span> <span class="n">text</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">validationStatus</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="xmlGetValidationWarning"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.xmlGetValidationWarning">[docs]</a><span class="k">def</span> <span class="nf">xmlGetValidationWarning</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get validation warnings (if any).</span>
+
+<span class="sd">    Call after kvaXmlValidate() until return status is</span>
+<span class="sd">    KvaXmlValidationStatusOK.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        validationStatus (int): Validation status code.</span>
+<span class="sd">        text (string):          Validation status message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">validationStatus</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="o">-</span><span class="mi">666</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">1048</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetValidationWarning</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">validationStatus</span><span class="p">),</span> <span class="n">text</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">validationStatus</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="xmlGetLastError"><a class="viewcode-back" href="../../../reference/kvamemolibxml/wrapper.html#canlib.kvamemolibxml.xmlGetLastError">[docs]</a><span class="k">def</span> <span class="nf">xmlGetLastError</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the last error message (if any).</span>
+
+<span class="sd">    Get the last error message (if any) from conversion in human redable</span>
+<span class="sd">    format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       msg (string): Error message associated with kvaERR.</span>
+<span class="sd">       err (int): kvaMemoLibXml error code.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvaXmlGetLastError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

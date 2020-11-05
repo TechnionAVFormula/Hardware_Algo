@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Confiurations &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enumerations" href="enums.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvamemolibxml</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Confiurations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-lif">load_lif()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-lif-file">load_lif_file()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-xml">load_xml()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-xml-file">load_xml_file()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validationmessage">ValidationMessage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validationerrormessage">ValidationErrorMessage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validationwarningmessage">ValidationWarningMessage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvamemolibxml</a> &raquo;</li>
+        
+      <li>Confiurations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvamemolibxml/configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="confiurations">
+<h1>Confiurations<a class="headerlink" href="#confiurations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvamemolibxml.Configuration">
+<em class="property">class </em><code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">Configuration</code><span class="sig-paren">(</span><em>xml=None</em>, <em>lif=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#Configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration data for Kvaser devices</p>
+<p>It is usually preferred to create objects of this class with one of the
+functions:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#canlib.kvamemolibxml.load_xml" title="canlib.kvamemolibxml.load_xml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_xml</span></code></a></li>
+<li><a class="reference internal" href="#canlib.kvamemolibxml.load_xml_file" title="canlib.kvamemolibxml.load_xml_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_xml_file</span></code></a></li>
+<li><a class="reference internal" href="#canlib.kvamemolibxml.load_lif" title="canlib.kvamemolibxml.load_lif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lif</span></code></a></li>
+<li><a class="reference internal" href="#canlib.kvamemolibxml.load_lif_file" title="canlib.kvamemolibxml.load_lif_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lif_file</span></code></a></li>
+</ul>
+<p>The XML and param.lif representation of this configuration can be accessed
+with the <a class="reference internal" href="#canlib.kvamemolibxml.Configuration.xml" title="canlib.kvamemolibxml.Configuration.xml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xml</span></code></a> and <a class="reference internal" href="#canlib.kvamemolibxml.Configuration.lif" title="canlib.kvamemolibxml.Configuration.lif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lif</span></code></a> attributes, respectively.</p>
+<p>Two <a class="reference internal" href="#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Configuration</span></code></a> objects can be tested for equality:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config1</span> <span class="o">==</span> <span class="n">config2</span>
+</pre></div>
+</div>
+<p>This will test whether the objects are equivalent: whether they have the
+same param.lif representation.</p>
+<p>Finally, the configuration can be validated with <a class="reference internal" href="#canlib.kvamemolibxml.Configuration.validate" title="canlib.kvamemolibxml.Configuration.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Configuration.validate</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span><span class="p">,</span> <span class="n">warnings</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">warning</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid configuration&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="canlib.kvamemolibxml.Configuration.lif">
+<code class="descname">lif</code><a class="headerlink" href="#canlib.kvamemolibxml.Configuration.lif" title="Permalink to this definition">¶</a></dt>
+<dd><p>The param.lif representation of this configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvamemolibxml.Configuration.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#Configuration.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.Configuration.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate this configuration</p>
+<p>Validates the XML representation of this configuration, and returns a
+tuple <code class="docutils literal notranslate"><span class="pre">(errors,</span> <span class="pre">warnings)</span></code> where <code class="docutils literal notranslate"><span class="pre">errors</span></code> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of
+<a class="reference internal" href="enums.html#canlib.kvamemolibxml.ValidationError" title="canlib.kvamemolibxml.ValidationError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.ValidationError</span></code></a> and <code class="docutils literal notranslate"><span class="pre">warnings</span></code> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>
+<a class="reference internal" href="enums.html#canlib.kvamemolibxml.ValidationWarning" title="canlib.kvamemolibxml.ValidationWarning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.ValidationWarning</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvamemolibxml.Configuration.xml">
+<code class="descname">xml</code><a class="headerlink" href="#canlib.kvamemolibxml.Configuration.xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>The XML representation of this configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="load-lif">
+<h2>load_lif()<a class="headerlink" href="#load-lif" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvamemolibxml.load_lif">
+<code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">load_lif</code><span class="sig-paren">(</span><em>lif_bytes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#load_lif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.load_lif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Configuration</span></code></a> from a param.lif <code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lif_bytes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code>) – Binary configuration in param.lif format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="load-lif-file">
+<h2>load_lif_file()<a class="headerlink" href="#load-lif-file" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvamemolibxml.load_lif_file">
+<code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">load_lif_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#load_lif_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.load_lif_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#canlib.kvamemolibxml.load_lif" title="canlib.kvamemolibxml.load_lif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lif</span></code></a> but takes a path to a file containing the lif configuration</p>
+</dd></dl>
+
+</div>
+<div class="section" id="load-xml">
+<h2>load_xml()<a class="headerlink" href="#load-xml" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvamemolibxml.load_xml">
+<code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">load_xml</code><span class="sig-paren">(</span><em>xml_string</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#load_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.load_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Configuration</span></code></a> from an xml <code class="xref py py-obj docutils literal notranslate"><span class="pre">string</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xml_string</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – XML configuration</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="load-xml-file">
+<h2>load_xml_file()<a class="headerlink" href="#load-xml-file" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvamemolibxml.load_xml_file">
+<code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">load_xml_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#load_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.load_xml_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#canlib.kvamemolibxml.load_lif" title="canlib.kvamemolibxml.load_lif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lif</span></code></a> but takes a path to a file containing the XML configuration</p>
+</dd></dl>
+
+</div>
+<div class="section" id="validationmessage">
+<h2>ValidationMessage<a class="headerlink" href="#validationmessage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvamemolibxml.ValidationMessage">
+<em class="property">class </em><code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">ValidationMessage</code><span class="sig-paren">(</span><em>code</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvamemolibxml.ValidationMessage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvamemolibxml.ValidationMessage.code">
+<code class="descname">code</code><a class="headerlink" href="#canlib.kvamemolibxml.ValidationMessage.code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvamemolibxml.ValidationMessage.text">
+<code class="descname">text</code><a class="headerlink" href="#canlib.kvamemolibxml.ValidationMessage.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="validationerrormessage">
+<h2>ValidationErrorMessage<a class="headerlink" href="#validationerrormessage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvamemolibxml.ValidationErrorMessage">
+<em class="property">class </em><code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">ValidationErrorMessage</code><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#ValidationErrorMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.ValidationErrorMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error found during validation</p>
+</dd></dl>
+
+</div>
+<div class="section" id="validationwarningmessage">
+<h2>ValidationWarningMessage<a class="headerlink" href="#validationwarningmessage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvamemolibxml.ValidationWarningMessage">
+<em class="property">class </em><code class="descclassname">canlib.kvamemolibxml.</code><code class="descname">ValidationWarningMessage</code><a class="reference internal" href="../../_modules/canlib/kvamemolibxml/configuration.html#ValidationWarningMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvamemolibxml.ValidationWarningMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A warning found during validation</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="enums.html" class="btn btn-neutral float-right" title="Enumerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

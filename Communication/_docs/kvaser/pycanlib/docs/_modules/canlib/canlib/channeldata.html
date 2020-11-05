@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.channeldata &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.channeldata</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.channeldata</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..ean</span> <span class="k">import</span> <span class="n">EAN</span><span class="p">,</span> <span class="n">IllegalEAN</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ChannelFlags</span><span class="p">,</span> <span class="n">ChannelDataItem</span><span class="p">,</span> <span class="n">HardwareType</span><span class="p">,</span> <span class="n">ChannelCap</span><span class="p">,</span> <span class="n">LoggerType</span><span class="p">,</span> <span class="n">Error</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">OperationalMode</span><span class="p">,</span> <span class="n">RemoteType</span><span class="p">,</span> <span class="n">DriverCap</span><span class="p">,</span> <span class="n">TransceiverType</span><span class="p">,</span> <span class="n">BusTypeGroup</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">CanNotImplementedError</span><span class="p">,</span> <span class="n">CanNotFound</span><span class="p">,</span> <span class="n">CanError</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span><span class="p">,</span> <span class="n">getNumberOfChannels</span>
+
+
+<span class="n">ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;channel_cap&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CHANNEL_CAP</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">ChannelCap</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `ChannelCap` object with the capabilities of the channel as flags. Also see `ChannelData.channel_cap_mask`.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;trans_cap&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TRANS_CAP</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">DriverCap</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `DriverCap` object with the capabilities of the transceiver as flags. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;channel_flags&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CHANNEL_FLAGS</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">ChannelFlags</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `ChannelFlags` object with the status of the channel as flags. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_type&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">HardwareType</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `HardwareType` enum representing the hardware type of the card.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_number&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_NUMBER</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the card&#39;s number in the computer. Each card type is numbered separately.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;chan_no_on_card&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CHAN_NO_ON_CARD</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` of the channel number on the card.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_serial_no&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_SERIAL_NO</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint64</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the serial number of the card, or 0 if it doesn&#39;t have a serial number.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;trans_serial_no&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TRANS_SERIAL_NO</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the serial number of the transceiver, or 0 if it doesn&#39;t have a serial number. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_firmware_rev&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_FIRMWARE_REV</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="c1"># little byteorder assumed:</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">release</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">build</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` object with the version of the card&#39;s firmware.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_hardware_rev&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_HARDWARE_REV</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>  <span class="c1"># little byteorder assumed</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` object with the version of the card&#39;s hardware.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;card_upc_no&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CARD_UPC_NO</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">EAN</span><span class="o">.</span><span class="n">from_bcd</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `canlib.EAN` object with the EAN of the card, or `None` if it doesn&#39;t one.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;trans_upc_no&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TRANS_UPC_NO</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">EAN</span><span class="o">.</span><span class="n">from_bcd</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `canlib.EAN` object with the EAN of the transceiver, or `None` if it doesn&#39;t have one. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="c1"># &#39;channel_name&#39;: dict(  # ~deprecated</span>
+    <span class="c1">#     item=ChannelDataItem.CHANNEL_NAME,</span>
+    <span class="c1"># ),</span>
+    <span class="s1">&#39;dll_file_version&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DLL_FILE_VERSION</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>  <span class="c1"># little byteorder assumed,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` with the version of the dll file.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;dll_product_version&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DLL_PRODUCT_VERSION</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>  <span class="c1"># little byteorder assumed,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` with the product version of the dll file.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;dll_filetype&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DLL_FILETYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;1 if </span><span class="se">\&quot;</span><span class="s2">kvalapw.dll</span><span class="se">\&quot;</span><span class="s2"> is used, 2 if </span><span class="se">\&quot;</span><span class="s2">kvalapw2.dll</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;trans_type&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TRANS_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">TransceiverType</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `TransceiverType` enum.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;device_physical_position&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DEVICE_PHYSICAL_POSITION</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the address of the device on its underlying bus. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;ui_number&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">UI_NUMBER</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the number associated with the device that can be displayed in the user interface. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;timesync_enabled&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TIMESYNC_ENABLED</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether legacy time synchronization is enabled. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;driver_file_version&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DRIVER_FILE_VERSION</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>  <span class="c1"># little byteorder assumed,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` with the version of the kernel-mode driver. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;driver_product_version&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DRIVER_PRODUCT_VERSION</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>  <span class="c1"># little byteorder assumed,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `canlib.VersionNumber` with the product version of the kernel-mode driver. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;mfgname_unicode&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">MFGNAME_UNICODE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_wchar</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the manufacturer&#39;s name. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;mfgname_ascii&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">MFGNAME_ASCII</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the manufacturer&#39;s name.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;devdescr_unicode&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DEVDESCR_UNICODE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_wchar</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the product name of the device. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;devdescr_ascii&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DEVDESCR_ASCII</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the product name of the device.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;driver_name&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DRIVER_NAME</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the name of the device driver.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;channel_quality&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CHANNEL_QUALITY</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` between 0 and 100 (inclusively) with the quality of the channel in percent of optimal quality. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;roundtrip_time&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">ROUNDTRIP_TIME</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the roundtrip time measured in milliseconds. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;bus_type&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">BUS_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">BusTypeGroup</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `BusTypeGroup` enum. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;devname_ascii&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">DEVNAME_ASCII</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the current device name. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;time_since_last_seen&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">TIME_SINCE_LAST_SEEN</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the time in milliseconds since last communication occured. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;remote_operational_mode&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">REMOTE_OPERATIONAL_MODE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">OperationalMode</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `OperationalMode` enum. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;remote_profile_name&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">REMOTE_PROFILE_NAME</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the remote profile name of the device. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;remote_host_name&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">REMOTE_HOST_NAME</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the remote host name of the device. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;remote_mac&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">REMOTE_MAC</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `str` with the remote mac address of the device. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;max_bitrate&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">MAX_BITRATE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `int` with the maximum bitrate of the device. Zero means no limit on the bitrate.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;channel_cap_mask&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CHANNEL_CAP_MASK</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">ChannelCap</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `ChannelCap` with which flags this device knows about.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;is_remote&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">IS_REMOTE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A `bool` for whether the device is currently connected as a remote device. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;remote_type&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">REMOTE_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">RemoteType</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `RemoteType` enum. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;logger_type&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">LOGGER_TYPE</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">LoggerType</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;A member of the `LoggerType` enum. Not implemented in Linux.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;hw_status&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">HW_STATUS</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="nb">tuple</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;Six `int` with hardware status codes. This is only intended for internal use.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;feature_ean&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">FEATURE_EAN</span><span class="p">,</span>
+        <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">ptype</span><span class="o">=</span><span class="n">EAN</span><span class="o">.</span><span class="n">from_bcd</span><span class="p">,</span>
+        <span class="n">__doc__</span><span class="o">=</span><span class="s2">&quot;An `canlib.EAN` object with an internal EAN. This is only intended for internal use.&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="ChannelData"><a class="viewcode-back" href="../../../reference/canlib/channeldata.html#canlib.canlib.ChannelData">[docs]</a><span class="k">class</span> <span class="nc">ChannelData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Object for querying various information about a channel</span>
+
+<span class="s2">    After instantiating a `ChannelData` object with a channel number, a variety</span>
+<span class="s2">    of information is available as attributes. Most attributes are named after</span>
+<span class="s2">    the C constant used to retrieve the information and are found in the list</span>
+<span class="s2">    below.</span>
+
+<span class="s2">    Other information does not follow the C implementation completely, and are</span>
+<span class="s2">    documented as separate properties further down.</span>
+
+<span class="s2">    There is also the `raw` function, that is used internally to get all</span>
+<span class="s2">    information and can also be used to interact more directly with the dll.</span>
+
+<span class="s2">    Attributes:</span>
+<span class="si">{dyn_attrs}</span><span class="s2"></span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">dyn_attrs</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s1">&#39;        &#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;__doc__&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ATTRIBUTES</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">=</span> <span class="n">channel_number</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">ATTRIBUTES</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls}</span><span class="s2"> object has no attribute </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span>
+        <span class="n">ctype</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ctype&#39;</span><span class="p">]</span>
+        <span class="n">ptype</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ptype&#39;</span><span class="p">]</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ctype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ptype</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ptype</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># In python 2, we get `long` and not `int` resulting in ValueError :(</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="n">ptype</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">orig_e</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">ret</span> <span class="o">=</span> <span class="n">ptype</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">orig_e</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="ChannelData.raw"><a class="viewcode-back" href="../../../reference/canlib/channeldata.html#canlib.canlib.ChannelData.raw">[docs]</a>    <span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A raw call to `canGetChannelData`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item (`ChannelDataItem`): The information to be retrieved.</span>
+<span class="sd">            ctype: The `ctypes` type that the information should be interpreted as.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ctype</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">canGetChannelData</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">,</span>
+                <span class="n">item</span><span class="p">,</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+                <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">CanError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># On windows and CANlib &lt; 5.23 Error.PARAM is returned instead of CanNotFound</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="n">PARAM</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">&gt;=</span> <span class="n">getNumberOfChannels</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">CanNotFound</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channel_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The product channel name.</span>
+
+<span class="sd">        Retrieves a clear text name of the channel. The name is returned as a</span>
+<span class="sd">        string.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">devdescr_ascii</span>
+        <span class="n">no_on_card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chan_no_on_card</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (channel </span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">no_on_card</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData.channel_name&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">device_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;.. deprecated:: 1.7&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">custom_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`str`: The custom channel name if set, or an empty string otherwise&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">=</span><span class="n">ChannelDataItem</span><span class="o">.</span><span class="n">CUST_CHANNEL_NAME</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">64</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">CanNotImplementedError</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<span class="k">class</span> <span class="nc">HandleData</span><span class="p">(</span><span class="n">ChannelData</span><span class="p">):</span>
+    <span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Object for querying various information about a handle</span>
+
+<span class="s2">    This is identical to the `ChannelData` object but it&#39;s constructor takes a</span>
+<span class="s2">    `canlib.Channel` instead of a channel number.</span>
+
+<span class="s2">    .. versionadded:: 1.13</span>
+
+<span class="s2">    Attributes:</span>
+<span class="si">{dyn_attrs}</span><span class="s2"></span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">dyn_attrs</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s1">&#39;        &#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;__doc__&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ATTRIBUTES</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+
+    <span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A raw call to `canGetHandleData`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item (`ChannelDataItem`): The information to be retrieved.</span>
+<span class="sd">            ctype: The `ctypes` type that the information should be interpreted as.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ctype</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetHandleData</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+            <span class="n">item</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

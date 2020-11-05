@@ -1,0 +1,1584 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.canlib.channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.canlib.channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.canlib.channel</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">..frame</span> <span class="k">import</span> <span class="n">Frame</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iopin</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">wrapper</span>
+<span class="kn">from</span> <span class="nn">.iocontrol</span> <span class="k">import</span> <span class="n">IOControl</span>
+<span class="kn">from</span> <span class="nn">.channeldata</span> <span class="k">import</span> <span class="n">HandleData</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">MessageFlag</span><span class="p">,</span> <span class="n">DeviceMode</span><span class="p">,</span> <span class="n">Driver</span><span class="p">,</span> <span class="n">Open</span><span class="p">,</span> <span class="n">ScriptRequest</span><span class="p">,</span> <span class="n">Stat</span><span class="p">,</span> <span class="n">ScriptStatus</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">ScriptStop</span>
+<span class="kn">from</span> <span class="nn">.envvar</span> <span class="k">import</span> <span class="n">EnvVar</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">CanError</span>
+<span class="kn">from</span> <span class="nn">.structures</span> <span class="k">import</span> <span class="n">CanBusStatistics</span>
+
+<span class="n">dll</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">dll</span>
+
+
+<span class="n">ErrorCounters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ErrorCounters&#39;</span><span class="p">,</span> <span class="s1">&#39;tx rx overrun&#39;</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Error counters returned by `.Channel.read_error_counters`.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="openChannel"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.openChannel">[docs]</a><span class="k">def</span> <span class="nf">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_bitrate</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open CAN channel</span>
+
+<span class="sd">    Retrieves a canChannel object for the given CANlib channel number using</span>
+<span class="sd">    the supplied flags.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (`int`): CANlib channel number</span>
+<span class="sd">        flags (`int`): Flags, a combination of the `canlib.canlib.Open` flag values.</span>
+<span class="sd">            Default is zero, i.e. no flags.</span>
+
+<span class="sd">        bitrate (canBITRATE_XXX or canFD_BITRATE_XXX): The desired</span>
+<span class="sd">            bitrate. Must be one of the predefined canBITRATE_XXX (for classic</span>
+<span class="sd">            CAN) or canFD_BITRATE_XXX (for CAN FD) constants. For CAN FD, this</span>
+<span class="sd">            is the arbitration bitrate.</span>
+
+<span class="sd">        data_bitrate (canFD_BITRATE_XXX): The desired data bitrate for CAN</span>
+<span class="sd">            FD. Must be one of the predefined canFD_BITRATE_XXX constants. This</span>
+<span class="sd">            is only valid when opening a CAN FD channel.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A `Channel` object created with channel and flags</span>
+
+<span class="sd">    .. versionadded:: 1.6</span>
+<span class="sd">       The *bitrate* and *data_bitrate* arguments was added.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bitrate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span> <span class="ow">or</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD_NONISO</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">data_bitrate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ch</span><span class="o">.</span><span class="n">setBusParamsFd</span><span class="p">(</span><span class="n">data_bitrate</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">bitrate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ch</span><span class="o">.</span><span class="n">setBusParamsFd</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">data_bitrate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_bitrate requires CAN FD flag&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ch</span></div>
+
+
+<div class="viewcode-block" id="ScriptText"><a class="viewcode-back" href="../../../reference/canlib/wrapper.html#canlib.canlib.ScriptText">[docs]</a><span class="k">class</span> <span class="nc">ScriptText</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Text returned by `Channel.scriptGetText`</span>
+
+<span class="sd">    Subclass of built-in `str`, so it can be used just like a normal string.</span>
+
+<span class="sd">    It also has the following attributes:</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        slot (`int`): Which script-slot the text came from.</span>
+<span class="sd">        time (`int`): Timestamp of when the text was printed.</span>
+<span class="sd">        ScriptText.flags (`canlib.canlib.Stat`): Any flags associated with the text.</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">slot</span> <span class="o">=</span> <span class="n">slot</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span>
+
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="Channel"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel">[docs]</a><span class="k">class</span> <span class="nc">Channel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper class that represents a CANlib channel.</span>
+
+<span class="sd">    This class wraps the canlib class and tries to implement a more Pythonic</span>
+<span class="sd">    interface to CANlib.</span>
+
+<span class="sd">    Channels are automatically closed on garbage collection, and can</span>
+<span class="sd">    also be used as context managers in which case they close as soon as the</span>
+<span class="sd">    context exits.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_iocontrol_ref</span> <span class="o">=</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="kc">None</span>  <span class="c1"># noqa</span>
+    <span class="n">_handledata_ref</span> <span class="o">=</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="kc">None</span>  <span class="c1"># noqa</span>
+    <span class="n">_MAX_MSG_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_number</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">channel_number</span>
+        <span class="c1"># Initialize handle here in case canOpenChannel triggers an exception.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">canOpenChannel</span><span class="p">(</span><span class="n">channel_number</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">envvar</span> <span class="o">=</span> <span class="n">EnvVar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">CanError</span><span class="p">:</span>
+            <span class="c1"># For some reason, in python 2 we get &quot;Handle is invalid (-10)</span>
+            <span class="c1"># here. Probably something to do with the unpredictable way</span>
+            <span class="c1"># __del__ is called.</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_calculate_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">message_flags</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">message_flags</span> <span class="o">&amp;</span> <span class="n">MessageFlag</span><span class="o">.</span><span class="n">FDF</span><span class="p">:</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="n">dlc</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">dlc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">length</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">iocontrol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`IOControl`: ``canIoCtl`` helper object for this channel</span>
+
+<span class="sd">        See the documentation for `IOControl` for how it can be used to perform</span>
+<span class="sd">        all functionality of the C function ``canIoCtl``.</span>
+
+<span class="sd">        Example usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from canlib import canlib</span>
+<span class="sd">            &gt;&gt;&gt; ch = canlib.openChannel(channel=0)</span>
+<span class="sd">            &gt;&gt;&gt; ch.iocontrol.timer_scale</span>
+<span class="sd">            1000</span>
+<span class="sd">            &gt;&gt;&gt; ch.iocontrol.local_txecho = False</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Because handles are only closed on garbage collection, a weak</span>
+        <span class="c1"># reference is used to prevent a cyclic reference that would delay</span>
+        <span class="c1"># garbage collection (in CPython). As a side effect, the iocontrol</span>
+        <span class="c1"># objects are optimized to only stay alive while someone needs them.</span>
+        <span class="n">ioc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iocontrol_ref</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ioc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ioc</span> <span class="o">=</span> <span class="n">IOControl</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_iocontrol_ref</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">ioc</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ioc</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channel_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`HandleData`: ``canGetHandleData`` helper object for this channel</span>
+
+<span class="sd">        See the documentation for `ChannelData`/`HandleData` for how it can be</span>
+<span class="sd">        used to perform all functionality of the C function</span>
+<span class="sd">        ``canGetHandleData``.</span>
+
+<span class="sd">        .. versionadded:: 1.13</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Because handles are only closed on garbage collection, a weak</span>
+        <span class="c1"># reference is used to prevent a cyclic reference that would delay</span>
+        <span class="c1"># garbage collection (in CPython). As a side effect, the handledata</span>
+        <span class="c1"># objects are optimized to only stay alive while someone needs them.</span>
+        <span class="n">chd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handledata_ref</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">chd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">chd</span> <span class="o">=</span> <span class="n">HandleData</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handledata_ref</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">chd</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">chd</span>
+
+<div class="viewcode-block" id="Channel.close"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close CANlib channel</span>
+
+<span class="sd">        Closes the channel associated with the handle. If no other threads are</span>
+<span class="sd">        using the CAN circuit, it is taken off bus.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            It is normally not necessary to call this function directly, as the</span>
+<span class="sd">            internal handle is automatically closed when the `Channel` object</span>
+<span class="sd">            is garbage collected.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">canClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Channel.canAccept"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.canAccept">[docs]</a>    <span class="k">def</span> <span class="nf">canAccept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envelope</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set acceptance filters mask or code.</span>
+
+<span class="sd">        This routine sets the message acceptance filters on a CAN channel.</span>
+
+<span class="sd">        Setting flag to `AcceptFilterFlag.NULL_MASK` (0) removes the filter.</span>
+
+<span class="sd">        Note that not all CAN boards support different masks for standard and</span>
+<span class="sd">        extended CAN identifiers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            envelope:  The mask or code to set.</span>
+<span class="sd">            flag:      Any of `AcceptFilterFlag`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canAccept</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">envelope</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.canSetAcceptanceFilter"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.canSetAcceptanceFilter">[docs]</a>    <span class="k">def</span> <span class="nf">canSetAcceptanceFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">is_extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set message acceptance filter.</span>
+
+<span class="sd">        This routine sets the message acceptance filters on a CAN channel.</span>
+<span class="sd">        The message is accepted `if id AND mask == code` (this is actually</span>
+<span class="sd">        imlepemented as `if ((code XOR id) AND mask) == 0`).</span>
+
+<span class="sd">        Using standard 11-bit CAN identifiers and setting</span>
+
+<span class="sd">        * mask = 0x7f0,</span>
+<span class="sd">        * code = 0x080</span>
+
+<span class="sd">        accepts CAN messages with standard id 0x080 to 0x08f.</span>
+
+<span class="sd">        Setting the *mask* to canFILTER_NULL_MASK (0) removes the filter.</span>
+
+<span class="sd">        Note that not all CAN boards support different masks for standard and</span>
+<span class="sd">        extended CAN identifiers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mask (`int`): A bit mask that indicates relevant bits with &#39;1&#39;.</span>
+<span class="sd">            code (`int`): The expected state of the masked bits.</span>
+<span class="sd">            is_extended (`bool`): If `True`, both mask and code applies</span>
+<span class="sd">                to 29-bit CAN identifiers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canSetAcceptanceFilter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">is_extended</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.setBusParams"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.setBusParams">[docs]</a>    <span class="k">def</span> <span class="nf">setBusParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">tseg1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tseg2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sjw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">noSamp</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                     <span class="n">syncmode</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set bus timing parameters for classic CAN</span>
+
+<span class="sd">        This function sets the bus timing parameters for the specified CAN</span>
+<span class="sd">        controller.</span>
+
+<span class="sd">        The library provides default values for tseg1, tseg2, sjw and noSamp</span>
+<span class="sd">        when freq is specified to one of the pre-defined constants,</span>
+<span class="sd">        `canlib.canlib.canBITRATE_xxx`.</span>
+
+<span class="sd">        If freq is any other value, no default values are supplied by the</span>
+<span class="sd">        library.</span>
+
+<span class="sd">        If you are using multiple handles to the same physical channel, for</span>
+<span class="sd">        example if you are writing a threaded application, you must call</span>
+<span class="sd">        busOff() once for each handle. The same applies to busOn() - the</span>
+<span class="sd">        physical channel will not go off bus until the last handle to the</span>
+<span class="sd">        channel goes off bus.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            freq: Bitrate in bit/s.</span>
+<span class="sd">            tseg1: Number of quanta from (but not including) the Sync Segment</span>
+<span class="sd">                to the sampling point.</span>
+<span class="sd">            tseg2: Number of quanta from the sampling point to the end of</span>
+<span class="sd">                the bit.</span>
+<span class="sd">            sjw: The Synchronization Jump Width, can be 1,2,3, or 4.</span>
+<span class="sd">            nosamp: The number of sampling points, only 1 is supported.</span>
+<span class="sd">            syncMode: Unsupported and ignored.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canSetBusParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">tseg1</span><span class="p">,</span> <span class="n">tseg2</span><span class="p">,</span> <span class="n">sjw</span><span class="p">,</span> <span class="n">noSamp</span><span class="p">,</span> <span class="n">syncmode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getBusParams"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getBusParams">[docs]</a>    <span class="k">def</span> <span class="nf">getBusParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get bus timing parameters for classic CAN</span>
+
+<span class="sd">        This function retrieves the current bus parameters for the specified</span>
+<span class="sd">        channel.</span>
+
+<span class="sd">        Returns: A tuple containing:</span>
+<span class="sd">            *freq*: Bitrate in bit/s.</span>
+
+<span class="sd">            *tseg1*: Number of quanta from but not including the Sync</span>
+<span class="sd">            Segment to the sampling point.</span>
+
+<span class="sd">            *tseg2*: Number of quanta from the sampling point to the</span>
+<span class="sd">            end of the bit.</span>
+
+<span class="sd">            *sjw*: The Synchronization Jump Width, can be 1,2,3, or 4.</span>
+
+<span class="sd">            *noSamp*: The number of sampling points, only 1 is supported.</span>
+
+<span class="sd">            *syncmode*: Unsupported, always read as zero.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">()</span>
+        <span class="n">tseg1</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">tseg2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">sjw</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">noSamp</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">syncmode</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetBusParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">freq</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg1</span><span class="p">),</span>
+                            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg2</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sjw</span><span class="p">),</span>
+                            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">noSamp</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">syncmode</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">freq</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tseg1</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tseg2</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">sjw</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">noSamp</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">syncmode</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.setBusParamsFd"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.setBusParamsFd">[docs]</a>    <span class="k">def</span> <span class="nf">setBusParamsFd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq_brs</span><span class="p">,</span> <span class="n">tseg1_brs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tseg2_brs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sjw_brs</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set bus timing parameters for BRS in CAN FD</span>
+
+<span class="sd">        This function sets the bus timing parameters used in BRS (Bit rate</span>
+<span class="sd">        switch) mode for the current CANlib channel.</span>
+
+<span class="sd">        The library provides default values for tseg1_brs, tseg2_brs and</span>
+<span class="sd">        sjw_brs when freq is specified to one of the pre-defined constants,</span>
+<span class="sd">        `canlib.canlib.canFD_BITRATE_xxx`</span>
+
+<span class="sd">        If freq is any other value, no default values are supplied by the</span>
+<span class="sd">        library.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            freq_brs: Bitrate in bit/s.</span>
+<span class="sd">            tseg1_brs: Number of quanta from (but not including) the Sync</span>
+<span class="sd">               Segment to the sampling point.</span>
+<span class="sd">            tseg2_brs: Number of quanta from the sampling point to the</span>
+<span class="sd">               end of the bit.</span>
+<span class="sd">            sjw_brs: The Synchronization Jump Width.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canSetBusParamsFd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">freq_brs</span><span class="p">,</span> <span class="n">tseg1_brs</span><span class="p">,</span>
+                              <span class="n">tseg2_brs</span><span class="p">,</span> <span class="n">sjw_brs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getBusParamsFd"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getBusParamsFd">[docs]</a>    <span class="k">def</span> <span class="nf">getBusParamsFd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get bus timing parameters for BRS in CAN FD</span>
+
+<span class="sd">        This function retrieves the bus current timing parameters used in BRS</span>
+<span class="sd">        (Bit rate switch) mode for the current CANlib channel.</span>
+
+<span class="sd">        The library provides default values for tseg1_brs, tseg2_brs and</span>
+<span class="sd">        sjw_brs when freq is specified to one of the pre-defined constants,</span>
+<span class="sd">        `canlib.canlib.canFD_BITRATE_xxx`</span>
+
+<span class="sd">        If freq is any other value, no default values are supplied by the</span>
+<span class="sd">        library.</span>
+
+<span class="sd">        Returns: A tuple containing:</span>
+<span class="sd">            *freq_brs*: Bitrate in bit/s.</span>
+
+<span class="sd">            *tseg1_brs*: Number of quanta from (but not including) the Sync</span>
+<span class="sd">            Segment to the sampling point.</span>
+
+<span class="sd">            *tseg2_brs*: Number of quanta from the sampling point to the</span>
+<span class="sd">            end of the bit.</span>
+
+<span class="sd">            *sjw_brs*: The Synchronization Jump Width.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">freq_brs</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">()</span>
+        <span class="n">tseg1_brs</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">tseg2_brs</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">sjw_brs</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetBusParamsFd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">freq_brs</span><span class="p">),</span>
+                              <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg1_brs</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">tseg2_brs</span><span class="p">),</span>
+                              <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">sjw_brs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">freq_brs</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tseg1_brs</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tseg2_brs</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">sjw_brs</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.busOn"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.busOn">[docs]</a>    <span class="k">def</span> <span class="nf">busOn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Takes the specified channel on-bus.</span>
+
+<span class="sd">        If you are using multiple handles to the same physical channel, for</span>
+<span class="sd">        example if you are writing a threaded application, you must call</span>
+<span class="sd">        busOn() once for each handle.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canBusOn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.busOff"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.busOff">[docs]</a>    <span class="k">def</span> <span class="nf">busOff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Takes the specified channel off-bus.</span>
+
+<span class="sd">        Closes the channel associated with the handle. If no other threads are</span>
+<span class="sd">        using the CAN circuit, it is taken off bus. The handle can not be used</span>
+<span class="sd">        for further references to the channel.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canBusOff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_request_bus_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canRequestBusStatistics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_bus_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="n">CanBusStatistics</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetBusStatistics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">statistics</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">statistics</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">statistics</span>
+
+<div class="viewcode-block" id="Channel.get_bus_statistics"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.get_bus_statistics">[docs]</a>    <span class="k">def</span> <span class="nf">get_bus_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return bus statistics.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `structures.CanBusStatistics`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="n">CanBusStatistics</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canRequestBusStatistics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>  <span class="c1"># we need to wait for the statistics to be available in windows.</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetBusStatistics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">statistics</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">statistics</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">statistics</span></div>
+
+<div class="viewcode-block" id="Channel.getBusOutputControl"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getBusOutputControl">[docs]</a>    <span class="k">def</span> <span class="nf">getBusOutputControl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get driver type</span>
+
+<span class="sd">        This function retrieves the current CAN controller driver type. This</span>
+<span class="sd">        corresponds loosely to the bus output control register in the CAN</span>
+<span class="sd">        controller, hence the name of this function.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            Not all CAN driver types are supported on all cards.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            drivertype (`.canlib.Driver`): Driver type to set.</span>
+
+<span class="sd">        .. versionadded:: 1.11</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">driver_type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canGetBusOutputControl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">driver_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Driver</span><span class="p">(</span><span class="n">driver_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+    <span class="c1"># qqdaca v1.5 This function is complicated by the fact that previously it</span>
+    <span class="c1"># had the signature of write_wait, and we still want to support that for</span>
+    <span class="c1"># one more version at least.</span>
+    <span class="c1">#</span>
+    <span class="c1"># It would be preferable to merge `write` and `writeWait` by giving `write`</span>
+    <span class="c1"># an optional `wait` argument. If specified, it would make the function</span>
+    <span class="c1"># call `canWriteWait` with ``timeout=wait``. However, that would complicate</span>
+    <span class="c1"># the function too much if the old signature is still to be supported.</span>
+    <span class="c1">#</span>
+    <span class="c1"># If this merger is done in the future, also add the same argument to</span>
+    <span class="c1"># linlib&#39;s `writeMessage` and `requestMessage` functions.</span>
+<div class="viewcode-block" id="Channel.write"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a CAN message.</span>
+
+<span class="sd">        This function sends a Frame object as a CAN message. Note that the</span>
+<span class="sd">        message has been queued for transmission when this calls return. It has</span>
+<span class="sd">        not necessarily been sent.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            If you are using the same channel via multiple handles, the default</span>
+<span class="sd">            behaviour is that the different handles will &quot;hear&quot; each other just</span>
+<span class="sd">            as if each handle referred to a channel of its own. If you open,</span>
+<span class="sd">            say, channel 0 from thread A and thread B and then send a message</span>
+<span class="sd">            from thread A, it will be &quot;received&quot; by thread B.</span>
+
+<span class="sd">            This behaviour can be changed by setting `local_txecho` to `False`</span>
+<span class="sd">            (using `canlib.canlib.IOControl`):</span>
+
+<span class="sd">            &gt;&gt;&gt; from canlib import canlib</span>
+<span class="sd">            &gt;&gt;&gt; ch = canlib.openChannel(channel=0)</span>
+<span class="sd">            &gt;&gt;&gt; ch.iocontrol.local_txecho = False</span>
+
+<span class="sd">        Also see `Channel.write_raw` for sending messages without constructing</span>
+<span class="sd">        `canlib.Frame` objects.</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Sending the `canlib.Frame` contents as separate arguments; this</span>
+<span class="sd">           functionality has been taken over by `write_raw`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (`canlib.Frame`)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">canWrite</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">deprecation</span><span class="o">.</span><span class="n">manual_warn</span><span class="p">(</span>
+                <span class="s2">&quot;Calling Channel.write() with individual arguments is deprecated, &quot;</span>
+                <span class="s2">&quot;please use a Frame object or Channel.write_raw()&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_raw</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_raw</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.write_raw"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.write_raw">[docs]</a>    <span class="k">def</span> <span class="nf">write_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a CAN message</span>
+
+<span class="sd">        See docstring of `Channel.write` for general information about sending</span>
+<span class="sd">        CAN messages.</span>
+
+<span class="sd">        The variable name id (as used by canlib) is a built-in function in</span>
+<span class="sd">        Python, so the name `id_` is used instead.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_: The identifier of the CAN message to send.</span>
+<span class="sd">            msg: An array or bytearray of the message data</span>
+<span class="sd">            flag: A combination of `canlib.canlib.MessageFlag`. Use this</span>
+<span class="sd">                parameter e.g. to send extended (29-bit) frames.</span>
+<span class="sd">            dlc: The length of the message in bytes. For Classic CAN dlc can</span>
+<span class="sd">                be at most 8, unless `canlib.canlib.Open.ACCEPT_LARGE_DLC` is</span>
+<span class="sd">                used. For CAN FD dlc can be one of the following 0-8, 12, 16,</span>
+<span class="sd">                20, 24, 32, 48, 64. Optional, if omitted, dlc is calculated</span>
+<span class="sd">                from the msg array.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dlc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dlc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canWrite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeSync"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.writeSync">[docs]</a>    <span class="k">def</span> <span class="nf">writeSync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait for queued messages to be sent</span>
+
+<span class="sd">        Waits until all CAN messages for the specified handle are sent, or the</span>
+<span class="sd">        timeout period expires.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (`int`): The timeout in milliseconds, `None` or ``0xFFFFFFFF`` for</span>
+<span class="sd">                an infinite timeout.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canWriteSync</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeWait"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.writeWait">[docs]</a>    <span class="k">def</span> <span class="nf">writeWait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a CAN message and waits for it to be sent.</span>
+
+<span class="sd">        This function sends a CAN message. It returns when the message is sent,</span>
+<span class="sd">        or the timeout expires. This is a convenience function that combines</span>
+<span class="sd">        write() and writeSync().</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Sending the `Frame` contents as separate arguments; this</span>
+<span class="sd">           functionality has been taken over by `writeWait_raw`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (`canlib.Frame`) : Frame containing the CAN data to be sent</span>
+<span class="sd">            timeout (`int`) : The timeout, in milliseconds. 0xFFFFFFFF gives an infinite</span>
+<span class="sd">                timeout.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">canWriteWait</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">frame</span><span class="o">.</span><span class="n">dlc</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">deprecation</span><span class="o">.</span><span class="n">manual_warn</span><span class="p">(</span>
+                <span class="s2">&quot;Calling Channel.writeWait() with individual arguments is deprecated, &quot;</span>
+                <span class="s2">&quot;please use a Frame object or Channel.writeWait_raw()&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWait_raw</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.writeWait_raw"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.writeWait_raw">[docs]</a>    <span class="k">def</span> <span class="nf">writeWait_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dlc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a CAN message and waits for it to be sent.</span>
+
+<span class="sd">        This function sends a CAN message. It returns when the message is sent,</span>
+<span class="sd">        or the timeout expires. This is a convenience function that combines</span>
+<span class="sd">        write() and writeSync().</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_: The identifier of the CAN message to send.</span>
+<span class="sd">            msg: An array or bytearray of the message data</span>
+<span class="sd">            flag: A combination of `canlib.canlib.MessageFlag`. Use this</span>
+<span class="sd">                parameter e.g. to send extended (29-bit) frames.</span>
+<span class="sd">            dlc: The length of the message in bytes. For Classic CAN dlc can</span>
+<span class="sd">                be at most 8, unless `canlib.canlib.Open.ACCEPT_LARGE_DLC` is</span>
+<span class="sd">                used. For CAN FD dlc can be one of the following 0-8, 12, 16,</span>
+<span class="sd">                20, 24, 32, 48, 64. Optional, if omitted, dlc is calculated</span>
+<span class="sd">                from the msg array.</span>
+<span class="sd">            timeout: The timeout, in milliseconds. 0xFFFFFFFF gives an infinite</span>
+<span class="sd">                timeout.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">dlc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">dlc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">canWriteWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.readTimer"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.readTimer">[docs]</a>    <span class="k">def</span> <span class="nf">readTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the hardware clock on the specified device</span>
+
+<span class="sd">        Returns the time value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvReadTimer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.read"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a CAN message and metadata.</span>
+
+<span class="sd">        Reads a message from the receive buffer. If no message is available,</span>
+<span class="sd">        the function waits until a message arrives or a timeout occurs.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            If you are using the same channel via multiple handles, the default</span>
+<span class="sd">            behaviour is that the different handles will &quot;hear&quot; each other just</span>
+<span class="sd">            as if each handle referred to a channel of its own. If you open,</span>
+<span class="sd">            say, channel 0 from thread A and thread B and then send a message</span>
+<span class="sd">            from thread A, it will be &quot;received&quot; by thread B.</span>
+
+<span class="sd">            This behaviour can be changed by setting `local_txecho` to `False`</span>
+<span class="sd">            (using `canlib.canlib.IOControl`):</span>
+
+<span class="sd">            &gt;&gt;&gt; from canlib import canlib</span>
+<span class="sd">            &gt;&gt;&gt; ch = canlib.openChannel(channel=0)</span>
+<span class="sd">            &gt;&gt;&gt; ch.iocontrol.local_txecho = False</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (`int`):  Timeout in milliseconds, -1 gives an</span>
+<span class="sd">                infinite timeout.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.Frame`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># msg will be replaced by class when CAN FD is supported</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MAX_MSG_SIZE</span><span class="p">)</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">()</span>
+        <span class="n">dlc</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canReadWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">MessageFlag</span><span class="p">(</span><span class="n">flag</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="c1"># In Python 2 this will fail because the value is a C long, and the</span>
+            <span class="c1"># enums only accept int.</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">MessageFlag</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_length</span><span class="p">(</span><span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Frame</span><span class="p">(</span>
+            <span class="n">id_</span><span class="o">=</span><span class="n">id_</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">raw</span><span class="p">[:</span><span class="n">length</span><span class="p">]),</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.readDeviceCustomerData"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.readDeviceCustomerData">[docs]</a>    <span class="k">def</span> <span class="nf">readDeviceCustomerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userNumber</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">itemNumber</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read customer data stored in device&quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">userNumber</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">itemNumber</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvReadDeviceCustomerData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span>
+                                     <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;!Q&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Channel.readSpecificSkip"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.readSpecificSkip">[docs]</a>    <span class="k">def</span> <span class="nf">readSpecificSkip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a message with specified identifier</span>
+
+<span class="sd">        Reads a message with a specified identifier from the receive</span>
+<span class="sd">        buffer. Any preceding message not matching the specified identifier</span>
+<span class="sd">        will be removed in the receive buffer. If no message with the specified</span>
+<span class="sd">        identifier is available, the function returns immediately with an error</span>
+<span class="sd">        code.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.Frame`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># msg will be replaced by class when CAN FD is supported</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MAX_MSG_SIZE</span><span class="p">)</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+        <span class="n">dlc</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canReadSpecificSkip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">dlc</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">MessageFlag</span><span class="p">(</span><span class="n">flag</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="c1"># In Python 2 this will fail because the value is a long, and the</span>
+            <span class="c1"># enums only accept int.</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">MessageFlag</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_length</span><span class="p">(</span><span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Frame</span><span class="p">(</span>
+            <span class="n">id_</span><span class="o">=</span><span class="n">id_</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">raw</span><span class="p">[:</span><span class="n">length</span><span class="p">]),</span>
+            <span class="n">dlc</span><span class="o">=</span><span class="n">dlc</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.requestChipStatus"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.requestChipStatus">[docs]</a>    <span class="k">def</span> <span class="nf">requestChipStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request chip status messages</span>
+
+<span class="sd">        Requests that the hardware report the chip status (bus on/error passive</span>
+<span class="sd">        status etc.) to the driver. The chip status can later be retrieved</span>
+<span class="sd">        using `canlib.Channel.readStatus`.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            The `requestChipStatus` function is asynchronous, that is, it</span>
+<span class="sd">            completes before the answer is returned from the hardware.  The</span>
+<span class="sd">            time between a call to `requestChipStatus` and the point in time</span>
+<span class="sd">            where the chip status is actually available via a call to</span>
+<span class="sd">            `canlib.Channel.readStatus` is not defined. The</span>
+<span class="sd">            `canlib.Channel.readStatus` always returns the latest data reported</span>
+<span class="sd">            by the hardware.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canRequestChipStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.readStatus"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.readStatus">[docs]</a>    <span class="k">def</span> <span class="nf">readStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return status for the current channel</span>
+
+<span class="sd">        Returns the latest status reported by the hardware in a combination of</span>
+<span class="sd">        the flags `~canlib.canlib.Stat` (bus on/error passive + status etc).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.canlib.Stat`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canReadStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">flags</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Stat</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.readSyncSpecific"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.readSyncSpecific">[docs]</a>    <span class="k">def</span> <span class="nf">readSyncSpecific</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait until the receive queue contains a message with the specified id</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canReadSyncSpecific</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.read_error_counters"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.read_error_counters">[docs]</a>    <span class="k">def</span> <span class="nf">read_error_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the error counters of the CAN controller</span>
+
+<span class="sd">        Returns the latest known values of the error counters in the specified</span>
+<span class="sd">        circuit. If the error counters change values precisely when</span>
+<span class="sd">        `read_error_counters` is called, it may not be reflected in the</span>
+<span class="sd">        returned result.</span>
+
+<span class="sd">        Use `.clear_error_counters` via `.Channel.iocontrol` to clear</span>
+<span class="sd">        the counters.</span>
+
+<span class="sd">        Returns (`.ErrorCounters`) : A named tuple containing:</span>
+<span class="sd">            *rx*: Receive error counter</span>
+
+<span class="sd">            *tx*: Transmit error counter</span>
+
+<span class="sd">            *overrun*: Number of overrun errors.</span>
+
+<span class="sd">        .. versionadded:: 1.11</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txErr</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">rxErr</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">ovErr</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canReadErrorCounters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">txErr</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">rxErr</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ovErr</span><span class="p">))</span>
+        <span class="n">error_counters</span> <span class="o">=</span> <span class="n">ErrorCounters</span><span class="p">(</span>
+            <span class="n">tx</span><span class="o">=</span><span class="n">txErr</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">rx</span><span class="o">=</span><span class="n">rxErr</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">overrun</span><span class="o">=</span><span class="n">ovErr</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">error_counters</span></div>
+
+<div class="viewcode-block" id="Channel.scriptSendEvent"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptSendEvent">[docs]</a>    <span class="k">def</span> <span class="nf">scriptSendEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slotNo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">eventType</span><span class="o">=</span><span class="n">const</span><span class="o">.</span><span class="n">kvEVENT_TYPE_KEY</span><span class="p">,</span>
+                        <span class="n">eventNo</span><span class="o">=</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send specified event to specified t script</span>
+
+<span class="sd">        Send an event with given type, event number, and associated data to a</span>
+<span class="sd">        script running in a specific slot.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptSendEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">slotNo</span><span class="p">),</span>
+                              <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">eventType</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">eventNo</span><span class="p">),</span>
+                              <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.setBusOutputControl"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.setBusOutputControl">[docs]</a>    <span class="k">def</span> <span class="nf">setBusOutputControl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drivertype</span><span class="o">=</span><span class="n">Driver</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set driver type</span>
+
+<span class="sd">        This function sets the driver type for a CAN controller to e.g. silent</span>
+<span class="sd">        mode. This corresponds loosely to the bus output control register in</span>
+<span class="sd">        the CAN controller, hence the name of this function.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            Not all CAN driver types are supported on all cards.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drivertype (`.canlib.Driver`): Driver type to set.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canSetBusOutputControl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">drivertype</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.ioCtl_flush_rx_buffer"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.ioCtl_flush_rx_buffer">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;.iocontrol.flush_rx_buffer()&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ioCtl_flush_rx_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `IOControl`; ``Channel.iocontrol.flush_rx_buffer()``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canIoCtl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">canIOCTL_FLUSH_RX_BUFFER</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.ioCtl_set_timer_scale"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.ioCtl_set_timer_scale">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;&#39;Channel.iocontrol.timer_scale = scale&#39;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ioCtl_set_timer_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `IOControl`; ``Channel.iocontrol.timer_scale = scale``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_long</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canIoCtl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">canIOCTL_SET_TIMER_SCALE</span><span class="p">,</span>
+                     <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">scale</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.ioCtl_get_report_access_errors"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.ioCtl_get_report_access_errors">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;&#39;Channel.iocontrol.report_access_errors&#39; attribute&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ioCtl_get_report_access_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `IOControl`; ``Channel.iocontrol.report_access_errors``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canIoCtl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">canIOCTL_GET_REPORT_ACCESS_ERRORS</span><span class="p">,</span>
+                     <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.ioCtl_set_report_access_errors"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.ioCtl_set_report_access_errors">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;&#39;Channel.iocontrol.report_access_errors = on&#39;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ioCtl_set_report_access_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `IOControl`; ``Channel.iocontrol.report_access_errors = on``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span><span class="p">(</span><span class="n">on</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">canIoCtl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">canIOCTL_SET_REPORT_ACCESS_ERRORS</span><span class="p">,</span>
+                     <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.flashLeds"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.flashLeds">[docs]</a>    <span class="k">def</span> <span class="nf">flashLeds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Turn Leds on or off.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            action (`int`): One of `canlib.canlib.LEDAction`, defining</span>
+<span class="sd">                          which LED to turn on or off.</span>
+<span class="sd">            timeout_ms (`int`): Specifies the time, in milliseconds, during which</span>
+<span class="sd">                              the action is to be carried out. When the timeout</span>
+<span class="sd">                              expires, the LED(s) will return to its ordinary</span>
+<span class="sd">                              function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFlashLeds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_Name"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_Name">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).device_name&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_Name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).device_name``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_Name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_Cust_Name"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_Cust_Name">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).custom_name&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_Cust_Name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).custom_name``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_Cust_Name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">CanError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="kc">None</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_Chan_No_On_Card"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_Chan_No_On_Card">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).chan_no_on_card&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_Chan_No_On_Card</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).chan_no_on_card``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_Chan_No_On_Card</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_CardNumber"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_CardNumber">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).card_number&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_CardNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).card_number``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_CardNumber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_EAN"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_EAN">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).card_upc_no&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_EAN</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).card_upc_no``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_EAN</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_EAN_short"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_EAN_short">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span>
+    <span class="k">def</span> <span class="nf">getChannelData_EAN_short</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_EAN_short</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_Serial"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_Serial">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).card_serial_no&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_Serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).card_serial_no``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_Serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_DriverName"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_DriverName">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).driver_name&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_DriverName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).driver_name``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_DriverName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.getChannelData_Firmware"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.getChannelData_Firmware">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;ChannelData(Channel.index).card_firmware_rev&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getChannelData_Firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated function</span>
+
+<span class="sd">        .. deprecated:: 1.5</span>
+<span class="sd">           Use `ChannelData`; ``ChannelData(Channel.index).card_firmware_rev``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">getChannelData_Firmware</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptStart"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptStart">[docs]</a>    <span class="k">def</span> <span class="nf">scriptStart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start previously loaded script in specified slot&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptStart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptStatus"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptStatus">[docs]</a>    <span class="k">def</span> <span class="nf">scriptStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retreives t program status for selected slot</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot (`int`) : Slot number to be queried</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `canlib.ScriptStatus`</span>
+
+<span class="sd">        .. versionadded:: 1.6</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ScriptStatus</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptStop"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptStop">[docs]</a>    <span class="k">def</span> <span class="nf">scriptStop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">ScriptStop</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop script running in specified slot</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot (`int`) : slot containing the running script we want to stop.</span>
+<span class="sd">            mode (`canlib.ScriptStop`) : Default mode is `canlib.ScriptStop.NORMAL`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptStop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptUnload"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptUnload">[docs]</a>    <span class="k">def</span> <span class="nf">scriptUnload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unload previously stopped script in specified slot&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptUnload</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptLoadFileOnDevice"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptLoadFileOnDevice">[docs]</a>    <span class="k">def</span> <span class="nf">scriptLoadFileOnDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">localFile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load compiled, locally stored, script file</span>
+
+<span class="sd">        Loads a compiled script file (.txe) stored locally on the device (SD</span>
+<span class="sd">        card) into a script slot on the device. The scripts default channel</span>
+<span class="sd">        will be the same channel used when this Channel object was created.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot (`int`) : slot containing the running script we want to stop.</span>
+<span class="sd">            localFile (`str`): Name of compiled script (.txe) to load.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptLoadFileOnDevice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span>
+                                     <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">localFile</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.scriptLoadFile"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptLoadFile">[docs]</a>    <span class="k">def</span> <span class="nf">scriptLoadFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">filePathOnPC</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load compiled script file from host(PC)</span>
+
+<span class="sd">        Loads a compiled script file (.txe) stored on the host (PC) into a</span>
+<span class="sd">        script slot on the device. The scripts default channel will be the same</span>
+<span class="sd">        channel used when this Channel object was created.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot (`int`) : slot containing the running script we want to stop.</span>
+<span class="sd">            filePathOnPC (`str`): Path to compiled script (.txe) to load.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c_filePathOnPC</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filePathOnPC</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptLoadFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">c_filePathOnPC</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarOpen"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarOpen">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarOpen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to open an Envvar</span>
+
+<span class="sd">        This should normally not by used directly, instead opening and closing</span>
+<span class="sd">        of an envvar is automatically done when accessing via the `EnvVar`</span>
+<span class="sd">        class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">envvarType</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">envvarSize</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">envvarName</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">envHandle</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarOpen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">envvarName</span><span class="p">,</span>
+                                           <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">envvarType</span><span class="p">),</span>
+                                           <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">envvarSize</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">envvarType</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">envvarSize</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarClose"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarClose">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarClose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to close an Envvar</span>
+
+<span class="sd">        This should normally not by used directly, instead opening and closing</span>
+<span class="sd">        of an envvar is automatically done when accessing via the `EnvVar`</span>
+<span class="sd">        class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarClose</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarSetInt"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarSetInt">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarSetInt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to set an Envvar of type int</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarSetInt</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarGetInt"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarGetInt">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarGetInt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to read an Envvar of type int</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">envvarValue</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarGetInt</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                 <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">envvarValue</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">envvarValue</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarSetFloat"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarSetFloat">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarSetFloat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to set an Envvar of type float</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarSetFloat</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                   <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarGetFloat"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarGetFloat">[docs]</a>    <span class="k">def</span> <span class="nf">scriptEnvvarGetFloat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to read an Envvar of type float</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">envvarValue</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_float</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarGetFloat</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                   <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">envvarValue</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">envvarValue</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarSetData"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarSetData">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;.script_envvar_set_data()&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">scriptEnvvarSetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">envSize</span><span class="p">):</span>
+        <span class="n">value_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarSetData</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                  <span class="n">value_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">envSize</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.script_envvar_set_data"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.script_envvar_set_data">[docs]</a>    <span class="k">def</span> <span class="nf">script_envvar_set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to write a slice of an Envvar of type char</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        `value` needs to be a bytes-like object or list</span>
+
+<span class="sd">        .. versionadded:: 1.10</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="n">char_array</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="nb">len</span>
+        <span class="n">value_p</span> <span class="o">=</span> <span class="n">char_array</span><span class="o">.</span><span class="n">from_buffer_copy</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarSetData</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                  <span class="n">value_p</span><span class="p">,</span>
+                                  <span class="n">start</span><span class="p">,</span>
+                                  <span class="nb">len</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptEnvvarGetData"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptEnvvarGetData">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;.script_envvar_get_data()&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">scriptEnvvarGetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="n">envSize</span><span class="p">):</span>
+        <span class="n">envvarValue</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">envSize</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarGetData</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                  <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">envvarValue</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">envSize</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">envvarValue</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.script_envvar_get_data"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.script_envvar_get_data">[docs]</a>    <span class="k">def</span> <span class="nf">script_envvar_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envHandle</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="c1"># rename to length?</span>
+        <span class="sd">&quot;&quot;&quot;Low level function to read a slice of an Envvar of type char</span>
+
+<span class="sd">        This should normally not by used directly, instead set and get the</span>
+<span class="sd">        value of an envvar using the `EnvVar` class through `Channel.envvar`</span>
+
+<span class="sd">        .. versionadded:: 1.10</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">char_array</span> <span class="o">=</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="nb">len</span><span class="p">)()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptEnvvarGetData</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="n">envHandle</span><span class="p">),</span>
+                                  <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">char_array</span><span class="p">),</span>
+                                  <span class="n">start</span><span class="p">,</span>
+                                  <span class="nb">len</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">char_array</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.scriptGetText"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptGetText">[docs]</a>    <span class="k">def</span> <span class="nf">scriptGetText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read text from subscribed script slots</span>
+
+<span class="sd">        Text-subscriptions must first be set up with</span>
+<span class="sd">        `Channel.scriptRequestText`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `ScriptText`</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            `canlib.canlib.CanNoMsg`: No more text is currently available.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slot</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">()</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptGetText</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">slot</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">time</span><span class="p">),</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">flags</span><span class="p">),</span>
+            <span class="n">text</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">text</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ScriptText</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">slot</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Stat</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.scriptRequestText"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.scriptRequestText">[docs]</a>    <span class="k">def</span> <span class="nf">scriptRequestText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">ScriptRequest</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set up a printf subscription to a selected script slot</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            slot (`int`): The script slot to subscribe/unsubscribe from.</span>
+<span class="sd">            request(`canlib.canlib.ScriptRequest`): Whether to subscribe or unsubscribe.</span>
+
+<span class="sd">        Text printed with ``printf()`` by a t-script that you are subscribed to</span>
+<span class="sd">        is saved and can be retrieved with `Channel.scriptGetText`.</span>
+
+<span class="sd">        .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvScriptRequestText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.set_callback"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.set_callback">[docs]</a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register callback function</span>
+
+<span class="sd">        This will register a callback function which is called when certain</span>
+<span class="sd">        events occur. You can register at most one callback function per handle</span>
+<span class="sd">        at any time.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">        The callback function is called in the context of a high-priority</span>
+<span class="sd">        thread created by CANlib. You should take precaution not to do any time</span>
+<span class="sd">        consuming tasks in the callback.</span>
+
+<span class="sd">        Small example of usage::</span>
+
+<span class="sd">            # Declare callback function</span>
+<span class="sd">            def callback_func(hnd, context, event):</span>
+<span class="sd">                event = canlib.Notify(event)</span>
+
+<span class="sd">                # The nonlocal statement causes the listed identifiers to refer</span>
+<span class="sd">                # to previously bound variables in the nearest enclosing scope</span>
+<span class="sd">                # excluding globals.</span>
+<span class="sd">                nonlocal callback_has_been_called</span>
+<span class="sd">                print(&quot;Callback called, context:{}, event:{!r}&quot;.format(context, event))</span>
+<span class="sd">                # Notify the main program by setting the flag</span>
+<span class="sd">                callback_has_been_called = True</span>
+
+<span class="sd">            # setup communication variable and callback</span>
+<span class="sd">            callback_has_been_called = False</span>
+<span class="sd">            callback = canlib.dll.KVCALLBACK_T(callback_func)</span>
+
+<span class="sd">            with canlib.openChannel(0) as ch:</span>
+<span class="sd">            ch.set_callback(callback, context=121, event=canlib.Notify.BUSONOFF)</span>
+<span class="sd">            # trigger the callback</span>
+<span class="sd">            ch.busOn()</span>
+<span class="sd">            # do something else</span>
+<span class="sd">            time.sleep(0.5)</span>
+<span class="sd">            # Verify that the callback was triggered</span>
+<span class="sd">            assert callback_has_been_called</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">        It is very important to make sure that you keep a reference to the</span>
+<span class="sd">        callback type (``callback`` in the sample above) for as long as any C</span>
+<span class="sd">        library might call it. If it gets deleted by the garbage collector,</span>
+<span class="sd">        calling it from C is likely to either cause a segfault or maybe even</span>
+<span class="sd">        interpret random memory as machine language.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            function (`canlib.canlib.KVCALLBACK_T`): A ctypes wrapped Python function</span>
+
+<span class="sd">            event (`canlib.canlib.Notify`): A combination of flags to indicate</span>
+<span class="sd">                what events to trigger on</span>
+
+<span class="sd">        .. versionadded :: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvSetNotifyCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.fileDiskFormat"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileDiskFormat">[docs]</a>    <span class="k">def</span> <span class="nf">fileDiskFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format the disk on the device, not supported by all devices.</span>
+
+<span class="sd">        .. versionadded:: 1.11</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileDiskFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.fileGetCount"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileGetCount">[docs]</a>    <span class="k">def</span> <span class="nf">fileGetCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the number of files on the device.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `int`: The number of files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileGetCount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.fileGetName"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileGetName">[docs]</a>    <span class="k">def</span> <span class="nf">fileGetName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileNo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the name of the file with the supplied number.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fileNo (`int`): The number of the file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `str`: The name of the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fileName</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileGetName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">fileNo</span><span class="p">),</span> <span class="n">fileName</span><span class="p">,</span>
+                          <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">fileName</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.fileDelete"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileDelete">[docs]</a>    <span class="k">def</span> <span class="nf">fileDelete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceFileName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete file from device.&quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileDelete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">deviceFileName</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.fileCopyToDevice"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileCopyToDevice">[docs]</a>    <span class="k">def</span> <span class="nf">fileCopyToDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostFileName</span><span class="p">,</span> <span class="n">deviceFileName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Copy an arbitrary file from the host to the device.</span>
+
+<span class="sd">        The filename must adhere to the FAT &#39;8.3&#39; naming standard, max 8</span>
+<span class="sd">        characters - a dot - max 3 characters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hostFileName (`str`):   The target host file name.</span>
+<span class="sd">            deviceFileName (`str`, optional): The device file name.</span>
+<span class="sd">                Defaults to the same as *hostFileName*.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">deviceFileName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deviceFileName</span> <span class="o">=</span> <span class="n">hostFileName</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileCopyToDevice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">hostFileName</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+                               <span class="n">deviceFileName</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.fileCopyFromDevice"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.fileCopyFromDevice">[docs]</a>    <span class="k">def</span> <span class="nf">fileCopyFromDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceFileName</span><span class="p">,</span> <span class="n">hostFileName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Copy an arbitrary file from the device to the host.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            deviceFileName (`str`): The device file name.</span>
+<span class="sd">            hostFileName (`str`, optional):   The target host file name.</span>
+<span class="sd">                Defaults to deviceFileName.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">hostFileName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hostFileName</span> <span class="o">=</span> <span class="n">deviceFileName</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvFileCopyFromDevice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">deviceFileName</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+                                 <span class="n">hostFileName</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.kvDeviceSetMode"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.kvDeviceSetMode">[docs]</a>    <span class="k">def</span> <span class="nf">kvDeviceSetMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the current device&#39;s mode.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            The mode is device specific, which means that not all modes are</span>
+<span class="sd">            implemented in all products.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (`int`): One of `canlib.canlib.DeviceMode`, defining which</span>
+<span class="sd">                        mode to use.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvDeviceSetMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.kvDeviceGetMode"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.kvDeviceGetMode">[docs]</a>    <span class="k">def</span> <span class="nf">kvDeviceGetMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the current device&#39;s mode.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            The mode is device specific, which means that not all modes are</span>
+<span class="sd">            implemented in all products.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `int`: One of `DeviceMode`, indicating which mode is in use.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvDeviceGetMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">DeviceMode</span><span class="p">(</span><span class="n">mode</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.number_of_io_pins"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.number_of_io_pins">[docs]</a>    <span class="k">def</span> <span class="nf">number_of_io_pins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the total number of available I/O pins</span>
+
+<span class="sd">        .. versionadded:: 1.8</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pin_count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoGetNumberOfPins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">pin_count</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pin_count</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Channel.io_pins"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.io_pins">[docs]</a>    <span class="k">def</span> <span class="nf">io_pins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generator that returns all I/O pins one by one</span>
+
+<span class="sd">        Returns object depending on pin type and direction: `iopin.AnalogIn`,</span>
+<span class="sd">        `iopin.AnalogOut`, `iopin.DigitalIn`, `iopin.DigitalOut` or</span>
+<span class="sd">        `iopin.Relay`.</span>
+
+<span class="sd">        .. versionadded:: 1.8</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_io_pins</span><span class="p">()):</span>
+            <span class="k">yield</span> <span class="n">iopin</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.io_confirm_config"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.io_confirm_config">[docs]</a>    <span class="k">def</span> <span class="nf">io_confirm_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Confirm current I/O configuration</span>
+
+<span class="sd">        It is required to confirm a configuration by calling this function</span>
+<span class="sd">        before accessing any I/O pins value.</span>
+
+<span class="sd">        .. versionadded:: 1.8</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvIoConfirmConfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Channel.get_io_pin"><a class="viewcode-back" href="../../../reference/canlib/channel.html#canlib.canlib.Channel.get_io_pin">[docs]</a>    <span class="k">def</span> <span class="nf">get_io_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return I/O pin using *index*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `iopin.IoPin`: io pin object for *index* (Any of `iopin.AnalogIn`, `iopin.DigitalOut` etc)</span>
+
+<span class="sd">        .. versionadded:: 1.8</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">iopin</span><span class="o">.</span><span class="n">get_io_pin</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

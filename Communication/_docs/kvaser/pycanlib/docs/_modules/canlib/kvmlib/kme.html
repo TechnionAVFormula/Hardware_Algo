@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvmlib.kme &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvmlib.kme</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvmlib.kme</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">..futureapi</span> <span class="k">import</span> <span class="n">NotYetSupportedError</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">FileType</span>
+<span class="kn">from</span> <span class="nn">.events</span> <span class="k">import</span> <span class="n">memoLogEventEx</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">kvm_error</span><span class="p">,</span> <span class="n">KvmNoLogMsg</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+
+
+<span class="c1"># It would be nice if we set filetype based on path extension,</span>
+<span class="c1"># but since only KME50 is fully supported, we don&#39;t do that yet.</span>
+<div class="viewcode-block" id="createKme"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.createKme">[docs]</a><span class="k">def</span> <span class="nf">createKme</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="n">FileType</span><span class="o">.</span><span class="n">KME50</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a KME file on the host computer</span>
+
+<span class="sd">    Arguments:</span>
+
+<span class="sd">        path (`str`): The full filepath for the .KME file</span>
+<span class="sd">            (e.g. ``&quot;data/mylog.kme50&quot;``).</span>
+
+<span class="sd">        filetype (`canlib.kvmlib.FileType`): The KME file type</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `canlib.kvmlib.Kme`</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+    <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">kme_handle</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeCreateFile</span><span class="p">(</span><span class="n">ct_filename</span><span class="p">,</span>
+                                      <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">status_p</span><span class="p">),</span>
+                                      <span class="n">filetype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="n">FileType</span><span class="o">.</span><span class="n">KME50</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Kme50</span><span class="p">(</span><span class="n">kme_handle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Kme</span><span class="p">(</span><span class="n">kme_handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="openKme"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.openKme">[docs]</a><span class="k">def</span> <span class="nf">openKme</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="n">FileType</span><span class="o">.</span><span class="n">KME50</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open a KME file on the host computer</span>
+
+<span class="sd">    Arguments:</span>
+
+<span class="sd">        path (`str`): The full filepath for the .KME file</span>
+<span class="sd">            (e.g. ``&quot;data/mylog.kme50&quot;``).</span>
+
+<span class="sd">        filetype (`canlib.kvmlib.FileType`): The KME file type</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `canlib.kvmlib.Kme`</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status_p</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+    <span class="n">kme_handle</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeOpenFile</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+                                    <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">status_p</span><span class="p">),</span>
+                                    <span class="n">filetype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">status_p</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR openKme failed with filename:&quot;</span>
+              <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, filetype:</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filetype</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">kvm_error</span><span class="p">(</span><span class="n">status_p</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="n">FileType</span><span class="o">.</span><span class="n">KME50</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Kme50</span><span class="p">(</span><span class="n">kme_handle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Kme</span><span class="p">(</span><span class="n">kme_handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="kme_file_type"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.kme_file_type">[docs]</a><span class="k">def</span> <span class="nf">kme_file_type</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan KME file and report version</span>
+
+<span class="sd">    Open and read the file `path` and try to decode what version</span>
+<span class="sd">    of KME it contains. Returns type as kvmFILE_xxx.</span>
+
+<span class="sd">    Arguments:</span>
+
+<span class="sd">        path (`str`): The full filepath for the .KME file</span>
+<span class="sd">            (e.g. ``&quot;data/mylog.kme&quot;``).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `canlib.kvmlib.FileType`: The KME file type</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">ct_filename</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeScanFileType</span><span class="p">(</span><span class="n">ct_filename</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="nb">type</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">FileType</span><span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_dump_hex</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">group_size</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">hexstring</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%02x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">group_size</span>
+    <span class="n">grouped_hexstring</span> <span class="o">=</span> <span class="p">[</span><span class="n">hexstring</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hexstring</span><span class="p">),</span> <span class="n">n</span><span class="p">)]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">grouped_hexstring</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="Kme"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme">[docs]</a><span class="k">class</span> <span class="nc">Kme</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A kme file</span>
+
+<span class="sd">    A class representing a KME file. The main use is twofold:</span>
+
+<span class="sd">    Either we create a KME file using `canlib.kvmlib.createKme` and would like</span>
+<span class="sd">    to write events using `canlib.kvmlib.Kme.write_event`::</span>
+
+<span class="sd">        with kvmlib.createKme(&#39;out/data.kme50&#39;) as kme:</span>
+<span class="sd">            ...</span>
+<span class="sd">            kme.write_event(my_logevent)</span>
+
+<span class="sd">    Or we read events from an existing KME file::</span>
+
+<span class="sd">        with kvmlib.readKme(&#39;in/data.kme50&#39;) as kme:</span>
+<span class="sd">            event = kme.read_event()</span>
+<span class="sd">            ...</span>
+<span class="sd">            print(event)</span>
+
+<span class="sd">    Note that only KME files of type KME50 may currently be written to.</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">handle</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Kme.event_count_estimation"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.event_count_estimation">[docs]</a>    <span class="k">def</span> <span class="nf">event_count_estimation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an approximation of the number of events contained in the KME file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `int`: Approximate number of events in KME file.</span>
+
+<span class="sd">    .. versionadded:: 1.11</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">eventCount</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeCountEventsEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">eventCount</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">NotYetSupportedError</span><span class="p">:</span>
+            <span class="n">eventCount</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeCountEvents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">eventCount</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">eventCount</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Kme.estimate_events"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.estimate_events">[docs]</a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">replacedby</span><span class="p">(</span><span class="n">event_count_estimation</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">estimate_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimate how many events the KME file contains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `int`: Approximate number of events in KME file.</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+<span class="sd">    .. deprecated:: 1.11</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eventCount</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeCountEvents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">eventCount</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">eventCount</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="Kme.events"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.events">[docs]</a>    <span class="k">def</span> <span class="nf">events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_event</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">KvmNoLogMsg</span><span class="p">):</span>
+                <span class="k">return</span>
+            <span class="k">yield</span> <span class="n">event</span></div>
+
+<div class="viewcode-block" id="Kme.read_event"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.read_event">[docs]</a>    <span class="k">def</span> <span class="nf">read_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read logevent from KME file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `kvmlib.events. memoLogEventEx`</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logevent</span> <span class="o">=</span> <span class="n">memoLogEventEx</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeReadEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">logevent</span><span class="p">)</span>
+        <span class="c1"># _dump_hex(&quot;Reading event:&quot;, logevent.event.raw.data)</span>
+        <span class="k">return</span> <span class="n">logevent</span></div>
+
+    <span class="c1"># Read + write does not produce identical files for formats other than KME50...</span>
+<div class="viewcode-block" id="Kme.write_event"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.write_event">[docs]</a>    <span class="k">def</span> <span class="nf">write_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logevent</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Writing is only supported for filetype KME50&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kme.close"><a class="viewcode-back" href="../../../reference/kvmlib/kme.html#canlib.kvmlib.Kme.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeCloseFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">Kme50</span><span class="p">(</span><span class="n">Kme</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">read_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read logevent from KME50 file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `kvmlib.events.LogEvent`: E.g. `kvmlib.events.MessageEvent`.</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logevent</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Kme50</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">read_event</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">logevent</span><span class="o">.</span><span class="n">createMemoEvent</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">write_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write logevent to KME50 file</span>
+
+<span class="sd">        Arguments:</span>
+
+<span class="sd">            logevent (`kvmlib.events.LogEvent`): The event to write,</span>
+<span class="sd">                (e.g. `kvmlib.events.MessageEvent`).</span>
+
+<span class="sd">    .. versionadded:: 1.7</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mrt</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">_asMrtEvent</span><span class="p">()</span>
+        <span class="n">mle</span> <span class="o">=</span> <span class="n">memoLogEventEx</span><span class="p">(</span><span class="n">mrt</span><span class="p">)</span>
+        <span class="c1"># _dump_hex(&quot;writing event:&quot;, mle.event.raw.data)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvmKmeWriteEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">mle</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

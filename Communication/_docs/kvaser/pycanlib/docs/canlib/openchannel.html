@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Open Channel &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CAN Frames" href="canframes.html" />
+    <link rel="prev" title="Devices and Channels" href="devicesandchannels.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Using canlib (CANlib)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devicesandchannels.html">Devices and Channels</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Open Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#open-as-can">Open as CAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open-as-can-fd">Open as CAN FD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#close-channel">Close Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-can-bitrate">Set CAN Bitrate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-can-fd-bitrate">Set CAN FD Bitrate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#can-driver-modes">CAN Driver Modes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canframes.html">CAN Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sendandreceive.html">Send and Receive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buserrors.html">Bus Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timemeasurement.html">Time Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usingthreads.html">Using Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iopinhandling.html">I/O Pin Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Using canlib (CANlib)</a> &raquo;</li>
+        
+      <li>Open Channel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/canlib/openchannel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="open-channel">
+<h1>Open Channel<a class="headerlink" href="#open-channel" title="Permalink to this headline">¶</a></h1>
+<p>Once we have imported <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code> to enumerate the connected Kvaser CAN
+devices, the next call is likely to be a call to <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a>,
+which returns a <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a> object for the specific CAN
+circuit. This object is then used for subsequent calls to the library. The
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> function’s first argument is the number of the
+desired channel, the second argument is modifier flags <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Open" title="canlib.canlib.Open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Open</span></code></a>.</p>
+<p><a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> may raise several different exceptions, one of
+which is <a class="reference internal" href="../reference/canlib/exceptions.html#canlib.canlib.CanNotFound" title="canlib.canlib.CanNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CanNotFound</span></code></a>. This means that the channel specified in
+the first parameter was not found, or that the flags passed to
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> is not applicable to the specified channel.</p>
+<div class="section" id="open-as-can">
+<h2>Open as CAN<a class="headerlink" href="#open-as-can" title="Permalink to this headline">¶</a></h2>
+<p>No special <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Open" title="canlib.canlib.Open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Open</span></code></a> modifier flag is needed in the flags argument to <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a> when opening a channel in CAN mode.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">EXCLUSIVE</span><span class="p">)</span>
+<span class="go">&lt;canlib.canlib.channel.Channel object at 0x0000015B787EDA90&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="open-as-can-fd">
+<h2>Open as CAN FD<a class="headerlink" href="#open-as-can-fd" title="Permalink to this headline">¶</a></h2>
+<p>To open a channel in CAN FD mode, either <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Open.CAN_FD" title="canlib.canlib.Open.CAN_FD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CAN_FD</span></code></a> or
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Open.CAN_FD_NONISO" title="canlib.canlib.Open.CAN_FD_NONISO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CAN_FD_NONISO</span></code></a> needs to be given in the flags argument to
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a>.</p>
+<p>This example opens channel 0 in CAN FD mode for exclusive usage by this application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span> <span class="o">|</span> <span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">EXCLUSIVE</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="close-channel">
+<h2>Close Channel<a class="headerlink" href="#close-channel" title="Permalink to this headline">¶</a></h2>
+<p>Closing a channel is done using <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.close" title="canlib.canlib.Channel.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>. If no other
+handles are referencing the same CANlib channel, the channel is taken off
+bus.</p>
+<p>The CAN channel can also be opened and closed using a context manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-can-bitrate">
+<h2>Set CAN Bitrate<a class="headerlink" href="#set-can-bitrate" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.setBusParams" title="canlib.canlib.Channel.setBusParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBusParams</span></code></a> to set the CAN bus parameters. The bus parameters include the bit rate, the position of the sampling point etc, they are also described in most CAN controller data sheets. CANlib provides a few default set of parameters for the most common bus speeds through the <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canBITRATE_xxx</span></code> constants.</p>
+<p>To set the bus speed to 500 kbit/s:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The predefined bit rates may also be set directly in the call to <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To set a bit rate that is not predefined, you have to calculate the appropriate
+bus parameters yourself.</p>
+<p>Set the speed to 125 kbit/s, each bit comprising 8 (= 1 + 4 + 3) quanta, the
+sampling point occurs at 5/8 of a bit; SJW = 1; one sampling point:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">125000</span><span class="p">,</span> <span class="n">tseg1</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tseg2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sjw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">noSamp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set the speed to 111111 kbit/s, the sampling point to 75%, the SJW to 2 and the
+number of samples to 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">111111</span><span class="p">,</span> <span class="n">tseg1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tseg2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sjw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">noSamp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you do not set a bus speed, a default of 500 kbit/s will be used.</p>
+</div>
+<div class="section" id="set-can-fd-bitrate">
+<h2>Set CAN FD Bitrate<a class="headerlink" href="#set-can-fd-bitrate" title="Permalink to this headline">¶</a></h2>
+<p>In CAN FD we need to set both the arbitration/nominal bitrate, using
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.setBusParams" title="canlib.canlib.Channel.setBusParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBusParams</span></code></a>, and the data phase bitrate, using
+<a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.setBusParams" title="canlib.canlib.Channel.setBusParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBusParams</span></code></a>. CANlib provides a few default set of
+parameters for the most common CAN FD bus speeds through the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canFD_BITRATE_xxx</span></code> constants.</p>
+<p>Set the nominal bitrate to 500 kbit/s, with sampling point at 80% and the data phase bitrate to 1000 kbit/s, with sampling point at 80%:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">setBusParamsFd</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canFD_BITRATE_1M_80P</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">...</span>
+</pre></div>
+</div>
+<p>The predefined bit rates may also be set directly in the call to <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">bitrate</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">data_bitrate</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">canFD_BITRATE_1M_80P</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more copmplex settings of CAN FD bitrates, use the <a class="reference external" href="https://www.kvaser.com/support/calculators/can-fd-bit-timing-calculator/">Bit Timing Calculator
+for CAN FD</a>
+available on the Kvaser web site.</p>
+</div>
+<div class="section" id="can-driver-modes">
+<span id="id1"></span><h2>CAN Driver Modes<a class="headerlink" href="#can-driver-modes" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="../reference/canlib/channel.html#canlib.canlib.Channel.setBusOutputControl" title="canlib.canlib.Channel.setBusOutputControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBusOutputControl</span></code></a> to set the bus driver
+mode. This is usually set to <a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Driver.NORMAL" title="canlib.canlib.Driver.NORMAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Driver.NORMAL</span></code></a> to obtain the
+standard push-pull type of driver. Some controllers also support
+<a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Driver.SILENT" title="canlib.canlib.Driver.SILENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Driver.SILENT</span></code></a> which makes the controller receive only, not
+transmit anything, not even ACK bits. This might be handy for e.g. when
+listening to a CAN bus without interfering.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">canlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">ch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">ch</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">Driver</span><span class="o">.</span><span class="n">SILENT</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">...</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/canlib/enums.html#canlib.canlib.Driver.NORMAL" title="canlib.canlib.Driver.NORMAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Driver.NORMAL</span></code></a> is set by default.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="canframes.html" class="btn btn-neutral float-right" title="CAN Frames" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="devicesandchannels.html" class="btn btn-neutral float-left" title="Devices and Channels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

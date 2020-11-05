@@ -1,0 +1,122 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Car RES Datalogger
+VAL_TABLE_ DL_Status 8 "Error" 7 "Logging EM & FSD data" 5 "Logging FSD data" 3 "Logging EM data" 1 "DL idle, ready to log" ;
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ FMEA_Template_05 : 0|8@1- (1,0) [0|0] "" Vector__XXX
+ SG_ FMEA_Template_04 : 0|64@1- (1,0) [0|0] "" Vector__XXX
+ SG_ FMEA_Template_03 : 0|64@1- (1,0) [0|0] "" Vector__XXX
+ SG_ FMEA_Template_02 : 0|64@1- (1,0) [0|0] "" Vector__XXX
+ SG_ FMEA_Template_01 : 0|64@1- (1,0) [0|0] "" Vector__XXX
+ SG_ RES_Template_03 : 0|64@1- (1,0) [0|0] "" Vector__XXX
+ SG_ RES_Template_02 : 0|8@1- (1,0) [0|0] "" Vector__XXX
+ SG_ RES_Template_01 : 0|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ DV_current_round : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DV_cones_ctr_current : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DV_cones_ctr_all : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ EBS_state_triggered : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_state_deactivated : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_state_available : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ASSI_state_res_triggered : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ASSI_state_ready : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ASSI_state_off : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ASSI_state_finish : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ASSI_state_autonomous_mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AMI_state_trackdrive : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AMI_state_skidpad : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AMI_state_braketest : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AMI_state_acceleration : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ SteeringAngle_target : 0|8@1- (1,0) [-128|127] "°" Vector__XXX
+ SG_ SteeringAngle_current : 0|8@1- (1,0) [-128|127] "°" Vector__XXX
+ SG_ Speed_target : 0|8@1+ (1,0) [0|255] "kph" Vector__XXX
+ SG_ Speed_current : 0|8@1+ (1,0) [0|255] "kph" Vector__XXX
+ SG_ Brake_target : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Brake_current : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1072 FSE_EnergyMeter_Data: 8 Datalogger
+ SG_ Current : 48|16@1- (0.05,0) [-1638.4|1638.35] "A" Vector__XXX
+ SG_ Voltage : 32|16@1- (0.04,0) [-1310.72|1310.68] "V" Vector__XXX
+ SG_ Power : 16|16@1- (3,0) [-98304|98301] "W" Vector__XXX
+ SG_ Status : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ MsgCntr : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 3221225472 DV_cones_ctr_current "Holds the number of all cones that are currently detected";
+CM_ SG_ 3221225472 DV_cones_ctr_all "Holds the number of all cones ever detected in this dynamic discipline";
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 100000000000;
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed";
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 100000;
+BA_DEF_ SG_  "NWM-WakeupAllowed" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","IfActive","NoMsgSendType","NotUsed","vector_leerstring";
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 999999;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 1000;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 50000;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 50000;
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "No","Yes";
+BA_DEF_ BO_  "NmMessage" ENUM  "no","yes";
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 65535;
+BA_DEF_ BU_  "NmStationAddress" INT 0 63;
+BA_DEF_ BU_  "NmNode" ENUM  "no","yes";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_  "NmBaseAddress" HEX 1024 1087;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenSigSendType" "Cyclic";
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "NWM-WakeupAllowed" "";
+BA_DEF_DEF_  "GenMsgSendType" "NoMsgSendType";
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgILSupport" "Yes";
+BA_DEF_DEF_  "NmMessage" "no";
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "NmNode" "no";
+BA_DEF_DEF_  "NodeLayerModules" "CANoeILNLVector.dll";
+BA_DEF_DEF_  "NmBaseAddress" 1024;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "GenMsgSendType" BO_ 1072 0;
+BA_ "GenMsgCycleTime" BO_ 1072 20;
+BA_ "GenSigSendType" SG_ 3221225472 RES_Template_02 3;
+BA_ "GenSigSendType" SG_ 3221225472 RES_Template_01 3;
+VAL_ 1072 Status 8 "Error" 7 "Logging EM & FSD data" 5 "Logging FSD data" 3 "Logging EM data" 1 "DL idle, ready to log" ;
+

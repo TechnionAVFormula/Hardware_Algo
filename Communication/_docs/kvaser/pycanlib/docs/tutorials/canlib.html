@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kvrlib" href="kvrlib.html" />
+    <link rel="prev" title="Tutorials" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">canlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-connected-devices">List connected devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#send-and-receive-single-frame">Send and receive single frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#send-and-receive-can-fd-frame">Send and receive CAN FD frame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linlib.html">linlib</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>canlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/canlib.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="canlib">
+<h1><a class="toc-backref" href="#id1">canlib</a><a class="headerlink" href="#canlib" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#canlib" id="id1">canlib</a><ul>
+<li><a class="reference internal" href="#list-connected-devices" id="id2">List connected devices</a></li>
+<li><a class="reference internal" href="#send-and-receive-single-frame" id="id3">Send and receive single frame</a></li>
+<li><a class="reference internal" href="#send-and-receive-can-fd-frame" id="id4">Send and receive CAN FD frame</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The following sections contain sample code for inspiration on how to use Kvaser Python canlib.</p>
+<div class="section" id="list-connected-devices">
+<h2><a class="toc-backref" href="#id2">List connected devices</a><a class="headerlink" href="#list-connected-devices" title="Permalink to this headline">¶</a></h2>
+<p>This code print some basic information (device name, EAN number and serial number) from all connected devices.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">canlib</span>
+
+<span class="n">num_channels</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">getNumberOfChannels</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Found </span><span class="si">%d</span><span class="s2"> channels&quot;</span> <span class="o">%</span> <span class="n">num_channels</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">):</span>
+    <span class="n">chdata</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">. </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">chdata</span><span class="o">.</span><span class="n">device_name</span><span class="p">,</span>
+                                <span class="n">chdata</span><span class="o">.</span><span class="n">card_upc_no</span><span class="p">,</span>
+                                <span class="n">chdata</span><span class="o">.</span><span class="n">card_serial_no</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-and-receive-single-frame">
+<h2><a class="toc-backref" href="#id3">Send and receive single frame</a><a class="headerlink" href="#send-and-receive-single-frame" title="Permalink to this headline">¶</a></h2>
+<p>Here is some basic code to send and receive a single frame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">Frame</span>
+<span class="kn">from</span> <span class="nn">canlib.canlib</span> <span class="kn">import</span> <span class="n">ChannelData</span>
+
+
+<span class="k">def</span> <span class="nf">setUpChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">openFlags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">ACCEPT_VIRTUAL</span><span class="p">,</span>
+                 <span class="n">bitrate</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">canBITRATE_500K</span><span class="p">,</span>
+                 <span class="n">outputControl</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Driver</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">):</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">openFlags</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Using channel: </span><span class="si">%s</span><span class="s2">, EAN: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ChannelData</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span><span class="o">.</span><span class="n">channel_name</span><span class="p">,</span>
+                                          <span class="n">ChannelData</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span><span class="o">.</span><span class="n">card_upc_no</span><span class="p">))</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">outputControl</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ch</span>
+
+
+<span class="k">def</span> <span class="nf">tearDownChannel</span><span class="p">(</span><span class="n">ch</span><span class="p">):</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;canlib version:&quot;</span><span class="p">,</span> <span class="n">canlib</span><span class="o">.</span><span class="n">dllversion</span><span class="p">())</span>
+
+<span class="n">ch0</span> <span class="o">=</span> <span class="n">setUpChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ch1</span> <span class="o">=</span> <span class="n">setUpChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">MessageFlag</span><span class="o">.</span><span class="n">EXT</span><span class="p">)</span>
+<span class="n">ch1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ch0</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canNoMsg</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">canlib</span><span class="o">.</span><span class="n">canError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+
+<span class="n">tearDownChannel</span><span class="p">(</span><span class="n">ch0</span><span class="p">)</span>
+<span class="n">tearDownChannel</span><span class="p">(</span><span class="n">ch1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-and-receive-can-fd-frame">
+<h2><a class="toc-backref" href="#id4">Send and receive CAN FD frame</a><a class="headerlink" href="#send-and-receive-can-fd-frame" title="Permalink to this headline">¶</a></h2>
+<p>Here are some minimal code to send and receive a CAN FD frame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">canlib</span> <span class="kn">import</span> <span class="n">canlib</span><span class="p">,</span> <span class="n">Frame</span>
+
+    <span class="n">bitrate</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canFD_BITRATE_500K_80P</span>
+    <span class="n">bitrate_data</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">canFD_BITRATE_2M_80P</span>
+
+    <span class="c1"># open channel as CAN FD using the flag</span>
+    <span class="n">ch0</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span><span class="p">)</span>
+    <span class="n">ch0</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">drivertype</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Driver</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">)</span>
+    <span class="n">ch0</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="n">ch0</span><span class="o">.</span><span class="n">setBusParamsFd</span><span class="p">(</span><span class="n">bitrate_data</span><span class="p">)</span>
+    <span class="n">ch0</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+    <span class="n">ch1</span> <span class="o">=</span> <span class="n">canlib</span><span class="o">.</span><span class="n">openChannel</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Open</span><span class="o">.</span><span class="n">CAN_FD</span><span class="p">)</span>
+    <span class="n">ch1</span><span class="o">.</span><span class="n">setBusOutputControl</span><span class="p">(</span><span class="n">drivertype</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">Driver</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">)</span>
+    <span class="n">ch1</span><span class="o">.</span><span class="n">setBusParams</span><span class="p">(</span><span class="n">bitrate</span><span class="p">)</span>
+    <span class="n">ch1</span><span class="o">.</span><span class="n">setBusParamsFd</span><span class="p">(</span><span class="n">bitrate_data</span><span class="p">)</span>
+    <span class="n">ch1</span><span class="o">.</span><span class="n">busOn</span><span class="p">()</span>
+
+    <span class="c1"># set FDF flag to send using CAN FD</span>
+    <span class="c1"># set BRS flag to send using higher bit rate in the data phase</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+                  <span class="n">flags</span><span class="o">=</span><span class="n">canlib</span><span class="o">.</span><span class="n">MessageFlag</span><span class="o">.</span><span class="n">FDF</span> <span class="o">|</span> <span class="n">canlib</span><span class="o">.</span><span class="n">MessageFlag</span><span class="o">.</span><span class="n">BRS</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Sending&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="n">ch0</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">ch1</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Receiving&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+
+    <span class="n">ch0</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+    <span class="n">ch1</span><span class="o">.</span><span class="n">busOff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kvrlib.html" class="btn btn-neutral float-right" title="kvrlib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

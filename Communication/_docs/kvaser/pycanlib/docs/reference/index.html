@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reference &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Base Exceptions" href="exceptions.html" />
+    <link rel="prev" title="Write a Configuration to a Memorator" href="../examples/write_memo_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Base Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#canlibexception">CanlibException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#dllexception">DllException</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ean.html">EAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="device.html">Device</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="device.html#connected-devices">connected_devices()</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="frame.html">Frames</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="frame.html#frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frame.html#linframe">LINFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="versionnumber.html">Version Numbers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="versionnumber.html#versionnumber">VersionNumber</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versionnumber.html#betaversionnumber">BetaVersionNumber</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="canlib/index.html">canlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="canlib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#canerror">CanError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#cannomsg">CanNoMsg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#cannotfound">CanNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#canscriptfail">CanScriptFail</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#envvarexception">EnvvarException</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#envvarnameerror">EnvvarNameError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#envvarvalueerror">EnvvarValueError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#ionovalidconfiguration">IoNoValidConfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#iopinconfigurationnotconfirmed">IoPinConfigurationNotConfirmed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/exceptions.html#txefileisencrypted">TxeFileIsEncrypted</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/channel.html">Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/channel.html#openchannel">openChannel()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/channel.html#errorcounters">ErrorCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/channel.html#id1">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/channel.html#canbusstatistics">CanBusStatistics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/channeldata.html">ChannelData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/envvar.html">EnvVar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#acceptfilterflag">AcceptFilterFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#bustypegroup">BusTypeGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#channelcap">ChannelCap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#channeldataitem">ChannelDataItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#channelflags">ChannelFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#devicemode">DeviceMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#driver">Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#drivercap">DriverCap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#envvartype">EnvVarType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#hardwaretype">HardwareType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#iocontrolitem">IOControlItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#ledaction">LEDAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#loggertype">LoggerType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#messageflag">MessageFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#notify">Notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#open">Open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#operationalmode">OperationalMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#remotetype">RemoteType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#scriptrequest">ScriptRequest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#scriptstatus">ScriptStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#scriptstop">ScriptStop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#stat">Stat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#transceivertype">TransceiverType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/enums.html#txedataitem">TxeDataItem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/iocontrol.html">IOControl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/iopin.html">I/O pin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#addonmodule">AddonModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#analogin">AnalogIn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#analogout">AnalogOut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#digitalin">DigitalIn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#digitalout">DigitalOut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#digitalvalue">DigitalValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#direction">Direction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#info">Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#iopin">IoPin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#moduletype">ModuleType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#pintype">PinType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/iopin.html#relay">Relay</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/txe.html">Script Container</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/txe.html#sourceelement">SourceElement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/txe.html#txe">Txe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canlib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#bitratesetting">bitrateSetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#geterrortext">getErrorText()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#getnumberofchannels">getNumberOfChannels()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#getversion">getVersion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#prodversion">prodversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#reinitializelibrary">reinitializeLibrary()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#scripttext">ScriptText</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#translatebaud">translateBaud()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canlib/wrapper.html#unloadlibrary">unloadLibrary()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kvadblib/index.html">kvadblib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvderror">KvdError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdbuffertoosmall">KvdBufferTooSmall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvddbfileparse">KvdDbFileParse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvderrinparameter">KvdErrInParameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdinuse">KvdInUse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdnoattribute">KvdNoAttribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdnomessage">KvdNoMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdnonode">KvdNoNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdnotfound">KvdNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#kvdonlyoneallowed">KvdOnlyOneAllowed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#id1">KvdInUse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/exceptions.html#signalnotfound">SignalNotFound</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/attribute.html">Attribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/attributedef.html">Attribute Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#attributedefinition">AttributeDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#defaultdefinition">DefaultDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#enumdefaultdefinition">EnumDefaultDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#enumdefinition">EnumDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#floatdefinition">FloatDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#integerdefinition">IntegerDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#minmaxdefinition">MinMaxDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/attributedef.html#stringdefinition">StringDefinition</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/dbc.html">Dbc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/dbc.html#id1">Dbc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/dbc.html#get-last-parse-error">get_last_parse_error()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#attributeowner">AttributeOwner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#attributetype">AttributeType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#messageflag">MessageFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#protocoltype">ProtocolType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#signalbyteorder">SignalByteOrder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#signalmultiplexmode">SignalMultiplexMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/enums.html#signaltype">SignalType</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/framebox.html">Frame Box</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/framebox.html#framebox">FrameBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/framebox.html#boundmessage">BoundMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/framebox.html#boundsignal">BoundSignal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/message.html">Message</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/signal.html">Signals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/signal.html#enumsignal">EnumSignal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/signal.html#signal">Signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/signal.html#valuelimits">ValueLimits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/signal.html#valuescaling">ValueScaling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/signal.html#valuesize">ValueSize</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvadblib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/wrapper.html#bytes-to-dlc">bytes_to_dlc()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/wrapper.html#dlc-to-bytes">dlc_to_bytes()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvadblib/wrapper.html#get-protocol-properties">get_protocol_properties()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kvamemolibxml/index.html">kvamemolibxml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/exceptions.html#kvaerror">KvaError</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/configuration.html">Confiurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#load-lif">load_lif()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#load-lif-file">load_lif_file()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#load-xml">load_xml()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#load-xml-file">load_xml_file()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#validationmessage">ValidationMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#validationerrormessage">ValidationErrorMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/configuration.html#validationwarningmessage">ValidationWarningMessage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/enums.html#validationerror">ValidationError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/enums.html#validationwarning">ValidationWarning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvamemolibxml/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#kvabuffertoxml">kvaBufferToXml()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#kvaxmltobuffer">kvaXmlToBuffer()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#kvaxmltofile">kvaXmlToFile()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#kvaxmlvalidate">kvaXmlValidate()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#xmlgetlasterror">xmlGetLastError()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#xmlgetvalidationerror">xmlGetValidationError()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#xmlgetvalidationstatuscount">xmlGetValidationStatusCount()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvamemolibxml/wrapper.html#xmlgetvalidationwarning">xmlGetValidationWarning()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kvlclib/index.html">kvlclib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/exceptions.html#kvlcerror">KvlcError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/exceptions.html#kvlcendoffile">KvlcEndOfFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/exceptions.html#kvlcnotimplemented">KvlcNotImplemented</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/converter.html">Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/enums.html#channelmask">ChannelMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/enums.html#fileformat">FileFormat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/property.html">Property</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/readerformat.html">Reader Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/readerformat.html#id1">reader_formats()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/readerformat.html#readerformat">ReaderFormat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/writerformat.html">Writer Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/writerformat.html#id1">writer_formats()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/writerformat.html#writerformat">WriterFormat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvlclib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvlclib/wrapper.html#dllversion">dllversion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kvmlib/index.html">kvmlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#kvmerror">KvmError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#kvmdiskerror">KvmDiskError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#kvmdisknotformated">KvmDiskNotFormated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#kvmnodisk">KvmNoDisk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#kvmnologmsg">KvmNoLogMsg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/exceptions.html#lockedlogerror">LockedLogError</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/enums.html#device">Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/enums.html#filetype">FileType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/enums.html#loggerdataformat">LoggerDataFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/enums.html#logfiletype">LogFileType</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/events.html">Events</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/events.html#messageevent">MessageEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/events.html#logevent">LogEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/events.html#rtcevent">RTCEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/events.html#triggerevent">TriggerEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/events.html#versionevent">VersionEvent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/log.html">Log files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/log.html#unmountedlog">UnmountedLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/log.html#logfile">LogFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/log.html#mountedlog">MountedLog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/kme.html">kme files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kme.html#createkme">createKme()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kme.html#openkme">openKme()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kme.html#kme">Kme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kme.html#kme-file-type">kme_file_type()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/kmf.html">kmf files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kmf.html#openkmf">openKmf()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kmf.html#kmf">Kmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/kmf.html#kmfsystem">KmfSystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/memorator.html">Memorator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/memorator.html#opendevice">openDevice()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/memorator.html#id1">Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvmlib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvmlib/wrapper.html#dllversion">dllversion()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kvrlib/index.html">kvrlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/exceptions.html#kvrerror">KvrError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/exceptions.html#kvrblank">KvrBlank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/exceptions.html#devicenotinseterror">DeviceNotInSetError</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/discovery.html">Discovery</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#address">Address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#deviceinfo">DeviceInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#id1">Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#get-default-discovery-addresses">get_default_discovery_addresses()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#opendiscovery">openDiscovery()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#servicestatus">ServiceStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#set-clear-stored-devices-on-exit">set_clear_stored_devices_on_exit()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#start-discovery">start_discovery()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#store-devices">store_devices()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/discovery.html#stored-devices">stored_devices()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#accessibility">Accessibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#addresstype">AddressType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#addresstypeflag">AddressTypeFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#availability">Availability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#basicserviceset">BasicServiceSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#configmode">ConfigMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#deviceusage">DeviceUsage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#networkstate">NetworkState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#regulatorydomain">RegulatoryDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#remotestate">RemoteState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#servicestate">ServiceState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/enums.html#startinfo">StartInfo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/infoset.html">Device Info Set</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/infoset.html#discover-info-set">discover_info_set()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/infoset.html#empty-info-set">empty_info_set()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/infoset.html#stored-info-set">stored_info_set()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/infoset.html#deviceinfoset">DeviceInfoSet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/remotedevice.html">Remote Device</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#addressinfo">AddressInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#configprofile">ConfigProfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#connectionstatus">ConnectionStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#connectiontestresult">ConnectionTestResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#connectiontest">ConnectionTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#opendevice">openDevice()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#remotedevice">RemoteDevice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#wlanscan">WlanScan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/remotedevice.html#wlanscanresult">WlanScanResult</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/structures.html">Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/structures.html#kvraddress">kvrAddress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/structures.html#kvraddresslist">kvrAddressList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/structures.html#kvrdeviceinfo">kvrDeviceInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/structures.html#kvrdeviceinfolist">kvrDeviceInfoList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/structures.html#kvrversion">kvrVersion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/service.html">service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvrlib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#addressfromstring">addressFromString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#configactiveprofileset">configActiveProfileSet()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#configactiveprofileget">configActiveProfileGet()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#confignoprofilesget">configNoProfilesGet()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#devicegetservicestatus">deviceGetServiceStatus()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#devicegetservicestatustext">deviceGetServiceStatusText()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#generate-wep-keys">generate_wep_keys()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#generate-wpa-keys">generate_wpa_keys()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#hostname">hostname()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#initializelibrary">initializeLibrary()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#kvrdiscovery">kvrDiscovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#kvrconfig">kvrConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#stringfromaddress">stringFromAddress()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#unload">unload()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#verify-xml">verify_xml()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kvrlib/wrapper.html#wepkeys">WEPKeys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="linlib/index.html">linlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="linlib/exceptions.html">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="linlib/exceptions.html#linerror">LinError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/exceptions.html#linnomessageerror">LinNoMessageError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/exceptions.html#linnotimplementederror">LinNotImplementedError</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/channel.html">Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="linlib/channel.html#openchannel">openChannel()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/channel.html#openmaster">openMaster()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/channel.html#openslave">openSlave()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/channel.html#id1">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/channel.html#firmwareversion">FirmwareVersion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/enums.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#channeldata">ChannelData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#channeltype">ChannelType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#error">Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#messagedisturb">MessageDisturb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#messageflag">MessageFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#messageparity">MessageParity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/enums.html#setup">Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/structures.html">MessageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linlib/wrapper.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#dllversion">dllversion()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#getchanneldata">getChannelData()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#gettransceiverdata">getTransceiverData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#initializelibrary">initializeLibrary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#transceiverdata">TransceiverData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linlib/wrapper.html#unloadlibrary">unloadLibrary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exceptions.html" class="btn btn-neutral float-right" title="Base Exceptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../examples/write_memo_config.html" class="btn btn-neutral float-left" title="Write a Configuration to a Memorator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvmlib.enums &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvmlib.enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvmlib.enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..cenum</span> <span class="k">import</span> <span class="n">CEnum</span>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../reference/kvmlib/enums.html#canlib.kvmlib.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="n">FAIL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">PARAM</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+    <span class="n">LOGFILEOPEN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+    <span class="n">NOSTARTTIME</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9</span>
+    <span class="n">NOLOGMSG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+    <span class="n">LOGFILEWRITE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span>
+    <span class="n">EOF</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span>
+    <span class="n">NO_DISK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">13</span>
+    <span class="n">LOGFILEREAD</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>
+    <span class="n">QUEUE_FULL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span>
+    <span class="n">CRC_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">21</span>
+    <span class="n">SECTOR_ERASED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">22</span>
+    <span class="n">FILE_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">23</span>
+    <span class="n">DISK_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">24</span>
+    <span class="n">DISKFULL_DIR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">25</span>
+    <span class="n">DISKFULL_DATA</span> <span class="o">=</span> <span class="o">-</span><span class="mi">26</span>
+    <span class="n">SEQ_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">27</span>
+    <span class="n">FILE_SYSTEM_CORRUPT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">28</span>
+    <span class="n">UNSUPPORTED_VERSION</span> <span class="o">=</span> <span class="o">-</span><span class="mi">29</span>
+    <span class="n">NOT_IMPLEMENTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">30</span>
+    <span class="n">FATAL_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">31</span>
+    <span class="n">ILLEGAL_REQUEST</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32</span>
+    <span class="n">FILE_NOT_FOUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span>
+    <span class="n">NOT_FORMATTED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">34</span>
+    <span class="n">WRONG_DISK_TYPE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">35</span>
+    <span class="n">TIMEOUT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">36</span>
+    <span class="n">DEVICE_COMM_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">37</span>
+    <span class="n">OCCUPIED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">38</span>
+    <span class="n">USER_CANCEL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">39</span>
+    <span class="n">FIRMWARE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span>
+    <span class="n">CONFIG_ERROR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">41</span>
+    <span class="n">WRITE_PROT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">42</span>
+    <span class="n">RESULT_TOO_BIG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">43</span></div>
+
+
+<div class="viewcode-block" id="Device"><a class="viewcode-back" href="../../../reference/kvmlib/enums.html#canlib.kvmlib.Device">[docs]</a><span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvmDEVICE_xxx</span>
+
+<span class="sd">    Device type, used to connect to a Memorator device.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MHYDRA</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MHYDRA_EXT</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="FileType"><a class="viewcode-back" href="../../../reference/kvmlib/enums.html#canlib.kvmlib.FileType">[docs]</a><span class="k">class</span> <span class="nc">FileType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvmFILE_xxx</span>
+
+<span class="sd">    KME file type, a binary file format representing log data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">KME24</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Deprecated format, use KME40</span>
+    <span class="n">KME25</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Deprecated format, use KME40</span>
+    <span class="n">KME40</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">KME50</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="LoggerDataFormat"><a class="viewcode-back" href="../../../reference/kvmlib/enums.html#canlib.kvmlib.LoggerDataFormat">[docs]</a><span class="k">class</span> <span class="nc">LoggerDataFormat</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvmLDF_MAJOR_xxx</span>
+
+<span class="sd">    Logged data format (LDF) version.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MAJOR_CAN</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Used in Kvaser Memorator (2nd generation)</span>
+    <span class="n">MAJOR_CAN64</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Used in Kvaser Memorator (2nd generation) with</span></div>
+    <span class="c1"># extended data capabilities.</span>
+
+
+<div class="viewcode-block" id="LogFileType"><a class="viewcode-back" href="../../../reference/kvmlib/enums.html#canlib.kvmlib.LogFileType">[docs]</a><span class="k">class</span> <span class="nc">LogFileType</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvmLogFileType_xxx</span>
+
+<span class="sd">    .. versionadded:: 1.11</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ERR</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># A log file containing only error frames with frames before and after.</span>
+    <span class="n">ALL</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># A log file containing all frames.</span></div>
+
+
+<span class="k">class</span> <span class="nc">SoftwareInfoItem</span><span class="p">(</span><span class="n">CEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kvm_SWINFO_xxx</span>
+
+<span class="sd">    Different types of version information that can be extracted using</span>
+<span class="sd">    kvmDeviceGetSoftwareInfo().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">KVMLIB</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">DRIVER</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">FIRMWARE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CONFIG_VERSION_NEEDED</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

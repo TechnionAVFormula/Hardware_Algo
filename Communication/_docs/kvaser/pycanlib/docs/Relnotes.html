@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Release Notes &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Miscellaneous" href="reference/linlib/wrapper.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-13-390-24-feb-2020">New Features and Fixed Problems in V1.13.390  (24-FEB-2020)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-12-251-08-oct-2019">New Features and Fixed Problems in V1.12.251  (08-OCT-2019)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-11-226-13-sep-2019">New Features and Fixed Problems in V1.11.226  (13-SEP-2019)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-10-102-12-may-2019">New Features and Fixed Problems in V1.10.102  (12-MAY-2019)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-9-909-03-mar-2019">New Features and Fixed Problems in V1.9.909  (03-MAR-2019)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-8-812-26-nov-2018">New Features and Fixed Problems in V1.8.812  (26-NOV-2018)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-7-741-16-sep-2018">New Features and Fixed Problems in V1.7.741  (16-SEP-2018)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-6-615-13-may-2018">New Features and Fixed Problems in V1.6.615  (13-MAY-2018)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-5-525-12-feb-2018">New Features and Fixed Problems in V1.5.525  (12-FEB-2018)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-4-373-13-sep-2017">New Features and Fixed Problems in V1.4.373  (13-SEP-2017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-3-242-05-may-2017">New Features and Fixed Problems in V1.3.242  (05-MAY-2017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-2-163-15-feb-2017">New Features and Fixed Problems in V1.2.163  (15-FEB-2017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-1-23-28-sep-2016">New Features and Fixed Problems in V1.1.23  (28-SEP-2016)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-0-10-15-sep-2016">New Features and Fixed Problems in V1.0.10  (15-SEP-2016)</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Release Notes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Relnotes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="release-notes">
+<h1><a class="toc-backref" href="#id1">Release Notes</a><a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<p>This is the release notes for the pycanlib module.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#release-notes" id="id1">Release Notes</a><ul>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-13-390-24-feb-2020" id="id2">New Features and Fixed Problems in V1.13.390  (24-FEB-2020)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-12-251-08-oct-2019" id="id3">New Features and Fixed Problems in V1.12.251  (08-OCT-2019)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-11-226-13-sep-2019" id="id4">New Features and Fixed Problems in V1.11.226  (13-SEP-2019)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-10-102-12-may-2019" id="id5">New Features and Fixed Problems in V1.10.102  (12-MAY-2019)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-9-909-03-mar-2019" id="id6">New Features and Fixed Problems in V1.9.909  (03-MAR-2019)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-8-812-26-nov-2018" id="id7">New Features and Fixed Problems in V1.8.812  (26-NOV-2018)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-7-741-16-sep-2018" id="id8">New Features and Fixed Problems in V1.7.741  (16-SEP-2018)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-6-615-13-may-2018" id="id9">New Features and Fixed Problems in V1.6.615  (13-MAY-2018)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-5-525-12-feb-2018" id="id10">New Features and Fixed Problems in V1.5.525  (12-FEB-2018)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-4-373-13-sep-2017" id="id11">New Features and Fixed Problems in V1.4.373  (13-SEP-2017)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-3-242-05-may-2017" id="id12">New Features and Fixed Problems in V1.3.242  (05-MAY-2017)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-2-163-15-feb-2017" id="id13">New Features and Fixed Problems in V1.2.163  (15-FEB-2017)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-1-23-28-sep-2016" id="id14">New Features and Fixed Problems in V1.1.23  (28-SEP-2016)</a></li>
+<li><a class="reference internal" href="#new-features-and-fixed-problems-in-v1-0-10-15-sep-2016" id="id15">New Features and Fixed Problems in V1.0.10  (15-SEP-2016)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-13-390-24-feb-2020">
+<h2><a class="toc-backref" href="#id2">New Features and Fixed Problems in V1.13.390  (24-FEB-2020)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-13-390-24-feb-2020" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li>Added <code class="xref py py-obj docutils literal notranslate"><span class="pre">HandleData</span></code> to wrap canGetHandleData. Also added
+<a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.channel_data" title="canlib.canlib.Channel.channel_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_data</span></code></a> as a helper function.</li>
+<li>IOControl now returns utf-8 decoded strings instead of “bytes in string”.</li>
+<li>Fixed a bug where <code class="xref py py-obj docutils literal notranslate"><span class="pre">isconnected</span></code> would return <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>
+if the <code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_number</span></code> attribute was larger than the total number of
+available CANlib channels, regardles of if the device was connected or not.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-12-251-08-oct-2019">
+<h2><a class="toc-backref" href="#id3">New Features and Fixed Problems in V1.12.251  (08-OCT-2019)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-12-251-08-oct-2019" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Minor changes.</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-11-226-13-sep-2019">
+<h2><a class="toc-backref" href="#id4">New Features and Fixed Problems in V1.11.226  (13-SEP-2019)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-11-226-13-sep-2019" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li>Added a slight delay in get_bus_statistics because the underlying
+functions in CANlib are asynchronous.</li>
+<li>Added <a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.read_error_counters" title="canlib.canlib.Channel.read_error_counters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_error_counters</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">iocontrol</span></code>
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_error_counters</span></code>.</li>
+<li>Added <a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.getBusOutputControl" title="canlib.canlib.Channel.getBusOutputControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBusOutputControl</span></code></a>.</li>
+<li>Added <a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.fileDiskFormat" title="canlib.canlib.Channel.fileDiskFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fileDiskFormat</span></code></a> that formats the disk in a
+remote device, i.e Kvaser DIN Rail.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.BoundSignal.value</span></code>:<ul>
+<li>If the signal is an enum-signal, and the signal’s value is not found in the
+enum definition, the raw value is now returned.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib</span></code>:<ul>
+<li>Marked using kvmlib class as deprecated (was deprecated in v1.6)</li>
+<li>Replaced <a class="reference internal" href="reference/kvmlib/kme.html#canlib.kvmlib.Kme.estimate_events" title="canlib.kvmlib.Kme.estimate_events"><code class="xref py py-obj docutils literal notranslate"><span class="pre">estimate_events</span></code></a> with
+<a class="reference internal" href="reference/kvmlib/kme.html#canlib.kvmlib.Kme.event_count_estimation" title="canlib.kvmlib.Kme.event_count_estimation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Kme.event_count_estimation</span></code></a> in order to have same name as
+<a class="reference internal" href="reference/kvmlib/log.html#canlib.kvmlib.LogFile.event_count_estimation" title="canlib.kvmlib.LogFile.event_count_estimation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogFile.event_count_estimation</span></code></a>. Old function name is now deprecated.</li>
+<li>When found, new 64 bit version of the dll call, <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvmLogFileMountEx</span></code>,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">kvlcEventCountEx</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvmKmeCountEventsEx</span></code> (added in CANlib v5.29), is
+now used.</li>
+<li>Added <a class="reference internal" href="reference/kvmlib/log.html#canlib.kvmlib.LogFile.log_type" title="canlib.kvmlib.LogFile.log_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_type</span></code></a> for supporting the different log
+types generated by Kvaser Memorator Light HS v2.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code>:<ul>
+<li><a class="reference internal" href="reference/kvadblib/dbc.html#canlib.kvadblib.Dbc" title="canlib.kvadblib.Dbc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dbc</span></code></a> raises <code class="xref py py-obj docutils literal notranslate"><span class="pre">KvdDbFileParse</span></code>
+if the dbc file loaded contains syntax errors.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-10-102-12-may-2019">
+<h2><a class="toc-backref" href="#id5">New Features and Fixed Problems in V1.10.102  (12-MAY-2019)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-10-102-12-may-2019" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Reference documentation has been restructured.</li>
+<li><a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel</span></code></a>:<ul>
+<li>Added support for slicing environment variables declared as char.  Replaced
+low level function <code class="xref py py-obj docutils literal notranslate"><span class="pre">scriptEnvvarSetData</span></code> with
+<a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.script_envvar_set_data" title="canlib.canlib.Channel.script_envvar_set_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">script_envvar_set_data</span></code></a> and added
+<a class="reference internal" href="reference/canlib/envvar.html#canlib.canlib.envvar.DataEnvVar" title="canlib.canlib.envvar.DataEnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataEnvVar</span></code></a> which is now returned when a char envvar is
+returned.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code>:<ul>
+<li>Error messages from the CAN database parser in <a class="reference internal" href="reference/kvadblib/dbc.html#canlib.kvadblib.Dbc" title="canlib.kvadblib.Dbc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dbc</span></code></a> can be
+retrieved using <a class="reference internal" href="reference/kvadblib/dbc.html#canlib.kvadblib.get_last_parse_error" title="canlib.kvadblib.get_last_parse_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_last_parse_error()</span></code></a>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-9-909-03-mar-2019">
+<h2><a class="toc-backref" href="#id6">New Features and Fixed Problems in V1.9.909  (03-MAR-2019)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-9-909-03-mar-2019" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code>:<ul>
+<li>Error texts are now fetched from the dll using kvaDbGetErrorText().</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib</span></code>:<ul>
+<li>Added support for DLC mismatch handling included in CANlib v5.27</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvDevice</span></code>:<ul>
+<li>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvDevice.kvDevice</span></code> class is now deprecated, use <a class="reference internal" href="reference/device.html#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Device</span></code></a>
+instead</li>
+</ul>
+</li>
+<li><a class="reference internal" href="reference/device.html#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Device</span></code></a>:<ul>
+<li>Added method <code class="xref py py-obj docutils literal notranslate"><span class="pre">Device.issubset</span></code> as a helper to find loosely specified
+devices.</li>
+</ul>
+</li>
+<li><a class="reference internal" href="reference/canlib/iopin.html#module-canlib.canlib.iopin" title="canlib.canlib.iopin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.iopin</span></code></a>:<ul>
+<li>Added attributes <code class="xref py py-obj docutils literal notranslate"><span class="pre">fw_version</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">serial</span></code> to <code class="xref py py-obj docutils literal notranslate"><span class="pre">IoPin</span></code>. To read these
+attributes, CANlib v5.27 is needed.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">AddonModule</span></code> is a new class, holding attributes of one add-on module.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config.modules</span></code> is now an attribute, calculated at creation time and
+containing an ordered list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">AddonModule</span></code> objects. The old functionality
+has been moved to <code class="xref py py-obj docutils literal notranslate"><span class="pre">Config._modules</span></code></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config.issubset</span></code> is a new method to identify if a configuration contains
+the expected add-on modules.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-8-812-26-nov-2018">
+<h2><a class="toc-backref" href="#id7">New Features and Fixed Problems in V1.8.812  (26-NOV-2018)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-8-812-26-nov-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li>Fixed issue were Channel.handle attribute would not be initialized when
+opening of the channel failed.</li>
+<li>Added experimental support for accessing IO-pins on sub modules of the
+Kvaser DIN Rail SE 400S that was added to CANlib v5.26. This includes a
+new module <a class="reference internal" href="reference/canlib/iopin.html#module-canlib.canlib.iopin" title="canlib.canlib.iopin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.iopin</span></code></a>.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code>:<ul>
+<li>Fixed issue with signals were multiplexing mode, and scaling (factor and
+offset) returned wrong values from a loaded .dbc file.</li>
+<li>Added show_all argument to Dbc.messages. Dbc.__iter__ now set show_all to
+False in order to skip VECTOR__INDEPENDENT_SIG_MSG messages.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-7-741-16-sep-2018">
+<h2><a class="toc-backref" href="#id8">New Features and Fixed Problems in V1.7.741  (16-SEP-2018)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-7-741-16-sep-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib</span></code>:<ul>
+<li>Added <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.event_count_estimation</span></code></li>
+<li>Added <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.kme</span></code>
+Previous kvmlib.kmeXXX functions are now deprecated.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li>Added <a class="reference internal" href="reference/canlib/enums.html#canlib.canlib.ScriptStatus" title="canlib.canlib.ScriptStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ScriptStatus</span></code></a></li>
+<li>Added enums to <a class="reference internal" href="reference/canlib/enums.html#canlib.canlib.ChannelCap" title="canlib.canlib.ChannelCap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ChannelCap</span></code></a></li>
+<li>Fixed <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canWriteSync</span></code></li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib</span></code>:<ul>
+<li>Added API to access information about reader formats.</li>
+<li>Added kvlclib.Property to replace old
+PROPERTY_XXX constants which are now deprecated.</li>
+<li>Added kvlclib.reader_formats and kvlclib.writer_formats to replace now
+deprecated kvlclib.WriterFormat.getFirstWriterFormat and
+kvlclib.WriterFormat.getNextWriterFormat.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-6-615-13-may-2018">
+<h2><a class="toc-backref" href="#id9">New Features and Fixed Problems in V1.6.615  (13-MAY-2018)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-6-615-13-may-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Updated for CANlib SDK v5.23.</li>
+<li>Getting version numbers should now be done with <code class="docutils literal notranslate"><span class="pre">dllversion()</span></code>,
+which will return <a class="reference internal" href="reference/versionnumber.html#canlib.BetaVersionNumber" title="canlib.BetaVersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.BetaVersionNumber</span></code></a> if the dll is marked as Beta.
+Also added <code class="docutils literal notranslate"><span class="pre">canlib.prodversion()</span></code> to return the CANlib product version number.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device</span></code>:<ul>
+<li>New <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device.Device</span></code> class (available as <a class="reference internal" href="reference/device.html#canlib.Device" title="canlib.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Device</span></code></a>) that is a
+simpler version of kvDevice. <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device.Device</span></code> objects can be defined
+using an EAN and serial number, or a connected device can be searched for
+using <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device.Device.find</span></code>. These objects do not require the device
+to stay connected, and can be used to later create most other <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib</span></code>
+objects, e.g. <a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a>, <a class="reference internal" href="reference/kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Memorator</span></code></a>, etc.</li>
+<li>New <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device.connected_devices</span></code> which returns an iterator of
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.device.Device</span></code> objects, one for each device currently connected.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean</span></code>:<ul>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> objects can be tested for equality, both with other
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> objects and with strings.</li>
+<li>Added <code class="xref py py-obj docutils literal notranslate"><span class="pre">CanNotFound</span></code> exception.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> objects can now be directly instantiated from string,
+i.e. <code class="docutils literal notranslate"><span class="pre">ean</span> <span class="pre">=</span> <span class="pre">canlib.EAN(ean_string)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ean</span> <span class="pre">=</span>
+<span class="pre">canlib.EAN.from_string(ean_string)</span></code>.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> objects can be converted back into any of the
+representations that can be used to create them. See the documentation of
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> for more info.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code> objects can be indexed and iterated upon, yielding the
+digits as <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>s.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li><a class="reference internal" href="reference/canlib/envvar.html#canlib.canlib.EnvVar" title="canlib.canlib.EnvVar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.EnvVar</span></code></a> object raises <code class="xref py py-obj docutils literal notranslate"><span class="pre">EnvvarNameError</span></code> when given an
+illegal name, instead of <code class="xref py py-obj docutils literal notranslate"><span class="pre">AssertionError</span></code>.</li>
+<li><a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.openChannel" title="canlib.canlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.openChannel</span></code></a> can now set the bitrate of the channel opened.</li>
+<li><a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a> objects automatically close their handles when
+garbage collected</li>
+<li><a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a> has new methods
+<a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.scriptRequestText" title="canlib.canlib.Channel.scriptRequestText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.scriptRequestText</span></code></a> and
+<a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel.scriptGetText" title="canlib.canlib.Channel.scriptGetText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel.scriptGetText</span></code></a> to get text printed with
+<code class="docutils literal notranslate"><span class="pre">printf()</span></code> by a script. This text is returned as a
+<a class="reference internal" href="reference/canlib/wrapper.html#canlib.canlib.ScriptText" title="canlib.canlib.ScriptText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ScriptText</span></code></a> object.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml</span></code>:<ul>
+<li>A new, object oriented way of dealing with kvamemolibxml using
+<a class="reference internal" href="reference/kvamemolibxml/configuration.html#canlib.kvamemolibxml.Configuration" title="canlib.kvamemolibxml.Configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.Configuration</span></code></a> objects.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib</span></code>:<ul>
+<li>Improved object model<ul>
+<li>New <a class="reference internal" href="reference/kvmlib/memorator.html#canlib.kvmlib.openDevice" title="canlib.kvmlib.openDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.openDevice</span></code></a> function that returns a
+<a class="reference internal" href="reference/kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Memorator</span></code></a> object representing a connected Memorator
+device. See the documentation of <a class="reference internal" href="reference/kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Memorator</span></code></a> for
+instructions on how to use this new class to more easily interface with
+your Memorators.</li>
+<li>New <a class="reference internal" href="reference/kvmlib/kmf.html#canlib.kvmlib.openKmf" title="canlib.kvmlib.openKmf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.openKmf</span></code></a> function for opening .KMF files that returns
+a <a class="reference internal" href="reference/kvmlib/kmf.html#canlib.kvmlib.Kmf" title="canlib.kvmlib.Kmf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Kmf</span></code></a> object that is similar to
+<a class="reference internal" href="reference/kvmlib/memorator.html#canlib.kvmlib.Memorator" title="canlib.kvmlib.Memorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Memorator</span></code></a>. See the docstring of <a class="reference internal" href="reference/kvmlib/kmf.html#canlib.kvmlib.Kmf" title="canlib.kvmlib.Kmf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.Kmf</span></code></a> for
+more information.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.linlib</span></code>:<ul>
+<li>Getting version number with <a class="reference internal" href="reference/linlib/wrapper.html#canlib.linlib.dllversion" title="canlib.linlib.dllversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.linlib.dllversion</span></code></a> (requires CANlib SDK
+v5.23 or newer).</li>
+<li>Explicit <a class="reference internal" href="reference/linlib/channel.html#canlib.linlib.Channel.close" title="canlib.linlib.Channel.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.linlib.Channel.close</span></code></a> function for forcing a linlib
+channel’s internal handle to be closed.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:<ul>
+<li>Added support for accessing information within compiled t program (.txe) files.<ul>
+<li>Added wrapper function for <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvScriptTxeGetData</span></code>.</li>
+<li>Added compiled t program (.txe) interface class <a class="reference internal" href="reference/canlib/txe.html#canlib.canlib.Txe" title="canlib.canlib.Txe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Txe</span></code></a>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code>:<ul>
+<li>enums now returns non-empty dictionary in attribute definition returned
+from <code class="xref py py-obj docutils literal notranslate"><span class="pre">EnumDefinition.definition</span></code></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-5-525-12-feb-2018">
+<h2><a class="toc-backref" href="#id10">New Features and Fixed Problems in V1.5.525  (12-FEB-2018)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-5-525-12-feb-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Updated for CANlib SDK v5.22.</li>
+<li>Added support for LIN bus API (LINlib)</li>
+<li>Added support for Database API (kvaDbLib)
+Needs version v5.22 of CANlib SDK to get supported dll.</li>
+</ul>
+<p>Restructuring of code in order to make the API simpler and the code base more
+maintainable have resulted in the following changes (old style is deprecated,
+shown in details while running Python with the -Wd argument):</p>
+<ul>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvMessage</span></code> has been renamed <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a></p>
+<ul class="simple">
+<li><a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> objects are now accepted and returned when writing and reading channels.</li>
+<li>The new <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvadblib</span></code> module uses these <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> objects heavily.</li>
+</ul>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib</span></code>:</p>
+<ul class="simple">
+<li>Added wrapper functions for <code class="xref py py-obj docutils literal notranslate"><span class="pre">canReadStatus</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">canRequestChipStatus</span></code></li>
+<li>Deprecated use of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canlib()</span></code> objects; all methods have been moved to the module.<ul>
+<li>See the docstring of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.CANLib</span></code> for more information</li>
+</ul>
+</li>
+<li>Simplified the names of the channel-classes (old names are deprecated):<ul>
+<li>The channel class is now <a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a>, instead of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canChannel</span></code>.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ChannelData_Channel_Flags</span></code> is now <a class="reference internal" href="reference/canlib/enums.html#canlib.canlib.ChannelFlags" title="canlib.canlib.ChannelFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ChannelFlags</span></code></a></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ChannelData_Channel_Flags_bits</span></code> is now <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.ChannelFlagBits</span></code></li>
+</ul>
+</li>
+<li><a class="reference internal" href="reference/canlib/channel.html#canlib.canlib.Channel" title="canlib.canlib.Channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.Channel</span></code></a> now uses <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> objects for reading and writing.<ul>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.read</span></code> now returns a <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> object instead of a tuple. However, <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> objects are largely compatible with tuples.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.write</span></code> takes a single argument, a <a class="reference internal" href="reference/frame.html#canlib.Frame" title="canlib.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Frame</span></code></a> object. The previous call signature has been taken over by <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.write_raw</span></code>.</li>
+<li>Likewise for <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.writeWait</span></code> and its new friend <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.Channel.writeWait_raw</span></code>.</li>
+</ul>
+</li>
+<li>The class <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.canVersion</span></code> has been removed, and
+<a class="reference internal" href="reference/canlib/wrapper.html#canlib.canlib.getVersion" title="canlib.canlib.getVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.canlib.getVersion</span></code></a> now returns a <a class="reference internal" href="reference/versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a>. The new
+class still supports conversion to string and accessing <code class="docutils literal notranslate"><span class="pre">.major</span></code> and
+<code class="docutils literal notranslate"><span class="pre">.minor</span></code> attributes.</li>
+</ul>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib</span></code>:</p>
+<ul class="simple">
+<li>Added wrapper functions for kvmKmeReadEvent.</li>
+<li>Corrected encoding for Python 3 in kmeOpenFile().</li>
+<li>Deprecated names for several classes to make them more logical and more pythonic:<ul>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.memoMsg</span></code> is now <a class="reference internal" href="reference/kvmlib/events.html#canlib.kvmlib.LogEvent" title="canlib.kvmlib.LogEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.LogEvent</span></code></a></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.logMsg</span></code> is now <a class="reference internal" href="reference/kvmlib/events.html#canlib.kvmlib.MessageEvent" title="canlib.kvmlib.MessageEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.MessageEvent</span></code></a></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.rtcMsg</span></code> is now <a class="reference internal" href="reference/kvmlib/events.html#canlib.kvmlib.RTCEvent" title="canlib.kvmlib.RTCEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.RTCEvent</span></code></a></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.trigMsg</span></code> is now <a class="reference internal" href="reference/kvmlib/events.html#canlib.kvmlib.TriggerEvent" title="canlib.kvmlib.TriggerEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.TriggerEvent</span></code></a></li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.verMsg</span></code> is now <a class="reference internal" href="reference/kvmlib/events.html#canlib.kvmlib.VersionEvent" title="canlib.kvmlib.VersionEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.VersionEvent</span></code></a></li>
+</ul>
+</li>
+<li>The class <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.kvmVersion</span></code> has been removed, and
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.KvmLib.getVersion</span></code> now returns a <a class="reference internal" href="reference/versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a>. The
+new class still supports conversion to string and accessing <code class="docutils literal notranslate"><span class="pre">.major</span></code>,
+<code class="docutils literal notranslate"><span class="pre">.minor</span></code>, and <code class="docutils literal notranslate"><span class="pre">.build</span></code> attributes.</li>
+</ul>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib</span></code>:</p>
+<ul>
+<li><p class="first">Added method <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.addDatabaseFile</span></code> and helper object <a class="reference internal" href="reference/kvlclib/enums.html#canlib.kvlclib.ChannelMask" title="canlib.kvlclib.ChannelMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.ChannelMask</span></code></a>.</p>
+</li>
+<li><p class="first">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.KvlcLib</span></code> object has been deprecated.</p>
+<ul>
+<li><p class="first">All functions that relate to converters have been moved to the more appropriately named <a class="reference internal" href="reference/kvlclib/converter.html#canlib.kvlclib.Converter" title="canlib.kvlclib.Converter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.Converter</span></code></a>.</p>
+<ul>
+<li><p class="first">Some of these functions have been renamed:</p>
+<ul>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsOutputFilenameNew</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">IsOverrunActive</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">IsDataTruncated</span></code> have all had their initial “i” lower-cased, as the upper case “I” was an error.</p>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPropertyDefault</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">isPropertySupported</span></code> are no longer available on the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Converter</span></code> object, they must be accessed via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code> attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">converter</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">getPropertyDefault</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first"><a class="reference internal" href="reference/kvlclib/writerformat.html#canlib.kvlclib.WriterFormat.getFirstWriterFormat" title="canlib.kvlclib.WriterFormat.getFirstWriterFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.WriterFormat.getFirstWriterFormat</span></code></a> and <a class="reference internal" href="reference/kvlclib/writerformat.html#canlib.kvlclib.WriterFormat.getNextWriterFormat" title="canlib.kvlclib.WriterFormat.getNextWriterFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.WriterFormat.getNextWriterFormat</span></code></a> now returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">kvlclib.FileFormat</span></code> object (which is based on the <code class="xref py py-obj docutils literal notranslate"><span class="pre">IntEnum</span></code> class).</p>
+</li>
+<li><p class="first">Other functions have been moved to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib</span></code> module.</p>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteConverter</span></code> is no longer supported. Instead, converters are automatically deleted when garbage collected. If their contents must be flushed to file, see the new <a class="reference internal" href="reference/kvlclib/converter.html#canlib.kvlclib.Converter.flush" title="canlib.kvlclib.Converter.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.Converter.flush</span></code></a> method.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">The class <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvlclib.KvlcVersion</span></code> has been removed, and
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvmlib.kvlclib.getVersion</span></code> now returns a <a class="reference internal" href="reference/versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a>. The
+new class still supports conversion to string and accessing <code class="docutils literal notranslate"><span class="pre">.major</span></code>,
+<code class="docutils literal notranslate"><span class="pre">.minor</span></code>, and <code class="docutils literal notranslate"><span class="pre">.build</span></code> attributes.</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib</span></code>:</p>
+<ul class="simple">
+<li>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.KvrLib</span></code> object has been deprecated; all methods have been moved to the module.</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.getVersion</span></code> no longer returns a <a class="reference internal" href="reference/kvrlib/structures.html#canlib.kvrlib.kvrVersion" title="canlib.kvrlib.kvrVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.kvrVersion</span></code></a>
+but a <a class="reference internal" href="reference/versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a>. The return value still supports conversion to
+string and accessing <code class="docutils literal notranslate"><span class="pre">.major</span></code> and <code class="docutils literal notranslate"><span class="pre">.minor</span></code> attributes.</li>
+</ul>
+</li>
+<li><p class="first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml</span></code>:</p>
+<ul class="simple">
+<li>Renamed from <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.KvaMemoLibXml</span></code>, however trying to import the old name will just import the new one instead.</li>
+<li>Deprecated the use of <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.KvaMemoLib</span></code> objects, all methods have been moved to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml</span></code> module itself.</li>
+<li>Breaking change: Moved values that were incorrectly defined as constants into enums. In most cases this should not have any impact, as all the values are internal error codes and are turned into Python exceptions. But if you nonetheless use the kvamemolibxml status values directly, you’ll need to change your code as follows:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">KvaXmlStatusERR_XXX_XXX</span></code> is now <code class="docutils literal notranslate"><span class="pre">Error.XXX_XXX</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">KvaXmlValidationStatusERR_XXX_XXX</span></code> is now <code class="docutils literal notranslate"><span class="pre">ValidationError.XXX_XXX</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">KvaXmlValidationStatusWARN</span></code> is now <code class="docutils literal notranslate"><span class="pre">ValidationWarning.XXX_XXX</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">KvaXmlStatusFail</span></code> is now <code class="docutils literal notranslate"><span class="pre">Error.FAIL</span></code> (Changed to be consistent with other KvaXmlStatus errors). The same is true for <code class="docutils literal notranslate"><span class="pre">ValidationError.FAIL</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">KvaXmlStatusOK</span></code> and <code class="docutils literal notranslate"><span class="pre">KvaXmlValidationStatusOK</span></code> are still treated as if they are constants, as they are not error statuses.</li>
+</ul>
+</li>
+<li><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvamemolibxml.getVersion</span></code> no longer returns a string but a
+<a class="reference internal" href="reference/versionnumber.html#canlib.VersionNumber" title="canlib.VersionNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.VersionNumber</span></code></a>. The return value still supports conversion to
+string.</li>
+</ul>
+</li>
+<li><p class="first">Exceptions:</p>
+<ul class="simple">
+<li>Exceptions throughout the package have been standardised, and now all inherit from <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.exceptions.CanlibException</span></code>.</li>
+<li>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">canERR</span></code> attribute that some exceptions had has been deprecated in favour of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code> attribute. Furthermore, all <code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib</span></code> exceptions now have this attribute; the status code that was returned from a C call that triggered the specific exception.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-4-373-13-sep-2017">
+<h2><a class="toc-backref" href="#id11">New Features and Fixed Problems in V1.4.373  (13-SEP-2017)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-4-373-13-sep-2017" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Minor changes.</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-3-242-05-may-2017">
+<h2><a class="toc-backref" href="#id12">New Features and Fixed Problems in V1.3.242  (05-MAY-2017)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-3-242-05-may-2017" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Added missing unicode conversions for Python3.</li>
+<li>Linux<ul>
+<li>Added support for new libraries (kvadblib, kvmlib, kvamemolibxml, kvlclib).</li>
+<li>Added wrappers KvFileGetCount, kvFileGetName, kvFileCopyXxxx, kvDeviceSetMode, kvDeviceGetMode</li>
+</ul>
+</li>
+<li>canlib:<ul>
+<li>Added wrapper for kvFileDelete</li>
+<li>Enhanced printout from canScriptFail errors.</li>
+<li>Second file argument in fileCopyFromDevice and fileCopyToDevice is now optional.</li>
+<li>OS now loads all dependency dll (also adding KVDLLPATH to PATH in Windows).</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-2-163-15-feb-2017">
+<h2><a class="toc-backref" href="#id13">New Features and Fixed Problems in V1.2.163  (15-FEB-2017)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-2-163-15-feb-2017" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Added wrapper function canlib.getChannelData_Cust_Name()</li>
+<li>Added module canlib.kvlclib which is a wrapper for the Converter Library
+kvlclib in CANlib SDK.</li>
+<li>Added wrapper function canChannel.flashLeds().</li>
+<li>Added missing unicode conversions for Python3.</li>
+<li>Fixed bug where CANlib SDK install directory was not always correctly
+detected in Windows 10.</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-1-23-28-sep-2016">
+<h2><a class="toc-backref" href="#id14">New Features and Fixed Problems in V1.1.23  (28-SEP-2016)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-1-23-28-sep-2016" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>canSetAcceptanceFilter and kvReadTimer was not implemented in Linux</li>
+</ul>
+</div>
+<div class="section" id="new-features-and-fixed-problems-in-v1-0-10-15-sep-2016">
+<h2><a class="toc-backref" href="#id15">New Features and Fixed Problems in V1.0.10  (15-SEP-2016)</a><a class="headerlink" href="#new-features-and-fixed-problems-in-v1-0-10-15-sep-2016" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Initial module release.</li>
+<li>Added kvmlib.kmeSCanFileType()</li>
+<li>Added canChannel.canAccept() and canChannel.canSetAcceptanceFilter()</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="reference/linlib/wrapper.html" class="btn btn-neutral float-left" title="Miscellaneous" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

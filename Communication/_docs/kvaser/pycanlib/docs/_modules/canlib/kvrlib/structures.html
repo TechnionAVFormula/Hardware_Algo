@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.structures &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.structures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.structures</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">DeviceUsage</span><span class="p">,</span> <span class="n">Accessibility</span><span class="p">,</span> <span class="n">Availability</span>
+
+
+<div class="viewcode-block" id="kvrVersion"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrVersion">[docs]</a><span class="k">class</span> <span class="nc">kvrVersion</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;minor&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint8</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">major</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="kvrAddress"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrAddress">[docs]</a><span class="k">class</span> <span class="nc">kvrAddress</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">Type_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">Type_IPV4</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Type_IPV6</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">Type_IPV4_PORT</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">Type_MAC</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="n">TypeText</span> <span class="o">=</span> <span class="p">{</span><span class="n">Type_UNKNOWN</span><span class="p">:</span> <span class="s1">&#39;UNKNOWN&#39;</span><span class="p">,</span>
+                <span class="n">Type_IPV4</span><span class="p">:</span> <span class="s1">&#39;IPV4&#39;</span><span class="p">,</span>
+                <span class="n">Type_IPV6</span><span class="p">:</span> <span class="s1">&#39;IPV6&#39;</span><span class="p">,</span>
+                <span class="n">Type_IPV4_PORT</span><span class="p">:</span> <span class="s1">&#39;IPV4_PORT&#39;</span><span class="p">,</span>
+                <span class="n">Type_MAC</span><span class="p">:</span> <span class="s1">&#39;MAC&#39;</span><span class="p">}</span>
+
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_ubyte</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Type_IPV4</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Type_IPV4_PORT</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">addr</span> <span class="o">+=</span> <span class="s1">&#39;:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeText</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="kvrAddressList"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrAddressList">[docs]</a><span class="k">class</span> <span class="nc">kvrAddressList</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;elements&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_short</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;STRUCT_ARRAY&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">kvrAddress</span><span class="p">))]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_of_structs</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">elems</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrAddress</span> <span class="o">*</span> <span class="n">num_of_structs</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">elems</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">kvrAddress</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="n">num_of_structs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+            <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">kvrCipherInfoElement</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;capability&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;group_cipher&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;list_cipher_auth&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+    <span class="p">]</span>
+
+
+<div class="viewcode-block" id="kvrDeviceInfo"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrDeviceInfo">[docs]</a><span class="k">class</span> <span class="nc">kvrDeviceInfo</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;struct_size&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ean_hi&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ean_lo&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ser_no&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;fw_major_ver&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;fw_minor_ver&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;fw_build_ver&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;host_name&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;usage&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;accessibility&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;accessibility_pwd&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;device_address&quot;</span><span class="p">,</span> <span class="n">kvrAddress</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;client_address&quot;</span><span class="p">,</span> <span class="n">kvrAddress</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;base_station_id&quot;</span><span class="p">,</span> <span class="n">kvrAddress</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;request_connection&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;availability&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;encryption_key&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">32</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;reserved1&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;reserved2&quot;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="kvrDeviceInfo.connect"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrDeviceInfo.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_connection</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="kvrDeviceInfo.disconnect"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrDeviceInfo.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_connection</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ean_hi</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ean_hi</span> <span class="ow">and</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">ean_lo</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ean_lo</span> <span class="ow">and</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">ser_no</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ser_no</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%x</span><span class="s2"> </span><span class="si">%x</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ean_hi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean_lo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ser_no</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">acc_pwd</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span>
+        <span class="n">enc_key</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span>
+
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;name/hostname  : </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> / </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">host_name</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  ean/serial   : </span><span class="si">%x</span><span class="s2">-</span><span class="si">%x</span><span class="s2"> / </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ean_hi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ean_lo</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">ser_no</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  fw           : </span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2">.</span><span class="si">%03d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fw_major_ver</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">fw_minor_ver</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">fw_build_ver</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  addr/cli/AP  : </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_address</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">base_station_id</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  availability : </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Availability</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">availability</span><span class="p">))</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  usage/access : </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">DeviceUsage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usage</span><span class="p">),</span>
+            <span class="n">Accessibility</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accessibility</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessibility_pwd</span><span class="p">:</span>
+            <span class="n">acc_pwd</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encryption_key</span><span class="p">:</span>
+            <span class="n">enc_key</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;  pass/enc.key : </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc_pwd</span><span class="p">,</span> <span class="n">enc_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="kvrDeviceInfoList"><a class="viewcode-back" href="../../../reference/kvrlib/structures.html#canlib.kvrlib.kvrDeviceInfoList">[docs]</a><span class="k">class</span> <span class="nc">kvrDeviceInfoList</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;elements&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_short</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;STRUCT_ARRAY&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">kvrDeviceInfo</span><span class="p">))]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceInfos</span><span class="p">):</span>
+        <span class="n">num_of_structs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">deviceInfos</span><span class="p">)</span>
+        <span class="n">elems</span> <span class="o">=</span> <span class="p">(</span><span class="n">kvrDeviceInfo</span> <span class="o">*</span> <span class="n">num_of_structs</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">elems</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">kvrDeviceInfo</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_of_structs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span> <span class="o">=</span> <span class="n">deviceInfos</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="n">num_of_structs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">):</span>
+            <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

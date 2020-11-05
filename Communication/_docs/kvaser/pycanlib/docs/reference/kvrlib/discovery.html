@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Discovery &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enumerations" href="enums.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">kvrlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Discovery</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#address">Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deviceinfo">DeviceInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Discovery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-default-discovery-addresses">get_default_discovery_addresses()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opendiscovery">openDiscovery()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#servicestatus">ServiceStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-clear-stored-devices-on-exit">set_clear_stored_devices_on_exit()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-discovery">start_discovery()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#store-devices">store_devices()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stored-devices">stored_devices()</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="enums.html">Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="infoset.html">Device Info Set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remotedevice.html">Remote Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service.html">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../linlib/index.html">linlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">kvrlib</a> &raquo;</li>
+        
+      <li>Discovery</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/kvrlib/discovery.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="discovery">
+<h1>Discovery<a class="headerlink" href="#discovery" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="address">
+<h2>Address<a class="headerlink" href="#address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.Address">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">Address</code><a class="reference internal" href="../../_modules/canlib/kvrlib/address.html#Address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Address" title="Permalink to this definition">¶</a></dt>
+<dd><p>An IP or MAC address</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Address.type</strong> (<a class="reference internal" href="enums.html#canlib.kvrlib.AddressType" title="canlib.kvrlib.AddressType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.AddressType</span></code></a>) – Address type.</li>
+<li><a class="reference internal" href="structures.html#canlib.kvrlib.kvrAddress.address" title="canlib.kvrlib.kvrAddress.address"><strong>address</strong></a> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list[int]</span></code>) – A list of integers, the numbers in the address.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="canlib.kvrlib.Address.from_c">
+<em class="property">classmethod </em><code class="descname">from_c</code><span class="sig-paren">(</span><em>c_addr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/address.html#Address.from_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Address.from_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Address</span></code></a> object from a <a class="reference internal" href="structures.html#canlib.kvrlib.kvrAddress" title="canlib.kvrlib.kvrAddress"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.kvrAddress</span></code></a> object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.Address.to_c">
+<code class="descname">to_c</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/address.html#Address.to_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Address.to_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="structures.html#canlib.kvrlib.kvrAddress" title="canlib.kvrlib.kvrAddress"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.kvrAddress</span></code></a> from this object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="deviceinfo">
+<h2>DeviceInfo<a class="headerlink" href="#deviceinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.DeviceInfo">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">DeviceInfo</code><span class="sig-paren">(</span><em>device_info=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#DeviceInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information about a device that can be written to the registry</p>
+<p>See <a class="reference internal" href="infoset.html#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceInfoSet</span></code></a> for information about how to get
+<a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> objects, process them, and then write them to the registry.</p>
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.accessibility">
+<code class="descname">accessibility</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.accessibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>The accessibility of this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="enums.html#canlib.kvrlib.Accessibility" title="canlib.kvrlib.Accessibility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Accessibility</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.availability">
+<code class="descname">availability</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.availability" title="Permalink to this definition">¶</a></dt>
+<dd><p>The availability of this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="enums.html#canlib.kvrlib.Availability" title="canlib.kvrlib.Availability"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Availability</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.base_station_id">
+<code class="descname">base_station_id</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.base_station_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of the base station</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Address</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.client_address">
+<code class="descname">client_address</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.client_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of connected client</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Address</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.connect">
+<code class="descname">connect</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the service should connect to this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.device_address">
+<code class="descname">device_address</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.device_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of remote device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Address</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.ean">
+<code class="descname">ean</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.ean" title="Permalink to this definition">¶</a></dt>
+<dd><p>EAN of device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.ean.EAN</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.encryption_key">
+<code class="descname">encryption_key</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.encryption_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The encryption key to use when encrypting communication</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This attribute is write-only.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.firmware_version">
+<code class="descname">firmware_version</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.firmware_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Firmware version</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.versionnumber.VersionNumber</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.hostname">
+<code class="descname">hostname</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.hostname" title="Permalink to this definition">¶</a></dt>
+<dd><p>DNS hostname if available, otherwise an empty string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfo.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#DeviceInfo.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string with information about the <a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a></p>
+<p>To be used when the <code class="docutils literal notranslate"><span class="pre">str()</span></code> representation is not detailed enough.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.name">
+<code class="descname">name</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>User-defined name of device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.password">
+<code class="descname">password</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.password" title="Permalink to this definition">¶</a></dt>
+<dd><p>The accessibility password to use when connecting to a device</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This attribute is write-only.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.serial">
+<code class="descname">serial</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The serial number of the device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.service_status">
+<code class="descname">service_status</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.service_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple with the service status of the device</p>
+<p>The returned tuple has the format <code class="docutils literal notranslate"><span class="pre">(state,</span> <span class="pre">start_info,</span> <span class="pre">text)</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">state</span></code> is a <a class="reference internal" href="enums.html#canlib.kvrlib.ServiceState" title="canlib.kvrlib.ServiceState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ServiceState</span></code></a>, <code class="docutils literal notranslate"><span class="pre">start_info</span></code> is a
+<a class="reference internal" href="enums.html#canlib.kvrlib.StartInfo" title="canlib.kvrlib.StartInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.StartInfo</span></code></a>, and <code class="docutils literal notranslate"><span class="pre">text</span></code> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> with local
+connection status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#canlib.kvrlib.ServiceStatus" title="canlib.kvrlib.ServiceStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.ServiceStatus</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.stored">
+<code class="descname">stored</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.stored" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this <a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> was read from the registry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.DeviceInfo.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#DeviceInfo.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the attributes of this instance</p>
+<p>This function takes a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, and will set the attributes given by the
+keys to the corresponding value (on this object).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.DeviceInfo.usage">
+<code class="descname">usage</code><a class="headerlink" href="#canlib.kvrlib.DeviceInfo.usage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usage status (Free/Remote/USB/Config)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="enums.html#canlib.kvrlib.DeviceUsage" title="canlib.kvrlib.DeviceUsage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceUsage</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Discovery<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.Discovery">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">Discovery</code><span class="sig-paren">(</span><em>handle</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#Discovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Discovery" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kvrlib “Discovery” process</p>
+<p>Most of the time the discovery process can be handled by
+<a class="reference internal" href="infoset.html#canlib.kvrlib.discover_info_set" title="canlib.kvrlib.discover_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.discover_info_set</span></code></a>, which returns the results of the
+discovery as a <a class="reference internal" href="infoset.html#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceInfoSet</span></code></a>.</p>
+<p>Even when interacted with directly, instnances of this class are normally
+not instantiated directly, but created using
+<a class="reference internal" href="#canlib.kvrlib.start_discovery" title="canlib.kvrlib.start_discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.start_discovery</span></code></a>, or sometimes using
+<a class="reference internal" href="#canlib.kvrlib.openDiscovery" title="canlib.kvrlib.openDiscovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.openDiscovery</span></code></a>.</p>
+<p>Instances of this class can be used as context handlers, in which case the
+discovery will be closed when the context is exited. The discovery will
+also be closed when the instance is garbage collected, if it hasn’t
+already.</p>
+<dl class="attribute">
+<dt id="canlib.kvrlib.Discovery.addresses">
+<code class="descname">addresses</code><a class="headerlink" href="#canlib.kvrlib.Discovery.addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of addresses to use for discovery</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This attribute is write-only.</p>
+</div>
+<p>This attribute should be a list of <a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Address</span></code></a> objects.</p>
+<p>If the <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery</span></code></a> object was created by
+<a class="reference internal" href="#canlib.kvrlib.start_discovery" title="canlib.kvrlib.start_discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.start_discovery</span></code></a>, the addresses are automatically
+set. Otherwise, they must be assigned before <a class="reference internal" href="#canlib.kvrlib.Discovery.start" title="canlib.kvrlib.Discovery.start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery.start</span></code></a> can be
+called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.Discovery.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#Discovery.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Discovery.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the discovery process</p>
+<p>This function is called when the <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery</span></code></a> object is
+garbage-collected.</p>
+<p>If the <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery</span></code></a> object is used as a context handler, this function
+will be called when the context exits.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.Discovery.results">
+<code class="descname">results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#Discovery.results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Discovery.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator of the result from the discovery</p>
+<p>The results are yielded as <a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceInfo</span></code></a> objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="canlib.kvrlib.Discovery.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>delay</em>, <em>timeout</em>, <em>report_stored=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#Discovery.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.Discovery.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the discovery</p>
+<p>If the <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery</span></code></a> object was created by
+<a class="reference internal" href="#canlib.kvrlib.start_discovery" title="canlib.kvrlib.start_discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.start_discovery</span></code></a>, the discovery has already been run,
+and this function does not need to be called.</p>
+<p>After the discovery has been run, its results can be retrieved using
+<a class="reference internal" href="#canlib.kvrlib.Discovery.results" title="canlib.kvrlib.Discovery.results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Discovery.results</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>delay</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The millisecond delay between sending discovery
+messages to addresses in the address list.</li>
+<li><strong>timeout</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – The millisecond timeout after all discovery
+messages have been sent, before returning.</li>
+<li><strong>report_stored</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), stored devices
+will be discovered.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="get-default-discovery-addresses">
+<h2>get_default_discovery_addresses()<a class="headerlink" href="#get-default-discovery-addresses" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.get_default_discovery_addresses">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">get_default_discovery_addresses</code><span class="sig-paren">(</span><em>broadcast=True</em>, <em>stored=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#get_default_discovery_addresses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.get_default_discovery_addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the default discovery addresses</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>broadcast</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), then the returned list
+will contain broadcast addresses.</li>
+<li><strong>stored</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>), then the returned
+list will contain earlier stored addresses.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If both arguments are <code class="docutils literal notranslate"><span class="pre">False</span></code>, a <code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code> will be raised.</p>
+<p>Retruns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference internal" href="#canlib.kvrlib.Address" title="canlib.kvrlib.Address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Address</span></code></a> objects.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="opendiscovery">
+<h2>openDiscovery()<a class="headerlink" href="#opendiscovery" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.openDiscovery">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">openDiscovery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#openDiscovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.openDiscovery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns a <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Discovery</span></code></a> object</p>
+<p>Device discovery is normally done using <a class="reference internal" href="infoset.html#canlib.kvrlib.discover_info_set" title="canlib.kvrlib.discover_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.discover_info_set</span></code></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="servicestatus">
+<h2>ServiceStatus<a class="headerlink" href="#servicestatus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.kvrlib.ServiceStatus">
+<em class="property">class </em><code class="descclassname">canlib.kvrlib.</code><code class="descname">ServiceStatus</code><span class="sig-paren">(</span><em>state</em>, <em>start_info</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#canlib.kvrlib.ServiceStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.kvrlib.ServiceStatus.start_info">
+<code class="descname">start_info</code><a class="headerlink" href="#canlib.kvrlib.ServiceStatus.start_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ServiceStatus.state">
+<code class="descname">state</code><a class="headerlink" href="#canlib.kvrlib.ServiceStatus.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.kvrlib.ServiceStatus.text">
+<code class="descname">text</code><a class="headerlink" href="#canlib.kvrlib.ServiceStatus.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="set-clear-stored-devices-on-exit">
+<h2>set_clear_stored_devices_on_exit()<a class="headerlink" href="#set-clear-stored-devices-on-exit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.set_clear_stored_devices_on_exit">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">set_clear_stored_devices_on_exit</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#set_clear_stored_devices_on_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.set_clear_stored_devices_on_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether kvrlib should clear stored devices when the application exist</p>
+</dd></dl>
+
+</div>
+<div class="section" id="start-discovery">
+<h2>start_discovery()<a class="headerlink" href="#start-discovery" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.start_discovery">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">start_discovery</code><span class="sig-paren">(</span><em>delay</em>, <em>timeout</em>, <em>addresses=None</em>, <em>report_stored=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#start_discovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.start_discovery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start and return a <a class="reference internal" href="#canlib.kvrlib.Discovery" title="canlib.kvrlib.Discovery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.Discovery</span></code></a></p>
+<p>Device discovery is normally done using <a class="reference internal" href="infoset.html#canlib.kvrlib.discover_info_set" title="canlib.kvrlib.discover_info_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.discover_info_set</span></code></a>.</p>
+<p>The returned object should usually be used as a context handler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">kvrlib</span><span class="o">.</span><span class="n">start_discovery</span><span class="p">(</span><span class="n">delay</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span> <span class="k">as</span> <span class="n">disc</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">disc</span><span class="o">.</span><span class="n">results</span><span class="p">():</span>
+        <span class="c1"># process the discovery result</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="store-devices">
+<h2>store_devices()<a class="headerlink" href="#store-devices" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.store_devices">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">store_devices</code><span class="sig-paren">(</span><em>devices</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#store_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.store_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a collection of <a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceInfo</span></code></a> objects in the registry</p>
+<p>See <a class="reference internal" href="infoset.html#canlib.kvrlib.DeviceInfoSet" title="canlib.kvrlib.DeviceInfoSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceInfoSet</span></code></a> for a simpler way of dealing with device
+infos and the registry.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Previously stored devices are cleared.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="stored-devices">
+<h2>stored_devices()<a class="headerlink" href="#stored-devices" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="canlib.kvrlib.stored_devices">
+<code class="descclassname">canlib.kvrlib.</code><code class="descname">stored_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/kvrlib/discovery.html#stored_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.kvrlib.stored_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the devices stored in the registry as a tuple of <a class="reference internal" href="#canlib.kvrlib.DeviceInfo" title="canlib.kvrlib.DeviceInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.kvrlib.DeviceInfo</span></code></a> objects</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="enums.html" class="btn btn-neutral float-right" title="Enumerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

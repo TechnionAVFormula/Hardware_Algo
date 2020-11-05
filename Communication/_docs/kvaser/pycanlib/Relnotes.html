@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Release Notes</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Release Notes</h1>
+    <p>This is the release notes for the pycanlib module.</p>
+    <aside class="topic contents" id="contents">
+        <h1>Contents</h1>
+        <ul>
+            <li><a href="#new-features-and-fixed-problems-in-v1-13-390-24-feb-2020">New Features and Fixed Problems in V1.13.390 (24-FEB-2020)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-12-251-08-oct-2019">New Features and Fixed Problems in V1.12.251 (08-OCT-2019)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-11-226-13-sep-2019">New Features and Fixed Problems in V1.11.226 (13-SEP-2019)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-10-102-12-may-2019">New Features and Fixed Problems in V1.10.102 (12-MAY-2019)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-9-909-03-mar-2019">New Features and Fixed Problems in V1.9.909 (03-MAR-2019)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-8-812-26-nov-2018">New Features and Fixed Problems in V1.8.812 (26-NOV-2018)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-7-741-16-sep-2018">New Features and Fixed Problems in V1.7.741 (16-SEP-2018)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-6-615-13-may-2018">New Features and Fixed Problems in V1.6.615 (13-MAY-2018)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-5-525-12-feb-2018">New Features and Fixed Problems in V1.5.525 (12-FEB-2018)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-4-373-13-sep-2017">New Features and Fixed Problems in V1.4.373 (13-SEP-2017)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-3-242-05-may-2017">New Features and Fixed Problems in V1.3.242 (05-MAY-2017)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-2-163-15-feb-2017">New Features and Fixed Problems in V1.2.163 (15-FEB-2017)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-1-23-28-sep-2016">New Features and Fixed Problems in V1.1.23 (28-SEP-2016)</a></li>
+            <li><a href="#new-features-and-fixed-problems-in-v1-0-10-15-sep-2016">New Features and Fixed Problems in V1.0.10 (15-SEP-2016)</a></li>
+        </ul>
+    </aside>
+    <section id="new-features-and-fixed-problems-in-v1-13-390-24-feb-2020">
+        <h2>New Features and Fixed Problems in V1.13.390 (24-FEB-2020)</h2>
+        <ul>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Added <cite>~canlib.canlib.HandleData</cite> to wrap canGetHandleData. Also added <cite>~canlib.canlib.Channel.channel_data</cite> as a helper function.</li>
+                    <li>IOControl now returns utf-8 decoded strings instead of "bytes in string".</li>
+                    <li>Fixed a bug where <cite>~canlib.canlib.Device.isconnected</cite> would return <cite>False</cite> if the <cite>channel_number</cite> attribute was larger than the total number of available CANlib channels, regardles of if the device was connected or not.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-12-251-08-oct-2019">
+        <h2>New Features and Fixed Problems in V1.12.251 (08-OCT-2019)</h2>
+        <ul>
+            <li>Minor changes.</li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-11-226-13-sep-2019">
+        <h2>New Features and Fixed Problems in V1.11.226 (13-SEP-2019)</h2>
+        <ul>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Added a slight delay in get_bus_statistics because the underlying functions in CANlib are asynchronous.</li>
+                    <li>Added <cite>~canlib.canlib.Channel.read_error_counters</cite> and <cite>iocontrol</cite> <cite>clear_error_counters</cite>.</li>
+                    <li>Added <cite>~canlib.canlib.Channel.getBusOutputControl</cite>.</li>
+                    <li>Added <cite>~canlib.canlib.Channel.fileDiskFormat</cite> that formats the disk in a remote device, i.e Kvaser DIN Rail.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.BoundSignal.value</cite>:
+                <ul>
+                    <li>If the signal is an enum-signal, and the signal's value is not found in the enum definition, the raw value is now returned.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvmlib</cite>:
+                <ul>
+                    <li>Marked using kvmlib class as deprecated (was deprecated in v1.6)</li>
+                    <li>Replaced <cite>~canlib.kvmlib.Kme.estimate_events</cite> with <cite>.Kme.event_count_estimation</cite> in order to have same name as <cite>.LogFile.event_count_estimation</cite>. Old function name is now deprecated.</li>
+                    <li>When found, new 64 bit version of the dll call, <cite>kvmLogFileMountEx</cite>, <cite>kvlcEventCountEx</cite>, and <cite>kvmKmeCountEventsEx</cite> (added in CANlib v5.29), is now used.</li>
+                    <li>Added <cite>~canlib.kvmlib.LogFile.log_type</cite> for supporting the different log types generated by Kvaser Memorator Light HS v2.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvadblib</cite>:
+                <ul>
+                    <li><cite>~canlib.kvadblib.Dbc</cite> raises <cite>~canlib.kvadblib.exception.KvdDbFileParse</cite> if the dbc file loaded contains syntax errors.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-10-102-12-may-2019">
+        <h2>New Features and Fixed Problems in V1.10.102 (12-MAY-2019)</h2>
+        <ul>
+            <li>Reference documentation has been restructured.</li>
+            <li><cite>~canlib.canlib.Channel</cite>:
+                <ul>
+                    <li>Added support for slicing environment variables declared as char. Replaced low level function <cite>scriptEnvvarSetData</cite> with <cite>~canlib.canlib.Channel.script_envvar_set_data</cite> and added <cite>~canlib.canlib.envvar.DataEnvVar</cite> which is now returned when a char envvar is returned.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvadblib</cite>:
+                <ul>
+                    <li>Error messages from the CAN database parser in <cite>~canlib.kvadblib.Dbc</cite> can be retrieved using <cite>~canlib.kvadblib.get_last_parse_error()</cite>.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-9-909-03-mar-2019">
+        <h2>New Features and Fixed Problems in V1.9.909 (03-MAR-2019)</h2>
+        <ul>
+            <li><cite>canlib.kvadblib</cite>:
+                <ul>
+                    <li>Error texts are now fetched from the dll using kvaDbGetErrorText().</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvlclib</cite>:
+                <ul>
+                    <li>Added support for DLC mismatch handling included in CANlib v5.27</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvDevice</cite>:
+                <ul>
+                    <li>The <cite>canlib.kvDevice.kvDevice</cite> class is now deprecated, use <cite>canlib.Device</cite> instead</li>
+                </ul>
+            </li>
+            <li><cite>canlib.Device</cite>:
+                <ul>
+                    <li>Added method <cite>Device.issubset</cite> as a helper to find loosely specified devices.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.canlib.iopin</cite>:
+                <ul>
+                    <li>Added attributes <cite>fw_version</cite> and <cite>serial</cite> to <cite>IoPin</cite>. To read these attributes, CANlib v5.27 is needed.</li>
+                    <li><cite>AddonModule</cite> is a new class, holding attributes of one add-on module.</li>
+                    <li><cite>Config.modules</cite> is now an attribute, calculated at creation time and containing an ordered list of <cite>AddonModule</cite> objects. The old functionality has been moved to <cite>Config._modules</cite></li>
+                    <li><cite>Config.issubset</cite> is a new method to identify if a configuration contains the expected add-on modules.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-8-812-26-nov-2018">
+        <h2>New Features and Fixed Problems in V1.8.812 (26-NOV-2018)</h2>
+        <ul>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Fixed issue were Channel.handle attribute would not be initialized when opening of the channel failed.</li>
+                    <li>Added experimental support for accessing IO-pins on sub modules of the Kvaser DIN Rail SE 400S that was added to CANlib v5.26. This includes a new module <cite>canlib.canlib.iopin</cite>.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvadblib</cite>:
+                <ul>
+                    <li>Fixed issue with signals were multiplexing mode, and scaling (factor and offset) returned wrong values from a loaded .dbc file.</li>
+                    <li>Added show_all argument to Dbc.messages. Dbc.__iter__ now set show_all to False in order to skip VECTOR__INDEPENDENT_SIG_MSG messages.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-7-741-16-sep-2018">
+        <h2>New Features and Fixed Problems in V1.7.741 (16-SEP-2018)</h2>
+        <ul>
+            <li><cite>canlib.kvmlib</cite>:
+                <ul>
+                    <li>Added <cite>canlib.kvmlib.event_count_estimation</cite></li>
+                    <li>Added <cite>canlib.kvmlib.kme</cite> Previous kvmlib.kmeXXX functions are now deprecated.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Added <cite>canlib.canlib.ScriptStatus</cite></li>
+                    <li>Added enums to <cite>canlib.canlib.ChannelCap</cite></li>
+                    <li>Fixed <cite>canlib.canlib.canWriteSync</cite></li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvlclib</cite>:
+                <ul>
+                    <li>Added API to access information about reader formats.</li>
+                    <li>Added kvlclib.Property to replace old PROPERTY_XXX constants which are now deprecated.</li>
+                    <li>Added kvlclib.reader_formats and kvlclib.writer_formats to replace now deprecated kvlclib.WriterFormat.getFirstWriterFormat and kvlclib.WriterFormat.getNextWriterFormat.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-6-615-13-may-2018">
+        <h2>New Features and Fixed Problems in V1.6.615 (13-MAY-2018)</h2>
+        <ul>
+            <li>Updated for CANlib SDK v5.23.</li>
+            <li>Getting version numbers should now be done with <code>dllversion()</code>, which will return <cite>canlib.BetaVersionNumber</cite> if the dll is marked as Beta. Also added <code>canlib.prodversion()</code> to return the CANlib product version number.</li>
+            <li><cite>canlib.device</cite>:
+                <ul>
+                    <li>New <cite>canlib.device.Device</cite> class (available as <cite>canlib.Device</cite>) that is a simpler version of kvDevice. <cite>canlib.device.Device</cite> objects can be defined using an EAN and serial number, or a connected device can be searched for using <cite>canlib.device.Device.find</cite>. These objects do not require the device to stay connected, and can be used to later create most other <cite>canlib</cite> objects, e.g. <cite>canlib.canlib.Channel</cite>, <cite>canlib.kvmlib.Memorator</cite>, etc.</li>
+                    <li>New <cite>canlib.device.connected_devices</cite> which returns an iterator of <cite>canlib.device.Device</cite> objects, one for each device currently connected.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.ean</cite>:
+                <ul>
+                    <li><cite>canlib.ean.EAN</cite> objects can be tested for equality, both with other <cite>canlib.ean.EAN</cite> objects and with strings.</li>
+                    <li>Added <cite>CanNotFound</cite> exception.</li>
+                    <li><cite>canlib.ean.EAN</cite> objects can now be directly instantiated from string, i.e. <code>ean = canlib.EAN(ean_string)</code> instead of <code>ean =
+canlib.EAN.from_string(ean_string)</code>.</li>
+                    <li><cite>canlib.ean.EAN</cite> objects can be converted back into any of the representations that can be used to create them. See the documentation of <cite>canlib.ean.EAN</cite> for more info.</li>
+                    <li><cite>canlib.ean.EAN</cite> objects can be indexed and iterated upon, yielding the digits as <cite>int</cite>s.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li><cite>canlib.canlib.EnvVar</cite> object raises <cite>EnvvarNameError</cite> when given an illegal name, instead of <cite>AssertionError</cite>.</li>
+                    <li><cite>canlib.canlib.openChannel</cite> can now set the bitrate of the channel opened.</li>
+                    <li><cite>canlib.canlib.Channel</cite> objects automatically close their handles when garbage collected</li>
+                    <li><cite>canlib.canlib.Channel</cite> has new methods <cite>canlib.canlib.Channel.scriptRequestText</cite> and <cite>canlib.canlib.Channel.scriptGetText</cite> to get text printed with <code>printf()</code> by a script. This text is returned as a <cite>canlib.canlib.ScriptText</cite> object.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvamemolibxml</cite>:
+                <ul>
+                    <li>A new, object oriented way of dealing with kvamemolibxml using <cite>canlib.kvamemolibxml.Configuration</cite> objects.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvmlib</cite>:
+                <ul>
+                    <li>Improved object model
+                        <ul>
+                            <li>New <cite>canlib.kvmlib.openDevice</cite> function that returns a <cite>canlib.kvmlib.Memorator</cite> object representing a connected Memorator device. See the documentation of <cite>canlib.kvmlib.Memorator</cite> for instructions on how to use this new class to more easily interface with your Memorators.</li>
+                            <li>New <cite>canlib.kvmlib.openKmf</cite> function for opening .KMF files that returns a <cite>canlib.kvmlib.Kmf</cite> object that is similar to <cite>canlib.kvmlib.Memorator</cite>. See the docstring of <cite>canlib.kvmlib.Kmf</cite> for more information.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><cite>canlib.linlib</cite>:
+                <ul>
+                    <li>Getting version number with <cite>canlib.linlib.dllversion</cite> (requires CANlib SDK v5.23 or newer).</li>
+                    <li>Explicit <cite>canlib.linlib.Channel.close</cite> function for forcing a linlib channel's internal handle to be closed.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Added support for accessing information within compiled t program (.txe) files.
+                        <ul>
+                            <li>Added wrapper function for <cite>kvScriptTxeGetData</cite>.</li>
+                            <li>Added compiled t program (.txe) interface class <cite>canlib.canlib.Txe</cite>.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvadblib</cite>:
+                <ul>
+                    <li>enums now returns non-empty dictionary in attribute definition returned from <cite>EnumDefinition.definition</cite></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-5-525-12-feb-2018">
+        <h2>New Features and Fixed Problems in V1.5.525 (12-FEB-2018)</h2>
+        <ul>
+            <li>Updated for CANlib SDK v5.22.</li>
+            <li>Added support for LIN bus API (LINlib)</li>
+            <li>Added support for Database API (kvaDbLib) Needs version v5.22 of CANlib SDK to get supported dll.</li>
+        </ul>
+        <p>Restructuring of code in order to make the API simpler and the code base more maintainable have resulted in the following changes (old style is deprecated, shown in details while running Python with the -Wd argument):</p>
+        <ul>
+            <li><cite>canlib.kvMessage</cite> has been renamed <cite>canlib.Frame</cite>
+                <ul>
+                    <li><cite>canlib.Frame</cite> objects are now accepted and returned when writing and reading channels.</li>
+                    <li>The new <cite>canlib.kvadblib</cite> module uses these <cite>canlib.Frame</cite> objects heavily.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.canlib</cite>:
+                <ul>
+                    <li>Added wrapper functions for <cite>canReadStatus</cite> and <cite>canRequestChipStatus</cite></li>
+                    <li>Deprecated use of <cite>canlib.canlib.canlib()</cite> objects; all methods have been moved to the module.
+                        <ul>
+                            <li>See the docstring of <cite>canlib.canlib.CANLib</cite> for more information</li>
+                        </ul>
+                    </li>
+                    <li>Simplified the names of the channel-classes (old names are deprecated):
+                        <ul>
+                            <li>The channel class is now <cite>canlib.canlib.Channel</cite>, instead of <cite>canlib.canChannel</cite>.</li>
+                            <li><cite>canlib.canlib.ChannelData_Channel_Flags</cite> is now <cite>canlib.canlib.ChannelFlags</cite></li>
+                            <li><cite>canlib.canlib.ChannelData_Channel_Flags_bits</cite> is now <cite>canlib.canlib.ChannelFlagBits</cite></li>
+                        </ul>
+                    </li>
+                    <li><cite>canlib.canlib.Channel</cite> now uses <cite>canlib.Frame</cite> objects for reading and writing.
+                        <ul>
+                            <li><cite>canlib.Channel.read</cite> now returns a <cite>canlib.Frame</cite> object instead of a tuple. However, <cite>canlib.Frame</cite> objects are largely compatible with tuples.</li>
+                            <li><cite>canlib.Channel.write</cite> takes a single argument, a <cite>canlib.Frame</cite> object. The previous call signature has been taken over by <cite>canlib.Channel.write_raw</cite>.</li>
+                            <li>Likewise for <cite>canlib.Channel.writeWait</cite> and its new friend <cite>canlib.Channel.writeWait_raw</cite>.</li>
+                        </ul>
+                    </li>
+                    <li>The class <cite>canlib.canlib.canVersion</cite> has been removed, and <cite>canlib.canlib.getVersion</cite> now returns a <cite>canlib.VersionNumber</cite>. The new class still supports conversion to string and accessing <code>.major</code> and <code>.minor</code> attributes.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvmlib</cite>:
+                <ul>
+                    <li>Added wrapper functions for kvmKmeReadEvent.</li>
+                    <li>Corrected encoding for Python 3 in kmeOpenFile().</li>
+                    <li>Deprecated names for several classes to make them more logical and more pythonic:
+                        <ul>
+                            <li><cite>canlib.kvmlib.memoMsg</cite> is now <cite>canlib.kvmlib.LogEvent</cite></li>
+                            <li><cite>canlib.kvmlib.logMsg</cite> is now <cite>canlib.kvmlib.MessageEvent</cite></li>
+                            <li><cite>canlib.kvmlib.rtcMsg</cite> is now <cite>canlib.kvmlib.RTCEvent</cite></li>
+                            <li><cite>canlib.kvmlib.trigMsg</cite> is now <cite>canlib.kvmlib.TriggerEvent</cite></li>
+                            <li><cite>canlib.kvmlib.verMsg</cite> is now <cite>canlib.kvmlib.VersionEvent</cite></li>
+                        </ul>
+                    </li>
+                    <li>The class <cite>canlib.kvmlib.kvmVersion</cite> has been removed, and <cite>canlib.kvmlib.KvmLib.getVersion</cite> now returns a <cite>canlib.VersionNumber</cite>. The new class still supports conversion to string and accessing <code>.major</code>, <code>.minor</code>, and <code>.build</code> attributes.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvlclib</cite>:
+                <ul>
+                    <li>Added method <cite>canlib.kvlclib.addDatabaseFile</cite> and helper object <cite>canlib.kvlclib.ChannelMask</cite>.</li>
+                    <li>The <cite>canlib.kvlclib.KvlcLib</cite> object has been deprecated.
+                        <ul>
+                            <li>All functions that relate to converters have been moved to the more appropriately named <cite>canlib.kvlclib.Converter</cite>.
+                                <ul>
+                                    <li>Some of these functions have been renamed:
+                                        <ul>
+                                            <li><cite>IsOutputFilenameNew</cite>, <cite>IsOverrunActive</cite>, and <cite>IsDataTruncated</cite> have all had their initial "i" lower-cased, as the upper case "I" was an error.</li>
+                                            <li><cite>getPropertyDefault</cite> and <cite>isPropertySupported</cite> are no longer available on the <cite>Converter</cite> object, they must be accessed via the <cite>format</cite> attribute:
+                                                <pre>converter.format.getPropertyDefault(...)</pre>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><cite>canlib.kvlclib.WriterFormat.getFirstWriterFormat</cite> and <cite>canlib.kvlclib.WriterFormat.getNextWriterFormat</cite> now returns a <cite>kvlclib.FileFormat</cite> object (which is based on the <cite>IntEnum</cite> class).</li>
+                            <li>Other functions have been moved to the <cite>canlib.kvlclib</cite> module.</li>
+                            <li><cite>deleteConverter</cite> is no longer supported. Instead, converters are automatically deleted when garbage collected. If their contents must be flushed to file, see the new <cite>canlib.kvlclib.Converter.flush</cite> method.</li>
+                        </ul>
+                    </li>
+                    <li>The class <cite>canlib.kvlclib.KvlcVersion</cite> has been removed, and <cite>canlib.kvmlib.kvlclib.getVersion</cite> now returns a <cite>canlib.VersionNumber</cite>. The new class still supports conversion to string and accessing <code>.major</code>, <code>.minor</code>, and <code>.build</code> attributes.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvrlib</cite>:
+                <ul>
+                    <li>The <cite>canlib.kvrlib.KvrLib</cite> object has been deprecated; all methods have been moved to the module.</li>
+                    <li><cite>canlib.kvrlib.getVersion</cite> no longer returns a <cite>canlib.kvrlib.kvrVersion</cite> but a <cite>canlib.VersionNumber</cite>. The return value still supports conversion to string and accessing <code>.major</code> and <code>.minor</code> attributes.</li>
+                </ul>
+            </li>
+            <li><cite>canlib.kvamemolibxml</cite>:
+                <ul>
+                    <li>Renamed from <cite>canlib.KvaMemoLibXml</cite>, however trying to import the old name will just import the new one instead.</li>
+                    <li>Deprecated the use of <cite>canlib.kvamemolibxml.KvaMemoLib</cite> objects, all methods have been moved to the <cite>canlib.kvamemolibxml</cite> module itself.</li>
+                    <li>Breaking change: Moved values that were incorrectly defined as constants into enums. In most cases this should not have any impact, as all the values are internal error codes and are turned into Python exceptions. But if you nonetheless use the kvamemolibxml status values directly, you'll need to change your code as follows:
+                        <ul>
+                            <li><code>KvaXmlStatusERR_XXX_XXX</code> is now <code>Error.XXX_XXX</code>.</li>
+                            <li><code>KvaXmlValidationStatusERR_XXX_XXX</code> is now <code>ValidationError.XXX_XXX</code></li>
+                            <li><code>KvaXmlValidationStatusWARN</code> is now <code>ValidationWarning.XXX_XXX</code>.</li>
+                            <li><code>KvaXmlStatusFail</code> is now <code>Error.FAIL</code> (Changed to be consistent with other KvaXmlStatus errors). The same is true for <code>ValidationError.FAIL</code>.</li>
+                            <li><code>KvaXmlStatusOK</code> and <code>KvaXmlValidationStatusOK</code> are still treated as if they are constants, as they are not error statuses.</li>
+                        </ul>
+                    </li>
+                    <li><cite>canlib.kvamemolibxml.getVersion</cite> no longer returns a string but a <cite>canlib.VersionNumber</cite>. The return value still supports conversion to string.</li>
+                </ul>
+            </li>
+            <li>Exceptions:
+                <ul>
+                    <li>Exceptions throughout the package have been standardised, and now all inherit from <cite>canlib.exceptions.CanlibException</cite>.</li>
+                    <li>The <cite>canERR</cite> attribute that some exceptions had has been deprecated in favour of a <cite>status</cite> attribute. Furthermore, all <cite>canlib</cite> exceptions now have this attribute; the status code that was returned from a C call that triggered the specific exception.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-4-373-13-sep-2017">
+        <h2>New Features and Fixed Problems in V1.4.373 (13-SEP-2017)</h2>
+        <ul>
+            <li>Minor changes.</li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-3-242-05-may-2017">
+        <h2>New Features and Fixed Problems in V1.3.242 (05-MAY-2017)</h2>
+        <ul>
+            <li>Added missing unicode conversions for Python3.</li>
+            <li>Linux
+                <ul>
+                    <li>Added support for new libraries (kvadblib, kvmlib, kvamemolibxml, kvlclib).</li>
+                    <li>Added wrappers KvFileGetCount, kvFileGetName, kvFileCopyXxxx, kvDeviceSetMode, kvDeviceGetMode</li>
+                </ul>
+            </li>
+            <li>canlib:
+                <ul>
+                    <li>Added wrapper for kvFileDelete</li>
+                    <li>Enhanced printout from canScriptFail errors.</li>
+                    <li>Second file argument in fileCopyFromDevice and fileCopyToDevice is now optional.</li>
+                    <li>OS now loads all dependency dll (also adding KVDLLPATH to PATH in Windows).</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-2-163-15-feb-2017">
+        <h2>New Features and Fixed Problems in V1.2.163 (15-FEB-2017)</h2>
+        <ul>
+            <li>Added wrapper function canlib.getChannelData_Cust_Name()</li>
+            <li>Added module canlib.kvlclib which is a wrapper for the Converter Library kvlclib in CANlib SDK.</li>
+            <li>Added wrapper function canChannel.flashLeds().</li>
+            <li>Added missing unicode conversions for Python3.</li>
+            <li>Fixed bug where CANlib SDK install directory was not always correctly detected in Windows 10.</li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-1-23-28-sep-2016">
+        <h2>New Features and Fixed Problems in V1.1.23 (28-SEP-2016)</h2>
+        <ul>
+            <li>canSetAcceptanceFilter and kvReadTimer was not implemented in Linux</li>
+        </ul>
+    </section>
+    <section id="new-features-and-fixed-problems-in-v1-0-10-15-sep-2016">
+        <h2>New Features and Fixed Problems in V1.0.10 (15-SEP-2016)</h2>
+        <ul>
+            <li>Initial module release.</li>
+            <li>Added kvmlib.kmeSCanFileType()</li>
+            <li>Added canChannel.canAccept() and canChannel.canSetAcceptanceFilter()</li>
+        </ul>
+    </section>
+</body>
+</html>

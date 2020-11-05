@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enumerations &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MessageInfo" href="structures.html" />
+    <link rel="prev" title="Channel" href="channel.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Base Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ean.html">EAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device.html">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frame.html">Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../versionnumber.html">Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../canlib/index.html">canlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvadblib/index.html">kvadblib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvamemolibxml/index.html">kvamemolibxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvlclib/index.html">kvlclib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvmlib/index.html">kvmlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kvrlib/index.html">kvrlib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">linlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Enumerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#channeldata">ChannelData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#channeltype">ChannelType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error">Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#messagedisturb">MessageDisturb</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#messageflag">MessageFlag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#messageparity">MessageParity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup">Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="structures.html">MessageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">linlib</a> &raquo;</li>
+        
+      <li>Enumerations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/linlib/enums.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="enumerations">
+<h1>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="channeldata">
+<h2>ChannelData<a class="headerlink" href="#channeldata" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.ChannelData">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">ChannelData</code><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#ChannelData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.ChannelData" title="Permalink to this definition">¶</a></dt>
+<dd><p>linCHANNELDATA_xxx</p>
+<p>These defines are used in <a class="reference internal" href="wrapper.html#canlib.linlib.getChannelData" title="canlib.linlib.getChannelData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getChannelData</span></code></a>.</p>
+<dl class="attribute">
+<dt id="canlib.linlib.ChannelData.CARD_FIRMWARE_REV">
+<code class="descname">CARD_FIRMWARE_REV</code><em class="property"> = 9</em><a class="headerlink" href="#canlib.linlib.ChannelData.CARD_FIRMWARE_REV" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="channeltype">
+<h2>ChannelType<a class="headerlink" href="#channeltype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.ChannelType">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">ChannelType</code><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#ChannelType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.ChannelType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flags for <a class="reference internal" href="channel.html#canlib.linlib.openChannel" title="canlib.linlib.openChannel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">openChannel</span></code></a></p>
+<dl class="attribute">
+<dt id="canlib.linlib.ChannelType.MASTER">
+<code class="descname">MASTER</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.linlib.ChannelType.MASTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.ChannelType.SLAVE">
+<code class="descname">SLAVE</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.linlib.ChannelType.SLAVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="error">
+<h2>Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.Error">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">Error</code><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Error" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="canlib.linlib.Error.CANERROR">
+<code class="descname">CANERROR</code><em class="property"> = -15</em><a class="headerlink" href="#canlib.linlib.Error.CANERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.DRIVER">
+<code class="descname">DRIVER</code><em class="property"> = -18</em><a class="headerlink" href="#canlib.linlib.Error.DRIVER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.DRIVERFAILED">
+<code class="descname">DRIVERFAILED</code><em class="property"> = -19</em><a class="headerlink" href="#canlib.linlib.Error.DRIVERFAILED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.ERRRESP">
+<code class="descname">ERRRESP</code><em class="property"> = -16</em><a class="headerlink" href="#canlib.linlib.Error.ERRRESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.INTERNAL">
+<code class="descname">INTERNAL</code><em class="property"> = -22</em><a class="headerlink" href="#canlib.linlib.Error.INTERNAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.INVHANDLE">
+<code class="descname">INVHANDLE</code><em class="property"> = -14</em><a class="headerlink" href="#canlib.linlib.Error.INVHANDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.LICENSE">
+<code class="descname">LICENSE</code><em class="property"> = -21</em><a class="headerlink" href="#canlib.linlib.Error.LICENSE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.MASTERONLY">
+<code class="descname">MASTERONLY</code><em class="property"> = -5</em><a class="headerlink" href="#canlib.linlib.Error.MASTERONLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOCARD">
+<code class="descname">NOCARD</code><em class="property"> = -20</em><a class="headerlink" href="#canlib.linlib.Error.NOCARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOCHANNELS">
+<code class="descname">NOCHANNELS</code><em class="property"> = -10</em><a class="headerlink" href="#canlib.linlib.Error.NOCHANNELS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOHANDLES">
+<code class="descname">NOHANDLES</code><em class="property"> = -13</em><a class="headerlink" href="#canlib.linlib.Error.NOHANDLES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOMEM">
+<code class="descname">NOMEM</code><em class="property"> = -9</em><a class="headerlink" href="#canlib.linlib.Error.NOMEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOMSG">
+<code class="descname">NOMSG</code><em class="property"> = -1</em><a class="headerlink" href="#canlib.linlib.Error.NOMSG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOTFOUND">
+<code class="descname">NOTFOUND</code><em class="property"> = -8</em><a class="headerlink" href="#canlib.linlib.Error.NOTFOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOTINITIALIZED">
+<code class="descname">NOTINITIALIZED</code><em class="property"> = -12</em><a class="headerlink" href="#canlib.linlib.Error.NOTINITIALIZED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOTRUNNING">
+<code class="descname">NOTRUNNING</code><em class="property"> = -3</em><a class="headerlink" href="#canlib.linlib.Error.NOTRUNNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NOT_IMPLEMENTED">
+<code class="descname">NOT_IMPLEMENTED</code><em class="property"> = -26</em><a class="headerlink" href="#canlib.linlib.Error.NOT_IMPLEMENTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NO_ACCESS">
+<code class="descname">NO_ACCESS</code><em class="property"> = -23</em><a class="headerlink" href="#canlib.linlib.Error.NO_ACCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.NO_REF_POWER">
+<code class="descname">NO_REF_POWER</code><em class="property"> = -25</em><a class="headerlink" href="#canlib.linlib.Error.NO_REF_POWER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.PARAM">
+<code class="descname">PARAM</code><em class="property"> = -7</em><a class="headerlink" href="#canlib.linlib.Error.PARAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.RUNNING">
+<code class="descname">RUNNING</code><em class="property"> = -4</em><a class="headerlink" href="#canlib.linlib.Error.RUNNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.SLAVEONLY">
+<code class="descname">SLAVEONLY</code><em class="property"> = -6</em><a class="headerlink" href="#canlib.linlib.Error.SLAVEONLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.TIMEOUT">
+<code class="descname">TIMEOUT</code><em class="property"> = -11</em><a class="headerlink" href="#canlib.linlib.Error.TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.VERSION">
+<code class="descname">VERSION</code><em class="property"> = -24</em><a class="headerlink" href="#canlib.linlib.Error.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Error.WRONGRESP">
+<code class="descname">WRONGRESP</code><em class="property"> = -17</em><a class="headerlink" href="#canlib.linlib.Error.WRONGRESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="messagedisturb">
+<h2>MessageDisturb<a class="headerlink" href="#messagedisturb" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.MessageDisturb">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">MessageDisturb</code><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#MessageDisturb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.MessageDisturb" title="Permalink to this definition">¶</a></dt>
+<dd><p>LIN illegal message flags</p>
+<dl class="attribute">
+<dt id="canlib.linlib.MessageDisturb.CSUM">
+<code class="descname">CSUM</code><em class="property"> = 1</em><a class="headerlink" href="#canlib.linlib.MessageDisturb.CSUM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageDisturb.PARITY">
+<code class="descname">PARITY</code><em class="property"> = 2</em><a class="headerlink" href="#canlib.linlib.MessageDisturb.PARITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="messageflag">
+<h2>MessageFlag<a class="headerlink" href="#messageflag" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.MessageFlag">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">MessageFlag</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#MessageFlag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.MessageFlag" title="Permalink to this definition">¶</a></dt>
+<dd><p>LIN message flags</p>
+<p>The following flags is used in <a class="reference internal" href="../frame.html#canlib.LINFrame.flags" title="canlib.LINFrame.flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canlib.LINFrame.flags</span></code></a>.</p>
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.BIT_ERROR">
+<code class="descname">BIT_ERROR</code><em class="property"> = &lt;MessageFlag.BIT_ERROR: 128&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.BIT_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.CSUM_ERROR">
+<code class="descname">CSUM_ERROR</code><em class="property"> = &lt;MessageFlag.CSUM_ERROR: 16&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.CSUM_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.NODATA">
+<code class="descname">NODATA</code><em class="property"> = &lt;MessageFlag.NODATA: 8&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.NODATA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.PARITY_ERROR">
+<code class="descname">PARITY_ERROR</code><em class="property"> = &lt;MessageFlag.PARITY_ERROR: 32&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.PARITY_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.RX">
+<code class="descname">RX</code><em class="property"> = &lt;MessageFlag.RX: 2&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.RX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.SYNCH_ERROR">
+<code class="descname">SYNCH_ERROR</code><em class="property"> = &lt;MessageFlag.SYNCH_ERROR: 64&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.SYNCH_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.TX">
+<code class="descname">TX</code><em class="property"> = &lt;MessageFlag.TX: 1&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.TX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageFlag.WAKEUP_FRAME">
+<code class="descname">WAKEUP_FRAME</code><em class="property"> = &lt;MessageFlag.WAKEUP_FRAME: 4&gt;</em><a class="headerlink" href="#canlib.linlib.MessageFlag.WAKEUP_FRAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="messageparity">
+<h2>MessageParity<a class="headerlink" href="#messageparity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.MessageParity">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">MessageParity</code><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#MessageParity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.MessageParity" title="Permalink to this definition">¶</a></dt>
+<dd><p>LIN message parity</p>
+<ul class="simple">
+<li><a class="reference internal" href="#canlib.linlib.MessageParity.STANDARD" title="canlib.linlib.MessageParity.STANDARD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageParity.STANDARD</span></code></a> == <code class="docutils literal notranslate"><span class="pre">LIN_MSG_USE_STANDARD_PARITY</span></code></li>
+<li><a class="reference internal" href="#canlib.linlib.MessageParity.ENHANCED" title="canlib.linlib.MessageParity.ENHANCED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageParity.ENHANCED</span></code></a> == <code class="docutils literal notranslate"><span class="pre">LIN_MSG_USE_ENHANCED_PARITY</span></code></li>
+</ul>
+<dl class="attribute">
+<dt id="canlib.linlib.MessageParity.ENHANCED">
+<code class="descname">ENHANCED</code><em class="property"> = 8</em><a class="headerlink" href="#canlib.linlib.MessageParity.ENHANCED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.MessageParity.STANDARD">
+<code class="descname">STANDARD</code><em class="property"> = 4</em><a class="headerlink" href="#canlib.linlib.MessageParity.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="canlib.linlib.Setup">
+<em class="property">class </em><code class="descclassname">canlib.linlib.</code><code class="descname">Setup</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/canlib/linlib/enums.html#Setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#canlib.linlib.Setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used in <a class="reference internal" href="channel.html#canlib.linlib.Channel.setupLIN" title="canlib.linlib.Channel.setupLIN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Channel.setupLIN</span></code></a></p>
+<dl class="attribute">
+<dt id="canlib.linlib.Setup.ENHANCED_CHECKSUM">
+<code class="descname">ENHANCED_CHECKSUM</code><em class="property"> = &lt;Setup.ENHANCED_CHECKSUM: 1&gt;</em><a class="headerlink" href="#canlib.linlib.Setup.ENHANCED_CHECKSUM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="canlib.linlib.Setup.VARIABLE_DLC">
+<code class="descname">VARIABLE_DLC</code><em class="property"> = &lt;Setup.VARIABLE_DLC: 2&gt;</em><a class="headerlink" href="#canlib.linlib.Setup.VARIABLE_DLC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="structures.html" class="btn btn-neutral float-right" title="MessageInfo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="channel.html" class="btn btn-neutral float-left" title="Channel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

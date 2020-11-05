@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvmlib.exceptions &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvmlib.exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvmlib.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">DllException</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">Error</span>
+
+
+<div class="viewcode-block" id="LockedLogError"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.LockedLogError">[docs]</a><span class="k">class</span> <span class="nc">LockedLogError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when trying to mount a log file to a locked log</span>
+
+<span class="sd">    Only one log file can be &quot;mounted&quot; internally at time. When a `LogFile`</span>
+<span class="sd">    object requires its log file to be kept mounted for an extended period of</span>
+<span class="sd">    time (such as when iterating over it) it will lock its containing</span>
+<span class="sd">    `MountedLog` object. If during this time an attempt is made to mount a log</span>
+<span class="sd">    file, this error will be raised.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LockedLogError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="s2">&quot;Active log file switched during iteration&quot;</span><span class="p">)</span></div>
+
+
+<span class="n">_all_errors_by_status</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_remember</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="n">_all_errors_by_status</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">status</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span>
+    <span class="k">return</span> <span class="n">cls</span>
+
+
+<span class="k">def</span> <span class="nf">kvm_error</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create and return an exception object corresponding to `status`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">_all_errors_by_status</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_all_errors_by_status</span><span class="p">[</span><span class="n">status</span><span class="p">]()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">KvmGeneralError</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="KvmError"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.KvmError">[docs]</a><span class="k">class</span> <span class="nc">KvmError</span><span class="p">(</span><span class="n">DllException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for exceptions raised by the kvmlib dll&quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_error_text</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+        <span class="c1"># Try the import locally so we don&#39;t trigger recursive calls to KvdError</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.wrapper</span> <span class="k">import</span> <span class="n">dll</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+            <span class="n">dll</span><span class="o">.</span><span class="n">kvmGetErrorText</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+            <span class="n">err_txt</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">err_txt</span> <span class="o">=</span> <span class="s2">&quot;Unknown error text&quot;</span>
+        <span class="n">err_txt</span> <span class="o">+=</span> <span class="s1">&#39; (</span><span class="si">%d</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">status</span>
+        <span class="k">return</span> <span class="n">err_txt</span></div>
+
+
+<span class="k">class</span> <span class="nc">KvmGeneralError</span><span class="p">(</span><span class="n">KvmError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A kvmlib error that does not (yet) have its own Exception</span>
+
+<span class="sd">    WARNING: Do not explicitly catch this error, instead catch `KvmError`. Your</span>
+<span class="sd">    error may at any point in the future get its own exception class, and so</span>
+<span class="sd">    will no longer be of this type. The actual status code that raised any</span>
+<span class="sd">    `KvmError` can always be accessed through a `status` attribute.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">KvmGeneralError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="KvmDiskError"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.KvmDiskError">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">KvmDiskError</span><span class="p">(</span><span class="n">KvmError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;General disk error&quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">DISK_ERROR</span></div>
+
+
+<div class="viewcode-block" id="KvmNoDisk"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.KvmNoDisk">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">KvmNoDisk</span><span class="p">(</span><span class="n">KvmDiskError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;No disk found&quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NO_DISK</span></div>
+
+
+<div class="viewcode-block" id="KvmDiskNotFormated"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.KvmDiskNotFormated">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">KvmDiskNotFormated</span><span class="p">(</span><span class="n">KvmDiskError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Disk not formatted&quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NOT_FORMATTED</span></div>
+
+
+<div class="viewcode-block" id="KvmNoLogMsg"><a class="viewcode-back" href="../../../reference/kvmlib/exceptions.html#canlib.kvmlib.KvmNoLogMsg">[docs]</a><span class="nd">@_remember</span>
+<span class="k">class</span> <span class="nc">KvmNoLogMsg</span><span class="p">(</span><span class="n">KvmError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;No log message found&quot;&quot;&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">NOLOGMSG</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

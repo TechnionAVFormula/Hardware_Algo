@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>canlib.kvrlib.wrapper &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>canlib.kvrlib.wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for canlib.kvrlib.wrapper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">xml.dom</span> <span class="k">import</span> <span class="n">minidom</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">dllLoader</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">VersionNumber</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span> <span class="nn">.dll</span> <span class="k">import</span> <span class="n">KvrlibDll</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">Error</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">KvrBlank</span>
+<span class="kn">from</span> <span class="nn">.structures</span> <span class="k">import</span> <span class="n">kvrDeviceInfoList</span><span class="p">,</span> <span class="n">kvrDeviceInfo</span><span class="p">,</span> <span class="n">kvrAddress</span><span class="p">,</span> <span class="n">kvrAddressList</span>
+
+<span class="n">_ct_dll</span> <span class="o">=</span> <span class="n">dllLoader</span><span class="o">.</span><span class="n">load_dll</span><span class="p">(</span><span class="n">win_name</span><span class="o">=</span><span class="s1">&#39;kvrlib.dll&#39;</span><span class="p">)</span>
+<span class="n">dll</span> <span class="o">=</span> <span class="n">KvrlibDll</span><span class="p">(</span><span class="n">_ct_dll</span><span class="p">)</span>
+<span class="n">dll</span><span class="o">.</span><span class="n">kvrInitializeLibrary</span><span class="p">()</span>
+
+<span class="n">HOST_NAME_MIN_SIZE</span> <span class="o">=</span> <span class="mi">26</span>
+<span class="n">CONFIG_VERIFICATION_SIZE</span> <span class="o">=</span> <span class="mi">2048</span>
+
+
+<span class="n">WEPKeys</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;WEPKeys&#39;</span><span class="p">,</span> <span class="s2">&quot;key64 key128&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="generate_wep_keys"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.generate_wep_keys">[docs]</a><span class="k">def</span> <span class="nf">generate_wep_keys</span><span class="p">(</span><span class="n">pass_phrase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates four 64-bit and one 128-bit WEP keys</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pass_phrase (`str`): The pass phrase to use to generate the keys.</span>
+
+<span class="sd">    Returns a ``(key64, key128)`` (`WEPKeys`) namedtuple, where ``key64`` is a</span>
+<span class="sd">    list of four `bytes` object with the four 64-bit WEP keys, and where</span>
+<span class="sd">    ```key128`` is a `bytes` object with the single 128-bit WEP key.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">pass_phrase</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">key64_1</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">key64_2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">key64_3</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">key64_4</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">key128</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">27</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGenerateWepKeys</span><span class="p">(</span>
+        <span class="n">phrase</span><span class="p">,</span>
+        <span class="n">key64_1</span><span class="p">,</span>
+        <span class="n">key64_2</span><span class="p">,</span>
+        <span class="n">key64_3</span><span class="p">,</span>
+        <span class="n">key64_4</span><span class="p">,</span>
+        <span class="n">key128</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">key64</span> <span class="o">=</span> <span class="p">(</span><span class="n">key64_1</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key64_2</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key64_3</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key64_4</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">WEPKeys</span><span class="p">(</span><span class="n">key64</span><span class="p">,</span> <span class="n">key128</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">keys</span></div>
+
+
+<div class="viewcode-block" id="generate_wpa_keys"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.generate_wpa_keys">[docs]</a><span class="k">def</span> <span class="nf">generate_wpa_keys</span><span class="p">(</span><span class="n">pass_phrase</span><span class="p">,</span> <span class="n">ssid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a WPA key from a pass phrase and ssid</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pass_phrase (`str`): The pass phrase to use to generate the key.</span>
+<span class="sd">        ssid (`str`): The SSID to use to generate the key.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `bytes`: The generated WPA key.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">pass_phrase</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">ssid</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">ssid</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrNetworkGenerateWpaKeys</span><span class="p">(</span>
+        <span class="n">phrase</span><span class="p">,</span>
+        <span class="n">ssid</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="hostname"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.hostname">[docs]</a><span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="n">ean</span><span class="p">,</span> <span class="n">serial</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a hostname from ean and serial number</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ean `EAN`: European Article Number</span>
+<span class="sd">        serial `int`: Serial number</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">HOST_NAME_MIN_SIZE</span><span class="p">)</span>
+    <span class="n">hi</span><span class="p">,</span> <span class="n">lo</span> <span class="o">=</span> <span class="n">ean</span><span class="o">.</span><span class="n">hilo</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ean</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">hi</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">lo</span><span class="p">),</span> <span class="n">serial</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrHostName</span><span class="p">(</span><span class="n">hi</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="verify_xml"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.verify_xml">[docs]</a><span class="k">def</span> <span class="nf">verify_xml</span><span class="p">(</span><span class="n">xml_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Verify that the xml string complies with both the DTD and internal restrictions&quot;&quot;&quot;</span>
+    <span class="n">xml</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">xml_string</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">CONFIG_VERIFICATION_SIZE</span><span class="p">)</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigVerifyXml</span><span class="p">(</span><span class="n">xml</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+    <span class="n">error_string</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="n">BUFFER_TOO_SMALL</span><span class="p">:</span>
+        <span class="n">error_string</span> <span class="o">+=</span> <span class="s1">&#39;...(string was truncated)&#39;</span>
+    <span class="k">return</span> <span class="n">error_string</span></div>
+
+
+<div class="viewcode-block" id="kvrConfig"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig">[docs]</a><span class="k">class</span> <span class="nc">kvrConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">MODE_R</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MODE_RW</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MODE_ERASE</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="n">XML_BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">2046</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kvrlib</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">MODE_R</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">profile_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;parameter kvrlib is deprecated&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_no</span> <span class="o">=</span> <span class="n">profile_no</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">openEx</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;previous handle was not closed&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigOpen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span>
+
+<div class="viewcode-block" id="kvrConfig.openEx"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig.openEx">[docs]</a>    <span class="k">def</span> <span class="nf">openEx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profile_no</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;previous handle was not closed&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="k">if</span> <span class="n">profile_no</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_no</span> <span class="o">=</span> <span class="n">profile_no</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigOpenEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">),</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">profile_no</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kvrConfig.close"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="kvrConfig.getXml"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig.getXml">[docs]</a>    <span class="k">def</span> <span class="nf">getXml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">()</span>
+        <span class="n">xml_buffer</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XML_BUFFER_SIZE</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigGet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">xml_buffer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">XML_BUFFER_SIZE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml</span> <span class="o">=</span> <span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">xml_buffer</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml</span></div>
+
+<div class="viewcode-block" id="kvrConfig.setXml"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig.setXml">[docs]</a>    <span class="k">def</span> <span class="nf">setXml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">()</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="kvrConfig.clear"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrConfig.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigClear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="kvrDiscovery"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery">[docs]</a><span class="k">class</span> <span class="nc">kvrDiscovery</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kvrlib</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;parameter kvrlib is deprecated&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="mh">0xff</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryOpen</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delay_ms</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout_ms</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<div class="viewcode-block" id="kvrDiscovery.getDefaultAddresses"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.getDefaultAddresses">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getDefaultAddresses</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span>
+                            <span class="n">addressTypeFlag</span><span class="o">=</span><span class="n">const</span><span class="o">.</span><span class="n">kvrAddressTypeFlag_BROADCAST</span><span class="p">,</span>
+                            <span class="n">listSize</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+
+        <span class="n">address_list</span> <span class="o">=</span> <span class="n">kvrAddressList</span><span class="p">(</span><span class="n">listSize</span><span class="p">)</span>
+        <span class="n">address_list_count</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_uint32</span><span class="p">(</span><span class="n">listSize</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryGetDefaultAddresses</span><span class="p">(</span>
+            <span class="n">address_list</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">,</span>
+            <span class="n">address_list</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+            <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">address_list_count</span><span class="p">),</span>
+            <span class="n">addressTypeFlag</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">address_list</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">address_list_count</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="n">address_list</span></div>
+
+<div class="viewcode-block" id="kvrDiscovery.close"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryClose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span></div>
+
+    <span class="c1"># qqqmac not using handle - should this be classmethod?</span>
+<div class="viewcode-block" id="kvrDiscovery.clearDevicesAtExit"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.clearDevicesAtExit">[docs]</a>    <span class="k">def</span> <span class="nf">clearDevicesAtExit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">onoff</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryClearDevicesAtExit</span><span class="p">(</span><span class="n">onoff</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kvrDiscovery.setAddresses"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.setAddresses">[docs]</a>    <span class="k">def</span> <span class="nf">setAddresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addressList</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetAddresses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                                     <span class="n">addressList</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">,</span>
+                                     <span class="n">addressList</span><span class="o">.</span><span class="n">count</span><span class="p">)</span></div>
+
+    <span class="c1"># qqqmac not using handle - a different object or classmethod?</span>
+<div class="viewcode-block" id="kvrDiscovery.setEncryptionKey"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.setEncryptionKey">[docs]</a>    <span class="k">def</span> <span class="nf">setEncryptionKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_info</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetEncryptionKey</span><span class="p">(</span><span class="n">device_info</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
+
+    <span class="c1"># qqqmac not using handle - a different object or classmethod?</span>
+<div class="viewcode-block" id="kvrDiscovery.setPassword"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.setPassword">[docs]</a>    <span class="k">def</span> <span class="nf">setPassword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_info</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoverySetPassword</span><span class="p">(</span><span class="n">device_info</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kvrDiscovery.setScanTime"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.setScanTime">[docs]</a>    <span class="k">def</span> <span class="nf">setScanTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay_ms</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delay_ms</span> <span class="o">=</span> <span class="n">delay_ms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout_ms</span> <span class="o">=</span> <span class="n">timeout_ms</span></div>
+
+<div class="viewcode-block" id="kvrDiscovery.start"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay_ms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">delay_ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delay_ms</span> <span class="o">=</span> <span class="n">delay_ms</span>
+        <span class="k">if</span> <span class="n">timeout_ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout_ms</span> <span class="o">=</span> <span class="n">timeout_ms</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryStart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">delay_ms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_ms</span><span class="p">)</span></div>
+
+    <span class="c1"># qqqmac not using handle - a different object or classmethod?</span>
+<div class="viewcode-block" id="kvrDiscovery.storeDevices"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.storeDevices">[docs]</a>    <span class="k">def</span> <span class="nf">storeDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceInfos</span><span class="p">):</span>
+        <span class="n">deviceInfoList</span> <span class="o">=</span> <span class="n">kvrDeviceInfoList</span><span class="p">(</span><span class="n">deviceInfos</span><span class="p">)</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryStoreDevices</span><span class="p">(</span><span class="n">deviceInfoList</span><span class="o">.</span><span class="n">STRUCT_ARRAY</span><span class="p">,</span>
+                                     <span class="n">deviceInfoList</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kvrDiscovery.getResults"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.kvrDiscovery.getResults">[docs]</a>    <span class="k">def</span> <span class="nf">getResults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">deviceInfoList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">deviceInfo</span> <span class="o">=</span> <span class="n">kvrDeviceInfo</span><span class="p">()</span>
+                <span class="n">dll</span><span class="o">.</span><span class="n">kvrDiscoveryGetResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">deviceInfo</span><span class="p">)</span>
+                <span class="n">deviceInfoList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deviceInfo</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">KvrBlank</span><span class="p">):</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">deviceInfoList</span></div></div>
+
+
+<div class="viewcode-block" id="initializeLibrary"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.initializeLibrary">[docs]</a><span class="k">def</span> <span class="nf">initializeLibrary</span><span class="p">():</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrInitializeLibrary</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">ean2ean_hi</span><span class="p">(</span><span class="n">ean</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return EAN high part.</span>
+
+<span class="sd">    Returns the high part of the supplied EAN as an integer.</span>
+<span class="sd">    Calling ean2ean_hi(ean=&quot;73-30130-00671-3&quot;) returns 0x73301.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eanCompact</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ean</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;(\d</span><span class="si">{5}</span><span class="s1">)(\d</span><span class="si">{8}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">eanCompact</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">ean2ean_lo</span><span class="p">(</span><span class="n">ean</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return EAN low part.</span>
+
+<span class="sd">    Returns the low part of the supplied EAN as an integer.</span>
+<span class="sd">    Calling ean2ean_lo(ean=&quot;73-30130-00671-3&quot;) returns 0x30006713.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eanCompact</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ean</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;(\d</span><span class="si">{5}</span><span class="s1">)(\d</span><span class="si">{8}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">eanCompact</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">ean_hi_lo2ean</span><span class="p">(</span><span class="n">ean_hi</span><span class="p">,</span> <span class="n">ean_lo</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build EAN from high and low part.</span>
+
+<span class="sd">    Returns the EAN as a string built from high and low parts in integer</span>
+<span class="sd">    format.  Calling ean_hi_lo2ean(ean_hi=0x73301, ean_lo=0x30006713)</span>
+<span class="sd">    returns &quot;73-30130-00671-3&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%02x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%05x</span><span class="s2">-</span><span class="si">%x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ean_hi</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">,</span>
+                                  <span class="p">((</span><span class="n">ean_hi</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ean_lo</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">),</span>
+                                  <span class="p">(</span><span class="n">ean_lo</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfffff</span><span class="p">,</span> <span class="n">ean_lo</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="deviceGetServiceStatus"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.deviceGetServiceStatus">[docs]</a><span class="k">def</span> <span class="nf">deviceGetServiceStatus</span><span class="p">(</span><span class="n">device_info</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">start_info</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDeviceGetServiceStatus</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">device_info</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">state</span><span class="p">),</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">start_info</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">start_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deviceGetServiceStatusText"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.deviceGetServiceStatusText">[docs]</a><span class="k">def</span> <span class="nf">deviceGetServiceStatusText</span><span class="p">(</span><span class="n">device_info</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrDeviceGetServiceStatusText</span><span class="p">(</span>
+        <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">device_info</span><span class="p">),</span> <span class="n">msg</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="addressFromString"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.addressFromString">[docs]</a><span class="k">def</span> <span class="nf">addressFromString</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+    <span class="n">kvaddr</span> <span class="o">=</span> <span class="n">kvrAddress</span><span class="p">()</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrAddressFromString</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">kvaddr</span><span class="p">,</span> <span class="n">address</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">kvaddr</span></div>
+
+
+<div class="viewcode-block" id="stringFromAddress"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.stringFromAddress">[docs]</a><span class="k">def</span> <span class="nf">stringFromAddress</span><span class="p">(</span><span class="n">address</span><span class="p">):</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrStringFromAddress</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">addr</span><span class="p">),</span> <span class="n">address</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">addr</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="configActiveProfileSet"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.configActiveProfileSet">[docs]</a><span class="k">def</span> <span class="nf">configActiveProfileSet</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">profile_number</span><span class="p">):</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigActiveProfileSet</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">profile_number</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="configActiveProfileGet"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.configActiveProfileGet">[docs]</a><span class="k">def</span> <span class="nf">configActiveProfileGet</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="n">no_profiles</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigActiveProfileGet</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">no_profiles</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">no_profiles</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="configNoProfilesGet"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.configNoProfilesGet">[docs]</a><span class="k">def</span> <span class="nf">configNoProfilesGet</span><span class="p">(</span><span class="n">channel</span><span class="p">):</span>
+    <span class="n">no_profiles</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrConfigNoProfilesGet</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">no_profiles</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">no_profiles</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="unload"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.unload">[docs]</a><span class="k">def</span> <span class="nf">unload</span><span class="p">():</span>
+    <span class="n">dll</span><span class="o">.</span><span class="n">kvrUnloadLibrary</span><span class="p">()</span></div>
+
+
+<span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s1">&#39;dllversion&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getVersion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the kvrlib version number as a `str`</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+<span class="sd">       Use `dllversion` instead.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">dllversion</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="dllversion"><a class="viewcode-back" href="../../../reference/kvrlib/wrapper.html#canlib.kvrlib.dllversion">[docs]</a><span class="k">def</span> <span class="nf">dllversion</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the kvrlib version number as a `str`&quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">dll</span><span class="o">.</span><span class="n">kvrGetVersion</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">VersionNumber</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">major</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">minor</span><span class="p">)</span></div>
+
+
+<span class="c1"># For backwards compatibility</span>
+<span class="k">def</span> <span class="nf">discoveryOpen</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">kvrDiscovery</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">])</span>
+
+
+<span class="c1"># For backwards compatibility</span>
+<span class="k">def</span> <span class="nf">configOpen</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">kvrConfig</span><span class="o">.</span><span class="n">MODE_R</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">kvrConfig</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">KvrLib</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deprecated wrapper class for the Kvaser kvrlib.</span>
+
+<span class="sd">    .. deprecated:: 1.5</span>
+
+<span class="sd">    All functionality of this class has been moved to the kvrlib module itself::</span>
+
+<span class="sd">      # deprecated</span>
+<span class="sd">      from canlib import kvrlib</span>
+<span class="sd">      cl = kvrlib.KvrLib()  # or kvrlib.Kvrlib()</span>
+<span class="sd">      cl.functionName()</span>
+
+<span class="sd">      # use this instead</span>
+<span class="sd">      from canlib import kvrlib</span>
+<span class="sd">      kvrlib.functionName()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dll</span> <span class="o">=</span> <span class="n">dll</span>
+
+    <span class="c1"># ean:    73-30130-00671-3</span>
+    <span class="c1"># ean_hi: 0x73301</span>
+    <span class="c1"># ean_lo: 0x30006713</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%(levelname)s</span><span class="s1">] </span><span class="si">%(funcName)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                                <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                                <span class="nb">format</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                                <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                <span class="nb">format</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+
+        <span class="n">deprecation</span><span class="o">.</span><span class="n">manual_warn</span><span class="p">(</span>
+            <span class="s2">&quot;Creating KvrLib objects is deprecated, &quot;</span>
+            <span class="s2">&quot;all functionality has been moved to the kvrlib module itself.&quot;</span><span class="p">)</span>
+        <span class="c1"># since=1.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">]</span>
+        <span class="n">dll</span><span class="o">.</span><span class="n">kvrInitializeLibrary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{t}</span><span class="s2"> object xxx has no attribute </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;kvrlib.ean2ean_hi&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ean2ean_hi</span><span class="p">(</span><span class="n">ean</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Using KvrLib static functions is deprecated, all functionality has been</span>
+<span class="sd">        moved to the kvrlib module itself.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ean2ean_hi</span><span class="p">(</span><span class="n">ean</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;kvrlib.ean2ean_lo&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ean2ean_lo</span><span class="p">(</span><span class="n">ean</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Using KvrLib static functions is deprecated, all functionality has been</span>
+<span class="sd">        moved to the kvrlib module itself.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ean2ean_lo</span><span class="p">(</span><span class="n">ean</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="o">.</span><span class="n">favour</span><span class="p">(</span><span class="s2">&quot;kvrlib.ean_hi_lo2ean&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">ean_hi_lo2ean</span><span class="p">(</span><span class="n">ean_hi</span><span class="p">,</span> <span class="n">ean_lo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Using KvrLib static functions is deprecated, all functionality has been</span>
+<span class="sd">        moved to the kvrlib module itself.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ean_hi_lo2ean</span><span class="p">(</span><span class="n">ean_hi</span><span class="p">,</span> <span class="n">ean_lo</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

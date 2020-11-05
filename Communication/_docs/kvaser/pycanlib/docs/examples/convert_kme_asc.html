@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Convert a .kme50 file to plain ASCII &mdash; canlib 1.13.390 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Create a Database" href="create_db.html" />
+    <link rel="prev" title="Examples" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> canlib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.13.390
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib.html">Supported Libraries and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../canlib/index.html">Using canlib (CANlib)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Convert a .kme50 file to plain ASCII</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="create_db.html">Create a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbmonitor.html">Monitor a Channel Using a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examine_db.html">Examine the Contents of a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_channels.html">Print Information About All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html">Monitor a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pinger.html">Send Random Messages on a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_memo_config.html">Validate a Memorator Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="write_memo_config.html">Write a Configuration to a Memorator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Relnotes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">canlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Convert a .kme50 file to plain ASCII</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/convert_kme_asc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="convert-a-kme50-file-to-plain-ascii">
+<h1>Convert a .kme50 file to plain ASCII<a class="headerlink" href="#convert-a-kme50-file-to-plain-ascii" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;convert_kme_asc.py -- Convert a .kme50 logfile into plain ASCII</span>
+
+<span class="sd">This example script uses canlib.kvlclib to convert a logfile from .kme50 format</span>
+<span class="sd">into plain ASCII.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">canlib</span> <span class="k">import</span> <span class="n">kvlclib</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+
+<span class="k">def</span> <span class="nf">try_set_propery</span><span class="p">(</span><span class="n">cnv</span><span class="p">,</span> <span class="nb">property</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Check if the format supports the given property</span>
+    <span class="k">if</span> <span class="n">cnv</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">isPropertySupported</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
+        <span class="c1"># If a value is specified, set the property to this value</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cnv</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="nb">property</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Get the property&#39;s default value</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">cnv</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">getPropertyDefault</span><span class="p">(</span><span class="nb">property</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">%s</span><span class="s1"> is supported (Default: </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+              <span class="p">(</span><span class="nb">property</span><span class="p">,</span> <span class="n">default</span><span class="p">))</span>
+
+        <span class="c1"># Get the property&#39;s current value</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">cnv</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="nb">property</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    Current value: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">%s</span><span class="s1"> is not supported&#39;</span> <span class="o">%</span> <span class="nb">property</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">convert_events</span><span class="p">(</span><span class="n">cnv</span><span class="p">):</span>
+    <span class="c1"># Get estimated number of remaining events in the input file. This</span>
+    <span class="c1"># can be useful for displaying progress during conversion.</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">cnv</span><span class="o">.</span><span class="n">eventCount</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Converting about </span><span class="si">%d</span><span class="s2"> events...&quot;</span> <span class="o">%</span> <span class="n">total</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Convert events from input file one by one until EOF</span>
+            <span class="c1"># is reached</span>
+            <span class="n">cnv</span><span class="o">.</span><span class="n">convertEvent</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cnv</span><span class="o">.</span><span class="n">isOutputFilenameNew</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New output filename: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cnv</span><span class="o">.</span><span class="n">getOutputFilename</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;About </span><span class="si">%d</span><span class="s2"> events left...&quot;</span> <span class="o">%</span> <span class="n">cnv</span><span class="o">.</span><span class="n">eventCount</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">KvlcEndOfFile</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cnv</span><span class="o">.</span><span class="n">isOverrunActive</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOTE! The extracted data contained overrun.&quot;</span><span class="p">)</span>
+                <span class="n">cnv</span><span class="o">.</span><span class="n">resetOverrunActive</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cnv</span><span class="o">.</span><span class="n">isDataTruncated</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOTE! The extracted data was truncated.&quot;</span><span class="p">)</span>
+                <span class="n">cnv</span><span class="o">.</span><span class="n">resetStatusTruncated</span><span class="p">()</span>
+            <span class="k">break</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Convert a .kme50 logfile into plain ASCII.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;LOGFILE.KME50&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;The filename of the .kme50 logfile.&quot;</span><span class="p">))</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">in_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1"># set up formats</span>
+    <span class="n">out_fmt</span> <span class="o">=</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">WriterFormat</span><span class="p">(</span><span class="n">kvlclib</span><span class="o">.</span><span class="n">FileFormat</span><span class="o">.</span><span class="n">PLAIN_ASC</span><span class="p">)</span>
+    <span class="n">in_fmt</span> <span class="o">=</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">ReaderFormat</span><span class="p">(</span><span class="n">kvlclib</span><span class="o">.</span><span class="n">FileFormat</span><span class="o">.</span><span class="n">KME50</span><span class="p">)</span>
+
+    <span class="c1"># set resulting output file name taking advantage of the extension</span>
+    <span class="c1"># defined in the format.</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">in_file</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">out_fmt</span><span class="o">.</span><span class="n">extension</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output filename is &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">out_file</span><span class="p">)</span>
+
+    <span class="c1"># create converter</span>
+    <span class="n">cnv</span> <span class="o">=</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">Converter</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">out_fmt</span><span class="p">)</span>
+
+    <span class="c1"># Set input file and format</span>
+    <span class="n">cnv</span><span class="o">.</span><span class="n">setInputFile</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">FileFormat</span><span class="o">.</span><span class="n">KME50</span><span class="p">)</span>
+
+    <span class="c1"># split output files into max 100 MB files</span>
+    <span class="c1"># The name of the resulting files will now end in &#39;-partX.txt&#39;,</span>
+    <span class="c1"># thus the first file will be named logfile-part0.txt, assuming we use</span>
+    <span class="c1"># logfile.kme50 as input file name.</span>
+    <span class="n">try_set_propery</span><span class="p">(</span><span class="n">cnv</span><span class="p">,</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">Property</span><span class="o">.</span><span class="n">SIZE_LIMIT</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># allow output file to overwrite existing files</span>
+    <span class="n">try_set_propery</span><span class="p">(</span><span class="n">cnv</span><span class="p">,</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">Property</span><span class="o">.</span><span class="n">OVERWRITE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># we are only interested in the first channel</span>
+    <span class="n">cnv</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="n">kvlclib</span><span class="o">.</span><span class="n">Property</span><span class="o">.</span><span class="n">CHANNEL_MASK</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># add nice header to the output file</span>
+    <span class="n">try_set_propery</span><span class="p">(</span><span class="n">cnv</span><span class="p">,</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">Property</span><span class="o">.</span><span class="n">WRITE_HEADER</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># we are converting CAN traffic with max 8 bytes, so we can minimize</span>
+    <span class="c1"># the width of the data output to 8 bytes</span>
+    <span class="n">try_set_propery</span><span class="p">(</span><span class="n">cnv</span><span class="p">,</span> <span class="n">kvlclib</span><span class="o">.</span><span class="n">Property</span><span class="o">.</span><span class="n">LIMIT_DATA_BYTES</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+    <span class="n">convert_events</span><span class="p">(</span><span class="n">cnv</span><span class="p">)</span>
+
+    <span class="c1"># force flush result to disk</span>
+    <span class="n">cnv</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>We have created a wrapper function <code class="xref py py-obj docutils literal notranslate"><span class="pre">try_set_propery</span></code> that will examine the property we are trying to set, and ignore the setting if the current format used does not support the property. While converting events in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_events</span></code> function, we also inform the user if any overruns or data truncation was detected.</p>
+</div>
+<div class="section" id="sample-output">
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">C:\example&gt;python convert_kme_asc.py gensig.kme50</span>
+<span class="go">Output filename is &#39;C:\example\gensig.txt&#39;</span>
+<span class="go">  Property.SIZE_LIMIT is supported (Default: 0)</span>
+<span class="go">    Current value: 100</span>
+<span class="go">  Property.OVERWRITE is supported (Default: 0)</span>
+<span class="go">    Current value: 1</span>
+<span class="go">  Property.WRITE_HEADER is supported (Default: 0)</span>
+<span class="go">    Current value: 1</span>
+<span class="go">  Property.LIMIT_DATA_BYTES is supported (Default: 64)</span>
+<span class="go">    Current value: 8</span>
+<span class="go">Converting about 310 events...</span>
+<span class="go">New output filename: &#39;C:\example\gensig-part0.txt</span>
+<span class="go">About 309 events left...</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="create_db.html" class="btn btn-neutral float-right" title="Create a Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Kvaser AB
+      <span class="lastupdated">
+        Last updated on Mon, 24 Feb 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
