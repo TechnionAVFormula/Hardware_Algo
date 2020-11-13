@@ -4,14 +4,14 @@
 there are multiply options for car dashboard
 ### driving a real car dashboard
 ![](https://www.xsimulator.net/community/attachments/jaguar_cluster-jpg.76941/)
-this option is nice, but might be hard and expensive, and probably a overkill, this shouldn't be too difficult since those use regular can bus protocol from what i found, similar things are done in [driving simulators (https://www.xsimulator.net/community/threads/how-to-guide-real-car-dashboard-for-racing-games.11967/)community 
+this option is nice, but might be expensive, and probably a overkill, this shouldn't be too difficult since those use regular can bus protocol from what i found, similar things are done in [driving simulators] (https://www.xsimulator.net/community/threads/how-to-guide-real-car-dashboard-for-racing-games.11967/)community 
 
 similar option but maybe easier and cheaper:
 ### OBD2 scanner 
 ![](https://ae01.alicdn.com/kf/H44cf1ed9e3e24a868e45976d90e50d0a9/EANOP-L200-Car-HUD-OBD2-GPS-Smart-Head-Up-Display-Speed-Monitoring-9-Interface-Digital-Gauge.jpg_Q90.jpg_.webp)
 this is an easier and cheaper option then the first one, 
 [aliexpress link](https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20201112072944&SearchText=obd2+gauge)
-it has alot of display options already built in i think its all we need, but its not customizable , 
+it has alot of display options already built in, i think its all we need, but its not customizable , 
 research is needed for simulating the odb2 protocol,
 this seems to be a nice option
 
