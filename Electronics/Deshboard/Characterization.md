@@ -41,3 +41,15 @@ buying an already working obd2 gauge might be easier , in that case we should or
 ## what we could do immediately
 connecting buttons , knobs and other to the teensy, getting to know the teensy development environment, and checking other arm options like stm32 chips.
 we could also try and simulating a can bus to get started with sending and receiving data of the bus.
+
+# can bus
+# usefull forums about teensy and canbus library:
+https://forum.pjrc.com/threads/41937-Using-the-teensy-on-can-bus
+https://forum.pjrc.com/threads/39867-Another-fork-of-FlexCAN?highlight=canbus
+https://forum.pjrc.com/threads/57948-Teensy-3-2-Canbus-Which-FlexCan-do-I-use
+https://forum.pjrc.com/threads/57997-Canbus-with-Teensy-3-2-4-0
+# libraries in github:
+https://github.com/collin80/FlexCAN_Library
+https://github.com/tonton81/FlexCAN_Library
+# teensy useful forum:
+https://www.pjrc.com/store/teensy32.html
