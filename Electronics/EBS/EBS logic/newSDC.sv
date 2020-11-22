@@ -31,7 +31,7 @@ begin
     k1_R = Power_on_Reset;
     k2_S = Power_on_Reset;
     k1_S = w[0];
-    k2_S = ~w[2];
+    k2_R = ~w[2];
 end
 
 
@@ -43,8 +43,8 @@ end
 
 always_ff @(posedge k2_R or posedge k2_S)
 begin
-    if(k2_R) k2_Q <= 1'b0;
-    else if(k2_S) k2_Q <= 1'b1;
+    if(k2_R) k2_Q <= 1'b1;
+    else if(k2_S) k2_Q <= 1'b0;
 end
 
 always_comb
