@@ -4,7 +4,7 @@ A critical system in any Autonamus vehicle
 
 Resposible of stopping the car in case of a critical failure
 
-## The system is made out of three main parts: A Supervisor CPU, A Logic Shutdown Circuit and Mechanical breaks
+## The system consists of three main parts: A Supervisor CPU, A Logic Shutdown Circuit and Mechanical breaks
 
 ## Supervisor CPU
 What does it do?
