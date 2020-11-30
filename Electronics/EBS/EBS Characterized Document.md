@@ -1,5 +1,5 @@
-EBS Characterized Document
-Mechanical related
+# EBS Characterized Document
+## Mechanical related
 DV 3.1.1 All specifications of the brake system from T 6 remain valid.
 DV 3.1.4 The EBS may be part of the hydraulic brake system. For all components of pneumatic and hydraulic EBS actuation not covered by T 6, T 9 is applied.
 DV 3.1.5 When the EBS is part of the hydraulic brake system, the manual brake actuation (by brake pedal) may be deactivated for autonomous driving.
@@ -17,7 +17,7 @@ T 11.3.1 An LVMS according to T 11.2 must completely disable
 • [CV ONLY] power from the Low Voltage (LV) battery and the alternator to the LVS
 DV 2.3.2 The steering system may remain active during an emergency brake maneuver while vehicle is in movement.
 
-Functions
+## Functions
 DV 3.2.1 Due to the safety critical character of the EBS, the system must either remain fully functional, or the vehicle must automatically transition to the safe state in case of a single failure mode.
 DV 3.2.2 The safe state is the vehicle at a standstill, brakes engaged to prevent the vehicle from rolling, and an open SDC.
 DV 3.2.3 To get to the safe state, the vehicle must perform an autonomous brake maneuver described in section DV 3.3 and IN 6.3.
@@ -26,7 +26,7 @@ DV 3.2.4 An initial check has to be performed to ensure that EBS and its redunda
 DV 3.2.6 The service brake system may be used as redundancy if two-way monitoring is ensured.
 DV 2.3.2 The steering system may remain active during an emergency brake maneuver while vehicle is in movement.
 
-Performance
+## Performance
 DV 3.3.1 The system reaction time (the time between entering the triggered state and the start of the deceleration) must not exceed 200 ms.
 DV 3.3.2 The average deceleration must be greater than 8 m/s 2 under dry track conditions.
 DV 3.3.3 Whilst decelerating, the vehicle must remain in a stable driving condition (i.e. no unintended yaw movement). This can be either a controlled deceleration (steering and braking control is active) or a stable braking in a straight line with all four wheels locked.
@@ -34,7 +34,7 @@ DV 1.5.3 The SDC may only be closed by the AS, if the following conditions are f
 DV 2.2.7 After switching the ASMS to the “On” position, the vehicle may not start moving and the brakes must remain closed (“AS ready” state, Figure 21) until a “Go” signal is sent via the RES (“AS driving” state, Figure 21).
 
 
-Another
+## Another
 T 6.1.4 “Brake-by-wire” systems are prohibited. [DV ONLY] In autonomous mode, it is allowed to use “brake-by-wire”. In manual mode, T 6.1.1 applies.
 T 6.1.1 The vehicle must be equipped with a hydraulic brake system that acts on all four wheels and is operated by a single control.
 T 6.1.10 [EV ONLY] The first 90 % of the brake pedal travel may be used to regenerate brake energy without actuating the hydraulic brake system. The remaining brake pedal travel must directly actuate the hydraulic brake system, but brake energy regeneration may remain active.
