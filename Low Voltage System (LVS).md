@@ -41,14 +41,15 @@ spacing (EV4.3.4 ).
 
 ### Commercial options
 
-|                       | Solution                   | Solution Description                                                                         | Input Range | Output Range | Power        | Dimension                                                | Weight               | Cooling | Price            | Perusing Options         |
-| --------------------- | -------------------------- | -------------------------------------------------------------------------------------------- | ----------- | ------------ | ------------ | -------------------------------------------------------- | -------------------- | ------- | ---------------- | ------------------------ |
-| ![DVCH1503]           | [Deutronic DVCH1503]       | Two converters 12V,24V in battery (parallel, HV interlock)                                   | 400-800V    | 2-15V,2-30V  | 1500W (each) | 295.0x233.0x68.5mm (each)                                | <5kg (each)          | air     |                  |                          |
-| ![DVCH1503]           | [Deutronic DVCH3003]       | One converter 24V in battery (parallel, HV interlock ), additional converter 24->12V outside | 400-800V    | 0-30V        | 3000W        | 295.0x233.0x68.5mm                                       | <5kg                 | air     |                  |                          |
-| ![IQ4H]               | [SynQor IQ4H]              | Multiple brick parallel combination of 12/24V and 300/600W                                   | 180-425V    | 5-48V        | 300W,600W    | 119.02x63.14x13mm @600W, 63.14x60.6x12.57mm @300W (each) | 280g@600W, 134g@300W | air     |                  |                          |
-| ![DCM5614VD0H36K3T01] | [VICOR DCM5614VD0H36K3T01] | Two parallel converters 24V in battery, additional converter 24->12V outside                 | 180-400V    | 22-36V       | 1300W        | 141.37 x 35.54 x 9.4mm  (each)                           | 215g (each)          | air     | $1,156.04 (each) | [VICOR_mouser]  26 weeks |
-| ![CFB750-300S]        | [CINCON CFB750-300S]       | Tow (or three) converters 12V,24V,(24V) in battery   (issue: require soldering to board)     | 200-425V    | 12V,24V      | 750W (each)  | 116.8x61.0x12.7 mm                                       | 230g                 | air     | $290.00 (each)   | [CINCON_mouser] 3 weeks  |
-| ![AIF]                | [ARTESYN AIF]              | Multiple brick parallel combination of 12/24V and 600W   (issue: require soldering to board) | 250-420V    | 12V,24V      | 600W (each)  | 116.8x61.0x12.7 mm                                       | 250g                 | air     |                  |                          |
+|     | Solution                   | Solution Description                                                                         | Input Range | Output Range | Power        | Dimension                                                | Weight               | Cooling | Price            | Perusing Options         |
+| --- | -------------------------- | -------------------------------------------------------------------------------------------- | ----------- | ------------ | ------------ | -------------------------------------------------------- | -------------------- | ------- | ---------------- | ------------------------ |
+|     | [Deutronic DVCH1503]       | Two converters 12V,24V in battery (parallel, HV interlock)                                   | 400-800V    | 2-15V,2-30V  | 1500W (each) | 295.0x233.0x68.5mm (each)                                | <5kg (each)          | air     |                  |                          |
+|     | [Deutronic DVCH3003]       | One converter 24V in battery (parallel, HV interlock ), additional converter 24->12V outside | 400-800V    | 0-30V        | 3000W        | 295.0x233.0x68.5mm                                       | <5kg                 | air     |                  |                          |
+|     | [SynQor IQ4H]              | Multiple brick parallel combination of 12/24V and 300/600W                                   | 180-425V    | 5-48V        | 300W,600W    | 119.02x63.14x13mm @600W, 63.14x60.6x12.57mm @300W (each) | 280g@600W, 134g@300W | air     |                  |                          |
+|     | [VITESCO 4TH-GEN]            | Two converters 12V,24V in battery           TODO info in website not good                    |             |              |              |                                                          |                      |         |                  |                          |
+|     | [VICOR DCM5614VD0H36K3T01] | Two parallel converters 24V in battery, additional converter 24->12V outside                 | 180-400V    | 22-36V       | 1300W        | 141.37 x 35.54 x 9.4mm  (each)                           | 215g (each)          | air     | $1,156.04 (each) | [VICOR_mouser]  26 weeks |
+|     | [CINCON CFB750-300S]       | Tow (or three) converters 12V,24V,(24V) in battery   (issue: require soldering to board)     | 200-425V    | 12V,24V      | 750W (each)  | 116.8x61.0x12.7 mm                                       | 230g                 | air     | $290.00 (each)   | [CINCON_mouser] 3 weeks  |
+|     | [ARTESYN AIF]              | Multiple brick parallel combination of 12/24V and 600W   (issue: require soldering to board) | 250-420V    | 12V,24V      | 600W (each)  | 116.8x61.0x12.7 mm                                       | 250g                 | air     |                  |                          |
 
 [Deutronic DVCH1503]:https://www.deutronic.com/produkte/dvch1503-700/
 [Deutronic DVCH3003]:https://www.deutronic.com/produkte/dvch3003/ 
@@ -67,6 +68,8 @@ spacing (EV4.3.4 ).
 
 [ARTESYN AIF]:https://www.artesyn.com/power-supplies/websheet/560/aif-series
 [AIF]:https://www.artesyn.com/assets/w530/5951471cf7.png
+
+[VISCO 4TH-GEN]:https://www.vitesco-technologies.com/en/Home/Solutions/Products/High-Voltage-DC-DC-Converter-4th-Generation-en
 
 <!-- 1.[DVCH3000 Series]
     - https://www.deutronic.com/produkte/dvch3003/
