@@ -1,9 +1,4 @@
-EV2.2.1EV2.3.1לשאול בשיחה עם באר שבע:
-1. precharge - קשור לטעינת הסוללה או לבטיחות סגירת המפסק? המלצה? סיבוכים ?
-2. LV supply - כמה הספק מקסימלי הם הגיעו ברכב לא אוטונומי? 
-3. איפה יש קטלוג של BMS - tame-power לא מומלץ - https://tyva-moduloo.com/modular-lithium-battery-unit-systems-and-solutions/lithium-ion-battery-management-system-bms-tyva/ לבדוק
 
-http://www.melasta.com/cells/ סוללות
 
 ## Electrical System
 ### Grounding
@@ -46,4 +41,16 @@ following are true (EV1.2.1):
 of the vehicle, at a test voltage of maximum TS voltage or 250 V, whichever is higher.
 - the withstand voltage between both circuits is higher than three times the maximum
 TS voltage or 750 V, whichever is higher.
+
+
+|     | Solution                   | Solution Description                                        | cells per segment | number of segment | Input Range | Output Range | Power | Dimension | Weight | Cooling | Price       | Perusing Options |
+| --- | -------------------------- | ----------------------------------------------------------- | ----------------- | ----------------- | ----------- | ------------ | ----- | --------- | ------ | ------- | ----------- | ---------------- |
+|     | [Analog Devices LTC6813-1] | 27 segments of 18 cells.                                    |                   |                   |             |              |       |           |        |         | 150$ (each) |                  |
+|     | [STAFL BMS1xxxx]           | master unit BMS1000M and multiple BMS1101S/2s monitor units |                   |                   |             |              |       |           |        |         | 150$ (each) |                  |
+
+
+>Note: calculated for ~480 cells. 
+
+[Analog Devices LTC6813-1]:https://www.analog.com/en/products/ltc6813-1.html
+[STAFL]:https://www.staflsystems.com/battery-management-systems/
 
