@@ -64,9 +64,9 @@ The LVS includes every electrical part that is not part of the TS. It is a low v
 ### SDC Components
 SDC components can be divided to three groups by their placement on the vehicle:
 - SDC HV - components which locate in the accumulator or connect directly to the HV system.
-    > Components 3,4,10-13.
+    > Components 3,4,10,12,13.
 - SDC main - components which locate in the Power Control box.
-    > Components 1,2,7,14. 
+    > Components 1,2,7,11,14. 
 - SDC loop - components which locate on the SDC loop that goes to the front of the vehicle.
     > Components 5,6,8,9. 
 
@@ -89,6 +89,7 @@ Components list:
 <!-- TODO give link to component that already explained in another place -->
 
 #### BSPD
+https://drive.google.com/drive/folders/1gjJoZ_BcHyBW0HmJ54d6dFaPKRN08jeu
 
 #### Shutdown Buttons
 The Shutdown buttons are three emergency switches that cause the vehicle to stop by opening the SDC as one of them is pushed in (T11.4.1, T11.4.2)
