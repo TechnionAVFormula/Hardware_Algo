@@ -16,10 +16,34 @@ The LVS includes every electrical part that is not part of the TS. It is a low v
     - Master Switches and emergency shutdown button.
 
 ### System Parts:
+- LV Batteries
 - Master Switches and Power controls
 - Shutdown Circuit (SDC)
 - Fuses and wiring
 - Packaging, location and marking.
+
+## LV Batteries
+ LV batteries are all batteries connected to the LVS (T11.7.1).
+
+## Rules limitation
+#### General
+- Must have a rigid and sturdy casing (T11.7.3).
+- Ungrounded terminals must be insulated (T11.7.4).
+- Must be protected from short circuits, not more than 100 mm from ungrounded terminals (T11.7.6).
+- Battery packs based on lithium chemistry (except LiFePO4) (T11.7.7):
+    - Must include overcurrent protection that trips at or below the maximum discharge current of the cells.
+    - Must include overtemperature protection of at least 30 % of the cells, meeting EV5.8.3. The allowed temperature range is specs limit or 60◦C, the smallest.
+    - Must include voltage protection of all cells that trips when any cell leaves the allowed voltage range.
+    - Overtemperature for more than 1 s or overvoltage for more then 500ms must result in disconnecting the battery.
+    - Must have a ﬁre retardant casing, see T1.2.1.
+    - It must be possible to display all cell voltages and measured temperatures.
+
+#### location & installation
+- Must be securely attached to the chassis (T11.7.2).
+- Must be located within the rollover protection envelope defined in T1.1.16 (T11.7.2).
+- Wet-cell battery  can be located in the driver compartment if enclosed in a non-conductive, water proof and acid resistant container (T11.7.3).
+
+
 
 ## Master Switches and Power controls
 ### Rules limitations
