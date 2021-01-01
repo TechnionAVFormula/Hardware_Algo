@@ -9,6 +9,9 @@ sending an appropriate signal that represents the current, in order to achieve â
 pressing the brake pedal. This test must prove the functionality of the complete BSPD except
 for any commercially available current sensors.
 
+EV6.1.8 It must be possible to demonstrate that all features of the shutdown circuit function correctly.
+This includes all interlocks.
+
 ## Maintenance
 - Master switches must not be removed during maintenance (T11.2.4).
 - Shutdown buttons  must not be removed during maintenance (T11.4.6).
