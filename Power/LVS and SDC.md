@@ -138,6 +138,13 @@ Rules limitations:
 - Each sensor signal wire must have separate connector for technical inspection (T11.6.7).
 - The BSPD and its sensors must not be installed inside the TS accumulator (T1.6.10).
 
+> **FAQ from FSG site** - Case of Two Brake circuit:
+>> **Question**:
+    Rule T11.6.5. states that in BSPD, to detect hard braking, a brakesystempressure sensor must be used. Can you please clarify whether asinglepressure sensor is sufficient, or do we need to use signals fromtwoseparate pressure sensors measuring brake pressure on front wheels andonrear wheels independently?
+>> **Answer**:	
+    One pressure sensor is enough. You have to install the sensor in the brake circuit which reaches the threshold value first. 
+    
+
 Solution:
 https://drive.google.com/drive/folders/1gjJoZ_BcHyBW0HmJ54d6dFaPKRN08jeu
 
