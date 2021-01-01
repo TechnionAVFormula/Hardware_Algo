@@ -89,6 +89,32 @@ Components list:
 <!-- TODO give link to component that already explained in another place -->
 
 #### BSPD
+The BSPD role is to make sure that the motor does not preform acceleration while hard braking is occurs. That situation can be caused by hardware, software (DV), failure or human mistake. This is achieve by opening The SDC when the situation is detected (T11.6.1).
+
+Possible issue scenarios:
+- Driver preforms hard press both pedals simultaneously.
+- Driver or AS preforms hard braking while an HW/SW failure cause the motor to accelerate.
+- AS preforms Hard barking and acceleration simultaneously.
+
+Rules limitations:
+- Hard braking detection (T11.6.5) - brake oil pressure sensor must be used. The threshold must fulfill: 
+    - Below 30 Bar.
+    - No locked wheel.
+- Acceleration detection (T11.6.6) - DC circuit current sensor must be used. The threshold must fulfill:
+    - Equivalent of ≤5 kW for maximum TS voltage.
+- Trigger condition (T11.6.2) - hard barking and acceleration persist form more then 500ms.
+
+- SDC must remain open until (T11.6.1):
+    - LVMS is turn off.
+    - The opening condition is no longer present for more than 10 seconds.
+
+- Must be a standalone non-programable circuit with a minimum dependencies (T11.6.1 , T11.6.4).
+- Must directly supply from the LVMS (T11.6.3).
+- Supply and sensor inputs must not be routed through any other devices before entering the BSPD. 
+- Each sensor signal wire must have separate connector for technical inspection (T11.6.7).
+- The BSPD and its sensors must not be installed inside the TS accumulator (T1.6.10).
+
+Solution:
 https://drive.google.com/drive/folders/1gjJoZ_BcHyBW0HmJ54d6dFaPKRN08jeu
 
 #### Shutdown Buttons
