@@ -82,8 +82,31 @@ The LVS includes every electrical part that is not part of the TS. It is a low v
 <img src="./Power Control Diagram.jpg" width="500"/>
 
 ## Shutdown Circuit (SDC)
+The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) and the EBS valves relay. The circuit goal is to prevent power from going to the motor and triggering the EBS in case of critical failure of any system on the car (EV6.1.1).
+
 ### Rules limitations
-<!-- TODO -->
+
+#### General 
+- The shutdown buttons, the BOTS, the TSMS and all interlocks must not act through any power stage (EV6.1.10).
+- It must be possible to demonstrate that all features of the shutdown circuit function correctly (This includes all interlocks) (EV6.1.8).
+-  Every system that is required to or is able to open the SDC must:
+    - Have its own non-programmable power stage to achieve this.
+    - Be able to carry the SDC current through its power stages.
+    - Design such that a failure cannot result in electrical power being fed back into the electrical SDC.
+
+#### Parts Order
+- All parts of the shutdown circuit deﬁned in EV6.1.2 (parts 1-5,8,9,11) must be on the high-side connection of the AIR coils and the pre-charge circuitry (EV6.1.3).
+- The TSMS must be the last switch before the AIRs (except for pre-charge circuitry and hardwired interlocks) (EV6.1.4). 
+
+#### Functionality
+- When the SDC is opened (EV6.1.5):
+    - All AIRs must be opened.
+    - The TS voltage must drop to below 60V DC and 25V ACRMS in less then 5 seconds.
+    - All accumulator current ﬂow must stop immediately.
+- AIRs opening can be delayed in maximum of 250ms (can be used to reduce the current before opening), but  <!-- one more condition to understand --> (EV6.1.5). 
+- If the shutdown circuit is opened by the AMS or the IMD, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6).
+- Fail, power loss or disconnecting of any circuit which is a part of the SDC must result in SDC opened (EV6.1.7).
+
 
 ### SDC Components
 SDC components can be divided to three groups by their placement on the vehicle:
@@ -143,7 +166,7 @@ Rules limitations:
     Rule T11.6.5. states that in BSPD, to detect hard braking, a brakesystempressure sensor must be used. Can you please clarify whether asinglepressure sensor is sufficient, or do we need to use signals fromtwoseparate pressure sensors measuring brake pressure on front wheels andonrear wheels independently?
 >> **Answer**:	
     One pressure sensor is enough. You have to install the sensor in the brake circuit which reaches the threshold value first. 
-    
+
 
 Solution:
 https://drive.google.com/drive/folders/1gjJoZ_BcHyBW0HmJ54d6dFaPKRN08jeu
