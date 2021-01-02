@@ -89,7 +89,7 @@ The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) 
 #### General 
 - The shutdown buttons, the BOTS, the TSMS and all interlocks must not act through any power stage (EV6.1.10).
 - It must be possible to demonstrate that all features of the shutdown circuit function correctly (This includes all interlocks) (EV6.1.8).
--  Every system that is required to or is able to open the SDC must:
+- Every system that is required to or is able to open the SDC must:
     - Have its own non-programmable power stage to achieve this.
     - Be able to carry the SDC current through its power stages.
     - Design such that a failure cannot result in electrical power being fed back into the electrical SDC.
@@ -105,7 +105,7 @@ The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) 
     - The TS voltage must drop to below 60V DC and 25V ACRMS in less then 5 seconds.
     - All accumulator current ﬂow must stop immediately.
 - AIRs opening can be delayed in maximum of 250ms (can be used to reduce the current before opening), but  <!-- one more condition to understand --> (EV6.1.5). 
-- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2).
+- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2, EV6.3.).
 - Fail, power loss or disconnecting of any circuit which is a part of the SDC must result in SDC opened (EV6.1.7).
 
 
@@ -223,6 +223,51 @@ Rules limitations:
  -->
 
  The BOTS switch is normally close types since <!--TODO why? is it because it a switch and not a system-->.Thats meet Figure 20 (EV6.1).
+
+#### Activation Logic
+The Activation logic goal is to activate/deactivate the TS voltage using the activation buttons. It also makes sure that the SDC stays open when it opened by a failure and reset manually when needed.
+
+Rules limitations:
+- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2, EV6.3.6).
+- The driver must be able to activate and deactivate the TS from within the cockpit without the assistance of any other person (EV4.11.1).
+- The ASR must be able to activate the TS from outside the vehicle with an external TS activation button in proximity to the TSMS (EV4.11.2).
+- Closing the SDC by any part deﬁned in EV6.1.2 must not (re-)activate the TS. Additional action must be required (4.11.3).
+-  The autonomous system must not be able to activate/reactivate the TS (EV4.1.4)
+
+Solution:
+Designing a Activation Logic circuit that handle the activation buttons and the manual reset. The circuit will be design for EV vehicle with an option to connect it to the EBS for DV vehicle.
+
+Parts:
+- Three push buttons:
+    - Cookpit Activation Button - activate/deactivate the TS by the driver.
+    - External Activation Button - activate/deactivate the TS by the ARS (DV only). 
+    - Reset Button - manually enable the activation buttons in case that IMD/AMS/RES/EBS opened the SDC.
+- Relay which open/close the SDC.
+- Two LED Indicators:
+    <!-- TODO consider adding indicators that shows which system opened the SDC -->
+    - Activation Indicator - green/red LED which indicate the button status:
+        - Green - the system is ready for activation. Pressing on the activation buttons will activate the TS.
+        - Red - the TS ia active. Pressing on the button will deactivate the TS.
+        - Off - the button is disable.
+    - Reset Indicator - red LED which indicate the button status:
+        - ON (red) - SDC opened by IMD/AMS/RES/EBS (activation buttons disabled). Pressing on the reset button will enable the activation buttons (Manual reset).
+        - OFF - reset button disabled.
+- Logic Circuit - keep the current state of the system, enable/disable the buttons and activate/deactivate the TS accordingly.
+    - Inputs:
+        - Activate - pulse signal from Cookpit Activation Button or EBS (DV). pulse signal for activate/deactivate TS.
+        - Reset - pulse signal from reset button. Enable the Activate input. 
+        - SDC_close - Signal from the entry of the Activation Logic relay. LOW if the SDC is open.
+        - X_ok (4 input) - multiple signals from the systems which require manual reset after they opened the SDC. LOW if system X opened the SDC HIGH ig the system is ok.
+    - Outputs:
+        - Close_SDC - signal to the Activation Logic relay. HIGH close the realy (activating the TS).
+        - Activation_LED (2 outputs) - turn green/red/off the Activation Indicator.
+        - Reset_LED - turn red/off the reset Indicator.
+
+Functionality:
+- If the SDC is close except the Activation logic relay, the Activation Indicator will turn green and pressing the activation logic will close the relay (activating the TS).
+- If the SDC is close (TS is active), the Activation Indicator will turn red and pressing the activation button will open the activation logic relay (deactivating the TS). 
+- If the SDC opened, the Activation Logic Relay will open (deactivate the TS). In order to close the relay, the activation button must be pressed again.
+- If the SDC opened by the IMD/AMS/RES/EBS, the reset indicator will turn on and the activation button must be disable. In order to enable it, the reset button must be pressed.
 
 ## Fuses and wiring
 ### Rules limitations
