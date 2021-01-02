@@ -97,6 +97,7 @@ The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) 
 #### Parts Order
 - All parts of the shutdown circuit deﬁned in EV6.1.2 (parts 1-5,8,9,11) must be on the high-side connection of the AIR coils and the pre-charge circuitry (EV6.1.3).
 - The TSMS must be the last switch before the AIRs (except for pre-charge circuitry and hardwired interlocks) (EV6.1.4). 
+- AS must be able to detect opened SDC in order to change it state <!-- find rules  -->. so the EBS must be the last part before the ASMS. 
 
 #### Functionality
 - When the SDC is opened (EV6.1.5):
@@ -104,8 +105,9 @@ The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) 
     - The TS voltage must drop to below 60V DC and 25V ACRMS in less then 5 seconds.
     - All accumulator current ﬂow must stop immediately.
 - AIRs opening can be delayed in maximum of 250ms (can be used to reduce the current before opening), but  <!-- one more condition to understand --> (EV6.1.5). 
-- If the shutdown circuit is opened by the AMS or the IMD, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6).
+- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2).
 - Fail, power loss or disconnecting of any circuit which is a part of the SDC must result in SDC opened (EV6.1.7).
+
 
 
 ### SDC Components
@@ -123,7 +125,7 @@ Components list:
 3. IMD - Insulation Monitoring Device
 4. AMS - Accumulator Management System
 5. Shutdown Buttons
-6. AS Latch - Autonomous System Latch (controlled by EBS)
+6. AS Latch (EBS) - Autonomous System Latch (controlled by EBS)
 7. RES - Remote Emergency System
 8. Inertia Switch
 9. BOTS - Brake Over-Travel Switch
