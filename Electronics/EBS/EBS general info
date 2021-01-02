@@ -1,0 +1,6 @@
+#EBS
+##must be supplied by:
+#####1) LVMS: Low Voltage Master Switch- powers the SDC
+#####2) ASMS: Autonomous System Master Switch - Entrance
+#####3) RES: Remote Emergency System
+#####4) relay which is parallel to the AIR (Acuumolator (a.k.a battery) Isolation Relay)
