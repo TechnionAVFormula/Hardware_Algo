@@ -1,0 +1,5 @@
+- Nvidia pc debug connection:
+	- Ethernet
+	- eSATA (for hard disk)
+	- wifi dongle (higher location is better)
+	- USB debug
