@@ -16,10 +16,34 @@ The LVS includes every electrical part that is not part of the TS. It is a low v
     - Master Switches and emergency shutdown button.
 
 ### System Parts:
+- LV Batteries
 - Master Switches and Power controls
 - Shutdown Circuit (SDC)
 - Fuses and wiring
 - Packaging, location and marking.
+
+## LV Batteries
+ LV batteries are all batteries connected to the LVS (T11.7.1).
+
+## Rules limitation
+#### General
+- Must have a rigid and sturdy casing (T11.7.3).
+- Ungrounded terminals must be insulated (T11.7.4).
+- Must be protected from short circuits, not more than 100 mm from ungrounded terminals (T11.7.6).
+- Battery packs based on lithium chemistry (except LiFePO4) (T11.7.7):
+    - Must include overcurrent protection that trips at or below the maximum discharge current of the cells.
+    - Must include overtemperature protection of at least 30 % of the cells, meeting EV5.8.3. The allowed temperature range is specs limit or 60◦C, the smallest.
+    - Must include voltage protection of all cells that trips when any cell leaves the allowed voltage range.
+    - Overtemperature for more than 1 s or overvoltage for more then 500ms must result in disconnecting the battery.
+    - Must have a ﬁre retardant casing, see T1.2.1.
+    - It must be possible to display all cell voltages and measured temperatures.
+
+#### location & installation
+- Must be securely attached to the chassis (T11.7.2).
+- Must be located within the rollover protection envelope defined in T1.1.16 (T11.7.2).
+- Wet-cell battery  can be located in the driver compartment if enclosed in a non-conductive, water proof and acid resistant container (T11.7.3).
+
+
 
 ## Master Switches and Power controls
 ### Rules limitations
@@ -58,8 +82,33 @@ The LVS includes every electrical part that is not part of the TS. It is a low v
 <img src="./Power Control Diagram.jpg" width="500"/>
 
 ## Shutdown Circuit (SDC)
+The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) and the EBS valves relay. The circuit goal is to prevent power from going to the motor and triggering the EBS in case of critical failure of any system on the car (EV6.1.1).
+
 ### Rules limitations
-<!-- TODO -->
+
+#### General 
+- The shutdown buttons, the BOTS, the TSMS and all interlocks must not act through any power stage (EV6.1.10).
+- It must be possible to demonstrate that all features of the shutdown circuit function correctly (This includes all interlocks) (EV6.1.8).
+- Every system that is required to or is able to open the SDC must:
+    - Have its own non-programmable power stage to achieve this.
+    - Be able to carry the SDC current through its power stages.
+    - Design such that a failure cannot result in electrical power being fed back into the electrical SDC.
+
+#### Parts Order
+- All parts of the shutdown circuit deﬁned in EV6.1.2 (parts 1-5,8,9,11) must be on the high-side connection of the AIR coils and the pre-charge circuitry (EV6.1.3).
+- The TSMS must be the last switch before the AIRs (except for pre-charge circuitry and hardwired interlocks) (EV6.1.4). 
+- AS must be able to detect opened SDC in order to change it state <!-- find rules  -->. so the EBS must be the last part before the ASMS. 
+
+#### Functionality
+- When the SDC is opened (EV6.1.5):
+    - All AIRs must be opened.
+    - The TS voltage must drop to below 60V DC and 25V ACRMS in less then 5 seconds.
+    - All accumulator current ﬂow must stop immediately.
+- AIRs opening can be delayed in maximum of 250ms (can be used to reduce the current before opening), but  <!-- one more condition to understand --> (EV6.1.5). 
+- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2, EV6.3.).
+- Fail, power loss or disconnecting of any circuit which is a part of the SDC must result in SDC opened (EV6.1.7).
+
+
 
 ### SDC Components
 SDC components can be divided to three groups by their placement on the vehicle:
@@ -76,7 +125,7 @@ Components list:
 3. IMD - Insulation Monitoring Device
 4. AMS - Accumulator Management System
 5. Shutdown Buttons
-6. AS Latch - Autonomous System Latch (controlled by EBS)
+6. AS Latch (EBS) - Autonomous System Latch (controlled by EBS)
 7. RES - Remote Emergency System
 8. Inertia Switch
 9. BOTS - Brake Over-Travel Switch
@@ -89,6 +138,39 @@ Components list:
 <!-- TODO give link to component that already explained in another place -->
 
 #### BSPD
+The BSPD role is to make sure that the motor does not preform acceleration while hard braking is occurs. That situation can be caused by hardware, software (DV), failure or human mistake. This is achieve by opening The SDC when the situation is detected (T11.6.1).
+
+Possible issue scenarios:
+- Driver preforms hard press both pedals simultaneously.
+- Driver or AS preforms hard braking while an HW/SW failure cause the motor to accelerate.
+- AS preforms Hard barking and acceleration simultaneously.
+
+Rules limitations:
+- Hard braking detection (T11.6.5) - brake oil pressure sensor must be used. The threshold must fulfill: 
+    - Below 30 Bar.
+    - No locked wheel.
+- Acceleration detection (T11.6.6) - DC circuit current sensor must be used. The threshold must fulfill:
+    - Equivalent of ≤5 kW for maximum TS voltage.
+- Trigger condition (T11.6.2) - hard barking and acceleration persist form more then 500ms.
+
+- SDC must remain open until (T11.6.1):
+    - LVMS is turn off.
+    - The opening condition is no longer present for more than 10 seconds.
+
+- Must be a standalone non-programable circuit with a minimum dependencies (T11.6.1 , T11.6.4).
+- Must directly supply from the LVMS (T11.6.3).
+- Supply and sensor inputs must not be routed through any other devices before entering the BSPD. 
+- Each sensor signal wire must have separate connector for technical inspection (T11.6.7).
+- The BSPD and its sensors must not be installed inside the TS accumulator (T1.6.10).
+
+> **FAQ from FSG site** - Case of Two Brake circuit:
+>> **Question**:
+    Rule T11.6.5. states that in BSPD, to detect hard braking, a brakesystempressure sensor must be used. Can you please clarify whether asinglepressure sensor is sufficient, or do we need to use signals fromtwoseparate pressure sensors measuring brake pressure on front wheels andonrear wheels independently?
+>> **Answer**:	
+    One pressure sensor is enough. You have to install the sensor in the brake circuit which reaches the threshold value first. 
+
+
+Solution:
 https://drive.google.com/drive/folders/1gjJoZ_BcHyBW0HmJ54d6dFaPKRN08jeu
 
 #### Shutdown Buttons
@@ -141,6 +223,51 @@ Rules limitations:
  -->
 
  The BOTS switch is normally close types since <!--TODO why? is it because it a switch and not a system-->.Thats meet Figure 20 (EV6.1).
+
+#### Activation Logic
+The Activation logic goal is to activate/deactivate the TS voltage using the activation buttons. It also makes sure that the SDC stays open when it opened by a failure and reset manually when needed.
+
+Rules limitations:
+- If the SDC is opened by the AMS, IMD,RES or the EBS, it has to be latched open by a non-programmable logic that can only be manually reset by a person at the vehicle who is not the driver (EV6.1.6, DV1.5.2, EV6.3.6).
+- The driver must be able to activate and deactivate the TS from within the cockpit without the assistance of any other person (EV4.11.1).
+- The ASR must be able to activate the TS from outside the vehicle with an external TS activation button in proximity to the TSMS (EV4.11.2).
+- Closing the SDC by any part deﬁned in EV6.1.2 must not (re-)activate the TS. Additional action must be required (4.11.3).
+-  The autonomous system must not be able to activate/reactivate the TS (EV4.1.4)
+
+Solution:
+Designing a Activation Logic circuit that handle the activation buttons and the manual reset. The circuit will be design for EV vehicle with an option to connect it to the EBS for DV vehicle.
+
+Parts:
+- Three push buttons:
+    - Cookpit Activation Button - activate/deactivate the TS by the driver.
+    - External Activation Button - activate/deactivate the TS by the ARS (DV only). 
+    - Reset Button - manually enable the activation buttons in case that IMD/AMS/RES/EBS opened the SDC.
+- Relay which open/close the SDC.
+- Two LED Indicators:
+    <!-- TODO consider adding indicators that shows which system opened the SDC -->
+    - Activation Indicator - green/red LED which indicate the button status:
+        - Green - the system is ready for activation. Pressing on the activation buttons will activate the TS.
+        - Red - the TS ia active. Pressing on the button will deactivate the TS.
+        - Off - the button is disable.
+    - Reset Indicator - red LED which indicate the button status:
+        - ON (red) - SDC opened by IMD/AMS/RES/EBS (activation buttons disabled). Pressing on the reset button will enable the activation buttons (Manual reset).
+        - OFF - reset button disabled.
+- Logic Circuit - keep the current state of the system, enable/disable the buttons and activate/deactivate the TS accordingly.
+    - Inputs:
+        - Activate - pulse signal from Cookpit Activation Button or EBS (DV). pulse signal for activate/deactivate TS.
+        - Reset - pulse signal from reset button. Enable the Activate input. 
+        - SDC_close - Signal from the entry of the Activation Logic relay. LOW if the SDC is open.
+        - X_ok (4 input) - multiple signals from the systems which require manual reset after they opened the SDC. LOW if system X opened the SDC HIGH ig the system is ok.
+    - Outputs:
+        - Close_SDC - signal to the Activation Logic relay. HIGH close the realy (activating the TS).
+        - Activation_LED (2 outputs) - turn green/red/off the Activation Indicator.
+        - Reset_LED - turn red/off the reset Indicator.
+
+Functionality:
+- If the SDC is close except the Activation logic relay, the Activation Indicator will turn green and pressing the activation logic will close the relay (activating the TS).
+- If the SDC is close (TS is active), the Activation Indicator will turn red and pressing the activation button will open the activation logic relay (deactivating the TS). 
+- If the SDC opened, the Activation Logic Relay will open (deactivate the TS). In order to close the relay, the activation button must be pressed again.
+- If the SDC opened by the IMD/AMS/RES/EBS, the reset indicator will turn on and the activation button must be disable. In order to enable it, the reset button must be pressed.
 
 ## Fuses and wiring
 ### Rules limitations
