@@ -109,3 +109,14 @@ https://www.mouser.co.il/ProductDetail/XP-Power/QHL750300S12?qs=w%2Fv1CP2dgqpcbi
 
 8. https://www.artesyn.com/power-supplies/websheet/560/aif-series
  -->
+
+### Synqor Comparison
+|                     | IQ4H                              | MCOTS                                             |
+| ------------------- | --------------------------------- | ------------------------------------------------- |
+| unused power        | loss 0.5kW for the min 180V input | min input 155v almost power no loss               |
+| max power           | 2400W                             | 4000W                                             |
+| Hazard              | peak current issue                | peak current is issue only in final stage         |
+| power loss and heat | power dissipation 20/25W          | twice  power dissipation 40/50W                   |
+| flexibility         | fix output voltage                | adjustable output voltage                         |
+| adapter             | adapter fit                       | adapter may not fit                               |
+| cost                | 1772$ total cost                  | 4000$ for symmetric solution  2000$for asymmetric |
