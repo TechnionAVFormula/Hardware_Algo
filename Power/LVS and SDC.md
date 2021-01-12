@@ -268,9 +268,10 @@ Functionality:
 - If the SDC is close (TS is active), the Activation Indicator will turn red and pressing the activation button will open the activation logic relay (deactivating the TS). 
 - If the SDC opened, the Activation Logic Relay will open (deactivate the TS). In order to close the relay, the activation button must be pressed again.
 - If the SDC opened by the IMD/AMS/RES/EBS, the reset indicator will turn on and the activation button must be disable. In order to enable it, the reset button must be pressed.
-## Simulation
+##### Simulation
 find simulation here:  https://simulator.io/board/WbiPS1IL6c
-<img src="./activation/Activation Logic.jpg" width="500"/>
+
+<img src="./Activation logic.jpg" width="900"/>
 
 ## Fuses and wiring
 ### Rules limitations
