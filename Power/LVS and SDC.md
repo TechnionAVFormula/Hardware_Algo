@@ -96,7 +96,9 @@ The SDC is safety circuit which driving the AIRs (include pre-charge circuitry) 
 
 #### Parts Order
 - All parts of the shutdown circuit deﬁned in EV6.1.2 (parts 1-5,8,9,11) must be on the high-side connection of the AIR coils and the pre-charge circuitry (EV6.1.3).
-- The TSMS must be the last switch before the AIRs (except for pre-charge circuitry and hardwired interlocks) (EV6.1.4). 
+- The TSMS must be the last switch before the AIRs (except for pre-charge circuitry and hardwired interlocks) (EV6.1.4).
+- Closing the SDC by any part deﬁned in EV6.1.2 must not (re-)activate the TS. Additional action must be required (4.11.3).
+    > That means the Activation logic can placed before the AIRs but must placed after the TSMS. 
 - AS must be able to detect opened SDC in order to change it state <!-- find rules  -->. so the EBS must be the last part before the ASMS. 
 
 #### Functionality
