@@ -1,0 +1,586 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L 74xx_IEEE:74157 U1
+U 1 1 5FE75615
+P 3350 2200
+F 0 "U1" H 3350 2916 50  0000 C CNN
+F 1 "74157" H 3350 2825 50  0000 C CNN
+F 2 "" H 3350 2200 50  0001 C CNN
+F 3 "" H 3350 2200 50  0001 C CNN
+	1    3350 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:7400 U3
+U 1 1 5FE75DDC
+P 5500 2000
+F 0 "U3" H 5500 2325 50  0000 C CNN
+F 1 "7400" H 5500 2234 50  0000 C CNN
+F 2 "" H 5500 2000 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn7400" H 5500 2000 50  0001 C CNN
+	1    5500 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74HC74 U5
+U 1 1 5FE7728F
+P 7050 2350
+F 0 "U5" H 7050 2831 50  0000 C CNN
+F 1 "74HC74" H 7050 2740 50  0000 C CNN
+F 2 "" H 7050 2350 50  0001 C CNN
+F 3 "74xx/74hc_hct74.pdf" H 7050 2350 50  0001 C CNN
+	1    7050 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74HC74 U5
+U 2 1 5FE77565
+P 10050 3800
+F 0 "U5" H 10050 4281 50  0000 C CNN
+F 1 "74HC74" H 10050 4190 50  0000 C CNN
+F 2 "" H 10050 3800 50  0001 C CNN
+F 3 "74xx/74hc_hct74.pdf" H 10050 3800 50  0001 C CNN
+	2    10050 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx_IEEE:7408 U4
+U 1 1 5FE7B061
+P 6100 4750
+F 0 "U4" H 6100 5166 50  0000 C CNN
+F 1 "7408" H 6100 5075 50  0000 C CNN
+F 2 "" H 6100 4750 50  0001 C CNN
+F 3 "" H 6100 4750 50  0001 C CNN
+	1    6100 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx_IEEE:7408 U4
+U 2 1 5FE7C995
+P 11250 2350
+F 0 "U4" H 11250 2766 50  0000 C CNN
+F 1 "7408" H 11250 2675 50  0000 C CNN
+F 2 "" H 11250 2350 50  0001 C CNN
+F 3 "" H 11250 2350 50  0001 C CNN
+	2    11250 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx_IEEE:7408 U4
+U 3 1 5FE7EF42
+P 11250 3800
+F 0 "U4" H 11250 4216 50  0000 C CNN
+F 1 "7408" H 11250 4125 50  0000 C CNN
+F 2 "" H 11250 3800 50  0001 C CNN
+F 3 "" H 11250 3800 50  0001 C CNN
+	3    11250 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx_IEEE:7432 U6
+U 1 1 5FE80429
+P 8500 4200
+F 0 "U6" H 8500 4616 50  0000 C CNN
+F 1 "7432" H 8500 4525 50  0000 C CNN
+F 2 "" H 8500 4200 50  0001 C CNN
+F 3 "" H 8500 4200 50  0001 C CNN
+	1    8500 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2100 5200 2100
+Wire Wire Line
+	5200 1900 4100 1900
+Wire Wire Line
+	4100 1900 4100 1050
+Wire Wire Line
+	4100 1050 1850 1050
+Wire Wire Line
+	5800 2000 7050 2000
+Wire Wire Line
+	6750 2250 6650 2400
+Wire Wire Line
+	6650 2400 6650 2500
+Wire Wire Line
+	6750 2350 6650 2500
+Connection ~ 6650 2500
+Wire Wire Line
+	6650 2500 6650 2800
+$Comp
+L 74xx:7400 U3
+U 2 1 5FE93519
+P 7700 2950
+F 0 "U3" V 7654 3138 50  0000 L CNN
+F 1 "7400" V 7745 3138 50  0000 L CNN
+F 2 "" H 7700 2950 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn7400" H 7700 2950 50  0001 C CNN
+	2    7700 2950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7350 2450 7600 2600
+Wire Wire Line
+	7600 2600 7600 2650
+Wire Wire Line
+	7700 3250 7700 4100
+Wire Wire Line
+	7700 4100 7950 4100
+Wire Wire Line
+	7700 4300 7700 4750
+Wire Wire Line
+	7700 4750 6650 4750
+Wire Wire Line
+	7700 4300 7950 4300
+Wire Wire Line
+	9050 4200 10050 4200
+Wire Wire Line
+	10050 4200 10050 4100
+Wire Wire Line
+	9750 3700 9600 3700
+Wire Wire Line
+	9600 3700 9600 3800
+Wire Wire Line
+	9600 3800 9750 3800
+Wire Wire Line
+	9600 3800 9600 3900
+Connection ~ 9600 3800
+Wire Wire Line
+	10350 3700 10450 3700
+Wire Wire Line
+	10700 3900 10550 3900
+Wire Wire Line
+	10550 3900 10550 4750
+Wire Wire Line
+	10550 4750 7700 4750
+Connection ~ 7700 4750
+Wire Wire Line
+	10450 3700 10450 2450
+Wire Wire Line
+	10450 2450 10700 2450
+Connection ~ 10450 3700
+Wire Wire Line
+	10450 3700 10700 3700
+Wire Wire Line
+	7350 2250 10700 2250
+Wire Wire Line
+	7050 2000 7050 2050
+$Comp
+L EBS_library:UCC2946 U2
+U 1 1 5FEBBC41
+P 5100 3800
+F 0 "U2" H 4375 4481 50  0000 C CNN
+F 1 "UCC2946" H 4375 4390 50  0000 C CNN
+F 2 "" H 4600 4250 50  0001 C CNN
+F 3 "" H 4600 4250 50  0001 C CNN
+	1    5100 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 2650 7050 3450
+Wire Wire Line
+	7050 3550 4750 3550
+Wire Wire Line
+	4750 3900 5200 3900
+Wire Wire Line
+	5200 3900 5200 4650
+Wire Wire Line
+	5200 4650 5550 4650
+$Comp
+L power:GND #PWR0101
+U 1 1 5FEC0C24
+P 9600 3900
+F 0 "#PWR0101" H 9600 3650 50  0001 C CNN
+F 1 "GND" H 9605 3727 50  0000 C CNN
+F 2 "" H 9600 3900 50  0001 C CNN
+F 3 "" H 9600 3900 50  0001 C CNN
+	1    9600 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0102
+U 1 1 5FEC1E0C
+P 6650 2800
+F 0 "#PWR0102" H 6650 2550 50  0001 C CNN
+F 1 "GND" H 6655 2627 50  0000 C CNN
+F 2 "" H 6650 2800 50  0001 C CNN
+F 3 "" H 6650 2800 50  0001 C CNN
+	1    6650 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0103
+U 1 1 5FEC367E
+P 7800 2650
+F 0 "#PWR0103" H 7800 2500 50  0001 C CNN
+F 1 "+3.3V" H 7815 2823 50  0000 C CNN
+F 2 "" H 7800 2650 50  0001 C CNN
+F 3 "" H 7800 2650 50  0001 C CNN
+	1    7800 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10050 3500 10050 3450
+Wire Wire Line
+	10050 3450 7050 3450
+Connection ~ 7050 3450
+Wire Wire Line
+	7050 3450 7050 3550
+Text GLabel 1850 1050 0    50   Input ~ 0
+AS_close_SDC
+Text GLabel 1550 1900 0    50   Input ~ 0
+AS_driving_mode
+Wire Wire Line
+	2800 1900 2550 1900
+Text GLabel 1800 2400 0    50   Input ~ 0
+TS_Activation_Button_cockpit
+Text GLabel 1650 2850 0    50   Input ~ 0
+TS_Activation_Button_external
+Text GLabel 1350 4250 0    50   Input ~ 0
+watchdog
+Wire Wire Line
+	1350 4250 1450 4250
+Wire Wire Line
+	2700 4250 2700 3950
+Wire Wire Line
+	2700 3950 4000 3950
+Text GLabel 1750 4850 0    50   Input ~ 0
+shutdown_circuit
+Wire Wire Line
+	1750 4850 2150 4850
+Text GLabel 12550 2350 2    50   Output ~ 0
+To_SDC_relais
+Wire Wire Line
+	11800 2350 12550 2350
+Wire Wire Line
+	11800 3800 12600 3800
+Text GLabel 12600 3800 2    50   Output ~ 0
+SDC_is_ready
+$Comp
+L Diode:1N4148 D9
+U 1 1 5FF18303
+P 2450 1750
+F 0 "D9" V 2404 1830 50  0000 L CNN
+F 1 "1N4148" V 2495 1830 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2450 1575 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2450 1750 50  0001 C CNN
+	1    2450 1750
+	0    1    1    0   
+$EndComp
+Connection ~ 2450 1900
+$Comp
+L Diode:1N4148 D10
+U 1 1 5FF18E21
+P 2450 2050
+F 0 "D10" V 2404 2130 50  0000 L CNN
+F 1 "1N4148" V 2495 2130 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2450 1875 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2450 2050 50  0001 C CNN
+	1    2450 2050
+	0    1    1    0   
+$EndComp
+$Comp
+L Diode:1N4148 D6
+U 1 1 5FF19622
+P 2100 2550
+F 0 "D6" V 2054 2630 50  0000 L CNN
+F 1 "1N4148" V 2145 2630 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2100 2375 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2100 2550 50  0001 C CNN
+	1    2100 2550
+	0    1    1    0   
+$EndComp
+Connection ~ 2100 2400
+Wire Wire Line
+	2100 2400 1800 2400
+$Comp
+L Diode:1N4148 D5
+U 1 1 5FF19AF2
+P 2100 2250
+F 0 "D5" V 2054 2330 50  0000 L CNN
+F 1 "1N4148" V 2145 2330 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2100 2075 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2100 2250 50  0001 C CNN
+	1    2100 2250
+	0    1    1    0   
+$EndComp
+$Comp
+L Diode:1N4148 D4
+U 1 1 5FF1A2C5
+P 1750 3000
+F 0 "D4" V 1704 3080 50  0000 L CNN
+F 1 "1N4148" V 1795 3080 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1750 2825 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1750 3000 50  0001 C CNN
+	1    1750 3000
+	0    1    1    0   
+$EndComp
+Connection ~ 1750 2850
+Wire Wire Line
+	1750 2850 1650 2850
+Wire Wire Line
+	2450 1900 1550 1900
+Wire Wire Line
+	2800 2150 2600 2150
+Wire Wire Line
+	2600 2150 2600 2850
+Wire Wire Line
+	1750 2850 1900 2850
+Wire Wire Line
+	2800 2050 2300 2050
+$Comp
+L Diode:1N4148 D3
+U 1 1 5FF50697
+P 1750 2700
+F 0 "D3" V 1704 2780 50  0000 L CNN
+F 1 "1N4148" V 1795 2780 50  0000 L CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1750 2525 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1750 2700 50  0001 C CNN
+	1    1750 2700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2300 2050 2300 2400
+Wire Wire Line
+	2300 2400 2200 2400
+$Comp
+L power:GND #PWR0104
+U 1 1 5FF5E188
+P 800 3450
+F 0 "#PWR0104" H 800 3200 50  0001 C CNN
+F 1 "GND" H 805 3277 50  0000 C CNN
+F 2 "" H 800 3450 50  0001 C CNN
+F 3 "" H 800 3450 50  0001 C CNN
+	1    800  3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 3150 1750 3350
+Connection ~ 1750 3450
+Wire Wire Line
+	1750 3450 2100 3450
+Wire Wire Line
+	2100 2700 2100 2900
+Connection ~ 2100 3450
+Wire Wire Line
+	2100 3450 2150 3450
+Wire Wire Line
+	800  3450 1650 3450
+Wire Wire Line
+	2450 2200 2450 2400
+Wire Wire Line
+	2450 1500 2100 1500
+$Comp
+L power:+3.3V #PWR0105
+U 1 1 5FF6EF38
+P 1000 1500
+F 0 "#PWR0105" H 1000 1350 50  0001 C CNN
+F 1 "+3.3V" H 1015 1673 50  0000 C CNN
+F 2 "" H 1000 1500 50  0001 C CNN
+F 3 "" H 1000 1500 50  0001 C CNN
+	1    1000 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 1600 2450 1500
+Wire Wire Line
+	2100 2100 2100 1500
+Connection ~ 2100 1500
+Wire Wire Line
+	2100 1500 1750 1500
+Wire Wire Line
+	1750 2550 1750 1500
+Connection ~ 1750 1500
+Wire Wire Line
+	1750 1500 1000 1500
+$Comp
+L pspice:CAP C2
+U 1 1 5FF791CA
+P 1900 3100
+F 0 "C2" H 2078 3146 50  0000 L CNN
+F 1 "CAP" H 2078 3055 50  0000 L CNN
+F 2 "" H 1900 3100 50  0001 C CNN
+F 3 "~" H 1900 3100 50  0001 C CNN
+	1    1900 3100
+	1    0    0    -1  
+$EndComp
+Connection ~ 1900 2850
+Wire Wire Line
+	1900 2850 2600 2850
+$Comp
+L pspice:CAP C3
+U 1 1 5FF7A7F1
+P 2200 2650
+F 0 "C3" H 2378 2696 50  0000 L CNN
+F 1 "CAP" H 2378 2605 50  0000 L CNN
+F 2 "" H 2200 2650 50  0001 C CNN
+F 3 "~" H 2200 2650 50  0001 C CNN
+	1    2200 2650
+	1    0    0    -1  
+$EndComp
+Connection ~ 2200 2400
+Wire Wire Line
+	2200 2400 2100 2400
+$Comp
+L pspice:CAP C4
+U 1 1 5FF7B3C0
+P 2550 2150
+F 0 "C4" H 2728 2196 50  0000 L CNN
+F 1 "CAP" H 2728 2105 50  0000 L CNN
+F 2 "" H 2550 2150 50  0001 C CNN
+F 3 "~" H 2550 2150 50  0001 C CNN
+	1    2550 2150
+	1    0    0    -1  
+$EndComp
+Connection ~ 2550 1900
+Wire Wire Line
+	2550 1900 2450 1900
+Wire Wire Line
+	2550 2400 2450 2400
+Connection ~ 2450 2400
+Wire Wire Line
+	2450 2400 2450 3450
+Wire Wire Line
+	2200 2900 2100 2900
+Connection ~ 2100 2900
+Wire Wire Line
+	2100 2900 2100 3450
+Wire Wire Line
+	1900 3350 1750 3350
+Connection ~ 1750 3350
+Wire Wire Line
+	1750 3350 1750 3450
+$Comp
+L Diode:1N4148 D1
+U 1 1 5FF8BDAF
+P 1650 4100
+F 0 "D1" V 1696 4020 50  0000 R CNN
+F 1 "1N4148" V 1605 4020 50  0000 R CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1650 3925 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1650 4100 50  0001 C CNN
+	1    1650 4100
+	0    -1   -1   0   
+$EndComp
+Connection ~ 1650 4250
+Wire Wire Line
+	1650 4250 2700 4250
+$Comp
+L Diode:1N4148 D2
+U 1 1 5FF8CF6D
+P 1650 4400
+F 0 "D2" V 1696 4320 50  0000 R CNN
+F 1 "1N4148" V 1605 4320 50  0000 R CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1650 4225 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1650 4400 50  0001 C CNN
+	1    1650 4400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Diode:1N4148 D8
+U 1 1 5FF8DB81
+P 2150 5000
+F 0 "D8" V 2196 4920 50  0000 R CNN
+F 1 "1N4148" V 2105 4920 50  0000 R CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2150 4825 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2150 5000 50  0001 C CNN
+	1    2150 5000
+	0    -1   -1   0   
+$EndComp
+Connection ~ 2150 4850
+Wire Wire Line
+	2150 4850 2600 4850
+$Comp
+L Diode:1N4148 D7
+U 1 1 5FF8E291
+P 2150 4700
+F 0 "D7" V 2196 4620 50  0000 R CNN
+F 1 "1N4148" V 2105 4620 50  0000 R CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2150 4525 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2150 4700 50  0001 C CNN
+	1    2150 4700
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2150 4550 2150 4350
+Connection ~ 2150 3450
+Wire Wire Line
+	2150 3450 2450 3450
+Wire Wire Line
+	1650 3950 1650 3750
+Connection ~ 1650 3450
+Wire Wire Line
+	1650 3450 1750 3450
+Wire Wire Line
+	1650 4550 1900 4550
+Wire Wire Line
+	1900 4550 1900 5150
+Wire Wire Line
+	1900 5150 2150 5150
+Wire Wire Line
+	2150 5150 2700 5150
+Wire Wire Line
+	2700 5150 2700 5300
+Connection ~ 2150 5150
+$Comp
+L power:+3.3V #PWR0106
+U 1 1 5FFA065D
+P 2700 5300
+F 0 "#PWR0106" H 2700 5150 50  0001 C CNN
+F 1 "+3.3V" H 2715 5473 50  0000 C CNN
+F 2 "" H 2700 5300 50  0001 C CNN
+F 3 "" H 2700 5300 50  0001 C CNN
+	1    2700 5300
+	-1   0    0    1   
+$EndComp
+$Comp
+L pspice:CAP C1
+U 1 1 5FFA5256
+P 1450 4000
+F 0 "C1" H 1628 4046 50  0000 L CNN
+F 1 "CAP" H 1628 3955 50  0000 L CNN
+F 2 "" H 1450 4000 50  0001 C CNN
+F 3 "~" H 1450 4000 50  0001 C CNN
+	1    1450 4000
+	1    0    0    -1  
+$EndComp
+Connection ~ 1450 4250
+Wire Wire Line
+	1450 4250 1650 4250
+$Comp
+L pspice:CAP C5
+U 1 1 5FFA5CCE
+P 2600 4600
+F 0 "C5" H 2778 4646 50  0000 L CNN
+F 1 "CAP" H 2778 4555 50  0000 L CNN
+F 2 "" H 2600 4600 50  0001 C CNN
+F 3 "~" H 2600 4600 50  0001 C CNN
+	1    2600 4600
+	1    0    0    -1  
+$EndComp
+Connection ~ 2600 4850
+Wire Wire Line
+	2600 4850 5550 4850
+Wire Wire Line
+	2600 4350 2150 4350
+Connection ~ 2150 4350
+Wire Wire Line
+	2150 4350 2150 3450
+Wire Wire Line
+	1450 3750 1650 3750
+Connection ~ 1650 3750
+Wire Wire Line
+	1650 3750 1650 3450
+$EndSCHEMATC
