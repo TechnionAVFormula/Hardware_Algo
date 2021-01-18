@@ -13,13 +13,19 @@ logic SDCready;
 newSDC dut (.To_SDC_relais(SDCrelais), .SDC_is_Ready(SDCready),
  .AS_close_SDC(SDC_close), .AS_driving_mode(driving_mode),
  .TS_Activation_Button_cockpit(manual_ignition), .TS_Activation_Button_external(Auto_ignition),
- .Power_on_Reset(PowerOnreset), .Watchdog(WatchdogOutput), .Shutdown_circuit(SDCrelais));
+ .Power_on_Reset(PowerOnreset), .Watchdog(WatchdogOutput), .Shutdown_circuit(Shutdown));
 
  initial begin
      //resetting the system
 
      PowerOnreset=1'b1;
 
+     #10
+     manual_ignition= 1'b0;
+     Auto_ignition= 1'b0;
+     driving_mode= 1'b0;
+     SDC_close=1'b0;
+     Shutdown= 1'b0;
      #10
 
      WatchdogOutput= 1'b1;
@@ -31,7 +37,13 @@ newSDC dut (.To_SDC_relais(SDCrelais), .SDC_is_Ready(SDCready),
      #1
      Auto_ignition = 1'b0;
      #9
+     Shutdown = 1'b1;
+     #10
      WatchdogOutput = 1'b0;
+     #2
+     SDC_close= 1'b0;
+     #10
+     WatchdogOutput = 1'b1;
 
      
 

@@ -5,13 +5,6 @@ module mux2(
     input logic sel
 );
 
-always_comb begin
-    if (sel == 1'b1) begin
-    assign Z = d1;
-    end
-    else begin
-    assign Z = d0;
-    end
-end
+	assign Z = sel? d1 : d0;
 
 endmodule

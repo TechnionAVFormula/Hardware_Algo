@@ -1,11 +1,9 @@
 module SR_NAND_latch(
-    output logic Q,
-    output logic Qn,
-    input logic Sbar,
-    input logic Rbar
-);
+           input wire S, R, C,
+           output wire Q, Qbar);
 
-assign Q = ~(Sbar & Qn);
-assign Qn = ~(Rbar & Q);
-
-endmodule
+assign #2 Q_i = Q;
+assign #2 Qbar_i = Qbar;
+assign #2 Q = ~ (S & Qbar_i);
+assign #2 Qbar = ~ (R & Q_i);
+endmodule 
