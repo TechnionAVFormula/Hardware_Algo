@@ -146,17 +146,6 @@ Wire Wire Line
 	1550 6750 1200 6750
 Wire Wire Line
 	2500 6950 2500 6750
-$Comp
-L power:+3.3V #PWR?
-U 1 1 600A3F9A
-P 3000 7400
-F 0 "#PWR?" H 3000 7250 50  0001 C CNN
-F 1 "+3.3V" H 3015 7573 50  0000 C CNN
-F 2 "" H 3000 7400 50  0001 C CNN
-F 3 "" H 3000 7400 50  0001 C CNN
-	1    3000 7400
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	2300 6750 2500 6750
 Connection ~ 2500 6750
@@ -635,4 +624,204 @@ Text GLabel 9000 5000 2    50   Output ~ 0
 SDC_is_ready
 Text GLabel 6900 5400 2    50   Output ~ 0
 Driving_Button
+Text Notes 7650 6950 0    157  ~ 0
+EBS
+Wire Wire Line
+	3250 1350 3250 1450
+Text HLabel 2950 2050 2    50   Input ~ 0
+ACT2
+Text HLabel 2950 2200 2    50   Input ~ 0
+ACT2
+Text HLabel 2950 2350 2    50   Input ~ 0
+RBP
+Text HLabel 2950 2500 2    50   Input ~ 0
+FBP
+Text HLabel 2950 2650 2    50   Input ~ 0
+BVP2
+Text HLabel 2950 2800 2    50   Input ~ 0
+BVP1
+Text HLabel 1000 1750 0    50   Input ~ 0
+AVP2
+Text HLabel 1000 1900 0    50   Input ~ 0
+AVP1
+$Comp
+L power:GND #PWR?
+U 1 1 60084923
+P 1100 1300
+F 0 "#PWR?" H 1100 1050 50  0001 C CNN
+F 1 "GND" H 1105 1127 50  0000 C CNN
+F 2 "" H 1100 1300 50  0001 C CNN
+F 3 "" H 1100 1300 50  0001 C CNN
+	1    1100 1300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1300 1300 1100 1300
+$Comp
+L EBS_library:STM32_BOARD U?
+U 1 1 60094702
+P 1850 1600
+F 0 "U?" H 1850 2365 50  0000 C CNN
+F 1 "STM32_BOARD" H 1850 2274 50  0000 C CNN
+F 2 "" H 1850 1450 50  0001 C CNN
+F 3 "" H 1850 1450 50  0001 C CNN
+	1    1850 1600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1000 1750 1300 1750
+Text GLabel 950  2050 0    50   Output ~ 0
+fault
+Wire Wire Line
+	1300 2050 950  2050
+Wire Wire Line
+	2600 1300 2400 1300
+Wire Wire Line
+	3250 1450 2400 1450
+Wire Wire Line
+	2400 2050 2950 2050
+Wire Wire Line
+	2950 2200 2400 2200
+Wire Wire Line
+	2400 2350 2950 2350
+Wire Wire Line
+	2950 2500 2400 2500
+Wire Wire Line
+	2400 2650 2950 2650
+Wire Wire Line
+	2950 2800 2400 2800
+$Comp
+L power:+5V #PWR?
+U 1 1 600812A9
+P 2600 850
+F 0 "#PWR?" H 2600 700 50  0001 C CNN
+F 1 "+5V" H 2615 1023 50  0000 C CNN
+F 2 "" H 2600 850 50  0001 C CNN
+F 3 "" H 2600 850 50  0001 C CNN
+	1    2600 850 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 850  2600 1300
+$Comp
+L Interface_CAN_LIN:SN65HVD230 U?
+U 1 1 6008125E
+P 4000 1800
+F 0 "U?" H 4200 2050 50  0000 C CNN
+F 1 "SN65HVD230" H 4350 1450 50  0000 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 4000 1300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn65hvd230.pdf" H 3900 2200 50  0001 C CNN
+	1    4000 1800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 2250 3550 2250
+Wire Wire Line
+	3550 2250 3550 2000
+Wire Wire Line
+	3550 2000 3600 2000
+NoConn ~ 3600 1900
+Wire Wire Line
+	3250 1350 4000 1350
+Wire Wire Line
+	3600 1700 2400 1700
+Wire Wire Line
+	2400 1800 3600 1800
+Wire Wire Line
+	4400 1800 4950 1800
+Wire Wire Line
+	4950 1900 4400 1900
+Wire Wire Line
+	4000 1350 4100 1350
+Connection ~ 4000 1350
+Wire Wire Line
+	4000 1500 4000 1350
+Wire Wire Line
+	5100 2050 4950 2050
+Connection ~ 5100 2050
+Wire Wire Line
+	5100 2000 5100 2050
+Wire Wire Line
+	5100 1650 5600 1650
+Connection ~ 5100 1650
+Wire Wire Line
+	5100 1700 5100 1650
+Wire Wire Line
+	4950 2050 4950 1900
+Wire Wire Line
+	5600 2050 5100 2050
+Wire Wire Line
+	4950 1650 5100 1650
+Wire Wire Line
+	4950 1800 4950 1650
+Text HLabel 5600 2050 2    50   Input ~ 0
+CAN_L
+Text HLabel 5600 1650 2    50   Input ~ 0
+CAN_H
+$Comp
+L Device:R R?
+U 1 1 60081283
+P 5100 1850
+F 0 "R?" H 5170 1896 50  0000 L CNN
+F 1 "120" H 5170 1805 50  0000 L CNN
+F 2 "" V 5030 1850 50  0001 C CNN
+F 3 "~" H 5100 1850 50  0001 C CNN
+	1    5100 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 1350 4400 1350
+Wire Wire Line
+	4600 1400 4600 1350
+$Comp
+L Device:C C?
+U 1 1 60081278
+P 4250 1350
+F 0 "C?" V 3998 1350 50  0000 C CNN
+F 1 "100nF" V 4089 1350 50  0000 C CNN
+F 2 "" H 4288 1200 50  0001 C CNN
+F 3 "~" H 4250 1350 50  0001 C CNN
+	1    4250 1350
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 60081272
+P 4600 1400
+F 0 "#PWR?" H 4600 1150 50  0001 C CNN
+F 1 "GND" H 4605 1227 50  0000 C CNN
+F 2 "" H 4600 1400 50  0001 C CNN
+F 3 "" H 4600 1400 50  0001 C CNN
+	1    4600 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 2250 4000 2200
+Connection ~ 4000 2250
+Wire Wire Line
+	4000 2300 4000 2250
+$Comp
+L power:GND #PWR?
+U 1 1 60081266
+P 4000 2300
+F 0 "#PWR?" H 4000 2050 50  0001 C CNN
+F 1 "GND" H 4005 2127 50  0000 C CNN
+F 2 "" H 4000 2300 50  0001 C CNN
+F 3 "" H 4000 2300 50  0001 C CNN
+	1    4000 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1300 1900 1000 1900
+$Comp
+L power:+5V #PWR?
+U 1 1 600A38BF
+P 3000 7400
+F 0 "#PWR?" H 3000 7250 50  0001 C CNN
+F 1 "+5V" H 3015 7573 50  0000 C CNN
+F 2 "" H 3000 7400 50  0001 C CNN
+F 3 "" H 3000 7400 50  0001 C CNN
+	1    3000 7400
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC
