@@ -137,6 +137,129 @@ F 3 "~" H 4650 2400 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
+L Timer:LMC555xM U1
+U 1 1 601C2A29
+P 2600 5050
+F 0 "U1" H 2600 5631 50  0000 C CNN
+F 1 "LMC555xM" H 2600 5540 50  0000 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 3450 4650 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lmc555.pdf" H 3450 4650 50  0001 C CNN
+	1    2600 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 601C2A35
+P 3550 4900
+F 0 "R4" H 3620 4946 50  0000 L CNN
+F 1 "R" H 3620 4855 50  0000 L CNN
+F 2 "" V 3480 4900 50  0001 C CNN
+F 3 "~" H 3550 4900 50  0001 C CNN
+	1    3550 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 601C2A3B
+P 3550 5200
+F 0 "R5" H 3620 5246 50  0000 L CNN
+F 1 "R" H 3620 5155 50  0000 L CNN
+F 2 "" V 3480 5200 50  0001 C CNN
+F 3 "~" H 3550 5200 50  0001 C CNN
+	1    3550 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 5450 2600 5650
+Wire Wire Line
+	2600 5650 3550 5650
+$Comp
+L Device:C C4
+U 1 1 601C2A43
+P 3550 5500
+F 0 "C4" H 3665 5546 50  0000 L CNN
+F 1 "C" H 3665 5455 50  0000 L CNN
+F 2 "" H 3588 5350 50  0001 C CNN
+F 3 "~" H 3550 5500 50  0001 C CNN
+	1    3550 5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 5400 3100 5400
+Wire Wire Line
+	3100 5400 3100 5250
+Wire Wire Line
+	3550 5050 3100 5050
+Connection ~ 3550 5050
+Wire Wire Line
+	3550 4750 3550 4350
+Wire Wire Line
+	2100 5250 1800 5250
+Wire Wire Line
+	1800 5250 1800 4350
+Wire Wire Line
+	1800 4350 2600 4350
+Connection ~ 2600 4350
+Wire Wire Line
+	2600 4350 3550 4350
+Wire Wire Line
+	3100 4850 3100 4500
+Wire Wire Line
+	3100 4500 4450 4500
+Wire Wire Line
+	2100 5050 2000 5050
+Wire Wire Line
+	2000 5050 2000 5650
+$Comp
+L Device:C C3
+U 1 1 601C2A57
+P 2400 5650
+F 0 "C3" V 2148 5650 50  0000 C CNN
+F 1 "10nF" V 2239 5650 50  0000 C CNN
+F 2 "" H 2438 5500 50  0001 C CNN
+F 3 "~" H 2400 5650 50  0001 C CNN
+	1    2400 5650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2000 5650 2250 5650
+Wire Wire Line
+	2550 5650 2600 5650
+Connection ~ 2600 5650
+Wire Wire Line
+	2100 4850 1600 4850
+Wire Wire Line
+	1600 4850 1600 5950
+Wire Wire Line
+	1600 5950 3100 5950
+Wire Wire Line
+	3100 5950 3100 5400
+Connection ~ 3100 5400
+$Comp
+L power:GND #PWR0102
+U 1 1 601C2A65
+P 2600 5650
+F 0 "#PWR0102" H 2600 5400 50  0001 C CNN
+F 1 "GND" H 2605 5477 50  0000 C CNN
+F 2 "" H 2600 5650 50  0001 C CNN
+F 3 "" H 2600 5650 50  0001 C CNN
+	1    2600 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 4650 2600 4350
+$Comp
+L Device:R R6
+U 1 1 601C2A6C
+P 4600 4500
+F 0 "R6" V 4393 4500 50  0000 C CNN
+F 1 "1K" V 4484 4500 50  0000 C CNN
+F 2 "" V 4530 4500 50  0001 C CNN
+F 3 "~" H 4600 4500 50  0001 C CNN
+	1    4600 4500
+	0    1    1    0   
+$EndComp
+$Comp
 L 74xGxx:74AHC1G08 U5
 U 1 1 601C5C7E
 P 5650 2350
@@ -150,6 +273,19 @@ $EndComp
 Wire Wire Line
 	5350 2400 4800 2400
 $Comp
+L 74xGxx:74AHC1G08 U6
+U 1 1 601C7035
+P 5650 4450
+F 0 "U6" H 5625 4717 50  0000 C CNN
+F 1 "74AHC1G08" H 5625 4626 50  0000 C CNN
+F 2 "" H 5650 4450 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5650 4450 50  0001 C CNN
+	1    5650 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 4500 4750 4500
+$Comp
 L 74xx:74LS04 U4
 U 1 1 601C86B7
 P 5150 3950
@@ -161,6 +297,8 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 5150 3950 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
+	5150 4400 5350 4400
+Wire Wire Line
 	5150 1850 5200 1850
 Wire Wire Line
 	5150 1850 5150 2300
@@ -170,7 +308,7 @@ Connection ~ 5150 2300
 Wire Wire Line
 	5150 2300 5150 3650
 Wire Wire Line
-	5150 4250 5150 4450
+	5150 4250 5150 4400
 Text GLabel 5200 1850 2    50   Input ~ 0
 LED_picker
 $Comp
@@ -243,6 +381,8 @@ Wire Wire Line
 	6850 4200 6850 4250
 Wire Wire Line
 	6850 3800 6850 3900
+Wire Wire Line
+	5900 4450 6250 4450
 $Comp
 L Transistor_BJT:BC547 Q1
 U 1 1 5FFFABFB
@@ -315,6 +455,17 @@ Wire Wire Line
 	6850 1700 6850 1800
 Wire Wire Line
 	5900 2350 6250 2350
+$Comp
+L power:+5V #PWR0107
+U 1 1 60003B99
+P 2600 4350
+F 0 "#PWR0107" H 2600 4200 50  0001 C CNN
+F 1 "+5V" H 2615 4523 50  0000 C CNN
+F 2 "" H 2600 4350 50  0001 C CNN
+F 3 "" H 2600 4350 50  0001 C CNN
+	1    2600 4350
+	1    0    0    -1  
+$EndComp
 $Comp
 L power:+5V #PWR0108
 U 1 1 600041E5
@@ -430,6 +581,4 @@ F 3 "" H 5950 7300 50  0001 C CNN
 $EndComp
 Text Notes 1400 1850 0    50   ~ 0
 Time High (T1)  0.693 × (R1+R2) × C1   Seconds\nTime Low (T2)   0.693 × R2 × C1   Seconds\nTime Period (T)    0.693 × (R1+2×R2) × C1  Seconds\nFrequency (F)    1.44 / (R1+2×R2) × C1    Hertz (Hz)\nDuty Cycle     (T1/T)×100    Percentage (%)
-Wire Wire Line
-	5150 4450 6250 4450
 $EndSCHEMATC
